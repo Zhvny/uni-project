@@ -1,0 +1,323 @@
+.about-section {
+    margin-bottom: 60px;
+}
+
+.about-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+}
+
+.about-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.about-info h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+    position: relative;
+    display: inline-block;
+}
+
+.about-info h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    border-radius: 10px;
+}
+
+.about-info p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.about-image {
+    flex: 1;
+    min-width: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.about-image:hover img {
+    transform: scale(1.05);
+}
+
+.mission-vision {
+    margin-bottom: 60px;
+}
+
+.mission-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.mission, .vision {
+    flex: 1;
+    min-width: 300px;
+    background-color: var(--color-gray);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: var(--transition);
+}
+
+.mission:hover, .vision:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 238, 255, 0.3);
+}
+
+.mission h2, .vision h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.mission p, .vision p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.key-features {
+    margin-bottom: 60px;
+}
+
+.key-features h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-align: center;
+    color: var(--color-primary);
+    position: relative;
+    display: inline-block;
+}
+
+.key-features h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    border-radius: 10px;
+}
+
+.features-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: flex-start;
+}
+
+.feature-card {
+    flex: 0 0 calc(33.333% - 20px);
+    box-sizing: border-box;
+    background-color: var(--color-gray);
+    border-radius: 10px;
+    padding: 25px;
+    transition: var(--transition);
+    border: 1px solid rgba(0, 238, 255, 0.1);
+    max-width: none;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 238, 255, 0.3);
+    border-color: rgba(0, 238, 255, 0.3);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+}
+
+.feature-icon i {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    filter: drop-shadow(0 0 8px rgba(0, 238, 255, 0.5));
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.feature-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.team-section {
+    margin-bottom: 60px;
+}
+
+.team-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-align: center;
+    color: var(--color-primary);
+    position: relative;
+    display: inline-block;
+}
+
+.team-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    border-radius: 10px;
+}
+
+.team-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: flex-start;
+}
+
+.team-member {
+    flex: 0 0 calc(33.333% - 20px);
+    box-sizing: border-box;
+    background-color: var(--color-gray);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: var(--transition);
+    border: 1px solid rgba(0, 238, 255, 0.1);
+    max-width: none;
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 238, 255, 0.3);
+    border-color: rgba(0, 238, 255, 0.3);
+}
+
+.member-photo {
+    height: 250px;
+    overflow: hidden;
+}
+
+.member-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.team-member:hover .member-photo img {
+    transform: scale(1.05);
+}
+
+.member-details {
+    padding: 20px;
+    text-align: center;
+}
+
+.member-details h3 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.member-details h4 {
+    font-size: 1rem;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+}
+
+.member-social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.member-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: var(--transition);
+    color: var(--color-light);
+}
+
+.member-social a:hover {
+    background-color: var(--color-primary);
+    color: var(--color-dark);
+    transform: translateY(-5px);
+}
+
+.join-us {
+    margin-bottom: 60px;
+    background-color: var(--color-gray);
+    padding: 50px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.join-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.join-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto 30px;
+}
+
+.join-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.join-buttons .btn {
+    min-width: 180px;
+}
+
+/* Responsif */
+@media screen and (max-width: 992px) {
+    .feature-card {
+        flex: 0 0 calc(50% - 15px);
+    }
+    
+    .team-member {
+        flex: 0 0 calc(50% - 15px);
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .feature-card {
+        flex: 0 0 100%;
+    }
+
+    .team-member {
+        flex: 0 0 100%;
+    }
+}

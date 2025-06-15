@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Picverse</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/gallery.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">Picverse</a>
+        </div>
+        <nav class="main-nav">
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="submission.html">Submission</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <a href="#" class="btn btn-outline">Log In</a>
+            <a href="#" class="btn btn-primary">Sign Up</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Explore Artworks</h1>
+                <p>Discover amazing digital art from creators worldwide</p>
+            </div>
+        </section>
+        
+        <section class="filter-section">
+            <div class="container">
+                <h2 class="trending-section">Tags</h2>
+                <div class="tags-container">
+                    <a href="#" class="tag">All</a>
+                    <a href="#Digital" class="tag">Digital Painting</a>
+                    <a href="#Concept" class="tag">Concept Art</a>
+                    <a href="#Pixel" class="tag">Pixel Art</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery-section">
+            <div class="container">
+                <!-- Digital Painting Tag -->
+                <div class="tag-section">
+                    <h2 class="tag-title" id="Digital">#DigitalPainting</h2>
+                    <div class="artwork-grid">
+                        <!-- This will be populated from JSON -->
+                    </div>
+                </div>
+
+                <!-- Concept Art Tag -->
+                <div class="tag-section">
+                    <h2 class="tag-title" id="Concept">#ConceptArt</h2>
+                    <div class="artwork-grid">
+                        <!-- This will be populated from JSON -->
+                    </div>
+                </div>
+
+                <!-- Pixel Art Tag -->
+                <div class="tag-section">
+                    <h2 class="tag-title" id="Pixel">#PixelArt</h2>
+                    <div class="artwork-grid">
+                        <!-- This will be populated from JSON -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Artwork Modal -->
+    <div class="artwork-modal" id="artwork-modal">
+        <div class="modal-content">
+            <button class="close-modal" aria-label="Close modal">&times;</button>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="" alt="Artwork" id="modal-image">
+                </div>
+                <div class="modal-info">
+                    <h2 id="modal-title">Artwork Title</h2>
+                    <p class="modal-artist" id="modal-artist">by Artist Name</p>
+                    <div class="artwork-stats">
+                        <span><i class="fas fa-heart"></i> <span id="modal-likes">0</span></span>
+                        <span><i class="fas fa-comment"></i> <span id="modal-comments">0</span></span>
+                        <span><i class="fas fa-eye"></i> <span id="modal-views">0</span></span>
+                    </div>
+                    <div class="artwork-tags">
+                        <span class="tag">#DigitalPainting</span>
+                        <span class="tag">#Fantasy</span>
+                        <span class="tag">#Nature</span>
+                    </div>
+                    <div class="modal-description">
+                        <h3>Description</h3>
+                        <p id="modal-description">
+                            Loading description...
+                        </p>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-outline"><i class="fas fa-heart"></i> Like</button>
+                        <button class="btn btn-outline"><i class="fas fa-share"></i> Share</button>
+                        <button class="btn btn-primary"><i class="fas fa-comment"></i> Comment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Picverse</h2>
+                    <p>Where Digital Art Comes to Life</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Navigation</h3>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="submission.html">Submission</a></li>
+                            <li><a href="community.html">Community</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Guidelines</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Picverse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
