@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picverse - Digital Art Community</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">Picverse</a>
+        </div>
+        <nav class="main-nav">
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-list">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="submission.html">Submission</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <a href="#" class="btn btn-outline">Log In</a>
+            <a href="#" class="btn btn-primary">Sign Up</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Image Slideshow -->
+        <section class="hero-section" style="padding: 20px;">
+            <div class="slideshow-container">
+                <div class="slide active">
+                    <div class="slide-image" style="background-image: url('assets/images/hero-1.jpg')"></div>
+                    <div class="slide-content">
+                        <h1>Where Imagination Meets Canvas</h1>
+                        <p>Artwork by <span class="artist-name">Elena Martinez</span></p>
+                        <a href="gallery.html" class="btn btn-primary">Explore Gallery</a>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="slide-image" style="background-image: url('assets/images/hero-2.jpg')"></div>
+                    <div class="slide-content">
+                        <h1>Create, Share, Inspire</h1>
+                        <p>Artwork by <span class="artist-name">Jamal Wright</span></p>
+                        <a href="gallery.html" class="btn btn-primary">Explore Gallery</a>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="slide-image" style="background-image: url('assets/images/hero-3.jpg')"></div>
+                    <div class="slide-content">
+                        <h1>Digital Art Reimagined</h1>
+                        <p>Artwork by <span class="artist-name">Sophia Chen</span></p>
+                        <a href="gallery.html" class="btn btn-primary">Explore Gallery</a>
+                    </div>
+                </div>
+                <div class="slideshow-controls">
+                    <button class="prev-slide" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+                    <div class="slide-indicators">
+                        <button class="indicator active" aria-label="Go to slide 1" data-slide="0"></button>
+                        <button class="indicator" aria-label="Go to slide 2" data-slide="1"></button>
+                        <button class="indicator" aria-label="Go to slide 3" data-slide="2"></button>
+                    </div>
+                    <button class="next-slide" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending -->
+        <section class="trending-section">
+            <div class="container">
+                <h2>Trending Tags</h2>
+                <div class="tags-container">
+                    <a href="gallery.html#Digital" class="tag">#DigitalPainting</a>
+                    <a href="gallery.html#Concept" class="tag">#ConceptArt</a>
+                    <a href="gallery.html#Pixel" class="tag">#PixelArt</a>
+                    <a href="gallery.html#Abstract" class="tag">#Animation</a>
+                    <a href="gallery.html" class="tag">#3DArt</a>
+                    <a href="gallery.html#Fantasy" class="tag">#FantasyArt</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured -->
+        <section class="featured-section">
+            <div class="container">
+                <h2>Featured Artworks</h2>
+                <div class="artwork-grid">
+                    <div class="artwork-card">
+                        <div class="artwork-image">
+                            <img src="assets/images/artworks/artwork1.jpg" alt="Digital Landscape">
+                        </div>
+                        <div class="artwork-info">
+                            <h3>Digital Landscape</h3>
+                            <p class="artist">by Elena Martinez</p>
+                            <div class="artwork-stats">
+                                <span><i class="fas fa-heart"></i> <span id="modal-likes">342</span></span>
+                                <span><i class="fas fa-comment"></i> <span id="modal-comments">42</span></span>
+                                <span><i class="fas fa-eye"></i> <span id="modal-views">1.2k</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="artwork-card">
+                        <div class="artwork-image">
+                            <img src="assets/images/artworks/artwork2.jpg" alt="Cyberpunk City">
+                        </div>
+                        <div class="artwork-info">
+                            <h3>Cyberpunk City</h3>
+                            <p class="artist">by Jamal Wright</p>
+                            <div class="artwork-stats">
+                                <span><i class="fas fa-heart"></i> <span id="modal-likes">342</span></span>
+                                <span><i class="fas fa-comment"></i> <span id="modal-comments">42</span></span>
+                                <span><i class="fas fa-eye"></i> <span id="modal-views">1.2k</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="artwork-card">
+                        <div class="artwork-image">
+                            <img src="assets/images/artworks/artwork3.jpg" alt="Fantasy Character">
+                        </div>
+                        <div class="artwork-info">
+                            <h3>Fantasy Character</h3>
+                            <p class="artist">by Sophia Chen</p>
+                            <div class="artwork-stats">
+                                <span><i class="fas fa-heart"></i> <span id="modal-likes">342</span></span>
+                                <span><i class="fas fa-comment"></i> <span id="modal-comments">42</span></span>
+                                <span><i class="fas fa-eye"></i> <span id="modal-views">1.2k</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="artwork-card">
+                        <div class="artwork-image">
+                            <img src="assets/images/artworks/artwork4.jpg" alt="Abstract Emotions">
+                        </div>
+                        <div class="artwork-info">
+                            <h3>Abstract Emotions</h3>
+                            <p class="artist">by Marcus Johnson</p>
+                            <div class="artwork-stats">
+                                <span><i class="fas fa-heart"></i> <span id="modal-likes">342</span></span>
+                                <span><i class="fas fa-comment"></i> <span id="modal-comments">42</span></span>
+                                <span><i class="fas fa-eye"></i> <span id="modal-views">1.2k</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="artwork-card">
+                        <div class="artwork-image">
+                            <img src="assets/images/artworks/artwork5.jpg" alt="Futuristic Mech">
+                        </div>
+                        <div class="artwork-info">
+                            <h3>Futuristic Mech</h3>
+                            <p class="artist">by Liam Patel</p>
+                            <div class="artwork-stats">
+                                <span><i class="fas fa-heart"></i> <span id="modal-likes">342</span></span>
+                                <span><i class="fas fa-comment"></i> <span id="modal-comments">42</span></span>
+                                <span><i class="fas fa-eye"></i> <span id="modal-views">1.2k</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Artwork Modal -->
+        <div class="artwork-modal" id="artwork-modal">
+            <div class="modal-content">
+                <button class="close-modal" aria-label="Close modal">&times;</button>
+                <div class="modal-body">
+                    <div class="modal-image">
+                        <img src="" alt="Artwork" id="modal-image">
+                    </div>
+                    <div class="modal-info">
+                        <h2 id="modal-title">Artwork Title</h2>
+                        <p class="modal-artist" id="modal-artist">by Artist Name</p>
+                        <div class="artwork-stats">
+                                <span><i class="fas fa-heart"></i> <span id="modal-likes">342</span></span>
+                                <span><i class="fas fa-comment"></i> <span id="modal-comments">42</span></span>
+                                <span><i class="fas fa-eye"></i> <span id="modal-views">1.2k</span></span>
+                        </div>
+                        <div class="artwork-tags">
+                            <span class="tag">#DigitalArt</span>
+                            <span class="tag">#Featured</span>
+                        </div>
+                        <div class="modal-description">
+                            <h3>Description</h3>
+                            <p id="modal-description">
+                                Bro, warung kopi sebelah nyediain nasi uduk terenak sedunia. Ketika mie instan rebus dengan telur setengah matang menjadi penyelamat di akhir bulan, hidup terasa lebih bermakna. Tapi kenapa pas beli cilok, isinya angin doang?
+
+                                Sungguh sebuah misteri yang lebih susah dipecahkan daripada soal matematika. Sementara itu, bapak-bapak kompleks masih berdebat apakah lebih baik beli motor matic atau manual, padahal ujung-ujungnya boncengin anak buat beli es teh manis.
+
+                                Hingga suatu saat, seorang netizen berkata: ‘Gaji UMR, tapi gaya sultan.’ Dan saat itulah kita semua sadar bahwa hidup ini penuh dengan ketidakpastian, kecuali satu hal: tahu goreng selalu enak kalau dicocol sambel kecap
+                       </p>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn btn-outline"><i class="fas fa-heart"></i> Like</button>
+                            <button class="btn btn-outline"><i class="fas fa-share"></i> Share</button>
+                            <button class="btn btn-primary"><i class="fas fa-comment"></i> Comment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Picverse</h2>
+                    <p>Where Digital Art Comes to Life</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Navigation</h3>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="submission.html">Submission</a></li>
+                            <li><a href="community.html">Community</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Guidelines</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Picverse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
