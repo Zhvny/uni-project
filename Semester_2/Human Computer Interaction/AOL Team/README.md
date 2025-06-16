@@ -1,4 +1,4 @@
-<h1>Tabi ( Tangan Bicara ) ✋</h1>
+<h1>Tabi (Tangan Bicara) ✋</h1>
 
 <p align="center">
   <img src="./public/img/page/dashboard.png" width="550" />
@@ -8,13 +8,13 @@
 
 ## 📖 Tentang Tabi
 
-Tabi (Tangan Bicara) adalah platform pembelajaran bahasa isyarat yang dirancang untuk membantu semua orang belajar bahasa isyarat dengan cara yang interaktif dan menyenangkan. Platform ini bertujuan untuk menjembatani kesenjangan komunikasi antara komunitas tuli dan dengar, serta mempromosikan inklusi dan aksesibilitas bagi semua.
+Tabi (Tangan Bicara) is an Indonesian sign language (bisindo) learning platform designed to help everyone learn sign language in an interactive and fun way. The platform aims to bridge the communication gap between the deaf and hearing communities, and promote inclusion and accessibility for all.
 
-## 💎 Fitur Utama ( Beta )
+## 💎 Fitur Utama (Beta)
 
-- Pembelajaran Interaktif: latihan interaktif untuk belajar bahasa isyarat
-- Kamus Visual: Kumpulan kata dan frasa dalam bahasa isyarat dengan ilustrasi
-T- antangan Harian: Latihan singkat harian untuk mempertahankan konsistensi belajar
+- Interactive Learning: interactive exercises for learning sign language
+- Visual Dictionary: A collection of words and phrases in sign language with illustrations
+- Daily Challenges: Daily short exercises to maintain learning consistency
  
 ## Installation For Window/RDP
 
@@ -25,8 +25,8 @@ npm start
 
 ## License
 
-This project is under the [Yanzz](https://github.com/Yanzz231)
+This project is under the [?](https://github.com/Zhvny)
 
 ## Helper 🤖
 
-Just DM me with instagram [Yanz](https://www.instagram.com/iyanmikasa/)
+Just DM me with instagram [?](https://www.instagram.com/jkt48.kathrina/)
