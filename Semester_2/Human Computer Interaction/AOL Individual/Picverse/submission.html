@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Artwork - Picverse</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/submission.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">Picverse</a>
+        </div>
+        <nav class="main-nav">
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="submission.html" class="active">Submission</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <a href="#" class="btn btn-outline">Log In</a>
+            <a href="#" class="btn btn-primary">Sign Up</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Submit Your Artwork</h1>
+                <p>Share your creativity with the Picverse community</p>
+            </div>
+        </section>
+
+        <section class="submission-form-section">
+            <div class="container">
+                <div class="submission-guidelines">
+                    <h2>Submission Guidelines</h2>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Image formats: JPG, PNG, GIF (max 10MB)</li>
+                        <li><i class="fas fa-check"></i> Be respectful of other artists' work</li>
+                        <li><i class="fas fa-check"></i> Properly credit any references used</li>
+                        <li><i class="fas fa-check"></i> Clearly mark AI-generated content</li>
+                        <li><i class="fas fa-check"></i> Add relevant tags to help others discover your work</li>
+                    </ul>
+                </div>
+
+                <form id="artwork-submission-form" class="submission-form">
+                    <div class="form-message" id="form-message"></div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com">
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="title">Artwork Title <span class="required">*</span></label>
+                        <input type="text" id="title" name="title" placeholder="Give your artwork a title">
+                        <div class="error-message" id="title-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description <span class="required">*</span></label>
+                        <textarea id="description" name="description" rows="4" placeholder="Tell us about your artwork"></textarea>
+                        <div class="error-message" id="description-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tags">Tags <span class="required">*</span></label>
+                        <input type="text" id="tags" name="tags" placeholder="e.g., DigitalPainting, Fantasy, Nature (comma separated)">
+                        <div class="error-message" id="tags-error"></div>
+                    </div>
+                    
+                    <div class="form-group file-upload">
+                        <label for="artwork">Upload Artwork <span class="required">*</span></label>
+                        <div class="upload-container">
+                            <div class="upload-button">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Choose File</span>
+                            </div>
+                            <div class="file-name" id="file-name">No file chosen</div>
+                            <input type="file" id="artwork" name="artwork" accept="image/jpeg,image/png,image/gif" style="display:none;">
+                        </div>
+                        <div class="error-message" id="artwork-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="radio-group-label">Is this AI-generated? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="ai-yes" name="ai-generated" value="yes">
+                                <label for="ai-yes">Yes, it's AI-generated</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="ai-no" name="ai-generated" value="no">
+                                <label for="ai-no">No, it's 100% my original work</label>
+                            </div>
+                        </div>
+                        <div class="error-message" id="ai-generated-error"></div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="reset" class="btn btn-outline">Clear Form</button>
+                        <button type="submit" class="btn btn-primary">Submit Artwork</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="submission-tips">
+            <div class="container">
+                <h2>Tips for Successful Submissions</h2>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <h3>Quality Matters</h3>
+                        <p>Submit high-resolution images that show off your artwork's details.</p>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <h3>Effective Tagging</h3>
+                        <p>Use specific tags to help your work reach the right audience.</p>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-comment-dots"></i>
+                        </div>
+                        <h3>Tell Your Story</h3>
+                        <p>Include details about your creative process in the description.</p>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Timing Matters</h3>
+                        <p>Submit during peak hours to maximize visibility in the community.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Picverse</h2>
+                    <p>Where Digital Art Comes to Life</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Navigation</h3>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="submission.html">Submission</a></li>
+                            <li><a href="community.html">Community</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Guidelines</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Picverse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/submission.js"></script>
+</body>
+</html>
