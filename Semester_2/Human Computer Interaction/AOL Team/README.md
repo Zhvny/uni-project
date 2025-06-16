@@ -1,5 +1,6 @@
 <h1>Tabi (Tangan Bicara) ✋</h1>
 
+
 <p align="center">
   <img src="./public/img/page/dashboard.png" width="550" />
 </p>
