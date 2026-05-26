@@ -1,7 +1,7 @@
 # Everything About Collage
 ## What's Inside?
 
-- Code written under extreme pressure and snack deprivation
+- Code written under extreme pressure and snack deprivation (AI)
 - Assignments for subjects like:
   - Algorithms & Programming Fundamentals
   - Data Structures
