@@ -9,7 +9,7 @@
 
 ---
 
-## ote
+## Note
 
 - All code may not be optimized.
 - All parts are messy.
