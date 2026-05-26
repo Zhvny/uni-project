@@ -1,15 +1,15 @@
-# 🎓 Everything About Collage
-## 📂 What's Inside?
+# Everything About Collage
+## What's Inside?
 
-- Code written under extreme pressure and snack deprivation 🥲
+- Code written under extreme pressure and snack deprivation
 - Assignments for subjects like:
   - Algorithms & Programming Fundamentals
   - Data Structures
-  - (and possibly late-night caffeine-fueled experiments ☕)
+  - (and possibly late-night caffeine-fueled experiments)
 
 ---
 
-## 🧹 Note
+## ote
 
 - All code may not be optimized.
 - All parts are messy.
