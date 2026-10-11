@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><title>depth2 gate probe</title></head>
+<body><h1>depth2 probe — ../assets dari kedalaman 2</h1>
+<pre id="result">memuat...</pre>
+<script>
+  const out = document.getElementById('result');
+  const base = location.href;
+  const res = {
+    href: base,
+    oneUp: new URL('..', base).href,
+    assetsUrl: new URL('../assets/hljs/hljs.min.js', base).href
+  };
+  out.textContent = 'resolusi: ' + JSON.stringify(res);
+  const s = document.createElement('script');
+  s.src = '../assets/hljs/hljs.min.js';
+  s.onload = () => { out.textContent += '\nLOAD: onload-OK (path ../assets bekerja dari kedalaman 2)'; };
+  s.onerror = () => { out.textContent += '\nLOAD: onerror-FAIL'; };
+  document.head.appendChild(s);
+</script>
+</body></html>

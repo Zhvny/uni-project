@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smoke — file:// + MathJax + Mermaid + highlight.js</title>
+<link rel="stylesheet" href="./assets/hljs/github.min.css">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  options: {
+    enableSpeech: false,
+    enableBraille: false,
+    menuOptions: {
+      settings: { enrich: false, speech: false, braille: false, assistiveMml: false }
+    }
+  }
+};
+</script>
+<script src="./assets/mathjax/tex-svg.js" defer></script>
+<script src="./assets/hljs/hljs.min.js" defer></script>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; }
+  .box { border: 1px solid #aaa; border-radius: 8px; padding: 1rem; margin: 1rem 0; }
+</style>
+</head>
+<body>
+<h1>Smoke — file:// + MathJax + Mermaid + highlight.js</h1>
+
+<div class="box">
+  <h2>Matematika</h2>
+  <p>Inline \(x^2\) dan \(e^{i\pi}+1=0\).</p>
+  <p>Display:</p>
+  $$\sum_{i=1}^{n} \frac{x_i - \mu}{n}$$
+  <p>Aligned:</p>
+  $$
+  \begin{aligned}
+    \bar{x} &= \frac{1}{n}\sum_{i=1}^{n} x_i \\
+    s^2     &= \frac{1}{n-1}\sum_{i=1}^{n} (x_i - \bar{x})^2
+  \end{aligned}
+  $$
+</div>
+
+<div class="box">
+  <h2>Mata uang / persen (harus tetap teks, tidak jadi math)</h2>
+  <p id="money">Biaya Rp 12.000/bulan (+5%)</p>
+</div>
+
+<div class="box">
+  <h2>Mermaid flowchart</h2>
+  <pre class="mermaid">
+flowchart TD
+  A[Konsep] --> B[Detail]
+  B --> C[Contoh]
+  </pre>
+</div>
+
+<div class="box">
+  <h2>Kode bash (harus literal, < & > tidak terurai)</h2>
+  <pre><code class="language-bash">if [ $a -lt $b ] && [ $c -gt $d ]; then echo "ok"; fi</code></pre>
+</div>
+
+<script src="./assets/mermaid/mermaid.min.js" defer></script>
+<script defer>
+window.addEventListener('load', () => {
+  mermaid.initialize({ startOnLoad: false });
+  mermaid.run({ querySelector: '.mermaid' }).catch(err => console.error('mermaid:', err));
+  hljs.highlightAll();
+});
+</script>
+</body>
+</html>
