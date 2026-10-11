@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jaringan AWS — AWS</title>
+
+<!-- Tema hljs (dimuat sebelum note.css agar note.css menetralkan padding/latar) -->
+<link rel="stylesheet" href="../../assets/hljs/github.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../../assets/hljs/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="../../assets/note.css">
+
+<!-- MathJax 4 — JANGAN set throwOnError (dihapus di v4). Wajib matikan speech/Braille. -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  options: {
+    enableSpeech: false,
+    enableBraille: false,
+    menuOptions: {
+      settings: { enrich: false, speech: false, braille: false, assistiveMml: false }
+    }
+  }
+};
+</script>
+<script src="../../assets/mathjax/tex-svg.js" defer></script>
+<script src="../../assets/hljs/hljs.min.js" defer></script>
+</head>
+<body>
+<div class="layout">
+
+<details class="toc">
+  <summary>Daftar isi</summary>
+  <nav aria-label="Daftar isi">
+    <ol>
+      <li><a href="#tldr">TL;DR</a></li>
+      <li><a href="#peta">Peta konsep</a></li>
+      <li><a href="#konsep">Konsep inti</a></li>
+      <li><a href="#rumus">Rumus</a></li>
+      <li><a href="#kode">Kode</a></li>
+      <li><a href="#latihan">Latihan</a></li>
+      <li><a href="#faq">Jebakan &amp; FAQ</a></li>
+      <li><a href="#glosarium">Glosarium</a></li>
+      <li><a href="#checklist">Checklist</a></li>
+      <li><a href="#sumber">Sumber</a></li>
+    </ol>
+  </nav>
+</details>
+
+<article>
+
+<!-- ===================== WAJIB #0 META ===================== -->
+<header class="meta">
+  <a class="back" href="../../index.html">&larr; Daftar catatan</a>
+  <p class="eyebrow">AWS</p>
+  <h1>Jaringan di AWS</h1>
+  <dl>
+    <dt>Prasyarat</dt><dd><a href="%5BPart1%20-%20Modul2%5D%20Komputasi-AWS.html">Komputasi AWS</a></dd>
+    <dt>Dibuat</dt><dd>2026-10-11</dd>
+    <dt>Status</dt><dd>solid</dd>
+    <dt>Estimasi baca</dt><dd>25 menit</dd>
+  </dl>
+</header>
+
+<!-- ===================== WAJIB #1 TL;DR ===================== -->
+<section class="tldr" id="tldr">
+  <h2>TL;DR</h2>
+  <ul>
+    <li>Jaringan merutekan pesan seperti pos: butuh alamat pengirim,
+    alamat penerima, dan isi.</li>
+    <li>Alamat IP memakai bit; IPv4 ditulis desimal bertitik, CIDR
+    menulis rentangnya secara ringkas.</li>
+    <li>Amazon VPC adalah jaringan terisolasi; subnet publik vs privat
+    diletakkan di minimal dua Availability Zone.</li>
+    <li>AWS menyimpan lima alamat IP tiap subnet untuk perutean, DNS,
+    dan manajemen jaringan.</li>
+    <li>Network ACL stateless di tingkat subnet; security group
+    stateful di tingkat instans.</li>
+  </ul>
+</section>
+
+<!-- ===================== OPSIONAL #2 PETA ===================== -->
+<figure class="map" id="peta">
+  <h2>Peta konsep</h2>
+  <pre class="mermaid">
+flowchart TD
+  NET[Jaringan dan perutean] --> IP[Alamat IP dan CIDR]
+  IP --> VPC[Amazon VPC]
+  VPC --> PUB[Subnet publik]
+  VPC --> PRV[Subnet privat]
+  VPC --> RT[Tabel rute]
+  PUB --> NACL[Network ACL]
+  PRV --> NACL
+  NACL --> SG[Security group]
+  IGW[Internet gateway] --> VPC
+  CGW[Customer gateway] --> VGW[Virtual private gateway]
+  VGW --> VPC
+  DX[AWS Direct Connect] --> VPC
+  </pre>
+  <figcaption>Kerangka modul: dari dasar jaringan ke VPC, perutean,
+  dan lapisan keamanannya.</figcaption>
+</figure>
+
+<!-- ===================== WAJIB #3 KONSEP ===================== -->
+<section class="concept" id="konsep">
+  <h2>Konsep inti</h2>
+
+  <h3>Jaringan dan perutean</h3>
+  <p>Jaringan adalah cara menghubungkan komputer di seluruh dunia agar
+  dapat berkomunikasi. Menyampaikan pesan di jaringan diibaratkan
+  mengirim surat: butuh isi surat di dalam amplop, alamat pengirim,
+  dan alamat penerima.</p>
+  <p>Di dunia digital, komputer memproses pengiriman pesan dengan cara
+  yang sama. Proses mengarahkan pesan ke tujuan ini disebut
+  <strong>perutean</strong>.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: perutean cukup memakai nama host. Tidak &mdash;
+    perutean butuh alamat numerik (alamat IP) agar pesan sampai ke
+    lokasi yang benar.</p>
+  </aside>
+
+  <h3>Alamat IP dan notasi IPv4</h3>
+  <p>Setiap komputer memiliki alamat IP, yaitu kombinasi bit 0 dan 1.
+  Contohnya alamat 32-bit dalam biner:
+  <code>11000000 10101000 00000001 00011110</code>.</p>
+  <p>Biasanya alamat ini dikelompokkan per 8 bit (disebut
+  <em>oktet</em>) lalu dikonversi ke desimal yang dipisahkan titik,
+  misalnya <code>192.168.1.30</code>. Inilah notasi IPv4.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: Anda menulis alamat IP dalam biner di AWS. Tidak
+    &mdash; notasi sehari-hari memakai desimal bertitik; biner hanya
+    menjelaskan cara bit bekerja.</p>
+  </aside>
+
+  <h3>Notasi CIDR</h3>
+  <p>Untuk menyatakan satu rentang alamat IP, dipakai notasi
+  <strong>CIDR</strong>: alamat IP awal, garis miring, lalu sebuah
+  angka. Angka itu menunjukkan berapa banyak bit awal yang
+  <em>tetap</em>.</p>
+  <p>Contoh <code>192.168.1.0/24</code>: 24 bit pertama tetap, 8 bit
+  terakhir fleksibel. Karena tiap bit fleksibel bisa 0 atau 1, tersedia
+  256 alamat. Di AWS rentang terkecil adalah <code>/28</code> (16
+  alamat) dan terbesar <code>/16</code> (65.536 alamat).</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: angka setelah garis miring lebih besar berarti
+    jaringan lebih besar. Kebalikannya &mdash; <code>/24</code> lebih
+    kecil dari <code>/16</code>.</p>
+  </aside>
+
+  <h3>Amazon VPC</h3>
+  <p><strong>Amazon VPC</strong> (<em>virtual private cloud</em>)
+  adalah jaringan terisolasi yang Anda buat di AWS Cloud, mirip
+  jaringan tradisional di pusat data.</p>
+  <p>Saat membuat VPC, tentukan nama, Region (VPC mencakup semua
+  Availability Zone di dalam Region itu), dan rentang IP dalam CIDR.
+  Satu VPC bisa memiliki sampai lima CIDR IPv4: satu primer dan empat
+  sekunder.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: VPC terikat pada satu Availability Zone. Tidak
+    &mdash; VPC menjangkau semua AZ di Region yang dipilih.</p>
+  </aside>
+
+  <h3>Subnet publik dan privat</h3>
+  <p>Subnet adalah jaringan yang lebih kecil di dalam VPC, mirip
+  <em>VLAN</em> di jaringan on-premises. Saat membuat subnet, tentukan
+  VPC, Availability Zone, dan blok CIDR subnet (harus bagian dari
+  CIDR VPC).</p>
+  <p>Gunakan subnet publik untuk sumber daya yang harus terhubung
+  internet, dan subnet privat untuk sumber daya yang tidak. Untuk
+  redundansi, buat setidaknya <strong>dua subnet di dua Availability
+  Zone</strong>.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: satu subnet sudah cukup untuk ketersediaan
+    tinggi. Tidak &mdash; pakai minimal dua subnet di dua AZ agar ada
+    cadangan saat satu AZ gagal.</p>
+  </aside>
+
+  <h3>IP yang dicadangkan AWS</h3>
+  <p>Agar dapat mengonfigurasi VPC dengan tepat, AWS menyimpan
+  <strong>lima alamat IP</strong> di setiap subnet untuk perutean, DNS
+  (<em>domain name system</em>), dan manajemen jaringan.</p>
+  <p>Contoh: VPC <code>10.0.0.0/22</code> mencakup 1.024 alamat,
+  dibagi empat subnet <code>/24</code> berisi 256 alamat. Dari tiap
+  subnet, hanya 251 alamat yang dapat dipakai karena lima
+  dicadangkan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: semua alamat dalam rentang subnet bisa dipakai.
+    Tidak &mdash; lima alamat selalu dicadangkan AWS.</p>
+  </aside>
+
+  <h3>Gateway internet dan gateway privat virtual</h3>
+  <p><strong>Internet gateway</strong> menghubungkan VPC ke internet,
+  diibaratkan seperti modem. Berbeda dengan modem rumah, gateway
+  internet sangat tersedia dan dapat diskalakan; melampirkannya ke
+  VPC mengaktifkan konektivitas internet.</p>
+  <p><strong>Virtual private gateway</strong> adalah endpoint VPN di
+  sisi Amazon yang dilampirkan ke satu VPC, untuk menghubungkan VPC
+  ke jaringan privat lain. Di sisi Anda, hubungkan
+  <em>customer gateway</em> lalu buat koneksi VPN terenkripsi.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: internet gateway dan virtual private gateway
+    sama. Beda &mdash; yang pertama ke internet publik, yang kedua ke
+    jaringan privat lewat VPN terenkripsi.</p>
+  </aside>
+
+  <h3>AWS Direct Connect</h3>
+  <p><strong>AWS Direct Connect</strong> membuat koneksi fisik yang
+  aman antara pusat data on-premises dan Amazon VPC, memakai kabel
+  serat optik Ethernet standar ke lokasi Direct Connect.</p>
+  <p>Koneksi ini memungkinkan antarmuka virtual langsung ke layanan
+  AWS publik atau VPC. Lalu lintas tetap berada di jaringan global AWS
+  dan tidak pernah menyentuh internet publik.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: Direct Connect sama dengan VPN. Tidak &mdash;
+    VPN berjalan lewat internet publik (terenkripsi), Direct Connect
+    memakai link fisik khusus.</p>
+  </aside>
+
+  <h3>Tabel rute utama dan kustom</h3>
+  <p>Tabel rute berisi seperangkat aturan (disebut <em>rute</em>) yang
+  menentukan ke mana lalu lintas dari subnet atau gateway diarahkan.
+  Saat VPC dibuat, AWS membuat <strong>tabel rute utama</strong> yang
+  mengizinkan lalu lintas antar subnet.</p>
+  <p>Tabel rute utama tidak dapat dihapus. Subnet yang tidak punya
+  pengaitan eksplisit memakai tabel rute kustom; kaitkan subnet ke
+  tabel kustom bila ingin rute berbeda per subnet.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: tabel rute utama bisa dihapus. Tidak &mdash;
+    tabel itu permanen; yang bisa diganti adalah pengaitan subnet
+    ke tabel kustom.</p>
+  </aside>
+
+  <h3>Network ACL: stateless di tingkat subnet</h3>
+  <p><strong>Network ACL</strong> adalah firewall tingkat subnet yang
+  mengizinkan atau menolak lalu lintas masuk dan keluar. ACL default
+  mengizinkan semua lalu lintas, jadi baik sebagai titik awal.</p>
+  <p>ACL bersifat <em>stateless</em>: aturan masuk dan keluar
+  dikonfigurasi terpisah. Untuk server web, izinkan masuk port 443
+  dan keluar rentang 1025-65535 agar respons dapat meninggalkan
+  subnet.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: cukup mengatur aturan masuk. ACL stateless
+    &mdash; tanpa aturan keluar, respons server dibuat tetapi tidak
+    pernah keluar dari subnet.</p>
+  </aside>
+
+  <h3>Security group: stateful di tingkat instans</h3>
+  <p><strong>Security group</strong> adalah firewall virtual untuk
+  instans EC2. Konfigurasi defaultnya memblokir semua lalu lintas
+  masuk dan mengizinkan semua lalu lintas keluar.</p>
+  <p>Security group bersifat <em>stateful</em>: ia mengingat apakah
+  koneksi dimulai dari instans atau dari luar, lalu mengizinkan
+  respons tanpa mengubah aturan masuk. Buka port (mis. 80 dan 443)
+  agar instans menerima lalu lintas tersebut.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: harus membuka port keluar agar bisa membalas
+    permintaan. Tidak &mdash; karena stateful, respons otomatis
+    diizinkan.</p>
+  </aside>
+
+  <h3>Isolasi berlapis tanpa VLAN</h3>
+  <p>Pola desain umum: kelompokkan sumber daya ke beberapa tingkat
+  (web, aplikasi, basis data) dan buat security group yang mengatur
+  komunikasi antar tingkat.</p>
+  <p>Contoh: internet ke tingkat web lewat HTTPS, web ke aplikasi
+  lewat HTTP, aplikasi ke basis data lewat MySQL. Ini berbeda dari
+  on-premises yang mengisolasi grup dengan VLAN; di AWS security group
+  memberi isolasi setara tanpa mengikat ke jaringan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: isolasi grup sumber daya butuh VLAN seperti
+    on-premises. Tidak &mdash; security group mencapai isolasi sama
+    tanpa ikatan VLAN.</p>
+  </aside>
+</section>
+
+<!-- ===================== OPSIONAL #4 RUMUS ===================== -->
+<section class="formula" id="rumus">
+  <h2>Rumus</h2>
+  <p>$$ N_{total} = 2^{\,32 - p} $$</p>
+  <p>$$ N_{pakai} = N_{total} - 5 $$</p>
+  <table>
+    <thead><tr><th>Simbol</th><th>Arti</th></tr></thead>
+    <tbody>
+      <tr><td>\(N_{total}\)</td><td>Jumlah alamat di satu blok CIDR</td></tr>
+      <tr><td>\(p\)</td><td>Panjang prefix (angka setelah /)</td></tr>
+      <tr><td>\(N_{pakai}\)</td><td>Alamat yang dapat dipakai</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Kapan dipakai:</strong> menaksir jumlah alamat yang
+  tersedia saat memilih rentang CIDR VPC atau subnet.</p>
+  <p><strong>Kapan tidak:</strong> tidak memperhitungkan bahwa tiap
+  subnet dirancang minimal <code>/28</code> dan lima alamat
+  dicadangkan per subnet.</p>
+  <p>Contoh: prefix \(p = 24\) memberi \(N_{total} = 2^{8} = 256\)
+  alamat; yang bisa dipakai \(256 - 5 = 251\) alamat per subnet.</p>
+</section>
+
+<!-- ===================== OPSIONAL #5 KODE ===================== -->
+<section class="code" id="kode">
+  <h2>Kode</h2>
+  <p><strong>AWS CLI</strong> &mdash; membuat VPC dan subnet publik:</p>
+  <pre><code class="language-bash"># buat VPC dengan blok CIDR
+aws ec2 create-vpc --cidr-block 10.0.0.0/16
+
+# buat subnet di satu Availability Zone
+aws ec2 create-subnet \
+  --vpc-id vpc-0abc123 \
+  --cidr-block 10.0.0.0/24 \
+  --availability-zone us-east-1a
+</code></pre>
+  <p><strong>Apa yang berubah kalau X diubah:</strong> memperkecil
+  prefix subnet (mis. <code>/24</code> menjadi <code>/28</code>)
+  mengurangi jumlah alamat yang tersedia di subnet itu.</p>
+</section>
+
+<!-- ===================== WAJIB #6 LATIHAN ===================== -->
+<section class="practice" id="latihan">
+  <h2>Latihan mandiri</h2>
+
+  <p>1. Uraikan notasi <code>192.168.1.0/24</code>: berapa bit tetap,
+  berapa alamat, dan berapa yang dapat dipakai?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>24 bit pertama tetap, 8 bit fleksibel. Jumlah alamat =
+    \(2^{8} = 256\). Karena AWS menyimpan lima alamat per subnet,
+    yang dapat dipakai 251.</p>
+  </details>
+
+  <p>2. Sebuah subnet dirancang dengan rentang <code>/24</code>.
+  Berapa alamat yang dapat dipakai, dan kenapa tidak 256?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>251 alamat. AWS menyimpan lima alamat di setiap subnet untuk
+    perutean, DNS, dan manajemen jaringan.</p>
+  </details>
+
+  <p>3. Sebutkan dua perbedaan network ACL dan security group.</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Pertama, cakupan: network ACL bekerja di tingkat subnet,
+    security group di tingkat instans EC2. Kedua, sifat: network ACL
+    <em>stateless</em> (aturan masuk dan keluar terpisah), security
+    group <em>stateful</em> (respons otomatis diizinkan).</p>
+  </details>
+
+  <p>4. Kenapa server web di subnet dengan network ACL kustom butuh
+  aturan keluar pada rentang 1025-65535?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Karena network ACL bersifat stateless. Port respons bersifat
+    sementara (mis. 1025-65535), jadi tanpa aturan keluar server akan
+    merespons tetapi lalu lintasnya tidak pernah meninggalkan
+    subnet.</p>
+  </details>
+
+  <p>5. Kenapa sebaiknya membuat minimal dua subnet di dua Availability
+  Zone?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Untuk redundansi dan toleransi kesalahan. Jika satu Availability
+    Zone gagal, sumber daya di AZ lain tetap tersedia sebagai
+    cadangan.</p>
+  </details>
+</section>
+
+<!-- ===================== OPSIONAL #7 FAQ ===================== -->
+<section class="faq" id="faq">
+  <h2>Jebakan &amp; FAQ</h2>
+  <p><strong>Apakah boleh memakai CIDR lebih kecil dari /28?</strong>
+  Tidak. Rentang IP terkecil di AWS adalah <code>/28</code> (16
+  alamat), terbesar <code>/16</code> (65.536 alamat).</p>
+  <p><strong>Berapa subnet minimal untuk ketersediaan tinggi?</strong>
+  Minimal dua subnet yang dikonfigurasi di dua Availability Zone.</p>
+  <p><strong>Apa beda network ACL dan security group?</strong> Network
+  ACL adalah firewall tingkat subnet yang stateless; security group
+  adalah firewall tingkat instans EC2 yang stateful.</p>
+  <p><strong>Apakah semua alamat di rentang subnet bisa dipakai?</strong>
+  Tidak. AWS menyimpan lima alamat di tiap subnet.</p>
+  <p><strong>Apakah VPC hanya berada di satu Availability Zone?</strong>
+  Tidak. VPC menjangkau semua Availability Zone di Region yang
+  dipilih.</p>
+</section>
+
+<!-- ===================== OPSIONAL #8 GLOSARIUM ===================== -->
+<section class="glossary" id="glosarium">
+  <h2>Glosarium</h2>
+  <dl>
+    <dt>Jaringan</dt><dd>Cara menghubungkan komputer agar saling berkomunikasi.</dd>
+    <dt>Perutean</dt><dd>Proses mengarahkan pesan ke alamat tujuan yang benar.</dd>
+    <dt>Alamat IP</dt><dd>Alamat numerik komputer berupa kombinasi bit 0 dan 1.</dd>
+    <dt>IPv4</dt><dd>Notasi alamat 32-bit dalam empat oktet desimal bertitik.</dd>
+    <dt>Oktet</dt><dd>Kelompok 8 bit dalam sebuah alamat IP.</dd>
+    <dt>CIDR</dt><dd>Notasi ringkas penentuan rentang alamat IP.</dd>
+    <dt>Amazon VPC</dt><dd>Jaringan terisolasi yang Anda buat di AWS Cloud.</dd>
+    <dt>Subnet</dt><dd>Jaringan lebih kecil di dalam VPC.</dd>
+    <dt>Internet gateway</dt><dd>Komponen yang menghubungkan VPC ke internet.</dd>
+    <dt>Virtual private gateway</dt><dd>Endpoint VPN sisi AWS, dilampirkan ke satu VPC.</dd>
+    <dt>Customer gateway</dt><dd>Perangkat di sisi Anda untuk koneksi VPN.</dd>
+    <dt>AWS Direct Connect</dt><dd>Koneksi fisik khusus antara on-premises dan VPC.</dd>
+    <dt>Tabel rute</dt><dd>Aturan yang menentukan arah lalu lintas jaringan.</dd>
+    <dt>Network ACL</dt><dd>Firewall stateless di tingkat subnet.</dd>
+    <dt>Security group</dt><dd>Firewall stateful di tingkat instans EC2.</dd>
+    <dt>Stateful</dt><dd>Mengingat koneksi, respons otomatis diizinkan.</dd>
+    <dt>Stateless</dt><dd>Tidak mengingat koneksi, aturan tiap arah terpisah.</dd>
+    <dt>Availability Zone</dt><dd>Cluster pusat data redundan di dalam satu Region.</dd>
+  </dl>
+</section>
+
+<!-- ===================== OPSIONAL #9 CHECKLIST ===================== -->
+<section class="checklist" id="checklist">
+  <h2>Checklist kelulusan</h2>
+  <ul>
+    <li>Bisa jelaskan perutean lewat analogi pengiriman surat.</li>
+    <li>Bisa bedakan alamat IP biner dan notasi IPv4 desimal.</li>
+    <li>Bisa uraikan notasi CIDR dan hitung jumlah alamatnya.</li>
+    <li>Bisa sebut faktor yang dipilih saat membuat Amazon VPC.</li>
+    <li>Bisa bedakan subnet publik dan subnet privat.</li>
+    <li>Bisa jelaskan kenapa lima alamat IP dicadangkan tiap subnet.</li>
+    <li>Bisa bedakan internet gateway dan virtual private gateway.</li>
+    <li>Bisa jelaskan keunggulan AWS Direct Connect.</li>
+    <li>Bisa bedakan network ACL (stateless) dan security group (stateful).</li>
+    <li>Bisa rancang isolasi berlapis web, aplikasi, dan basis data.</li>
+  </ul>
+</section>
+
+<!-- ===================== WAJIB #10 SUMBER ===================== -->
+<section class="sources" id="sumber">
+  <h2>Sumber</h2>
+  <ol>
+    <li>Modul kursus <em>AWS Technical Essentials</em>, Bagian 1 &mdash;
+    jaringan AWS: pengantar jaringan, Amazon VPC, perutean, dan
+    keamanan VPC (transkrip lokal).</li>
+    <li>Dokumentasi resmi AWS: <em>Amazon VPC</em>, <em>Network ACL</em>,
+    <em>Security group</em>, <em>AWS Direct Connect</em>.</li>
+  </ol>
+</section>
+
+</article>
+</div>
+
+<script src="../../assets/note.js" defer></script>
+</body>
+</html>

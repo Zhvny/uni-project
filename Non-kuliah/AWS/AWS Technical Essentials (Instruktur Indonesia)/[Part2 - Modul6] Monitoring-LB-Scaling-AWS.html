@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monitoring, load balancing, dan penskalaan — AWS</title>
+
+<!-- Tema hljs (dimuat sebelum note.css agar note.css menetralkan padding/latar) -->
+<link rel="stylesheet" href="../../assets/hljs/github.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../../assets/hljs/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="../../assets/note.css">
+
+<!-- MathJax 4 — JANGAN set throwOnError (dihapus di v4). Wajib matikan speech/Braille. -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  options: {
+    enableSpeech: false,
+    enableBraille: false,
+    menuOptions: {
+      settings: { enrich: false, speech: false, braille: false, assistiveMml: false }
+    }
+  }
+};
+</script>
+<script src="../../assets/mathjax/tex-svg.js" defer></script>
+<script src="../../assets/hljs/hljs.min.js" defer></script>
+</head>
+<body>
+<div class="layout">
+
+<details class="toc">
+  <summary>Daftar isi</summary>
+  <nav aria-label="Daftar isi">
+    <ol>
+      <li><a href="#tldr">TL;DR</a></li>
+      <li><a href="#peta">Peta konsep</a></li>
+      <li><a href="#konsep">Konsep inti</a></li>
+      <li><a href="#rumus">Ketersediaan</a></li>
+      <li><a href="#kode">Kode</a></li>
+      <li><a href="#latihan">Latihan</a></li>
+      <li><a href="#faq">Jebakan &amp; FAQ</a></li>
+      <li><a href="#glosarium">Glosarium</a></li>
+      <li><a href="#checklist">Checklist</a></li>
+      <li><a href="#sumber">Sumber</a></li>
+    </ol>
+  </nav>
+</details>
+
+<article>
+
+<!-- ===================== WAJIB #0 META ===================== -->
+<header class="meta">
+  <a class="back" href="../../index.html">&larr; Daftar catatan</a>
+  <p class="eyebrow">AWS</p>
+  <h1>Monitoring, load balancing, dan penskalaan</h1>
+  <dl>
+    <dt>Prasyarat</dt><dd><a href="%5BPart2%20-%20Modul5%5D%20Basis-Data-AWS.html">Basis data di AWS</a></dd>
+    <dt>Dibuat</dt><dd>2026-10-11</dd>
+    <dt>Status</dt><dd>solid</dd>
+    <dt>Estimasi baca</dt><dd>30 menit</dd>
+  </dl>
+</header>
+
+<!-- ===================== WAJIB #1 TL;DR ===================== -->
+<section class="tldr" id="tldr">
+  <h2>TL;DR</h2>
+  <ul>
+    <li>Monitoring mengumpulkan, menganalisis, dan memakai data
+    (metrik) untuk menjawab pertanyaan tentang sumber daya dan sistem.</li>
+    <li>Amazon CloudWatch = pusat metrik, log, dasbor, dan alarm;
+    pemantauan dasar gratis (1 titik data / 5 menit).</li>
+    <li>Alarm memicu tindakan saat ambang batas terlampaui,
+    misalnya notifikasi Amazon SNS atau penskalaan.</li>
+    <li>Elastic Load Balancing mendistribusikan lalu lintas dan
+    melakukan pemeriksaan kondisi; tipe: ALB, NLB, GLB.</li>
+    <li>Amazon EC2 Auto Scaling menambah/menghapus instans lewat
+    templat peluncuran, grup, dan kebijakan penskalaan.</li>
+  </ul>
+</section>
+
+<!-- ===================== OPSIONAL #2 PETA ===================== -->
+<figure class="map" id="peta">
+  <h2>Peta konsep</h2>
+  <pre class="mermaid">
+flowchart TD
+  A[Monitoring] --> B[Amazon CloudWatch]
+  B --> B1[Metrik &amp; dimensi]
+  B --> B2[CloudWatch Logs]
+  B --> B3[Alarm]
+  B3 --> B4[Notifikasi Amazon SNS]
+  B3 --> B5[Pemicu penskalaan]
+  A --> C[Elastic Load Balancing]
+  C --> C1[ALB lapisan 7]
+  C --> C2[NLB lapisan 4]
+  C --> C3[GLB gateway]
+  C --> D[Pemeriksaan kondisi]
+  A --> E[Amazon EC2 Auto Scaling]
+  E --> E1[Templat peluncuran]
+  E --> E2[Grup Auto Scaling]
+  E --> E3[Kebijakan penskalaan]
+  D --> E
+  </pre>
+  <figcaption>Monitoring menjadi dasar load balancing dan penskalaan.</figcaption>
+</figure>
+
+<!-- ===================== WAJIB #3 KONSEP ===================== -->
+<section class="concept" id="konsep">
+  <h2>Konsep inti</h2>
+
+  <h3>Monitoring dan metrik</h3>
+  <p><strong>Monitoring</strong> adalah tindakan mengumpulkan, menganalisis,
+  dan memakai data untuk membuat keputusan atau menjawab pertanyaan tentang
+  sumber daya dan sistem TI. Setiap titik data yang diciptakan sumber daya
+  disebut <strong>metrik</strong>; metrik yang dikumpulkan dari waktu ke
+  waktu menjadi statistik, misalnya rata-rata pemanfaatan CPU.</p>
+  <p>Penting karena monitoring memberi visibilitas untuk mendeteksi,
+  menyelidiki, dan memperbaiki masalah lebih cepat &mdash; sebelum pengguna
+  akhir menyadarinya. Contoh metrik instans Amazon EC2: penggunaan CPU,
+  pemanfaatan jaringan, kinerja disk, pemanfaatan memori, dan log aplikasi.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: pemanfaatan CPU tinggi selalu berarti banjir permintaan.
+    Tidak &mdash; bisa juga proses yang mengalami kesalahan dan memakan
+    terlalu banyak CPU; cari proses yang melewati ambang batas untuk durasi
+    tak biasa.</p>
+  </aside>
+
+  <h3>Manfaat monitoring</h3>
+  <p>Lima manfaat utama: <strong>merespons secara proaktif</strong> sebelum
+  pengguna menyadari gangguan, <strong>meningkatkan kinerja dan keandalan</strong>
+  lewat gambaran sistem menyeluruh, <strong>mengenali ancaman dan event
+  keamanan</strong> dengan garis acuan, <strong>mengambil keputusan berbasis
+  data</strong> untuk bisnis, dan <strong>membuat solusi hemat biaya</strong>
+  dengan menyesuaikan ukuran sumber daya.</p>
+  <p>Penting karena <em>garis acuan</em> menetapkan aktivitas normal sehingga
+  anomali seperti lonjakan lalu lintas atau alamat IP tak biasa mudah
+  terlihat dan bisa memicu pemberitahuan atau tindakan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: monitoring hanya untuk mendeteksi kerusakan. Tidak
+    &mdash; data yang sama juga menopang keputusan bisnis dan penghematan
+    biaya, misalnya mengecilkan sumber daya yang pemanfaatannya rendah.</p>
+  </aside>
+
+  <h3>Amazon CloudWatch: visibilitas terpusat</h3>
+  <p><strong>Amazon CloudWatch</strong> adalah layanan pemantauan dan
+  observabilitas yang mengumpulkan data sumber daya dan menyediakan wawasan
+  yang dapat ditindaklanjuti. Data berasal dari komponen yang terdistribusi,
+  dan CloudWatch menjadi lokasi terpusat untuk meninjau semuanya.</p>
+  <p>Penting karena CloudWatch mendeteksi perilaku anomali, menyetel alarm,
+  memvisualisasikan log dan metrik, mengambil tindakan otomatis (misalnya
+  penskalaan), memecahkan masalah, serta menemukan wawasan kesehatan
+  aplikasi &mdash; semuanya tanpa mengelola infrastruktur dasar.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: memakai CloudWatch butuh menyiapkan server pemantauan.
+    Tidak &mdash; ini layanan terkelola; yang Anda butuhkan untuk memulai
+    hanyalah akun AWS.</p>
+  </aside>
+
+  <h3>Metrik, dimensi, dan pemantauan dasar</h3>
+  <p>Metrik adalah kumpulan titik data yang diurutkan waktu dan dipublikasikan
+  ke CloudWatch; setiap titik data harus punya <em>timestamp</em>.
+  <strong>Dimensi</strong> adalah pasangan nama dan nilai yang menjadi bagian
+  identitas metrik, dipakai untuk memfilter hasil &mdash; misalnya
+  <code>InstanceId</code> untuk metrik Amazon EC2.</p>
+  <p>Penting karena banyak layanan AWS mengirim metrik otomatis secara
+  <strong>gratis</strong> pada <em>pemantauan dasar</em>: 1 titik data per 5
+  menit. Untuk banyak aplikasi ini sudah memadai; <em>pemantauan mendetail</em>
+  menaikkan ketelitian ke 1 menit tetapi berbiaya.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: semua metrik dapat diandalkan pada resolusi 1 menit
+    secara gratis. Tidak &mdash; standar gratis adalah 1 titik data per 5
+    menit; 1 menit masuk pemantauan mendetail yang dikenai biaya.</p>
+  </aside>
+
+  <h3>Metrik kustom dan dasbor</h3>
+  <p><strong>Metrik kustom</strong> menerbitkan metrik milik Anda sendiri ke
+  CloudWatch &mdash; misalnya metrik tingkat aplikasi seperti jumlah penayangan
+  halaman, waktu muat, atau tingkat kesalahan permintaan. Metrik kustom
+  beresolusi tinggi dapat mencapai resolusi 1 detik (1 titik data per detik
+  per metrik).</p>
+  <p><strong>Dasbor CloudWatch</strong> adalah halaman beranda yang dapat
+  disesuaikan untuk memvisualisasikan satu atau beberapa metrik lewat widget
+  grafik atau teks; bahkan bisa menggabungkan beberapa Region ke satu
+  tampilan global. Aksesnya dikontrol lewat kebijakan IAM.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: data "langsung" (live data) sudah final. Tidak &mdash;
+    data langsung adalah data menit terakhir yang belum sepenuhnya
+    dikumpulkan.</p>
+  </aside>
+
+  <h3>CloudWatch Logs</h3>
+  <p><strong>CloudWatch Logs</strong> adalah tempat terpusat untuk menyimpan
+  dan menganalisis log dari aplikasi di instans EC2, fungsi AWS Lambda, dan
+  sumber lain. Anda dapat mengkueri dan memfilter data log, serta menyiapkan
+  <em>filter metrik</em> yang mengubah data log menjadi metrik numerik.</p>
+  <p>Penting karena filter metrik menjembatani log dan alarm: data log yang
+  tadinya hanya teks dapat digrafikkan di dasbor dan dipicu alarmnya, misalnya
+  saat kode respons kesalahan HTTP 500 bermunculan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: instans EC2 otomatis mengirim log ke CloudWatch Logs.
+    Tidak &mdash; Anda perlu memasang dan mengonfigurasi agen CloudWatch Logs
+    pada instans; beberapa layanan seperti Lambda lebih siap pakai.</p>
+  </aside>
+
+  <h3>Alarm CloudWatch</h3>
+  <p><strong>Alarm CloudWatch</strong> memulai tindakan otomatis berdasarkan
+  perubahan status berkelanjutan metrik. Untuk menyetelnya, pilih metrik,
+  <strong>ambang batas</strong>, dan <strong>periode waktu</strong>; misalnya
+  CPU di atas 80% selama 5 menit atau lebih. Tindakan bisa berupa tindakan
+  Amazon EC2, tindakan skala otomatis, atau notifikasi ke Amazon SNS.</p>
+  <p>Ada tiga status alarm: <strong>OK</strong> (metrik dalam ambang batas),
+  <strong>ALARM</strong> (metrik di luar ambang batas), dan
+  <strong>INSUFFICIENT_DATA</strong> (data tidak tersedia atau tidak cukup
+  untuk menentukan status).</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: alarm sebaiknya dipicu oleh lonjakan singkat. Tidak
+    &mdash; alarm untuk CPU 80% harus menetapkan jangka waktu agar lonjakan
+    pendek sementara tidak memicu tindakan sia-sia.</p>
+  </aside>
+
+  <h3>Ketersediaan dan jenis ketersediaan tinggi</h3>
+  <p><strong>Ketersediaan</strong> dinyatakan dalam persentase waktu aktif
+  per tahun atau jumlah "sembilan". Meningkatkannya butuh <strong>redundansi</strong>:
+  lebih banyak pusat data, server, basis data, dan replikasi &mdash; dengan
+  konsekuensi biaya lebih tinggi.</p>
+  <p>Ketika ada lebih dari satu server, pilih jenis ketersediaan:
+  <strong>aktif-pasif</strong> (hanya satu instans tersedia pada satu waktu,
+  aman untuk aplikasi <em>stateful</em>) atau <strong>aktif-aktif</strong>
+  (kedua server tersedia, lebih skalabel, cocok untuk aplikasi
+  <em>stateless</em>).</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: aktif-pasif lebih unggul karena sederhana. Tidak &mdash;
+    kelemahannya skalabilitas; aktif-aktif jauh lebih skalabel, tetapi
+    aplikasi stateful bermasalah jika sesi pelanggan tak tersedia di kedua
+    server.</p>
+  </aside>
+
+  <h3>Elastic Load Balancing dan pemeriksaan kondisi</h3>
+  <p><strong>Elastic Load Balancing (ELB)</strong> mendistribusikan lalu
+  lintas aplikasi yang masuk ke seluruh instans EC2, kontainer, alamat IP,
+  dan fungsi Lambda. Load balancer mengambil semua lalu lintas dan
+  mengalihkannya ke server backend berdasarkan algoritme, yang paling
+  populer <em>round robin</em>.</p>
+  <p>Penting karena ELB menangani <strong>pemeriksaan kondisi</strong> dan
+  merutekan lalu lintas hanya ke instans sehat &mdash; lewat koneksi TCP atau
+  permintaan HTTP/HTTPS yang memvalidasi kode respons, sering diarahkan ke
+  halaman pemantauan seperti <code>/memantau</code>.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: cukup memverifikasi port aplikasi terbuka. Tidak &mdash;
+    port terbuka tak berarti aplikasi bekerja; pemeriksaan kondisi yang tepat
+    harus memvalidasi seluruh elemen yang diandalkan, misalnya basis data dan
+    Amazon S3.</p>
+  </aside>
+
+  <h3>Fitur dan komponen ELB</h3>
+  <p>Fitur utama ELB: <strong>mode hibrid</strong> (menyeimbangkan beban ke
+  server on-premise lewat alamat IP), <strong>ketersediaan tinggi</strong>
+  (target di-deploy di beberapa Availability Zone), dan
+  <strong>skalabilitas</strong> (ELB diskalakan otomatis sesuai lalu lintas).
+  Tiga komponennya: <strong>aturan</strong>, <strong>listener</strong>, dan
+  <strong>grup target</strong>.</p>
+  <p>Penting karena <em>connection draining</em> mencegah Auto Scaling
+  mengakhiri instans sampai semua koneksi berakhir &mdash; ELB berhenti
+  mengirim koneksi baru ke instans yang akan dihentikan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: load balancer harus dikelola sendiri seperti perangkat
+    lunak biasa. Tidak &mdash; ELB sepenuhnya terkelola; Anda tidak perlu
+    mengelola atau mengoperasikannya.</p>
+  </aside>
+
+  <h3>Memilih tipe load balancer</h3>
+  <p><strong>Application Load Balancer (ALB)</strong> bekerja di lapisan 7
+  model OSI, ideal untuk lalu lintas HTTP/HTTPS, dengan perutean berdasarkan
+  jalur URL atau host, respons tetap, offloading TLS, autentikasi pengguna
+  (OIDC), dan <em>sticky session</em>. <strong>Network Load Balancer (NLB)</strong>
+  bekerja di lapisan 4 untuk lalu lintas TCP/UDP dengan latensi rendah,
+  preservasi IP sumber, dan dukungan IP statis/elastis. <strong>Gateway Load
+  Balancer (GLB)</strong> men-deploy dan menskalakan peralatan virtual pihak
+  ketiga seperti firewall.</p>
+  <p>Penting karena pemilihan tipe mengikuti kebutuhan aplikasi: ALB untuk
+  HTTP/HTTPS berlapis aplikasi, NLB untuk lalu lintas berkinerja tinggi
+  berbasis koneksi, GLB untuk inspeksi dan keamanan jaringan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: semua tipe load balancer bekerja di lapisan yang sama.
+    Tidak &mdash; ALB di lapisan 7, NLB di lapisan 4, dan GLB menggabungkan
+    gateway lapisan 3 dengan load balancing lapisan 4.</p>
+  </aside>
+
+  <h3>Amazon EC2 Auto Scaling</h3>
+  <p><strong>Amazon EC2 Auto Scaling</strong> menambah atau menghapus instans
+  EC2 secara otomatis berdasarkan kebijakan yang Anda tentukan, menjaga
+  kinerja tetap stabil dengan biaya serendah mungkin. Ini menangani masalah
+  kapasitas lewat <strong>penskalaan horizontal</strong> (menambah instans)
+  untuk sistem aktif-aktif, bukan hanya penskalaan vertikal (memperbesar
+  instans) yang manual dan terbatas.</p>
+  <p>Penting karena pendekatan tradisional menyediakan kapasitas puncak
+  sehingga malam hari kapasitas terbuang; Auto Scaling menyesuaikan kapasitas
+  tepat ke yang dipakai aplikasi, sehingga Anda hanya membayar sesuai
+  kebutuhan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: penskalaan vertikal menyelesaikan lonjakan tanpa henti.
+    Tidak &mdash; server hanya dapat diskalakan vertikal hingga batas tertentu;
+    setelah tercapai, sistem aktif-aktif lain perlu dibuat dan aplikasi
+    mungkin harus ditulis ulang.</p>
+  </aside>
+
+  <h3>Komponen Amazon EC2 Auto Scaling</h3>
+  <p>Tiga komponen utama, masing-masing menjawab satu pertanyaan:
+  <strong>templat peluncuran</strong> (<em>sumber daya mana</em> yang
+  diskalakan &mdash; ID AMI, tipe instans, grup keamanan, volume EBS, dan
+  mendukung versioning), <strong>grup Auto Scaling</strong> (<em>di mana</em>
+  sumber daya di-deploy &mdash; Amazon VPC dan minimal dua subnet di
+  Availability Zone berbeda), dan <strong>kebijakan penskalaan</strong>
+  (<em>kapan</em> sumber daya ditambah atau dihapus).</p>
+  <p>Penting karena grup juga menentukan pengaturan kapasitas:
+  <strong>minimum</strong>, <strong>yang diinginkan</strong>, dan
+  <strong>maksimum</strong>, serta jenis pembelian Instans Sesuai Permintaan
+  atau Instans Spot. AWS merekomendasikan templat peluncuran daripada
+  konfigurasi peluncuran yang lebih terbatas.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: konfigurasi peluncuran sama fleksibelnya dengan templat
+    peluncuran. Tidak &mdash; konfigurasi peluncuran tidak dapat dipakai
+    ulang sebagai templat atau dibuat dari instans EC2 yang ada; gunakan
+    templat peluncuran untuk fitur terbaru.</p>
+  </aside>
+
+  <h3>Kebijakan penskalaan</h3>
+  <p>Tersedia tiga jenis: <strong>sederhana</strong> (satu alarm CloudWatch
+  memicu penambahan/penghapusan instans atau menyetel kapasitas yang
+  diinginkan; masuk <em>periode pendinginan</em> sebelum tindakan lain),
+  <strong>bertahap</strong> (merespons alarm tambahan, misalnya tambah 2
+  instans saat CPU 85% dan 4 instans saat 95%), dan <strong>pelacakan
+  target</strong> (cukup beri nilai target untuk dilacak dan alarm CloudWatch
+  dibuat otomatis).</p>
+  <p>Penting karena periode pendinginan mencegah penambahan berlebihan:
+  instans EC2 butuh waktu booting dan alarm mungkin masih terpicu, jadi
+  kebijakan menunggu instans baru menerima lalu lintas lebih dulu.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: kebijakan sederhana cukup untuk semua lonjakan. Tidak
+    &mdash; saat CPU melonjak jauh (misalnya ke 85%), menambah satu instans
+    mungkin bukan langkah tepat; di sinilah kebijakan bertahap atau pelacakan
+    target lebih unggul.</p>
+  </aside>
+</section>
+
+<!-- ===================== OPSIONAL #4 RUMUS ===================== -->
+<section class="formula" id="rumus">
+  <h2>Ketersediaan</h2>
+  <p>Waktu henti yang diperbolehkan dalam setahun untuk tiap tingkat
+  ketersediaan:</p>
+  <p>$$ \text{waktu henti} = (1 - A) \times 365 \ \text{hari} $$</p>
+  <table>
+    <thead><tr><th>Ketersediaan</th><th>Waktu henti / tahun</th></tr></thead>
+    <tbody>
+      <tr><td>90% (satu sembilan)</td><td>36,53 hari</td></tr>
+      <tr><td>99% (dua sembilan)</td><td>3,65 hari</td></tr>
+      <tr><td>99,9% (tiga sembilan)</td><td>8,77 jam</td></tr>
+      <tr><td>99,95% (tiga setengah)</td><td>4,38 jam</td></tr>
+      <tr><td>99,99% (empat sembilan)</td><td>52,60 menit</td></tr>
+      <tr><td>99,999% (lima sembilan)</td><td>5,26 menit</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Kapan dipakai:</strong> menghitung anggaran waktu henti yang
+  dapat ditoleransi saat merancang target ketersediaan aplikasi.</p>
+  <p><strong>Kapan tidak:</strong> bila ketersediaan tak diukur sebagai
+  persentase waktu aktif, misalnya pada sistem yang dinilai per transaksi
+  atau per permintaan.</p>
+  <p>Contoh: \(A = 0{,}999\) memberi waktu henti sekitar 8,77 jam per tahun
+  &mdash; naik satu sembilan memangkasnya drastis tetapi menuntut redundansi
+  dan biaya lebih besar.</p>
+</section>
+
+<!-- ===================== OPSIONAL #5 KODE ===================== -->
+<section class="code" id="kode">
+  <h2>Kode</h2>
+  <p><strong>AWS CLI</strong> &mdash; menerbitkan metrik kustom ke
+  CloudWatch:</p>
+  <pre><code class="language-bash">aws cloudwatch put-metric-data \
+  --namespace "AplikasiSaya" \
+  --metric-name PageViews \
+  --value 1 \
+  --unit Count
+</code></pre>
+  <p><strong>AWS CLI</strong> &mdash; membuat alarm saat CPU di atas 80%
+  selama 5 menit:</p>
+  <pre><code class="language-bash">aws cloudwatch put-metric-alarm \
+  --alarm-name "CpuTinggi" \
+  --metric-name CPUUtilization \
+  --namespace AWS/EC2 \
+  --statistic Average \
+  --period 300 \
+  --threshold 80 \
+  --comparison-operator GreaterThanThreshold \
+  --evaluation-periods 1
+</code></pre>
+  <p><strong>Apa yang berubah kalau X diubah:</strong> menurunkan
+  <code>--threshold</code> atau <code>--period</code> membuat alarm lebih
+  sensitif; menaikkan <code>--evaluation-periods</code> menuntut kondisi
+  bertahan lebih lama sebelum ALARM.</p>
+</section>
+
+<!-- ===================== WAJIB #6 LATIHAN ===================== -->
+<section class="practice" id="latihan">
+  <h2>Latihan mandiri</h2>
+
+  <p>1. Apa perbedaan pemantauan dasar dan pemantauan mendetail di Amazon
+  CloudWatch, dan mana yang berbiaya?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Pemantauan dasar gratis: banyak layanan AWS mengirim metrik pada 1
+    titik data per 5 menit. Pemantauan mendetail memposting metrik setiap
+    menit untuk ketelitian lebih (misalnya pada instans EC2), dan fitur ini
+    dikenai biaya.</p>
+  </details>
+
+  <p>2. Anda ingin alarm dipicu ketika pemanfaatan CPU melebihi 80%. Tiga hal
+  apa yang harus ditentukan, dan mengapa durasi penting?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Pilih metrik, ambang batas (80%), dan periode waktu. Durasi penting
+    agar lonjakan pendek sementara tidak memicu alarm; alarm hanya dipicu
+    bila CPU tinggi untuk jangka waktu lama, misalnya 5 menit atau lebih.</p>
+  </details>
+
+  <p>3. Sebuah aplikasi melayani HTTP/HTTPS dengan perutean berdasarkan jalur
+  URL, sementara aplikasi lain butuh lalu lintas TCP berlatensi rendah dengan
+  preservasi IP sumber. Tipe load balancer mana yang tepat?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Aplikasi HTTP/HTTPS dengan perutean jalur URL: Application Load
+    Balancer (ALB, lapisan 7). Lalu lintas TCP berlatensi rendah dengan
+    preservasi IP sumber: Network Load Balancer (NLB, lapisan 4).</p>
+  </details>
+
+  <p>4. Apa tiga komponen utama Amazon EC2 Auto Scaling, dan pertanyaan utama
+  yang dijawab masing-masing?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Templat peluncuran: sumber daya mana yang harus diskalakan otomatis.
+    Grup Amazon EC2 Auto Scaling: di mana sumber daya di-deploy. Kebijakan
+    penskalaan: kapan sumber daya ditambahkan atau dihapus.</p>
+  </details>
+
+  <p>5. Jelaskan perbedaan kebijakan penskalaan sederhana, bertahap, dan
+  pelacakan target, serta keunggulan pelacakan target.</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Sederhana: memakai satu alarm CloudWatch dan masuk periode pendinginan
+    sebelum tindakan lain. Bertahap: merespons alarm tambahan saat penskalaan
+    berlangsung, misalnya tambah 2 instans di 85% dan 4 instans di 95%.
+    Pelacakan target: Anda cukup memberi nilai target (misalnya rata-rata
+    pemanfaatan CPU) dan alarm CloudWatch yang diperlukan dibuat otomatis
+    &mdash; keunggulannya tak perlu menyetel alarm manual.</p>
+  </details>
+</section>
+
+<!-- ===================== OPSIONAL #7 FAQ ===================== -->
+<section class="faq" id="faq">
+  <h2>Jebakan &amp; FAQ</h2>
+  <p><strong>Apakah metrik instans EC2 dipublikasikan otomatis ke CloudWatch
+  secara gratis?</strong> Ya, pada pemantauan dasar: 1 titik data per 5 menit
+  tanpa biaya tambahan. Ketelitian 1 menit baru masuk pemantauan mendetail
+  yang berbiaya.</p>
+  <p><strong>Apa itu dimensi pada metrik CloudWatch?</strong> Pasangan nama
+  dan nilai yang menjadi bagian identitas metrik, dipakai untuk memfilter
+  hasil &mdash; misalnya <code>InstanceId</code> pada metrik Amazon EC2.</p>
+  <p><strong>Bagaimana log berubah menjadi metrik yang bisa memicu
+  alarm?</strong> Lewat filter metrik di CloudWatch Logs, yang mengubah data
+  log menjadi metrik CloudWatch numerik untuk digrafikkan atau disetel
+  alarmnya.</p>
+  <p><strong>Apakah ELB tetap mengirim lalu lintas ke instans yang tidak
+  sehat?</strong> Tidak. ELB merutekan lalu lintas hanya ke instans yang
+  lolos pemeriksaan kondisi; instans yang gagal dihentikan pengiriman
+  lalu lintasnya dan dilaporkan ke Amazon EC2 Auto Scaling untuk
+  diganti.</p>
+  <p><strong>Apa itu connection draining?</strong> Fitur ELB yang mencegah
+  Amazon EC2 Auto Scaling mengakhiri instans EC2 sampai semua koneksi ke
+  instans tersebut berakhir, sekaligus mencegah koneksi baru.</p>
+  <p><strong>Apakah Auto Scaling memerlukan instans dengan kapasitas
+  puncak?</strong> Tidak. Auto Scaling menambah dan menghapus kapasitas
+  sesuai permintaan, sehingga Anda hanya membayar sesuai kebutuhan aplikasi
+  dan tidak menyediakan kapasitas puncak yang terbuang.</p>
+</section>
+
+<!-- ===================== OPSIONAL #8 GLOSARIUM ===================== -->
+<section class="glossary" id="glosarium">
+  <h2>Glosarium</h2>
+  <dl>
+    <dt>Monitoring</dt><dd>Mengumpulkan, menganalisis, dan memakai data tentang sumber daya dan sistem TI.</dd>
+    <dt>Metrik</dt><dd>Titik data yang diciptakan sumber daya dan dikumpulkan dari waktu ke waktu.</dd>
+    <dt>Dimensi</dt><dd>Pasangan nama dan nilai yang menjadi bagian identitas metrik CloudWatch.</dd>
+    <dt>Pemantauan dasar</dt><dd>Metrik gratis dengan 1 titik data per 5 menit.</dd>
+    <dt>Pemantauan mendetail</dt><dd>Metrik setiap 1 menit untuk instans EC2, berbiaya.</dd>
+    <dt>Metrik kustom</dt><dd>Metrik milik sendiri yang diterbitkan ke CloudWatch.</dd>
+    <dt>CloudWatch Logs</dt><dd>Tempat terpusat menyimpan dan menganalisis log.</dd>
+    <dt>Filter metrik</dt><dd>Mengubah data log menjadi metrik numerik CloudWatch.</dd>
+    <dt>Alarm CloudWatch</dt><dd>Memulai tindakan dari perubahan status berkelanjutan metrik.</dd>
+    <dt>Amazon SNS</dt><dd>Layanan notifikasi yang jadi salah satu target tindakan alarm.</dd>
+    <dt>Garis acuan</dt><dd>Penetapan aktivitas normal untuk mengenali anomali.</dd>
+    <dt>Ketersediaan</dt><dd>Persentase waktu aktif, dinyatakan dalam jumlah sembilan.</dd>
+    <dt>Aktif-pasif</dt><dd>Hanya satu instans tersedia pada satu waktu; sesuai aplikasi stateful.</dd>
+    <dt>Aktif-aktif</dt><dd>Kedua server tersedia; lebih skalabel, sesuai aplikasi stateless.</dd>
+    <dt>Elastic Load Balancing</dt><dd>Layanan pendistribusi lalu lintas aplikasi masuk.</dd>
+    <dt>Pemeriksaan kondisi</dt><dd>Memvalidasi instans sehat via TCP atau HTTP/HTTPS.</dd>
+    <dt>Connection draining</dt><dd>Menunda penghentian instans sampai koneksi berakhir.</dd>
+    <dt>ALB</dt><dd>Application Load Balancer lapisan 7 untuk lalu lintas HTTP/HTTPS.</dd>
+    <dt>NLB</dt><dd>Network Load Balancer lapisan 4 untuk lalu lintas TCP/UDP.</dd>
+    <dt>GLB</dt><dd>Gateway Load Balancer untuk peralatan virtual pihak ketiga.</dd>
+    <dt>Amazon EC2 Auto Scaling</dt><dd>Menambah/menghapus instans EC2 otomatis sesuai kebijakan.</dd>
+    <dt>Templat peluncuran</dt><dd>Informasi konfigurasi instans EC2 untuk Auto Scaling.</dd>
+    <dt>Grup Auto Scaling</dt><dd>Tempat menetapkan VPC, subnet, dan kapasitas instans.</dd>
+    <dt>Kebijakan penskalaan</dt><dd>Aturan kapan sumber daya ditambah atau dihapus.</dd>
+    <dt>Periode pendinginan</dt><dd>Jeda sebelum kebijakan penskalaan mengambil tindakan lain.</dd>
+  </dl>
+</section>
+
+<!-- ===================== OPSIONAL #9 CHECKLIST ===================== -->
+<section class="checklist" id="checklist">
+  <h2>Checklist kelulusan</h2>
+  <ul>
+    <li>Bisa jelaskan monitoring, metrik, dan lima manfaatnya.</li>
+    <li>Bisa bedakan pemantauan dasar dan pemantauan mendetail.</li>
+    <li>Bisa jelaskan dimensi, metrik kustom, dan dasbor CloudWatch.</li>
+    <li>Bisa jelaskan CloudWatch Logs dan filter metrik.</li>
+    <li>Bisa jelaskan cara menyetel alarm dan tiga statusnya.</li>
+    <li>Bisa baca tabel ketersediaan dan jumlah sembilan.</li>
+    <li>Bisa bedakan sistem aktif-pasif dan aktif-aktif.</li>
+    <li>Bisa jelaskan peran ELB, pemeriksaan kondisi, dan connection draining.</li>
+    <li>Bisa bedakan ALB, NLB, dan GLB beserta lapisannya.</li>
+    <li>Bisa jelaskan tiga komponen Amazon EC2 Auto Scaling.</li>
+    <li>Bisa bedakan kebijakan sederhana, bertahap, dan pelacakan target.</li>
+  </ul>
+</section>
+
+<!-- ===================== WAJIB #10 SUMBER ===================== -->
+<section class="sources" id="sumber">
+  <h2>Sumber</h2>
+  <ol>
+    <li>Modul kursus <em>AWS Technical Essentials</em>, Bagian 2 &mdash;
+    monitoring, load balancing, dan penskalaan (transkrip lokal).</li>
+    <li>Dokumentasi resmi AWS: <em>Amazon CloudWatch</em>,
+    <em>Elastic Load Balancing</em>, <em>Amazon EC2 Auto Scaling</em>.</li>
+  </ol>
+</section>
+
+</article>
+</div>
+
+<script src="../../assets/note.js" defer></script>
+</body>
+</html>

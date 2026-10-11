@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Komputasi AWS — AWS</title>
+
+<!-- Tema hljs (dimuat sebelum note.css agar note.css menetralkan padding/latar) -->
+<link rel="stylesheet" href="../../assets/hljs/github.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../../assets/hljs/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="../../assets/note.css">
+
+<!-- MathJax 4 — JANGAN set throwOnError (dihapus di v4). Wajib matikan speech/Braille. -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  options: {
+    enableSpeech: false,
+    enableBraille: false,
+    menuOptions: {
+      settings: { enrich: false, speech: false, braille: false, assistiveMml: false }
+    }
+  }
+};
+</script>
+<script src="../../assets/mathjax/tex-svg.js" defer></script>
+<script src="../../assets/hljs/hljs.min.js" defer></script>
+</head>
+<body>
+<div class="layout">
+
+<details class="toc">
+  <summary>Daftar isi</summary>
+  <nav aria-label="Daftar isi">
+    <ol>
+      <li><a href="#tldr">TL;DR</a></li>
+      <li><a href="#peta">Peta konsep</a></li>
+      <li><a href="#konsep">Konsep inti</a></li>
+      <li><a href="#kode">Kode</a></li>
+      <li><a href="#latihan">Latihan</a></li>
+      <li><a href="#faq">Jebakan &amp; FAQ</a></li>
+      <li><a href="#glosarium">Glosarium</a></li>
+      <li><a href="#checklist">Checklist</a></li>
+      <li><a href="#sumber">Sumber</a></li>
+    </ol>
+  </nav>
+</details>
+
+<article>
+
+<!-- ===================== WAJIB #0 META ===================== -->
+<header class="meta">
+  <a class="back" href="../../index.html">&larr; Daftar catatan</a>
+  <p class="eyebrow">AWS</p>
+  <h1>Komputasi di AWS</h1>
+  <dl>
+    <dt>Prasyarat</dt><dd><a href="%5BPart1%20-%20Modul1%5D%20Pengantar-AWS.html">Pengantar AWS</a></dd>
+    <dt>Dibuat</dt><dd>2026-10-11</dd>
+    <dt>Status</dt><dd>solid</dd>
+    <dt>Estimasi baca</dt><dd>25 menit</dd>
+  </dl>
+</header>
+
+<!-- ===================== WAJIB #1 TL;DR ===================== -->
+<section class="tldr" id="tldr">
+  <h2>TL;DR</h2>
+  <ul>
+    <li>Tiga tipe komputasi: mesin virtual (VM), kontainer, nirserver.</li>
+    <li>Amazon EC2 menyediakan server virtual; AMI menentukan sistem operasi
+    dan konfigurasi; tipe instans ditandai family + generasi + ukuran.</li>
+    <li>Kontainer mengemas kode + dependensi, lebih ringan dari VM karena
+    berbagi kernel host.</li>
+    <li>Orkestrasi kontainer: Amazon ECS (native AWS) dan Amazon EKS
+    (Kubernetes).</li>
+    <li>Nirserver: AWS Fargate (kontainer) dan AWS Lambda (fungsi).
+    Bayar hanya saat dipakai.</li>
+  </ul>
+</section>
+
+<!-- ===================== OPSIONAL #2 PETA ===================== -->
+<figure class="map" id="peta">
+  <h2>Peta konsep</h2>
+  <pre class="mermaid">
+flowchart TD
+  A[Komputasi sebagai layanan] --> B[Mesin virtual]
+  A --> C[Kontainer]
+  A --> D[Nirserver]
+  B --> B1[Amazon EC2]
+  B1 --> B2[AMI]
+  B1 --> B3[Tipe instans]
+  B1 --> B4[VPC dan AZ]
+  C --> C1[Docker]
+  C --> C2[Amazon ECS]
+  C --> C3[Amazon EKS]
+  D --> D1[AWS Fargate]
+  D --> D2[AWS Lambda]
+  D1 --> C2
+  D1 --> C3
+  </pre>
+  <figcaption>Kerangka modul: tiga tipe komputasi dan layanan turunannya.</figcaption>
+</figure>
+
+<!-- ===================== WAJIB #3 KONSEP ===================== -->
+<section class="concept" id="konsep">
+  <h2>Konsep inti</h2>
+
+  <h3>Server dan model klien-server</h3>
+  <p>Server adalah komputer (atau kumpulan komputer) yang terhubung ke internet
+  dan menyajikan konten ke pengguna internet. Server menangani permintaan HTTP
+  dan mengirim respons ke klien mengikuti model <em>client-server</em>. Klien
+  adalah orang atau komputer yang mengirim permintaan.</p>
+  <p>Penting karena server menyediakan CPU, memori, dan kapasitas jaringan untuk
+  memproses permintaan pengguna. Contoh server HTTP: IIS (Windows), Apache HTTP
+  Server, Nginx, dan Apache Tomcat (Linux).</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: "server" selalu perangkat keras. Di cloud, server adalah
+    sumber daya komputasi virtual yang dialokasikan sesuai permintaan.</p>
+  </aside>
+
+  <h3>Tiga tipe komputasi: VM, kontainer, nirserver</h3>
+  <p><strong>Mesin virtual</strong> mengemulasi server fisik lewat
+  <em>hypervisor</em>, perangkat lunak yang membagi sumber daya perangkat keras
+  fisik menjadi satu atau beberapa VM. <strong>Kontainer</strong> mengemas kode
+  beserta dependensinya agar andal berjalan di platform apa pun.
+  <strong>Nirserver</strong> menghilangkan pengelolaan server sama sekali.</p>
+  <p>Penting karena tidak ada satu layanan yang cocok untuk semua kasus. Kuncinya
+  memahami penawaran tiap opsi agar arsitektur sesuai kasus penggunaan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: VM akan hilang digantikan kontainer. Tidak. VM menawarkan
+    kekuatan penuh sebuah sistem operasi &mdash; instalasi paket, kernel khusus
+    &mdash; yang tidak selalu bisa digantikan kontainer.</p>
+  </aside>
+
+  <h3>Amazon EC2 dan hypervisor</h3>
+  <p>Amazon Elastic Compute Cloud (Amazon EC2) adalah <em>layanan web</em> yang
+  menyediakan kapasitas komputasi aman dan dapat diubah ukurannya di cloud.
+  Anda menyediakan server virtual yang disebut <strong>instans EC2</strong>.
+  Di balik layar, AWS mengoperasikan mesin host dan lapisan hypervisor serta
+  menginstal sistem operasi tamu (<em>guest OS</em>).</p>
+  <p>Penting karena EC2 adalah dasar yang dipakai beberapa layanan komputasi AWS
+  lain. Untuk membuat instans, tentukan spesifikasi perangkat keras (CPU, memori,
+  jaringan, penyimpanan) dan konfigurasi logis (jaringan, firewall,
+  autentikasi, sistem operasi).</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: Anda memasang sistem operasi dari nol. Tidak. Instalasi OS
+    bukan tanggung jawab Anda; OS sudah tertanam di dalam AMI yang Anda pilih.</p>
+  </aside>
+
+  <h3>Amazon Machine Image (AMI)</h3>
+  <p>AMI adalah template peluncuran instans: berisi sistem operasi, pemetaan
+  penyimpanan, tipe arsitektur, izin peluncuran, dan aplikasi yang sudah
+  terinstal. Hubungannya seperti resep dan kue: instans EC2 adalah perwujudan
+  langsung dari resep bernama AMI.</p>
+  <p>Penting karena AMI dapat <strong>digunakan ulang</strong>. Setelah
+  mengonfigurasi satu instans, Anda bisa membuat AMI darinya dan memakainya
+  untuk meluncurkan instans lain dengan konfigurasi identik. Sumber AMI:
+  Quick Start (buatan AWS), AWS Marketplace, My AMI, AMI komunitas, dan image
+  kustom (EC2 Image Builder). Setiap AMI punya ID berawalan <code>ami-</code>
+  yang berbeda tiap Region.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: satu ID AMI berlaku global. Tidak &mdash; ID AMI
+    berbeda-beda untuk tiap AWS Region.</p>
+  </aside>
+
+  <h3>Tipe instans EC2</h3>
+  <p>Tipe instans adalah kombinasi vCPU, memori, jaringan, dan kadang
+  penyimpanan instans atau GPU. Nama tipe seperti <code>c5n.xlarge</code>
+  bisa diuraikan: <strong>c</strong> = family (compute optimized),
+  <strong>5</strong> = generasi kelima, <strong>n</strong> = atribut tambahan
+  (penyimpanan NVMe lokal), <strong>xlarge</strong> = ukuran.</p>
+  <p>Penting karena tiap family dioptimalkan untuk beban kerja berbeda.</p>
+  <table>
+    <thead><tr><th>Family</th><th>Cocok untuk</th></tr></thead>
+    <tbody>
+      <tr><td>Tujuan umum</td><td>Server web, repo kode</td></tr>
+      <tr><td>Komputasi</td><td>Batch, HPC, media</td></tr>
+      <tr><td>Memori</td><td>Basis data, cache</td></tr>
+      <tr><td>Terakselerasi</td><td>ML, grafik, HPC</td></tr>
+      <tr><td>Penyimpanan</td><td>NoSQL, gudang data</td></tr>
+      <tr><td>HPC dioptimalkan</td><td>Simulasi, deep learning</td></tr>
+    </tbody>
+  </table>
+  <aside class="pitfall">
+    <p>Miskonsepsi: ukuran instans hanya soal CPU. Banyak pilihan ditentukan
+    oleh rasio memori atau kebutuhan GPU, bukan sekadar jumlah vCPU.</p>
+  </aside>
+
+  <h3>Lokasi instans: VPC dan Availability Zone</h3>
+  <p>Kecuali ditentukan lain, instans EC2 ditempatkan di dalam <em>virtual
+  private cloud</em> (VPC). VPC default praktis untuk memulai cepat, tetapi
+  sumber daya di dalamnya bersifat publik dan dapat diakses internet &mdash;
+  jangan menaruh data pelanggan di sana. Instans berada di Availability Zone
+  (AZ) pilihan Anda.</p>
+  <p>Penting untuk ketersediaan tinggi: gunakan minimal <strong>dua instans di
+  dua AZ terpisah</strong>. Jika satu dari sepuluh instans gagal, hanya 10 persen
+  armada hilang; jika frontend hanya satu instans dan gagal, aplikasi mati.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: VPC default aman untuk produksi. Tidak &mdash;
+    sumber dayanya publik; pindah ke VPC kustom untuk data sensitif.</p>
+  </aside>
+
+  <h3>Kontainer: kenapa lebih ringan dari VM</h3>
+  <p>Kontainer adalah unit terstandardisasi yang mengemas kode beserta
+  dependensinya dalam lingkungan independen, sehingga dapat dibawa dari
+  pengembangan ke produksi atau dari on-premises ke cloud. Docker adalah
+  runtime kontainer populer yang menangani isolasi, jaringan, dan penyimpanan.</p>
+  <p>Bedanya dengan VM: kontainer berbagi sistem operasi dan kernel dengan
+  host, sedangkan setiap VM membawa salinan OS sendiri. Kontainer lebih ringan
+  dan mulai hampir instan &mdash; penting saat aplikasi harus penskalaan cepat
+  saat lonjakan I/O.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: kontainer selalu lebih baik. VM tetap unggul saat butuh
+    kernel khusus atau kontrol penuh atas sistem operasi.</p>
+  </aside>
+
+  <h3>Orkestrasi kontainer: Amazon ECS dan Amazon EKS</h3>
+  <p>Satu instans yang menjalankan beberapa kontainer sulit memberi ketersediaan
+  dan skalabilitas tinggi. Layanan orkestrasi menangani penempatan kontainer,
+  penanganan kegagalan, dan pemantauan. AWS menawarkan dua: <strong>Amazon
+  ECS</strong> (native AWS) dan <strong>Amazon EKS</strong> (Kubernetes).</p>
+  <p>Di Amazon ECS, kontainer dapat dijalankan pada klaster instans EC2 yang
+  Anda kelola (perlu agen kontainer ECS terinstal) atau pada infrastruktur
+  nirserver AWS Fargate. Istilah kontainer berbeda: ECS menyebutnya
+  <em>task</em> dan menjalankan mesin <em>container instance</em>; EKS
+  menyebutnya <em>pod</em> dan menjalankan <em>worker node</em>.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: ECS menjalankan Kubernetes. Tidak &mdash; ECS memakai
+    teknologi asli AWS; EKS yang menjalankan Kubernetes.</p>
+  </aside>
+
+  <h3>Nirserver: AWS Fargate</h3>
+  <p>AWS Fargate adalah mesin komputasi nirserver khusus kontainer. Fargate
+  mengabstraksi instans EC2 sehingga Anda tidak mengelola infrastruktur yang
+  mendasari, tetapi tetap memakai konsep, API, dan integrasi Amazon ECS yang
+  sama. Fargate mendukung arsitektur Amazon ECS dan Amazon EKS serta
+  terintegrasi dengan IAM dan Amazon VPC.</p>
+  <p>Penting karena developer dapat fokus mengembangkan aplikasi; Fargate
+  mengalokasikan komputasi tepat seperlunya dan menghilangkan kebutuhan memilih
+  instans EC2, kapasitas klaster, dan penskalaan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: Fargate menggantikan ECS atau EKS. Tidak &mdash; Fargate
+    adalah lapisan komputasi yang menjalankannya, bukan orkestratornya.</p>
+  </aside>
+
+  <h3>Nirserver: AWS Lambda</h3>
+  <p>AWS Lambda menjalankan kode tanpa menyediakan atau mengelola server. Anda
+  mengunggah kode sumber dalam bahasa yang didukung Lambda, dan Lambda mengurus
+  menjalankan serta menskalakannya dengan ketersediaan tinggi. Empat sifat
+  nirserver: tanpa server dikelola, diskala berdasarkan penggunaan, tidak
+  membayar sumber daya tak terpakai, ketersediaan dan toleransi kesalahan
+  bawaan.</p>
+  <p>Konsep kuncinya: <strong>fungsi</strong> (sumber daya yang dipanggil untuk
+  menjalankan kode), <strong>pemicu</strong> (kapan fungsi berjalan),
+  <strong>event</strong> (dokumen JSON berisi data yang diproses), <strong>lingkungan
+  aplikasi</strong> (runtime terisolasi), <strong>paket deployment</strong>
+  (arsip <code>.zip</code> atau image kontainer), <strong>runtime</strong>
+  (lingkungan bahasa), dan <strong>handler</strong> (metode yang memroses
+  event).</p>
+  <p>Penting karena penagihan hanya berdasarkan jumlah invokasi dan durasi,
+  dibulatkan ke milidetik terdekat. Ini efektif untuk fungsi berdurasi sangat
+  singkat, mis. di bawah 100 md, dan API latensi rendah.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: Lambda punya waktu berjalan minimum yang ditagih. Tidak
+    &mdash; AWS membulatkan durasi ke milidetik terdekat tanpa minimum.</p>
+  </aside>
+</section>
+
+<!-- ===================== OPSIONAL #5 KODE ===================== -->
+<section class="code" id="kode">
+  <h2>Kode</h2>
+  <p><strong>AWS CLI</strong> &mdash; meluncurkan instans EC2:</p>
+  <pre><code class="language-bash"># luncurkan instans EC2
+aws ec2 run-instances \
+  --image-id ami-0abcdef1234567890 \
+  --instance-type t3.micro \
+  --key-name my-key
+</code></pre>
+  <p><strong>Definisi tugas Amazon ECS</strong> (JSON) &mdash; cetak biru
+  kontainer; contoh ini menjalankan Nginx di Fargate:</p>
+  <pre><code class="language-json">{
+  "family": "webserver",
+  "containerDefinitions": [
+    {
+      "name": "web",
+      "image": "nginx",
+      "memory": "100",
+      "cpu": "99"
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "memory": "512",
+  "cpu": "256"
+}
+</code></pre>
+  <p><strong>Handler AWS Lambda</strong> (Python) &mdash; metode yang menerima
+  event dan context:</p>
+  <pre><code class="language-python">def handler_name(event, context):
+    # event: dict hasil parsing JSON
+    return {"statusCode": 200, "body": "ok"}
+</code></pre>
+  <p><strong>Apa yang berubah kalau X diubah:</strong> mengubah
+  <code>requiresCompatibilities</code> dari <code>FARGATE</code> ke
+  <code>EC2</code> memindahkan tugas dari infrastruktur nirserver ke klaster
+  instans EC2 yang Anda kelola sendiri.</p>
+</section>
+
+<!-- ===================== WAJIB #6 LATIHAN ===================== -->
+<section class="practice" id="latihan">
+  <h2>Latihan mandiri</h2>
+
+  <p>1. Uraikan arti nama tipe instans <code>c5n.xlarge</code> bagian per
+  bagian.</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p><strong>c</strong> family compute optimized, <strong>5</strong>
+    generasi kelima, <strong>n</strong> atribut tambahan (penyimpanan NVMe
+    lokal), <strong>xlarge</strong> ukuran ekstra besar.</p>
+  </details>
+
+  <p>2. Apa perbedaan utama cara kerja kontainer dibanding mesin virtual?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Kontainer berbagi sistem operasi dan kernel dengan host, sehingga lebih
+    ringan dan mulai hampir instan. VM membawa salinan sistem operasinya
+    sendiri, sehingga lebih berat tetapi memberi kekuatan penuh sebuah OS
+    (instalasi paket, kernel khusus).</p>
+  </details>
+
+  <p>3. Anda ingin menjalankan kontainer yang sudah ditulis untuk Kubernetes
+  tanpa mengelola node sendiri. Layanan AWS mana yang tepat, dan apa
+  istilah kontainernya?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Amazon EKS (Kubernetes terkelola) dengan komputasi AWS Fargate agar node
+    tidak dikelola. Kontainer di EKS disebut <em>pod</em>, dan mesin yang
+    menjalankannya disebut <em>worker node</em> atau node Kubernetes.</p>
+  </details>
+
+  <p>4. Kenapa AWS Lambda cocok untuk fungsi yang eksekusinya sangat
+  singkat?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Penagihan Lambda berdasarkan jumlah invokasi dan durasi yang dibulatkan
+    ke milidetik terdekat tanpa waktu berjalan minimum dan tanpa membayar
+    sumber daya tak terpakai. Jadi fungsi di bawah 100 md tetap efisien
+    biayanya.</p>
+  </details>
+</section>
+
+<!-- ===================== OPSIONAL #7 FAQ ===================== -->
+<section class="faq" id="faq">
+  <h2>Jebakan &amp; FAQ</h2>
+  <p><strong>Apakah AMI bisa dipakai di semua Region?</strong> ID AMI
+  berbeda-beda per Region; AMI di satu Region tidak otomatis tersedia di
+  Region lain.</p>
+  <p><strong>Berapa instans EC2 minimum untuk ketersediaan tinggi?</strong>
+  Pertimbangkan minimal dua instans EC2 di dua Availability Zone terpisah.</p>
+  <p><strong>Apakah Amazon ECS hanya jalan di Fargate?</strong> Tidak. Tugas
+  dan layanan bisa dijalankan di infrastruktur nirserver Fargate atau di
+  klaster instans EC2 yang Anda kelola (perlu agen kontainer ECS).</p>
+  <p><strong>Apa beda task dan pod?</strong> Task adalah istilah kontainer di
+  Amazon ECS; pod adalah istilah kontainer di Amazon EKS (Kubernetes).</p>
+  <p><strong>Apakah Lambda perlu disediakan servernya?</strong> Tidak. Lambda
+  menjalankan kode pada infrastruktur berketersediaan tinggi tanpa administrasi
+  dari pengguna.</p>
+  <p><strong>Bagaimana Lambda memicu fungsi?</strong> Lewat pemanggilan
+  langsung via API Lambda, atau lewat pemicu yang memetakan event dari layanan
+  AWS lain (mis. panggilan API, item stream atau antrean).</p>
+</section>
+
+<!-- ===================== OPSIONAL #8 GLOSARIUM ===================== -->
+<section class="glossary" id="glosarium">
+  <h2>Glosarium</h2>
+  <dl>
+    <dt>Hypervisor</dt><dd>Perangkat lunak/firmware yang menjalankan mesin virtual.</dd>
+    <dt>Amazon EC2</dt><dd>Layanan web penyedia kapasitas komputasi yang dapat diskalakan.</dd>
+    <dt>Instans EC2</dt><dd>Server virtual yang disediakan di cloud AWS.</dd>
+    <dt>AMI</dt><dd>Template peluncuran instans (OS, penyimpanan, izin, aplikasi).</dd>
+    <dt>Tipe instans</dt><dd>Kombinasi vCPU, memori, jaringan, dan kadang GPU.</dd>
+    <dt>Kontainer</dt><dd>Unit terstandardisasi yang mengemas kode + dependensinya.</dd>
+    <dt>Docker</dt><dd>Runtime kontainer populer untuk membuat dan menjalankan kontainer.</dd>
+    <dt>Amazon ECS</dt><dd>Layanan orkestrasi kontainer native AWS.</dd>
+    <dt>Amazon EKS</dt><dd>Layanan terkelola untuk menjalankan Kubernetes di AWS.</dd>
+    <dt>AWS Fargate</dt><dd>Mesin komputasi nirserver khusus kontainer.</dd>
+    <dt>AWS Lambda</dt><dd>Komputasi nirserver untuk menjalankan kode tanpa server.</dd>
+    <dt>Event</dt><dd>Dokumen JSON berisi data yang diproses fungsi Lambda.</dd>
+    <dt>Handler</dt><dd>Metode dalam kode yang memroses event Lambda.</dd>
+    <dt>Runtime</dt><dd>Lingkungan bahasa yang menjalankan kode Lambda.</dd>
+    <dt>Availability Zone</dt><dd>Klaster pusat data redundan di dalam satu Region.</dd>
+    <dt>VPC</dt><dd>Jaringan privat virtual tempat instans EC2 ditempatkan.</dd>
+  </dl>
+</section>
+
+<!-- ===================== OPSIONAL #9 CHECKLIST ===================== -->
+<section class="checklist" id="checklist">
+  <h2>Checklist kelulusan</h2>
+  <ul>
+    <li>Bisa sebut tiga tipe komputasi: VM, kontainer, nirserver.</li>
+    <li>Bisa jelaskan peran hypervisor dan guest OS di EC2.</li>
+    <li>Bisa jelaskan AMI dan kenapa bisa digunakan ulang.</li>
+    <li>Bisa uraikan nama tipe instans (family, generasi, ukuran).</li>
+    <li>Bisa sebut enam family instans EC2 dan kegunaannya.</li>
+    <li>Bisa bedakan kontainer vs VM (kernel bersama).</li>
+    <li>Bisa bedakan Amazon ECS vs Amazon EKS dan istilah task/pod.</li>
+    <li>Bisa jelaskan Fargate sebagai nirserver untuk kontainer.</li>
+    <li>Bisa sebut konsep kunci dan model penagihan Lambda.</li>
+  </ul>
+</section>
+
+<!-- ===================== WAJIB #10 SUMBER ===================== -->
+<section class="sources" id="sumber">
+  <h2>Sumber</h2>
+  <ol>
+    <li>Modul kursus <em>AWS Technical Essentials</em>, Bagian 1 &mdash;
+    komputasi AWS (transkrip lokal).</li>
+    <li>Dokumentasi resmi AWS: <em>Amazon EC2</em>, <em>Amazon ECS</em>,
+    <em>Amazon EKS</em>, <em>AWS Fargate</em>, <em>AWS Lambda</em>.</li>
+  </ol>
+</section>
+
+</article>
+</div>
+
+<script src="../../assets/note.js" defer></script>
+</body>
+</html>

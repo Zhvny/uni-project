@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Penyimpanan AWS — AWS</title>
+
+<!-- Tema hljs (dimuat sebelum note.css agar note.css menetralkan padding/latar) -->
+<link rel="stylesheet" href="../../assets/hljs/github.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../../assets/hljs/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="../../assets/note.css">
+
+<!-- MathJax 4 — JANGAN set throwOnError (dihapus di v4). Wajib matikan speech/Braille. -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  options: {
+    enableSpeech: false,
+    enableBraille: false,
+    menuOptions: {
+      settings: { enrich: false, speech: false, braille: false, assistiveMml: false }
+    }
+  }
+};
+</script>
+<script src="../../assets/mathjax/tex-svg.js" defer></script>
+<script src="../../assets/hljs/hljs.min.js" defer></script>
+</head>
+<body>
+<div class="layout">
+
+<details class="toc">
+  <summary>Daftar isi</summary>
+  <nav aria-label="Daftar isi">
+    <ol>
+      <li><a href="#tldr">TL;DR</a></li>
+      <li><a href="#peta">Peta konsep</a></li>
+      <li><a href="#konsep">Konsep inti</a></li>
+      <li><a href="#kode">Kode</a></li>
+      <li><a href="#latihan">Latihan</a></li>
+      <li><a href="#faq">Jebakan &amp; FAQ</a></li>
+      <li><a href="#glosarium">Glosarium</a></li>
+      <li><a href="#checklist">Checklist</a></li>
+      <li><a href="#sumber">Sumber</a></li>
+    </ol>
+  </nav>
+</details>
+
+<article>
+
+<!-- ===================== WAJIB #0 META ===================== -->
+<header class="meta">
+  <a class="back" href="../../index.html">&larr; Daftar catatan</a>
+  <p class="eyebrow">AWS</p>
+  <h1>Penyimpanan di AWS</h1>
+  <dl>
+    <dt>Prasyarat</dt><dd><a href="%5BPart1%20-%20Modul2%5D%20Komputasi-AWS.html">Komputasi AWS</a></dd>
+    <dt>Dibuat</dt><dd>2026-10-11</dd>
+    <dt>Status</dt><dd>solid</dd>
+    <dt>Estimasi baca</dt><dd>30 menit</dd>
+  </dl>
+</header>
+
+<!-- ===================== WAJIB #1 TL;DR ===================== -->
+<section class="tldr" id="tldr">
+  <h2>TL;DR</h2>
+  <ul>
+    <li>Tiga kategori penyimpanan: file (hierarki), blok (potongan
+    berukuran tetap beralamat), objek (bucket datar).</li>
+    <li>Penyimpanan file: Amazon EFS (elastis, Multi-AZ) dan Amazon FSx
+    (NetApp ONTAP, OpenZFS, Windows, Lustre).</li>
+    <li>Penyimpanan blok: EC2 instance store (sementara) dan Amazon EBS
+    (persisten, dipasang 1-ke-1, di-snapshot ke S3).</li>
+    <li>Penyimpanan objek: Amazon S3 &mdash; bucket + key + Region,
+    privat secara default, punya kelas penyimpanan dan versioning.</li>
+    <li>Otomatiskan penurunan biaya dengan lifecycle: transisi antar
+    kelas dan penghapusan terjadwal.</li>
+  </ul>
+</section>
+
+<!-- ===================== OPSIONAL #2 PETA ===================== -->
+<figure class="map" id="peta">
+  <h2>Peta konsep</h2>
+  <pre class="mermaid">
+flowchart TD
+  A[Penyimpanan AWS] --> B[File]
+  A --> C[Blok]
+  A --> D[Objek]
+  B --> B1[Amazon EFS]
+  B --> B2[Amazon FSx]
+  C --> C1[EC2 instance store]
+  C --> C2[Amazon EBS]
+  C2 --> C3[Snapshot ke S3]
+  D --> D1[Amazon S3]
+  D1 --> D2[Kelas penyimpanan]
+  D1 --> D3[Versioning]
+  D1 --> D4[Lifecycle]
+  </pre>
+  <figcaption>Tiga kategori penyimpanan dan layanan turunannya.</figcaption>
+</figure>
+
+<!-- ===================== WAJIB #3 KONSEP ===================== -->
+<section class="concept" id="konsep">
+  <h2>Konsep inti</h2>
+
+  <h3>Tiga kategori penyimpanan</h3>
+  <p>Layanan penyimpanan AWS dibagi tiga kategori: <strong>penyimpanan
+  file</strong> (data sebagai file dalam hierarki folder), <strong>penyimpanan
+  blok</strong> (data sebagai blok berukuran tetap yang tiap bloknya punya
+  alamat sendiri), dan <strong>penyimpanan objek</strong> (data sebagai objek di
+  dalam bucket dengan struktur datar).</p>
+  <p>Penting karena tiap kategori dioptimalkan untuk beban kerja berbeda.
+  Penyimpanan blok unggul untuk operasi latensi rendah dan I/O intens;
+  penyimpanan objek unggul untuk skala besar dan data tak terstruktur.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: ketiganya bisa saling menggantikan. Tidak &mdash;
+    "bucket datar" S3 tidak cocok menjadi sistem file, dan EBS tidak bisa
+    diakses dari web secara langsung.</p>
+  </aside>
+
+  <h3>Penyimpanan file: Amazon EFS</h3>
+  <p>Amazon Elastic File System (Amazon EFS) adalah sistem file sederhana yang
+  otomatis tumbuh dan menyusut saat file ditambah atau dihapus. Tidak perlu
+  menyediakan kapasitas maupun kinerja. Puluhan hingga ribuan instans komputasi
+  bisa terhubung bersamaan dengan kinerja konsisten per instans.</p>
+  <p>Penting karena cocok untuk akses terpusat dan berbagi antar-host. Kelas
+  penyimpanannya: EFS Standard dan Standard-IA (Multi-AZ, ketahanan dan
+  ketersediaan tertinggi), serta EFS One Zone dan One Zone-IA (data dalam satu
+  Availability Zone, lebih hemat).</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: EFS perlu disediakan kapasitasnya di awal. Tidak &mdash;
+    EFS elastis; Anda hanya membayar penyimpanan yang benar-benar dipakai.</p>
+  </aside>
+
+  <h3>Penyimpanan file: Amazon FSx</h3>
+  <p>Amazon FSx adalah layanan terkelola penuh untuk sistem file pihak ketiga
+  berkinerja tinggi. Pilihan sistem file: <strong>NetApp ONTAP</strong>,
+  <strong>OpenZFS</strong>, <strong>Windows File Server</strong> (protokol SMB),
+  dan <strong>Lustre</strong> (throughput hingga 1+ TB/dtk, IOPS jutaan, sering
+  dikaitkan ke repositori data Amazon S3).</p>
+  <p>Penting karena FSx mempertahankan kompatibilitas asli dengan sistem file
+  yang sudah dipakai on-premises, sehingga migrasi tidak perlu mengubah kode
+  aplikasi. FSx mengotomatisasi penyediaan perangkat keras, konfigurasi
+  perangkat lunak, patching, dan pencadangan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: FSx adalah satu produk tunggal. Tidak &mdash; FSx adalah
+    keluarga layanan, dan Anda memilih salah satu dari empat sistem file.</p>
+  </aside>
+
+  <h3>Penyimpanan blok: EC2 instance store</h3>
+  <p>Amazon EC2 instance store menyediakan penyimpanan tingkat blok
+  <em>sementara</em> yang terpasang fisik pada komputer host instans. Siklus
+  hidupnya terikat pada instans: menghapus instans berarti data ikut terhapus.</p>
+  <p>Penting untuk kecepatan dan data yang tidak perlu bertahan lama, misalnya
+  buffer, cache, dan data scratch. Cocok juga bagi aplikasi yang mereplikasi
+  data ke instans lain, seperti klaster Hadoop, karena volume lokal cepat plus
+  replikasi memberi performa tinggi.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: instance store aman untuk data penting. Tidak &mdash;
+    bersifat sementara; jangan pakai untuk data persisten yang harus bertahan
+    saat instans berhenti atau gagal.</p>
+  </aside>
+
+  <h3>Penyimpanan blok: Amazon EBS</h3>
+  <p>Amazon Elastic Block Store (Amazon EBS) adalah penyimpanan tingkat blok
+  yang dipasang ke instans EC2. Penyimpanan yang dipasang ini disebut
+  <strong>volume EBS</strong>, analog drive eksternal: dapat dilepas dan
+  dipasang ulang di Availability Zone yang sama, terpisah dari komputasi,
+  berukuran terbatas, dan umumnya berelasi satu-ke-satu dengan instans.</p>
+  <p>Penting karena volume EBS bertahan saat instans berhenti, diakhiri, atau
+  perangkat keras gagal. Fitur kuncinya: direplikasi otomatis dalam
+  Availability Zone-nya (ketersediaan tinggi), mendukung enkripsi, dan dapat
+  dimodifikasi tanpa menghentikan instans.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: satu volume EBS bisa dipasang ke banyak instans sekaligus.
+    Umumnya tidak &mdash; hampir semua volume berelasi 1-ke-1; multipasang hanya
+    untuk volume SSD io1/io2 di Availability Zone yang sama.</p>
+  </aside>
+
+  <h3>Tipe volume EBS</h3>
+  <p>Volume EBS dibagi dua kategori: <strong>solid-state drive (SSD)</strong>
+  untuk beban transaksional dengan operasi baca/tulis sering berukuran I/O
+  kecil, dan <strong>hard disk drive (HDD)</strong> untuk beban streaming besar
+  yang membutuhkan throughput tinggi.</p>
+  <p>Penting karena pemilihan tipe menentukan biaya dan kinerja. Ukuran volume
+  maksimum EBS saat ini mencapai 64 tebibita (TiB) untuk tipe tertentu.</p>
+  <table>
+    <thead><tr><th>Kategori</th><th>Cocok untuk</th></tr></thead>
+    <tbody>
+      <tr><td>SSD tujuan umum (gp3, gp2)</td><td>Keseimbangan harga dan kinerja</td></tr>
+      <tr><td>SSD IOPS tersedia (io1, io2)</td><td>Beban peka latensi</td></tr>
+      <tr><td>HDD throughput (st1)</td><td>Beban sering diakses, throughput</td></tr>
+      <tr><td>HDD dingin (sc1)</td><td>Beban jarang diakses, biaya rendah</td></tr>
+    </tbody>
+  </table>
+  <aside class="pitfall">
+    <p>Miskonsepsi: semua volume EBS bisa diskalakan sama. Tidak &mdash; batas
+    ukuran, IOPS, dan throughput berbeda per tipe volume.</p>
+  </aside>
+
+  <h3>Snapshot Amazon EBS</h3>
+  <p>Snapshot adalah cadangan volume EBS yang bersifat tambahan
+  (<em>incremental</em>): hanya blok yang berubah sejak snapshot terakhir yang
+  disimpan. Jika data 10 GB di volume dan 2 GB berubah, hanya 2 GB itu yang
+  ditulis.</p>
+  <p>Penting sebagai pengaman terhadap kehilangan data. Snapshot disimpan
+  redundant di beberapa Availability Zone menggunakan Amazon S3, tetapi dikelola
+  lewat konsol Amazon EBS &mdash; Anda tidak perlu menyentuh Amazon S3
+  langsung. Snapshot dapat dipakai membuat volume baru yang identik.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: snapshot menyimpan seluruh volume setiap kali. Tidak
+    &mdash; snapshot bersifat tambahan, sehingga hemat ruang dan biaya.</p>
+  </aside>
+
+  <h3>Penyimpanan objek: konsep Amazon S3</h3>
+  <p>Amazon Simple Storage Service (Amazon S3) adalah penyimpanan objek mandiri
+  yang tidak terikat komputasi dan dapat diakses dari mana saja di web. Objek
+  adalah file ditambah metadata, disimpan dalam struktur datar di dalam kontainer
+  bernama <strong>bucket</strong>.</p>
+  <p>Penting karena S3 memberikan skalabilitas tidak terbatas, durabilitas
+  tinggi, dan efektivitas biaya. Objek diidentifikasi unik oleh kombinasi nama
+  bucket, <strong>key</strong>, dan ID versi. Nama bucket harus unik di semua
+  akun AWS dalam satu partisi (3&ndash;63 karakter, huruf kecil, angka, titik,
+  tanda hubung). S3 tidak punya hierarki asli, tetapi konsol memberi kesan
+  folder lewat awalan (<em>prefix</em>) dan pembatas <code>/</code>.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: folder di S3 adalah struktur nyata. Tidak &mdash; S3 hanya
+    bucket dan objek; folder hanyalah ilusi dari awalan nama key.</p>
+  </aside>
+
+  <h3>Keamanan Amazon S3</h3>
+  <p>Semua sumber daya S3 &mdash; bucket, folder, dan objek &mdash; privat
+  secara default; hanya akun yang membuatnya yang bisa melihat. Akses diberikan
+  lewat kebijakan akses. S3 juga otomatis mengenkripsi semua objek saat
+  diunggah, dengan enkripsi sisi server berkunci yang dikelola S3 sebagai
+  tingkat dasar tanpa biaya tambahan.</p>
+  <p>Penting karena dua fitur utama mengatur izin: <strong>kebijakan IAM</strong>
+  (dilampirkan ke sumber daya atau ke pengguna/grup/peran) dan <strong>kebijakan
+  bucket S3</strong> (format JSON, hanya bisa dilampirkan ke bucket, berlaku
+  untuk objek di dalamnya).</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: objek S3 publik sejak awal. Tidak &mdash; semuanya privat
+    secara default; membuka akses harus dipilih secara sadar lewat kebijakan.</p>
+  </aside>
+
+  <h3>Kelas penyimpanan Amazon S3</h3>
+  <p>Ketika objek diunggah tanpa menentukan kelas, objek masuk ke kelas default
+  (S3 Standard). Kelas penyimpanan memungkinkan Anda menurunkan tingkatan
+  penyimpanan saat pola akses data berubah, misalnya foto lama yang jarang
+  dibuka.</p>
+  <p>Penting karena biaya penyimpanan turun seiring jarangnya akses, dengan
+  konsekuensi waktu pengambilan yang lebih lama atau ketersediaan AZ yang lebih
+  sedikit.</p>
+  <table>
+    <thead><tr><th>Kelas</th><th>Cocok untuk</th></tr></thead>
+    <tbody>
+      <tr><td>S3 Standard</td><td>Serba guna, akses sering</td></tr>
+      <tr><td>S3 Intelligent-Tiering</td><td>Pola akses tak menentu</td></tr>
+      <tr><td>S3 Standard-IA</td><td>Jarang diakses, akses cepat</td></tr>
+      <tr><td>S3 One Zone-IA</td><td>Satu AZ, biaya lebih rendah</td></tr>
+      <tr><td>S3 Glacier Instant Retrieval</td><td>Arsip, ambil milidetik</td></tr>
+      <tr><td>S3 Glacier Flexible Retrieval</td><td>Arsip, ambil 1&ndash;5 menit</td></tr>
+      <tr><td>S3 Glacier Deep Archive</td><td>Retensi 7 tahun atau lebih</td></tr>
+      <tr><td>S3 on Outposts</td><td>Data lokal on-premise</td></tr>
+    </tbody>
+  </table>
+  <aside class="pitfall">
+    <p>Miskonsepsi: kelas termurah selalu terbaik. Tidak &mdash;
+    S3 Glacier Deep Archive punya waktu pengambilan default 12 jam, tidak cocok
+    untuk data yang kadang harus segera diambil.</p>
+  </aside>
+
+  <h3>Versioning Amazon S3</h3>
+  <p>Tanpa versioning, mengunggah objek dengan nama yang sama akan menimpa objek
+  aslinya. Versioning menyimpan beberapa versi dari satu objek dalam bucket yang
+  sama; saat diaktifkan, S3 otomatis membuat ID versi unik.</p>
+  <p>Penting untuk memulihkan objek dari penghapusan atau penimpaan tak sengaja.
+  Penghapusan tidak langsung menghapus permanen &mdash; S3 menaruh penanda
+  hapus (<em>delete marker</em>) yang bisa dihapus untuk memulihkan objek.
+  Status bucket: tanpa versi (default), versioning-aktif (tidak bisa balik ke
+  tanpa versi, hanya ditangguhkan), dan ditangguhkan (objek baru tanpa versi,
+  objek lama tetap berversi).</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: versioning gratis. Tidak &mdash; biaya penyimpanan dikenakan
+    untuk semua versi, jadi hapus versi lama yang tak diperlukan.</p>
+  </aside>
+
+  <h3>Siklus hidup (lifecycle) Amazon S3</h3>
+  <p>Konfigurasi siklus hidup mengotomatisasi dua jenis tindakan pada objek atau
+  grup objek: <strong>transisi</strong> (kapan objek pindah ke kelas penyimpanan
+  lain) dan <strong>kedaluwarsa</strong> (kapan objek dihapus permanen).</p>
+  <p>Penting agar Anda tidak perlu memindahkan objek secara manual. Contoh:
+  transisi ke S3 Standard-IA 30 hari setelah dibuat, atau arsipkan ke S3 Glacier
+  Deep Archive setelah satu tahun. Kandidat yang baik: log berkala dan data yang
+  frekuensi aksesnya berubah.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: lifecycle hanya untuk menghapus. Tidak &mdash; tindakan
+    transisinya justru alat utama untuk menekan biaya penyimpanan.</p>
+  </aside>
+
+  <h3>Memilih layanan penyimpanan</h3>
+  <p>Pilihan bergantung pada sifat data. EBS untuk data yang sering berubah dan
+  harus bertahan melewati penghentian instans; S3 untuk data yang jarang berubah
+  dan butuh skala besar; EFS untuk sistem file bersama cloud-native; FSx untuk
+  kompatibilitas sistem file pihak ketiga.</p>
+  <p>Penting karena kesalahan memilih menaikkan biaya dan risiko. EBS adalah
+  penyimpanan blok yang dibayar sesuai yang disediakan (provisioned), sedangkan
+  S3 adalah penyimpanan objek yang dibayar sesuai pemakaian dan tidak terpasang
+  ke komputasi.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: EFS bisa menggantikan EBS untuk semua kasus. Tidak &mdash;
+    EFS adalah penyimpanan file yang diakses bersama, sedangkan EBS adalah blok
+    yang umumnya dipasang satu-ke-satu ke instans.</p>
+  </aside>
+</section>
+
+<!-- ===================== OPSIONAL #5 KODE ===================== -->
+<section class="code" id="kode">
+  <h2>Kode</h2>
+  <p><strong>Konfigurasi lifecycle S3</strong> (JSON) &mdash; transisi ke
+  <code>STANDARD_IA</code> setelah 30 hari:</p>
+  <pre><code class="language-json">{
+  "Rules": [
+    {
+      "ID": "arsip-foto",
+      "Status": "Enabled",
+      "Transitions": [
+        { "Days": 30, "StorageClass": "STANDARD_IA" }
+      ],
+      "Expiration": { "Days": 365 }
+    }
+  ]
+}
+</code></pre>
+  <p><strong>AWS CLI</strong> &mdash; menerapkan konfigurasi dan mengunggah
+  objek:</p>
+  <pre><code class="language-bash"># terapkan lifecycle ke bucket
+aws s3api put-bucket-lifecycle-configuration \
+  --bucket my-bucket \
+  --lifecycle-configuration file://lifecycle.json
+
+# unggah objek ke bucket
+aws s3 cp photo.jpg s3://my-bucket/foto/photo.jpg
+</code></pre>
+  <p><strong>Apa yang berubah kalau X diubah:</strong> menaikkan nilai
+  <code>Days</code> pada <code>Transitions</code> menunda perpindahan ke kelas
+  yang lebih murah, sehingga biaya penyimpanan aktif bertahan lebih lama.</p>
+</section>
+
+<!-- ===================== WAJIB #6 LATIHAN ===================== -->
+<section class="practice" id="latihan">
+  <h2>Latihan mandiri</h2>
+
+  <p>1. Sebutkan tiga kategori penyimpanan AWS dan satu ciri pembeda tiap
+  kategori.</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>File &mdash; data sebagai file dalam hierarki folder. Blok &mdash; data
+    sebagai potongan berukuran tetap yang tiap bloknya beralamat. Objek &mdash;
+    data sebagai objek di dalam bucket berstruktur datar.</p>
+  </details>
+
+  <p>2. Anda perlu penyimpanan yang bertahan saat instans EC2 dihentikan, dapat
+  di-snapshot, dan umumnya dipasang ke satu instans. Layanan dan kategori mana
+  yang tepat?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Amazon EBS, kategori penyimpanan blok. Volume EBS persisten (bertahan
+    melewati penghentian/pengakhiran instans), mendukung snapshot, dan umumnya
+    berelasi 1-ke-1 dengan instans EC2.</p>
+  </details>
+
+  <p>3. Kenapa snapshot EBS lebih hemat ruang daripada menyalin seluruh volume
+  setiap kali?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Karena snapshot bersifat tambahan: hanya blok yang berubah sejak snapshot
+    terakhir yang disimpan. Contoh, dari data 10 GB hanya 2 GB yang berubah, jadi
+    hanya 2 GB itu yang ditulis.</p>
+  </details>
+
+  <p>4. Data arsip diakses sekitar satu kali per tahun dan harus disimpan tujuh
+  tahun untuk kepatuhan. Kelas penyimpanan S3 mana yang paling hemat, dan apa
+  konsekuensinya?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>S3 Glacier Deep Archive &mdash; kelas penyimpanan S3 dengan biaya
+    terendah. Konsekuensinya waktu pengambilan default 12 jam, cocok untuk
+    retensi jangka panjang, bukan untuk data yang butuh akses cepat.</p>
+  </details>
+</section>
+
+<!-- ===================== OPSIONAL #7 FAQ ===================== -->
+<section class="faq" id="faq">
+  <h2>Jebakan &amp; FAQ</h2>
+  <p><strong>Apakah S3 punya hierarki folder sungguhan?</strong> Tidak. S3
+  hanya menyimpan bucket dan objek dalam struktur datar; konsol menyiratkan
+  folder lewat awalan nama key dan pembatas <code>/</code>.</p>
+  <p><strong>Apa beda kebijakan IAM dan kebijakan bucket S3?</strong> Kebijakan
+  IAM dapat dilampirkan ke sumber daya maupun ke pengguna, grup, dan peran;
+  kebijakan bucket S3 hanya dilampirkan ke bucket dan berlaku untuk objek di
+  dalamnya. Pakai kebijakan IAM bila ingin semua kebijakan terpusat di satu
+  lokasi, dan kebijakan bucket untuk akses lintas akun yang sederhana.</p>
+  <p><strong>Kalau versioning diaktifkan, bisakah dikembalikan ke tanpa
+  versi?</strong> Tidak. Bucket yang pernah diaktifkan versioning tidak bisa
+  kembali ke status tanpa versi; paling jauh Anda menangguhkan versioning.</p>
+  <p><strong>Apakah penghapusan objek di bucket berversi langsung permanen?</strong>
+  Tidak. S3 menaruh penanda hapus; objek bisa dipulihkan dengan menghapus penanda
+  tersebut.</p>
+  <p><strong>Kapan pakai Amazon EFS, bukan Amazon EBS?</strong> Saat butuh
+  sistem file bersama yang diakses banyak instans komputasi sekaligus dan
+  tumbuh-menyusut otomatis. EBS adalah blok yang umumnya dipasang ke satu
+  instans.</p>
+  <p><strong>Apakah semua volume EBS bisa dipasang ke beberapa instans?</strong>
+  Tidak. Multipasang hanya didukung volume SSD Provisioned IOPS (io1 atau io2),
+  dan semua instans harus berada di Availability Zone yang sama.</p>
+</section>
+
+<!-- ===================== OPSIONAL #8 GLOSARIUM ===================== -->
+<section class="glossary" id="glosarium">
+  <h2>Glosarium</h2>
+  <dl>
+    <dt>Penyimpanan file</dt><dd>Data sebagai file dalam hierarki folder/direktori.</dd>
+    <dt>Penyimpanan blok</dt><dd>Data sebagai blok berukuran tetap yang tiap bloknya beralamat.</dd>
+    <dt>Penyimpanan objek</dt><dd>Data sebagai objek di dalam bucket berstruktur datar.</dd>
+    <dt>Amazon EFS</dt><dd>Sistem file elastis yang tumbuh dan menyusut otomatis.</dd>
+    <dt>Amazon FSx</dt><dd>Layanan terkelola untuk sistem file pihak ketiga berkinerja tinggi.</dd>
+    <dt>Amazon EBS</dt><dd>Penyimpanan blok yang dipasang ke instans EC2 (volume).</dd>
+    <dt>Volume EBS</dt><dd>Penyimpanan blok yang dapat dipasang dan dilepas dari instans EC2.</dd>
+    <dt>Instance store</dt><dd>Penyimpanan blok sementara pada host instans EC2.</dd>
+    <dt>Snapshot EBS</dt><dd>Cadangan tambahan volume EBS, disimpan di Amazon S3.</dd>
+    <dt>Amazon S3</dt><dd>Layanan penyimpanan objek mandiri, tidak terikat komputasi.</dd>
+    <dt>Bucket</dt><dd>Kontainer objek di dalam Amazon S3.</dd>
+    <dt>Key</dt><dd>Nama yang mengidentifikasi objek secara unik di dalam bucket.</dd>
+    <dt>Kelas penyimpanan</dt><dd>Tingkatan S3 dengan harga dan waktu akses berbeda.</dd>
+    <dt>Versioning</dt><dd>Menyimpan beberapa versi satu objek dalam bucket yang sama.</dd>
+    <dt>Lifecycle</dt><dd>Konfigurasi otomatis untuk transisi dan kedaluwarsa objek.</dd>
+    <dt>Availability Zone</dt><dd>Satu atau lebih pusat data terisolasi di dalam Region.</dd>
+  </dl>
+</section>
+
+<!-- ===================== OPSIONAL #9 CHECKLIST ===================== -->
+<section class="checklist" id="checklist">
+  <h2>Checklist kelulusan</h2>
+  <ul>
+    <li>Bisa sebut tiga kategori penyimpanan dan ciri pembedanya.</li>
+    <li>Bisa jelaskan kelas penyimpanan Amazon EFS (Standard vs One Zone).</li>
+    <li>Bisa sebut empat sistem file di Amazon FSx.</li>
+    <li>Bisa bedakan instance store (sementara) dan volume EBS (persisten).</li>
+    <li>Bisa bedakan tujuan volume SSD dan HDD EBS.</li>
+    <li>Bisa jelaskan kenapa snapshot EBS bersifat tambahan.</li>
+    <li>Bisa jelaskan konsep bucket, key, dan Region di Amazon S3.</li>
+    <li>Bisa bedakan kebijakan IAM dan kebijakan bucket S3.</li>
+    <li>Bisa memilih kelas penyimpanan S3 sesuai pola akses data.</li>
+    <li>Bisa jelaskan versioning dan tindakan lifecycle (transisi, kedaluwarsa).</li>
+  </ul>
+</section>
+
+<!-- ===================== WAJIB #10 SUMBER ===================== -->
+<section class="sources" id="sumber">
+  <h2>Sumber</h2>
+  <ol>
+    <li>Modul kursus <em>AWS Technical Essentials</em>, Bagian 2 &mdash;
+    penyimpanan AWS (transkrip lokal).</li>
+    <li>Dokumentasi resmi AWS: <em>Amazon S3</em>, <em>Amazon EBS</em>,
+    <em>Amazon EFS</em>, <em>Amazon FSx</em>, <em>Amazon EC2</em>.</li>
+  </ol>
+</section>
+
+</article>
+</div>
+
+<script src="../../assets/note.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Basis data di AWS — AWS</title>
+
+<!-- Tema hljs (dimuat sebelum note.css agar note.css menetralkan padding/latar) -->
+<link rel="stylesheet" href="../../assets/hljs/github.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../../assets/hljs/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="../../assets/note.css">
+
+<!-- MathJax 4 — JANGAN set throwOnError (dihapus di v4). Wajib matikan speech/Braille. -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  options: {
+    enableSpeech: false,
+    enableBraille: false,
+    menuOptions: {
+      settings: { enrich: false, speech: false, braille: false, assistiveMml: false }
+    }
+  }
+};
+</script>
+<script src="../../assets/mathjax/tex-svg.js" defer></script>
+<script src="../../assets/hljs/hljs.min.js" defer></script>
+</head>
+<body>
+<div class="layout">
+
+<details class="toc">
+  <summary>Daftar isi</summary>
+  <nav aria-label="Daftar isi">
+    <ol>
+      <li><a href="#tldr">TL;DR</a></li>
+      <li><a href="#peta">Peta konsep</a></li>
+      <li><a href="#konsep">Konsep inti</a></li>
+      <li><a href="#kode">Kode</a></li>
+      <li><a href="#latihan">Latihan</a></li>
+      <li><a href="#faq">Jebakan &amp; FAQ</a></li>
+      <li><a href="#glosarium">Glosarium</a></li>
+      <li><a href="#checklist">Checklist</a></li>
+      <li><a href="#sumber">Sumber</a></li>
+    </ol>
+  </nav>
+</details>
+
+<article>
+
+<!-- ===================== WAJIB #0 META ===================== -->
+<header class="meta">
+  <a class="back" href="../../index.html">&larr; Daftar catatan</a>
+  <p class="eyebrow">AWS</p>
+  <h1>Basis data di AWS</h1>
+  <dl>
+    <dt>Prasyarat</dt><dd><a href="%5BPart2%20-%20Modul4%5D%20Penyimpanan-AWS.html">Penyimpanan di AWS</a></dd>
+    <dt>Dibuat</dt><dd>2026-10-11</dd>
+    <dt>Status</dt><dd>solid</dd>
+    <dt>Estimasi baca</dt><dd>30 menit</dd>
+  </dl>
+</header>
+
+<!-- ===================== WAJIB #1 TL;DR ===================== -->
+<section class="tldr" id="tldr">
+  <h2>TL;DR</h2>
+  <ul>
+    <li>Basis data relasional menyimpan data dalam tabel (baris, kolom,
+    relasi) dengan skema tetap; diakses lewat SQL.</li>
+    <li>Terlalu banyak pekerjaan? Pilih terkelola (Amazon RDS, Aurora)
+    daripada tidak terkelola (self-manage di EC2).</li>
+    <li>Amazon RDS: tulis &amp; kelola relasional; fitur kunci Multi-AZ
+    (failover otomatis) dan snapshot/pencadangan otomatis.</li>
+    <li>Database dibuat khusus: DynamoDB (key-value), ElastiCache
+    (in-memory), DocumentDB, Keyspaces, Neptune, Timestream, QLDB.</li>
+    <li>Strategi &ldquo;basis data bebas&rdquo;: satu layanan per fungsi,
+    bukan satu basis data untuk semua.</li>
+  </ul>
+</section>
+
+<!-- ===================== OPSIONAL #2 PETA ===================== -->
+<figure class="map" id="peta">
+  <h2>Peta konsep</h2>
+  <pre class="mermaid">
+flowchart TD
+  A[Basis data di AWS] --> B[Relasional / SQL]
+  A --> C[Dibuat khusus / NoSQL]
+  B --> B1[Amazon RDS]
+  B --> B2[Amazon Aurora]
+  B --> B3[Amazon Redshift]
+  C --> C1[DynamoDB key-value]
+  C --> C2[ElastiCache in-memory]
+  C --> C3[DocumentDB dokumen]
+  C --> C4[Neptune grafik]
+  C --> C5[Timestream deret waktu]
+  B1 --> D[Multi-AZ failover]
+  B1 --> E[Read replica &amp; snapshot]
+  </pre>
+  <figcaption>Dua keluarga basis data AWS dan layanan utamanya.</figcaption>
+</figure>
+
+<!-- ===================== WAJIB #3 KONSEP ===================== -->
+<section class="concept" id="konsep">
+  <h2>Konsep inti</h2>
+
+  <h3>Basis data relasional dan SQL</h3>
+  <p>Basis data <strong>relasional</strong> mengatur data ke dalam tabel;
+  data di satu tabel dapat ditautkan ke tabel lain untuk membentuk
+  hubungan. Baris (sering disebut catatan) berisi seluruh informasi satu
+  entri, sedangkan kolom menggambarkan atributnya.</p>
+  <p>Penting karena tabel, baris, kolom, dan hubungan disebut
+  <strong>skema logis</strong>, dan pada basis data relasional skema
+  tersebut <em>tetap</em> — setelah berjalan, skema sulit diubah sehingga
+  pemodelan data dilakukan lebih dulu. Anda berkomunikasi lewat kueri
+  <strong>SQL</strong>, dan kekuatan sebenarnya muncul saat menarik data
+  dari beberapa tabel sekaligus (<em>join</em>).</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: skema relasional mudah diubah kapan saja. Tidak &mdash;
+    skema bersifat tetap; perubahan skema setelah produksi berjalan mahal,
+    jadi rancang skema di muka.</p>
+  </aside>
+
+  <h3>Manfaat basis data relasional</h3>
+  <p>Empat manfaat utama: <strong>SQL kompleks</strong> (gabungkan beberapa
+  tabel untuk memahami relasi), <strong>lebih sedikit redundansi</strong>
+  (simpan data sekali, rujuk dari tabel lain), <strong>popularitas</strong>
+  (dipakai sejak 1970-an, tenaga teknis sudah terbiasa), dan
+  <strong>akurasi</strong> (integritas tinggi lewat prinsip atomisitas,
+  konsistensi, isolasi, dan daya tahan atau <em>ACID</em>).</p>
+  <p>Penting karena sifat ACID dan popularitas membuatnya jadi pilihan
+  default untuk banyak aplikasi vital, misalnya ERP, CRM, dan aplikasi
+  niaga serta keuangan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: relasional cocok untuk semua hal. Tidak &mdash; menjadi
+    "perkakas gabungan" yang bisa banyak hal tetapi tidak terlalu unggul
+    pada satu tugas; model data lain (key-value, dokumen, grafik) lebih
+    tepat untuk beban tertentu.</p>
+  </aside>
+
+  <h3>RDBMS dan mesin yang didukung</h3>
+  <p>Sistem manajemen basis data relasional (<strong>RDBMS</strong>) dipakai
+  untuk membuat, memperbarui, dan mengelola basis data relasional. Contoh
+  umum: MySQL, PostgreSQL, Oracle, Microsoft SQL Server, dan Amazon Aurora.</p>
+  <p>Penting karena pemilihan mesin menentukan fitur dan konfigurasi yang
+  tersedia. Amazon RDS mendukung mesin komersial (Oracle, SQL Server),
+  sumber terbuka (MySQL, PostgreSQL, MariaDB), dan cloud asli
+  (Aurora).</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: semua RDBMS identik. Tidak &mdash; fitur dan konfigurasi
+    yang didukung berbeda per mesin, jadi pilih sesuai kebutuhan aplikasi.</p>
+  </aside>
+
+  <h3>Terkelola vs tidak terkelola</h3>
+  <p>Layanan <strong>terkelola</strong> dan <strong>tidak terkelola</strong>
+  ibarat kompromi antara kenyamanan dan kontrol, mirip model tanggung jawab
+  bersama. Pada basis data tidak terkelola (mis. self-manage di Amazon EC2),
+  AWS memelihara perangkat keras dan infrastruktur fisik, tetapi Anda tetap
+  mengelola instans EC2, basis data pada host, pengoptimalan kueri, dan data
+  pelanggan.</p>
+  <p>Pada basis data <strong>terkelola</strong>, layanan menyediakan
+  penyiapan instans dan basis data, serta sistem untuk ketersediaan tinggi,
+  skalabilitas, patching, dan cadangan. Anda masih bertanggung jawab atas
+  penyetelan basis data, pengoptimalan kueri, dan keamanan data pelanggan
+  — kenyamanan tertinggi dengan kontrol paling sedikit.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: terkelola berarti Anda lepas dari semua tanggung jawab.
+    Tidak &mdash; penyetelan basis data, pengoptimalan kueri, dan keamanan
+    data tetap di tangan Anda.</p>
+  </aside>
+
+  <h3>Amazon RDS dan instans basis data</h3>
+  <p>Amazon Relational Database Service (<strong>Amazon RDS</strong>) adalah
+  layanan basis data terkelola untuk membuat dan mengelola basis data
+  relasional di cloud tanpa beban operasional tradisional — Anda melimpahkan
+  penyediaan, patching, penskalaan, dan pemulihan.</p>
+  <p>Bagian komputasinya disebut <strong>instans basis data</strong> (DB
+  instance) yang menjalankan mesin DB; di bawahnya ada instans EC2, tetapi
+  dikelola lewat konsol RDS. Satu instans DB dapat berisi beberapa basis data
+  bermesin sama, dan setiap basis data dapat berisi beberapa tabel.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: instans DB dikelola dari konsol Amazon EC2. Tidak &mdash;
+    instans EC2 di bawahnya tetap dikelola melalui konsol Amazon RDS.</p>
+  </aside>
+
+  <h3>Penyimpanan Amazon RDS</h3>
+  <p>Bagian penyimpanan instans DB memakai volume <strong>Amazon EBS</strong>
+  untuk basis data dan penyimpanan log (MySQL, MariaDB, PostgreSQL, Oracle,
+  SQL Server). Saat memakai Aurora, data disimpan dalam <strong>volume
+  klaster</strong>: satu volume virtual berbasis SSD yang menyimpan salinan
+  data di tiga Availability Zone.</p>
+  <p>Penting karena pemilihan jenis penyimpanan menyesuaikan kinerja dan
+  biaya dengan beban kerja. RDS menyediakan tiga jenis: SSD Tujuan Umum
+  (gp2, gp3), Provisioned IOPS SSD (io1), dan Magnetik (standar).</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: Aurora memakai volume EBS per instans. Tidak &mdash;
+    Aurora memakai volume klaster yang menyalin data ke tiga Availability
+    Zone, bukan volume EBS biasa.</p>
+  </aside>
+
+  <h3>Amazon RDS di Amazon VPC</h3>
+  <p>Saat membuat instans DB, Anda memilih Amazon VPC dan subnet untuk basis
+  data. Kumpulan subnet ini disebut <strong>grup subnet DB</strong>, memuat
+  setidaknya dua Availability Zone, dan subnetnya harus privat (tanpa rute
+  ke gateway internet).</p>
+  <p>Penting karena isolasi ini memastikan instans DB dan datanya hanya
+  dapat diakses oleh backend aplikasi. Akses dapat dibatasi lebih lanjut
+  dengan ACL jaringan dan grup keamanan sebagai firewall berbutir halus.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: instans DB boleh berada di subnet publik agar mudah
+    diakses. Tidak &mdash; subnet harus privat supaya hanya backend aplikasi
+    yang bisa menghubungi basis data.</p>
+  </aside>
+
+  <h3>Cadangan data Amazon RDS</h3>
+  <p>Ada dua opsi pencadangan: <strong>pencadangan otomatis</strong>
+  (diaktifkan default, mencadangkan seluruh instans DB plus log transaksi,
+  dengan retensi 0&ndash;35 hari) dan <strong>snapshot manual</strong> (dapat
+  disimpan lebih dari 35 hari). Pencadangan otomatis memungkinkan
+  <em>point-in-time recovery</em>.</p>
+  <p>Penting karena keduanya saling melengkapi; praktik yang dianjurkan
+  adalah men-deploy kedua opsi. Menyetel retensi ke 0 hari akan
+  menghentikan pencadangan otomatis sekaligus menghapus cadangan yang ada.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: retensi 0 hari hanya mematikan pencadangan baru. Tidak
+    &mdash; menyetel 0 juga menghapus semua cadangan otomatis yang sudah ada.</p>
+  </aside>
+
+  <h3>Redundansi dengan Amazon RDS Multi-AZ</h3>
+  <p>Deployment <strong>Multi-AZ</strong> membuat salinan basis data yang
+  redundan di Availability Zone lain: salinan utama di satu subnet dan
+  salinan siaga di subnet Availability Zone kedua. Data direplikasi secara
+  <strong>sinkron</strong> ke siaga, dan salinan siaga tidak dikueri aplikasi.</p>
+  <p>Penting untuk ketersediaan tinggi: bila basis data utama kehilangan
+  konektivitas, RDS memulai <strong>failover otomatis</strong> lewat nama DNS
+  yang disediakan, mempromosikan basis data siaga ke peran utama dan
+  mengalihkan kueri ke basis data utama yang baru.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: salinan siaga Multi-AZ bisa dipakai membaca untuk
+    menambah kapasitas. Tidak &mdash; siaga bersifat pasif dan tidak dikueri;
+    untuk menambah kapasitas baca gunakan read replica.</p>
+  </aside>
+
+  <h3>Keamanan Amazon RDS</h3>
+  <p>Anda mengontrol akses ke sumber daya RDS. <strong>IAM</strong> menetapkan
+  siapa yang boleh mengelola sumber daya (membuat, menjelaskan, memodifikasi,
+  menghapus instans); <strong>grup keamanan</strong> mengontrol alamat IP
+  atau instans EC2 yang boleh terhubung; <strong>enkripsi</strong> mengamankan
+  instans dan snapshot saat diam; serta <strong>SSL/TLS</strong> melindungi
+  koneksi ke instans.</p>
+  <p>Penting karena kontrol berlapis memastikan hanya instans backend dengan
+  izin yang tepat yang dapat menyentuh basis data.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: instans DB baru bisa diakses lewat aturan grup keamanan
+    bawaan. Tidak &mdash; saat pertama dibuat, semua akses basis data dicegah
+    kecuali yang diizinkan aturan grup keamanan terkait.</p>
+  </aside>
+
+  <h3>Basis data yang dibuat khusus</h3>
+  <p>AWS menawarkan lebih dari 15 mesin yang dibuat khusus untuk beragam
+  model data: relasional, nilai kunci, dokumen, dalam memori, grafik, deret
+  waktu, kolom lebar, dan buku besar. Pendekatan "satu ukuran untuk semua"
+  dengan relasional untuk segala hal tidak lagi ideal.</p>
+  <p>Penting karena developer dapat memilih basis data sesuai kebutuhan
+  aplikasi. Portofolio ini mendukung aplikasi berbasis data terdistribusi
+  dengan skalabilitas tinggi dan membantu beralih dari basis data komersial
+  yang penuh batasan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: basis data khusus hanya "versi lebih baru" dari
+    relasional. Tidak &mdash; masing-masing mengoptimalkan model data
+    berbeda, bukan sekadar penerus relasional.</p>
+  </aside>
+
+  <h3>Layanan basis data khusus di AWS</h3>
+  <p>Portofolio basis data AWS mencakup beberapa layanan dengan jenis dan
+  kasus penggunaan berbeda:</p>
+  <table>
+    <thead><tr><th>Layanan</th><th>Jenis</th><th>Kasus penggunaan</th></tr></thead>
+    <tbody>
+      <tr><td>RDS, Aurora, Redshift</td><td>Relasional</td><td>ERP, CRM, ecommerce</td></tr>
+      <tr><td>DynamoDB</td><td>Nilai kunci</td><td>Web, e-commerce, game</td></tr>
+      <tr><td>ElastiCache</td><td>Dalam memori</td><td>Caching, sesi, skor</td></tr>
+      <tr><td>DocumentDB</td><td>Dokumen</td><td>Konten, katalog</td></tr>
+      <tr><td>Keyspaces</td><td>Kolom lebar</td><td>Manajemen armada</td></tr>
+      <tr><td>Neptune</td><td>Grafik</td><td>Deteksi penipuan</td></tr>
+      <tr><td>Timestream</td><td>Deret waktu</td><td>IoT, DevOps, telemetri</td></tr>
+      <tr><td>QLDB</td><td>Buku besar</td><td>Rantai pasokan</td></tr>
+    </tbody>
+  </table>
+  <p>Penting karena tiap layanan mengoptimalkan model datanya sendiri:
+  ElastiCache menyimpan data dalam memori penuh terkelola (Redis, Memcached),
+  MemoryDB menyediakan basis data in-memory tahan lama kompatibel Redis,
+  DocumentDB adalah basis data dokumen terkelola penuh kompatibel API dengan
+  MongoDB, Keyspaces kompatibel Apache Cassandra, Neptune adalah basis data
+  grafik terkelola penuh, Timestream adalah deret waktu nirserver cepat, dan
+  QLDB menyimpan riwayat perubahan yang dapat diverifikasi secara
+  kriptografis.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: ElastiCache adalah basis data utama yang tahan lama.
+    Tidak &mdash; ElastiCache adalah penyimpanan cache; untuk daya tahan
+    gunakan MemoryDB atau basis data lain yang sesuai.</p>
+  </aside>
+
+  <h3>Amazon DynamoDB dan komponen intinya</h3>
+  <p>Amazon DynamoDB adalah basis data <strong>NoSQL</strong> terkelola penuh
+  yang memberi kinerja cepat dan dapat diprediksi dengan skalabilitas lancar.
+  DynamoDB menyebarkan data dan lalu lintas ke cukup banyak server, menyimpan
+  semua data di SSD, dan mereplikasinya otomatis di beberapa Availability
+  Zone dalam satu Region.</p>
+  <p>Komponen intinya adalah <strong>tabel</strong> (kumpulan item),
+  <strong>item</strong> (kumpulan atribut), dan <strong>atribut</strong>.
+  DynamoDB memakai <strong>kunci primer</strong> untuk mengidentifikasi tiap
+  item secara unik dan <strong>indeks sekunder</strong> untuk fleksibilitas
+  kueri. Layanan ini cocok untuk aplikasi skala tinggi, nirserver, dan
+  workload OLTP.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: DynamoDB butuh Anda menyediakan dan menambal server
+    sendiri. Tidak &mdash; terkelola penuh; Anda tak mengurus penyediaan
+    perangkat keras, replikasi, patch, atau skala klaster.</p>
+  </aside>
+
+  <h3>Keamanan DynamoDB</h3>
+  <p>DynamoDB menyimpan data secara redundan pada beberapa perangkat di
+  beberapa fasilitas dalam satu Region, mengenkripsi semua data saat diam
+  memakai kunci di <strong>AWS KMS</strong>, dan mengandalkan
+  <strong>IAM</strong> untuk mengautentikasi serta mengotorisasi akses.</p>
+  <p>Penting karena praktik terbaiknya mencakup penggunaan IAM role untuk
+  kunci akses sementara, kondisi kebijakan IAM untuk kontrol terperinci
+  (hak istimewa minimal), serta <strong>AWS CloudTrail</strong> untuk
+  memantau penggunaan kunci terkelola AWS dan merekam aktivitas DynamoDB.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: enkripsi diam DynamoDB harus diaktifkan manual. Tidak
+    &mdash; semua data pengguna yang tersimpan di DynamoDB dienkripsi
+    sepenuhnya saat diam.</p>
+  </aside>
+
+  <h3>Memilih layanan basis data yang tepat</h3>
+  <p>Pilih layanan basis data yang paling sesuai dengan pekerjaan agar mudah
+  mengoptimalkan skala, kinerja, dan biaya. Relasional untuk aplikasi
+  tradisional, ERP, CRM, dan ecommerce; nilai kunci untuk web lalu lintas
+  tinggi dan game; dokumen untuk manajemen konten dan profil; grafik untuk
+  deteksi penipuan dan rekomendasi; deret waktu untuk IoT dan telemetri.</p>
+  <p>Penting karena aplikasi modern tidak lagi didukung satu basis data.
+  Aplikasi dipecah menjadi layanan lebih kecil, masing-masing dengan basis
+  datanya sendiri — strategi <strong>basis data bebas</strong> yang memberi
+  tiap basis data fungsi, kinerja, dan skala sesuai kebutuhan workload.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: satu basis data besar selalu lebih mudah dikelola.
+    Tidak &mdash; memecah aplikasi dan memberi tiap layanan basis data
+    terbaiknya menghilangkan gagasan "satu basis data untuk semua".</p>
+  </aside>
+</section>
+
+<!-- ===================== OPSIONAL #5 KODE ===================== -->
+<section class="code" id="kode">
+  <h2>Kode</h2>
+  <p><strong>Kueri SQL dasar</strong> &mdash; memilih semua data dari satu
+  tabel:</p>
+  <pre><code class="language-sql">SELECT * FROM table_name;
+
+-- gabungkan dua tabel untuk melihat relasinya
+SELECT b.judul, p.tanggal
+FROM buku AS b
+JOIN penjualan AS p ON b.isbn = p.isbn;
+</code></pre>
+  <p><strong>AWS CLI</strong> &mdash; membuat instans Amazon RDS:</p>
+  <pre><code class="language-bash">aws rds create-db-instance \
+  --db-instance-identifier db-utama \
+  --engine mysql \
+  --db-instance-class db.t3.micro \
+  --allocated-storage 20 \
+  --multi-az
+</code></pre>
+  <p><strong>Apa yang berubah kalau X diubah:</strong> menambahkan
+  <code>--multi-az</code> membuat salinan siaga di Availability Zone lain
+  dan mengaktifkan failover otomatis, dengan biaya dua instans.</p>
+</section>
+
+<!-- ===================== WAJIB #6 LATIHAN ===================== -->
+<section class="practice" id="latihan">
+  <h2>Latihan mandiri</h2>
+
+  <p>1. Apa perbedaan tanggung jawab AWS dan pelanggan antara basis data
+  yang dikelola sendiri di Amazon EC2 dan basis data terkelola seperti
+  Amazon RDS?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Pada EC2 (tidak terkelola), AWS memelihara perangkat keras dan
+    infrastruktur fisik, tetapi pelanggan mengelola instans EC2, basis data
+    pada host, pengoptimalan kueri, dan data. Pada RDS (terkelola), AWS
+    menyediakan penyiapan instans dan basis data plus sistem untuk
+    ketersediaan tinggi, skalabilitas, patching, dan cadangan; pelanggan
+    masih menyetel basis data, mengoptimalkan kueri, dan mengamankan data.</p>
+  </details>
+
+  <p>2. Jelaskan bagaimana Amazon RDS Multi-AZ menangani kegagalan basis
+  data utama.</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>RDS menyimpan salinan utama di satu Availability Zone dan salinan
+    siaga di Availability Zone lain, direplikasi secara sinkron. Bila utama
+    kehilangan konektivitas, RDS memulai failover otomatis lewat nama DNS
+    yang disediakan: basis data siaga dipromosikan ke peran utama dan kueri
+    dialihkan ke basis data utama yang baru.</p>
+  </details>
+
+  <p>3. Sebuah aplikasi game butuh papan peringkat dengan akses sangat cepat
+  dan sebuah sistem manajemen konten menyimpan dokumen kaya. Layanan basis
+  data mana yang tepat untuk masing-masing?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Papan peringkat: Amazon ElastiCache (basis data dalam memori, kasus
+    penggunaan caching dan papan peringkat game). Manajemen konten: Amazon
+    DocumentDB (basis data dokumen untuk manajemen konten, katalog, dan
+    profil pengguna).</p>
+  </details>
+
+  <p>4. Kenapa DynamoDB cocok untuk aplikasi skala tinggi, dan apa komponen
+  intinya?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Karena DynamoDB terkelola penuh, menyebarkan data dan lalu lintas ke
+    cukup banyak server, menyimpan data di SSD, dan mereplikasinya otomatis
+    di beberapa Availability Zone sehingga memberi kinerja cepat dan dapat
+    diprediksi. Komponen intinya: tabel (kumpulan item), item (kumpulan
+    atribut), dan atribut, dengan kunci primer dan indeks sekunder.</p>
+  </details>
+
+  <p>5. Apa maksud strategi "basis data bebas" pada aplikasi modern?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Aplikasi besar tidak lagi didukung satu basis data; aplikasi dipecah
+    menjadi layanan lebih kecil yang masing-masing punya basis datanya
+    sendiri, dipilih sesuai fungsionalitas, kinerja, dan skala workload-nya.
+    Ini menggantikan gagasan satu basis data untuk semua.</p>
+  </details>
+</section>
+
+<!-- ===================== OPSIONAL #7 FAQ ===================== -->
+<section class="faq" id="faq">
+  <h2>Jebakan &amp; FAQ</h2>
+  <p><strong>Apakah salinan siaga Multi-AZ dapat dipakai untuk membaca
+  guna menambah kapasitas?</strong> Tidak. Salinan siaga bersifat pasif dan
+  tidak dikueri aplikasi; ia disediakan untuk failover otomatis.</p>
+  <p><strong>Apakah AWS menyediakan basis data relasional terkelola, atau
+  harus self-manage di EC2?</strong> Keduanya tersedia. Yang tidak terkelola
+  dijalankan di Amazon EC2; yang terkelola disediakan Amazon RDS (plus
+  Aurora sebagai mesin cloud asli).</p>
+  <p><strong>Bagaimana pencadangan otomatis dan snapshot manual
+  berbeda?</strong> Pencadangan otomatis diaktifkan default, mencadangkan
+  seluruh instans DB plus log transaksi, dan memungkinkan pemulihan titik
+  waktu dengan retensi 0&ndash;35 hari. Snapshot manual dapat disimpan lebih
+  dari 35 hari.</p>
+  <p><strong>Kalau retensi pencadangan disetel 0 hari, apakah cadangan lama
+  tetap aman?</strong> Tidak. Menyetel retensi ke 0 menghentikan pencadangan
+  otomatis sekaligus menghapus semua cadangan otomatis yang ada.</p>
+  <p><strong>Apakah Amazon Aurora memakai volume EBS biasa per
+  instans?</strong> Tidak. Aurora menyimpan data dalam volume klaster,
+  satu volume virtual berbasis SSD yang menyalin data ke tiga Availability
+  Zone.</p>
+  <p><strong>Apakah ElastiCache dapat menjadi basis data utama yang tahan
+  lama?</strong> Tidak. ElastiCache adalah penyimpanan cache dalam memori;
+  untuk basis data in-memory tahan lama gunakan MemoryDB for Redis.</p>
+</section>
+
+<!-- ===================== OPSIONAL #8 GLOSARIUM ===================== -->
+<section class="glossary" id="glosarium">
+  <h2>Glosarium</h2>
+  <dl>
+    <dt>Basis data relasional</dt><dd>Data dalam tabel berelasi dengan skema tetap, diakses via SQL.</dd>
+    <dt>Skema logis</dt><dd>Tabel, baris, kolom, dan hubungan antar tabel.</dd>
+    <dt>RDBMS</dt><dd>Sistem manajemen basis data relasional.</dd>
+    <dt>SQL</dt><dd>Bahasa kueri terstruktur untuk berkomunikasi dengan RDBMS.</dd>
+    <dt>ACID</dt><dd>Atomisitas, konsistensi, isolasi, dan daya tahan data.</dd>
+    <dt>Amazon RDS</dt><dd>Layanan basis data relasional terkelola.</dd>
+    <dt>Instans DB</dt><dd>Bagian komputasi instans Amazon RDS yang menjalankan mesin DB.</dd>
+    <dt>Grup subnet DB</dt><dd>Kumpulan subnet (min. dua AZ) tempat instans DB ditempatkan.</dd>
+    <dt>Multi-AZ</dt><dd>Salinan siaga di AZ lain dengan replikasi sinkron dan failover otomatis.</dd>
+    <dt>Failover otomatis</dt><dd>Promosi basis data siaga ke peran utama saat utama gagal.</dd>
+    <dt>Snapshot manual</dt><dd>Cadangan RDS yang dapat disimpan lebih dari 35 hari.</dd>
+    <dt>Amazon DynamoDB</dt><dd>Basis data NoSQL key-value terkelola penuh.</dd>
+    <dt>Tabel/item/atribut</dt><dd>Komponen inti DynamoDB: kumpulan item, kumpulan atribut.</dd>
+    <dt>Kunci primer</dt><dd>Pengidentifikasi unik tiap item di DynamoDB.</dd>
+    <dt>Amazon ElastiCache</dt><dd>Penyimpanan cache dalam memori terkelola (Redis, Memcached).</dd>
+    <dt>Amazon DocumentDB</dt><dd>Basis data dokumen terkelola penuh, kompatibel MongoDB.</dd>
+    <dt>Amazon Neptune</dt><dd>Basis data grafik terkelola penuh.</dd>
+    <dt>Amazon Timestream</dt><dd>Layanan basis data deret waktu nirserver.</dd>
+    <dt>Amazon QLDB</dt><dd>Basis data buku besar dengan riwayat terverifikasi kriptografis.</dd>
+    <dt>Basis data bebas</dt><dd>Strategi memakai satu basis data terbaik per fungsi aplikasi.</dd>
+  </dl>
+</section>
+
+<!-- ===================== OPSIONAL #9 CHECKLIST ===================== -->
+<section class="checklist" id="checklist">
+  <h2>Checklist kelulusan</h2>
+  <ul>
+    <li>Bisa jelaskan tabel, baris, kolom, dan skema logis relasional.</li>
+    <li>Bisa sebut contoh RDBMS dan peran kueri SQL dengan <em>join</em>.</li>
+    <li>Bisa bedakan basis data terkelola dan tidak terkelola.</li>
+    <li>Bisa jelaskan peran Amazon RDS dan instans basis data.</li>
+    <li>Bisa jelaskan penyimpanan RDS (EBS) dan volume klaster Aurora.</li>
+    <li>Bisa bedakan pencadangan otomatis dan snapshot manual.</li>
+    <li>Bisa jelaskan cara kerja Multi-AZ dan failover otomatis.</li>
+    <li>Bisa sebut kontrol keamanan Amazon RDS (IAM, grup keamanan, enkripsi).</li>
+    <li>Bisa petakan jenis basis data ke layanan AWS yang tepat.</li>
+    <li>Bisa jelaskan komponen inti dan keamanan DynamoDB.</li>
+    <li>Bisa jelaskan strategi "basis data bebas".</li>
+  </ul>
+</section>
+
+<!-- ===================== WAJIB #10 SUMBER ===================== -->
+<section class="sources" id="sumber">
+  <h2>Sumber</h2>
+  <ol>
+    <li>Modul kursus <em>AWS Technical Essentials</em>, Bagian 2 &mdash;
+    basis data di AWS (transkrip lokal).</li>
+    <li>Dokumentasi resmi AWS: <em>Amazon RDS</em>, <em>Amazon Aurora</em>,
+    <em>Amazon DynamoDB</em>, <em>Amazon ElastiCache</em>,
+    <em>Amazon DocumentDB</em>, <em>Amazon Neptune</em>,
+    <em>Amazon Timestream</em>, <em>Amazon QLDB</em>.</li>
+  </ol>
+</section>
+
+</article>
+</div>
+
+<script src="../../assets/note.js" defer></script>
+</body>
+</html>
