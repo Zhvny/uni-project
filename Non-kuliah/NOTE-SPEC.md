@@ -5,6 +5,12 @@ Sumber kerangka: `Non-kuliah/_templates/note.html` — **salin mentah**, jangan 
 
 Lokasi file: `Non-kuliah/<subjek>/<topik>.html` (kedalaman 2 — path aset `../assets/…`).
 
+**Pengecualian — catatan AWS bersama materi sumber.** Bila catatan diletakkan di
+`Non-kuliah/AWS/AWS Technical Essentials (Instruktur Indonesia)/<topik>.html`
+(kedalaman **3**), path aset wajib `../../assets/…`, back-link `../../index.html`,
+dan `href` di `index.html` di-encode (`%20` spasi, `%5B`/`%5D` untuk `[` `]`).
+Salah hitung kedalaman = CSS/JS tak termuat (halaman "ancur") **tanpa error** di konsol.
+
 ---
 
 ## 1. Blok #0–#10 (kelas adalah kontrak)
