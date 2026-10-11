@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to Containers — AWS</title>
+
+<!-- Tema hljs (dimuat sebelum note.css agar note.css menetralkan padding/latar) -->
+<link rel="stylesheet" href="../../../assets/hljs/github.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../../../assets/hljs/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="../../../assets/note.css">
+
+<!-- MathJax 4 — JANGAN set throwOnError (dihapus di v4). Wajib matikan speech/Braille. -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  options: {
+    enableSpeech: false,
+    enableBraille: false,
+    menuOptions: {
+      settings: { enrich: false, speech: false, braille: false, assistiveMml: false }
+    }
+  }
+};
+</script>
+<script src="../../../assets/mathjax/tex-svg.js" defer></script>
+<script src="../../../assets/hljs/hljs.min.js" defer></script>
+</head>
+<body>
+<div class="layout">
+
+<details class="toc">
+  <summary>Daftar isi</summary>
+  <nav aria-label="Daftar isi">
+    <ol>
+      <li><a href="#tldr">TL;DR</a></li>
+      <li><a href="#peta">Peta konsep</a></li>
+      <li><a href="#konsep">Konsep inti</a></li>
+      <li><a href="#kode">Kode</a></li>
+      <li><a href="#latihan">Latihan</a></li>
+      <li><a href="#faq">Jebakan &amp; FAQ</a></li>
+      <li><a href="#glosarium">Glosarium</a></li>
+      <li><a href="#checklist">Checklist</a></li>
+      <li><a href="#sumber">Sumber</a></li>
+    </ol>
+  </nav>
+</details>
+
+<article>
+
+<!-- ===================== WAJIB #0 META ===================== -->
+<header class="meta">
+  <a class="back" href="../../../index.html">&larr; Daftar catatan</a>
+  <p class="eyebrow">AWS</p>
+  <h1>Introduction to Containers</h1>
+  <dl>
+    <dt>Prasyarat</dt><dd>Dasar baris perintah &amp; Linux</dd>
+    <dt>Dibuat</dt><dd>2026-10-12</dd>
+    <dt>Status</dt><dd>solid</dd>
+    <dt>Estimasi baca</dt><dd>20 menit</dd>
+  </dl>
+</header>
+
+<!-- ===================== WAJIB #1 TL;DR ===================== -->
+<section class="tldr" id="tldr">
+  <h2>TL;DR</h2>
+  <ul>
+    <li>Kontainer = paket ringan berisi aplikasi + dependensinya, terisolasi
+    namun berbagi kernel OS host.</li>
+    <li>Berbeda dari VM: tanpa OS tamu sendiri &rarr; jauh lebih ringan
+    dan cepat start.</li>
+    <li><strong>Image</strong> = templat read-only; <strong>kontainer</strong> =
+    instance image yang sedang berjalan.</li>
+    <li><strong>Dockerfile</strong> mendefinisikan cara membangun image;
+    <code>docker build</code> lalu <code>docker run</code>.</li>
+    <li>Kontainer adalah fondasi <strong>layanan mikro</strong>: tiap layanan
+    dikemas dan di-deploy terpisah.</li>
+  </ul>
+</section>
+
+<!-- ===================== OPSIONAL #2 PETA ===================== -->
+<figure class="map" id="peta">
+  <h2>Peta konsep</h2>
+  <pre class="mermaid">
+flowchart TD
+  A[Kode sumber] --> B[Dockerfile]
+  B -->|docker build| C[Image read-only]
+  C -->|docker run| D[Kontainer berjalan]
+  C --> F[Registry mis. Amazon ECR]
+  F -->|docker pull| D
+  D --> E[Aplikasi melayani trafik]
+  D -.banyak replika.-> G[Orkestrasi ECS EKS]
+  </pre>
+  <figcaption>Alur dari kode sumber menjadi kontainer yang berjalan.</figcaption>
+</figure>
+
+<!-- ===================== WAJIB #3 KONSEP ===================== -->
+<section class="concept" id="konsep">
+  <h2>Konsep inti</h2>
+
+  <h3>Apa itu kontainer</h3>
+  <p>Kontainer adalah unit standar perangkat lunak yang mengemas kode aplikasi
+  bersama dependensinya (pustaka, konfigurasi, runtime) sehingga jalan konsisten
+  di mana pun. Isolasi antar-kontainer dilakukan pada tingkat proses.</p>
+  <p>Penting karena "jalan di mesin saya tapi tidak di server" hilang: image yang
+  sama menghasilkan perilaku yang sama di laptop, server uji, maupun produksi.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: kontainer bukan "VM kecil". Kontainer berbagi kernel OS host,
+    jadi tak ada OS tamu penuh di dalamnya.</p>
+  </aside>
+
+  <h3>Virtualisasi dan abstraksi</h3>
+  <p>Virtualisasi <strong>VM</strong> mengabstraksi perangkat keras: hypervisor
+  menjalankan beberapa OS tamu, masing-masing dengan kernel sendiri. Kontainer
+  mengabstraksi pada tingkat <strong>Sistem Operasi</strong>: proses diisolasi
+  (namespace, cgroups) tapi memakai kernel host yang sama.</p>
+  <p>Konsekuensinya: kontainer jauh lebih kecil (megabyte, bukan gigabyte),
+  start dalam detik atau milidetik, dan lebih padat. VM unggul saat butuh
+  kernel berbeda atau isolasi keamanan yang lebih kuat.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: kontainer "tidak aman" hanya karena berbagi kernel. Isolasinya
+    kuat untuk sebagian besar kasus, tetapi memang lebih tipis dari VM &mdash;
+    jangan menjalankan proses tak tepercaya tanpa pengerasan tambahan.</p>
+  </aside>
+
+  <h3>Kontainerisasi bukan hal baru</h3>
+  <p>Idenya sudah lama: <code>chroot</code> (1979) mengisolasi sistem berkas,
+  lalu <strong>namespace</strong> (isolasi tampilan sumber daya) dan
+  <strong>cgroups</strong> (batas pemakaian CPU/memori) di Linux melengkapinya.
+  LXC membungkusnya menjadi "kontainer" penuh.</p>
+  <p>Penting karena Docker tidak menemukan konsepnya, melainkan membuatnya
+  <em>mudah dipakai</em>: format image standar, registry, dan alur kerja
+  yang sederhana.</p>
+
+  <h3>Docker sebagai platform virtualisasi</h3>
+  <p>Docker adalah platform untuk membangun, menjalankan, dan mendistribusikan
+  kontainer. Komponennya: <strong>Docker Engine</strong> (daemon + CLI),
+  <strong>image</strong>, <strong>kontainer</strong>, dan <strong>registry</strong>
+  (mis. Docker Hub, Amazon ECR).</p>
+  <p>Penting karena Docker menyatukan format image (OCI) dan tooling, sehingga
+  image yang dibuild bisa dijalankan di banyak runtime (Docker, containerd,
+  Podman, Amazon ECS/EKS).</p>
+
+  <h3>Manfaat kontainer Docker</h3>
+  <ul>
+    <li><strong>Portabel</strong> &mdash; image yang sama jalan di mana saja.</li>
+    <li><strong>Ringan</strong> &mdash; berbagi kernel, tanpa OS tamu.</li>
+    <li><strong>Konsisten</strong> &mdash; dependensi terkurung dalam image.</li>
+    <li><strong>Cepat</strong> &mdash; start dalam detik, mudah diskalakan.</li>
+    <li><strong>Efisien</strong> &mdash; banyak kontainer per host.</li>
+    <li><strong>Terisolasi</strong> &mdash; kegagalan satu kontainer tak
+    menjatuhkan yang lain.</li>
+  </ul>
+
+  <h3>Image: templat untuk kontainer</h3>
+  <p>Image adalah templat <em>read-only</em> dan <em>immutable</em> yang berisi
+  sistem berkas + metadata aplikasi. Image dibangun berlapis (<em>layer</em>);
+  tiap instruksi menambah satu lapisan yang di-cache.</p>
+  <p>Penting karena image adalah artefak yang dibagi dan dipromosikan antar
+  lingkungan. Untuk mengubah aplikasi, Anda membangun image baru &mdash; bukan
+  mengedit kontainer yang berjalan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: mengubah file di dalam kontainer yang berjalan bersifat
+    sementara. Perubahan hilang saat kontainer dihapus; ubah di Dockerfile lalu
+    build ulang.</p>
+  </aside>
+
+  <h3>Contoh: Dockerfile</h3>
+  <p><strong>Dockerfile</strong> adalah berkas teks berisi instruksi berurutan
+  untuk membangun image: basis (<code>FROM</code>), menyalin berkas
+  (<code>COPY</code>), menjalankan perintah saat build (<code>RUN</code>), dan
+  perintah saat jalan (<code>CMD</code>).</p>
+  <p>Penting karena Dockerfile membuat pembangunan image <em>reproducible</em>:
+  seluruh definisi lingkungan tersimpan sebagai kode (lihat blok Kode).</p>
+
+  <h3>Image Docker vs kontainer</h3>
+  <p>Analogi kelas &amp; objek: <strong>image</strong> adalah "kelas" (cetak biru,
+  read-only), <strong>kontainer</strong> adalah "objek" (instance yang berjalan
+  dengan lapisan tulis sendiri).</p>
+  <p>Penting karena satu image bisa melahirkan banyak kontainer identik sekaligus
+  &mdash; inilah dasar penskalaan horizontal. Kontainer yang dihapus tak mengubah
+  image asalnya.</p>
+
+  <h3>Manfaat layanan mikro</h3>
+  <p>Layanan mikro memecah aplikasi menjadi layanan kecil yang berdiri sendiri,
+  masing-masing punya siklus rilis dan penskalaan sendiri. Kontainer mempermudah
+  pola ini karena tiap layanan mudah dikemas, dijalankan, dan diganti.</p>
+  <p>Penting karena tim bisa merilis dan menskalakan bagian yang perlu saja,
+  serta memilih teknologi berbeda per layanan tanpa mengganggu yang lain.</p>
+
+  <h3>Tradisional vs layanan mikro</h3>
+  <table>
+    <thead><tr><th>Aspek</th><th>Monolit</th><th>Layanan mikro</th></tr></thead>
+    <tbody>
+      <tr><td>Deploy</td><td>Semua sekaligus</td><td>Per layanan</td></tr>
+      <tr><td>Skala</td><td>Seluruh aplikasi</td><td>Per layanan</td></tr>
+      <tr><td>Kode</td><td>Satu basis</td><td>Terpisah</td></tr>
+      <tr><td>Rilis</td><td>Lambat, besar</td><td>Cepat, kecil</td></tr>
+    </tbody>
+  </table>
+  <aside class="pitfall">
+    <p>Miskonsepsi: layanan mikro selalu lebih baik. Untuk aplikasi kecil, monolit
+    lebih sederhana dan murah; mikro menambah kerumitan jaringan, orkestrasi, dan
+    observabilitas.</p>
+  </aside>
+
+  <h3>Karakteristik layanan mikro</h3>
+  <ul>
+    <li>Otonom &mdash; bisa di-deploy dan diuji sendiri.</li>
+    <li>Terdesentralisasi &mdash; data &amp; keputusan per layanan.</li>
+    <li>Berkomunikasi lewat API/jaringan yang terdefinisi.</li>
+    <li>Skala independen per layanan.</li>
+    <li>Batas domain jelas (satu layanan, satu tanggung jawab).</li>
+    <li>Mudah diganti &mdash; tidak mengikat teknologi tertentu.</li>
+  </ul>
+</section>
+
+<!-- ===================== OPSIONAL #5 KODE ===================== -->
+<section class="code" id="kode">
+  <h2>Kode</h2>
+  <p><strong>Dockerfile</strong> &mdash; templat untuk membangun image:</p>
+  <pre><code class="language-bash"># Dockerfile
+FROM python:3.12-slim        # basis image
+WORKDIR /app                 # direktori kerja
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+EXPOSE 8000
+CMD ["python", "app.py"]     # perintah saat jalan
+</code></pre>
+  <p><strong>Membangun &amp; menjalankan</strong> image/kontainer:</p>
+  <pre><code class="language-bash"># bangun image dari Dockerfile di folder ini
+docker build -t aplikasi-saya:1.0 .
+
+# jalankan kontainer di latar, petakan port 8000
+docker run -d -p 8000:8000 --name app aplikasi-saya:1.0
+
+# lihat kontainer yang berjalan
+docker ps
+
+# masuk ke shell kontainer yang berjalan
+docker exec -it app /bin/sh
+</code></pre>
+  <p><strong>Apa yang berubah kalau X diubah:</strong> mengganti instruksi
+  <code>COPY . .</code> atau <code>RUN</code> menghasilkan lapisan (layer) baru,
+  sehingga <code>build</code> berikutnya membangun ulang dari titik itu ke bawah.</p>
+</section>
+
+<!-- ===================== WAJIB #6 LATIHAN ===================== -->
+<section class="practice" id="latihan">
+  <h2>Latihan mandiri</h2>
+
+  <p>1. Jelaskan beda <strong>image</strong> dan <strong>kontainer</strong> dengan
+  satu kalimat masing-masing.</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Image = templat read-only (cetak biru) yang berisi aplikasi + dependensi.
+    Kontainer = instance image yang sedang berjalan, dengan lapisan tulis sendiri.</p>
+  </details>
+
+  <p>2. Kenapa kontainer start jauh lebih cepat daripada VM?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Karena kontainer tidak menjalankan OS tamu sendiri; ia berbagi kernel OS
+    host dan cukup menyalakan proses terisolasi. VM harus menyalakan seluruh
+    sistem operasi lebih dulu.</p>
+  </details>
+
+  <p>3. Apa peran Dockerfile?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Mendefinisikan langkah berurutan untuk membangun image (basis, salin,
+    perintah build, perintah jalan), sehingga lingkungan aplikasi menjadi
+    reproducible dan tersimpan sebagai kode.</p>
+  </details>
+
+  <p>4. Kapan <em>monolit</em> lebih tepat daripada layanan mikro?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Saat aplikasi/tim masih kecil: monolit lebih sederhana, tanpa kerumitan
+    jaringan, orkestrasi, dan observabilitas yang ditambah layanan mikro.</p>
+  </details>
+</section>
+
+<!-- ===================== OPSIONAL #7 FAQ ===================== -->
+<section class="faq" id="faq">
+  <h2>Jebakan &amp; FAQ</h2>
+  <p><strong>Apakah kontainer punya OS sendiri?</strong> Tidak. Ia berbagi kernel
+  OS host; yang ada di dalam image hanyalah sistem berkas minimal + aplikasi.</p>
+  <p><strong>Bisakah saya mengubah file di kontainer yang jalan?</strong> Bisa,
+  tapi perubahan bersifat sementara dan hilang saat kontainer dihapus. Ubah di
+  Dockerfile lalu build ulang.</p>
+  <p><strong>Apakah Docker satu-satunya runtime kontainer?</strong> Tidak. Docker
+  yang paling populer, tetapi ada containerd, Podman, dan layanan terkelola
+  seperti Amazon ECS/EKS yang menjalankan image standar OCI.</p>
+  <p><strong>Apakah memakai kontainer berarti harus layanan mikro?</strong> Tidak.
+  Aplikasi monolit juga bisa dikontainerisasi; kontainer hanyalah cara mengemas.</p>
+  <p><strong>Di mana image disimpan?</strong> Di registry, mis. Docker Hub untuk
+  publik atau Amazon ECR (Elastic Container Registry) untuk privat.</p>
+</section>
+
+<!-- ===================== OPSIONAL #8 GLOSARIUM ===================== -->
+<section class="glossary" id="glosarium">
+  <h2>Glosarium</h2>
+  <dl>
+    <dt>Kontainer</dt><dd>Proses terisolasi berisi aplikasi + dependensinya.</dd>
+    <dt>Image</dt><dd>Templat read-only berlapis untuk membuat kontainer.</dd>
+    <dt>Dockerfile</dt><dd>Berkas instruksi untuk membangun image.</dd>
+    <dt>Docker Engine</dt><dd>Daemon + CLI yang menjalankan kontainer.</dd>
+    <dt>Registry</dt><dd>Tempat menyimpan &amp; membagi image (mis. ECR).</dd>
+    <dt>Layer</dt><dd>Lapisan sistem berkas yang menyusun sebuah image.</dd>
+    <dt>Hypervisor</dt><dd>Perangkat lunak yang menjalankan VM di atas host.</dd>
+    <dt>Namespace</dt><dd>Isolasi tampilan sumber daya antar-proses (Linux).</dd>
+    <dt>cgroups</dt><dd>Batas pemakaian CPU/memori untuk sekelompok proses.</dd>
+    <dt>Layanan mikro</dt><dd>Aplikasi yang dipecah jadi layanan kecil otonom.</dd>
+    <dt>Orkestrasi</dt><dd>Pengelolaan banyak kontainer (ECS, EKS, Kubernetes).</dd>
+  </dl>
+</section>
+
+<!-- ===================== OPSIONAL #9 CHECKLIST ===================== -->
+<section class="checklist" id="checklist">
+  <h2>Checklist kelulusan</h2>
+  <ul>
+    <li>Bisa definisikan kontainer dan bedakan dengan VM.</li>
+    <li>Bisa jelaskan perbedaan image vs kontainer.</li>
+    <li>Bisa jelaskan peran Dockerfile dan alur build/run.</li>
+    <li>Bisa sebut beberapa manfaat kontainer Docker.</li>
+    <li>Bisa bandingkan monolit vs layanan mikro.</li>
+    <li>Bisa sebut karakteristik utama layanan mikro.</li>
+  </ul>
+</section>
+
+<!-- ===================== WAJIB #10 SUMBER ===================== -->
+<section class="sources" id="sumber">
+  <h2>Sumber</h2>
+  <ol>
+    <li>Kerangka kursus <em>Introduction to Containers (Indonesian)</em> &mdash;
+    AWS Developer Learning Plan. <strong>Catatan:</strong> berkas sumber hanya
+    memuat daftar judul tanpa badan materi.</li>
+    <li>Karena berkas kosong, isi catatan disusun dari <strong>dokumentasi umum</strong>:
+    Docker (<em>Get started</em>, <em>Overview of Docker</em>),
+    dan materi pengantar kontainer/orkestrasi AWS (Amazon ECS/EKS).</li>
+  </ol>
+</section>
+
+</article>
+</div>
+
+<script src="../../../assets/note.js" defer></script>
+</body>
+</html>
