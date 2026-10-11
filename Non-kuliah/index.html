@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catatan belajar — daftar</title>
+<link rel="stylesheet" href="assets/note.css">
+</head>
+<body>
+<article>
+  <h1>Catatan belajar</h1>
+  <p>Kumpulan catatan offline. Buka satu catatan dari daftar di bawah.
+     Setiap catatan adalah satu file HTML mandiri di folder subjeknya.</p>
+
+  <label for="filter">Cari (subjek, tag, atau judul)</label>
+  <input id="filter" type="search" placeholder="mis. bisnis, bep, statistika" autocomplete="off">
+
+  <ul id="notes">
+    <!-- Baris ditambahkan agent, satu per catatan:
+    <li data-subjek="bisnis" data-tag="bep,biaya,keuangan">
+      <a href="bisnis/bep-break-even.html">Break-even point</a>
+      <span class="tags">bisnis · bep, biaya · 2026-10-11</span>
+    </li>
+    -->
+  </ul>
+
+  <section id="review-log">
+    <h2>Log ulasan</h2>
+    <p>Jejak kapan tiap topik diulas atau di-update (bagian dari workflow §11).</p>
+    <ul id="review-entries">
+      <!-- Entri ditambahkan agent: <li>YYYY-MM-DD — topik — catatan</li> -->
+    </ul>
+  </section>
+</article>
+
+<script>
+(function () {
+  var input = document.getElementById('filter');
+  var list = document.getElementById('notes');
+  if (!input || !list) return;
+  input.addEventListener('input', function () {
+    var q = input.value.trim().toLowerCase();
+    var items = list.querySelectorAll('li');
+    for (var i = 0; i < items.length; i++) {
+      var li = items[i];
+      var hay = (li.getAttribute('data-subjek') + ' ' +
+                 li.getAttribute('data-tag') + ' ' +
+                 li.textContent).toLowerCase();
+      li.classList.toggle('is-hidden', q !== '' && hay.indexOf(q) === -1);
+    }
+  });
+})();
+</script>
+</body>
+</html>
