@@ -85,6 +85,7 @@ setiap rumus **wajib** punya "kapan dipakai / kapan tidak"; jawaban latihan **wa
 ## 3. LaTeX: macro boleh + config MathJax (v4)
 
 - Delimiter inline: `\( … \)` · display: `$$ … $$`.
+- **PENTING — backslash body SATU, config DUA.** Di **body** HTML tulis `\(x\)` (satu backslash). Di **config JS** tulis `[['\\(','\\)']]` (dua backslash; JS men-unescape). Bila body tertulis `\\(x\\)` (dua backslash), MathJax menganggap delimiter ter-escape dan **inline tidak dirender tanpa error** (jebakan senyap). Self-check §8 butir 4/5 memverifikasinya.
 - Hanya macro yang **sudah dibundel** di `tex-svg.js`: paket `ams`, `newcommand`, `configmacros`, `textmacros`.
   **Dilarang** `\require` atau paket yang butuh unduh modul (`\cancel`, `\ce`, dll.).
 - **`throwOnError` tidak boleh diset** — opsi itu **dihapus di MathJax v4** dan menghasilkan warning.
@@ -178,6 +179,12 @@ PY
 
 # 3) sel tabel terpanjang (harus <= 40 utk 2 kolom, <= 25 utk 3 kolom)
 grep -oP '(?<=<td>)[^<]*' <file>.html | awk '{print length}' | sort -n | tail -1
+
+# 4) backslash body ganda (jebakan senyap) — HARUS 0 kecuali baris config inlineMath
+grep -n '\\\\(' <file>.html | grep -v inlineMath || echo "OK: tidak ada \\( ganda di body"
+
+# 5) cepat: hitung ekspresi inline mentah yang tak ter-render (jalankan di browser console)
+#    document.body.innerText.match(/\\\(/g)?.length || 0   -> harus 0
 ```
 
 Buka di browser: periksa console bersih, rumus/diagram/highlight muncul.
