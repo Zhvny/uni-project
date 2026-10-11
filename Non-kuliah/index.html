@@ -3,28 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Catatan belajar — daftar</title>
+<title>Daftar catatan</title>
 <link rel="stylesheet" href="assets/note.css">
 </head>
 <body>
-<article>
-  <h1>Catatan belajar</h1>
-  <p>Kumpulan catatan offline. Buka satu catatan dari daftar di bawah.
-     Setiap catatan adalah satu file HTML mandiri di folder subjeknya.</p>
+<article class="library">
+  <header class="lib-head">
+    <p class="eyebrow">Perpustakaan pribadi</p>
+    <h1>Daftar catatan</h1>
+    <p class="lede">Kumpulan catatan belajar offline. Satu topik = satu file;
+       buka salah satu untuk membaca atau mencetaknya.</p>
+  </header>
 
-  <label for="filter">Cari (subjek, tag, atau judul)</label>
-  <input id="filter" type="search" placeholder="mis. bisnis, bep, statistika" autocomplete="off">
+  <div class="lib-tools">
+    <label for="filter" class="visually-hidden">Cari catatan</label>
+    <input id="filter" type="search" placeholder="Cari subjek, tag, atau judul…" autocomplete="off">
+    <span id="count" class="count" aria-live="polite"></span>
+  </div>
 
   <ul id="notes">
     <li data-subjek="bisnis" data-tag="bep,biaya,keuangan">
       <a href="bisnis/bep-break-even.html">Break-even point</a>
-      <span class="tags">bisnis · bep, biaya · 2026-10-11</span>
+      <span class="tags">bep · biaya, keuangan · 2026-10-11</span>
     </li>
-    <li data-subjek="python" data-tag="python,list,dict,set"><a href="python/list-dict-set.html">List, Dict, Set di Python</a><span class="tags">python · list, dict, set · 2026-10-11</span></li>
-    <!-- Baris ditambahkan agent, satu per catatan:
+    <li data-subjek="python" data-tag="python,list,dict,set">
+      <a href="python/list-dict-set.html">List, Dict, Set di Python</a>
+      <span class="tags">list, dict, set · 2026-10-11</span>
+    </li>
+    <!-- Baris ditambahkan agent, satu per catatan (subjek dikelompokkan otomatis via JS):
     <li data-subjek="bisnis" data-tag="bep,biaya,keuangan">
       <a href="bisnis/bep-break-even.html">Break-even point</a>
-      <span class="tags">bisnis · bep, biaya · 2026-10-11</span>
+      <span class="tags">bep · biaya, keuangan · 2026-10-11</span>
     </li>
     -->
   </ul>
@@ -43,18 +52,55 @@
 (function () {
   var input = document.getElementById('filter');
   var list = document.getElementById('notes');
+  var count = document.getElementById('count');
   if (!input || !list) return;
-  input.addEventListener('input', function () {
+
+  var items = Array.prototype.slice.call(list.querySelectorAll('li[data-subjek]'));
+
+  // Kelompokkan per subjek: sisipkan judul kelompok (progresif — tanpa JS
+  // tetap daftar datar biasa). Sunting tetap cukup tambah satu <li>.
+  var groups = [];
+  items.forEach(function (li) {
+    var name = li.getAttribute('data-subjek') || 'lain-lain';
+    var g = groups.filter(function (x) { return x.name === name; })[0];
+    if (!g) { g = { name: name, items: [] }; groups.push(g); }
+    g.items.push(li);
+  });
+  var frag = document.createDocumentFragment();
+  groups.forEach(function (g) {
+    var h = document.createElement('li');
+    h.className = 'subject';
+    h.setAttribute('role', 'presentation');
+    h.textContent = g.name;
+    frag.appendChild(h);
+    g.items.forEach(function (li) { frag.appendChild(li); });
+  });
+  list.appendChild(frag);            // memindahkan li yang sudah ada → urut per subjek
+
+  function refresh() {
     var q = input.value.trim().toLowerCase();
-    var items = list.querySelectorAll('li');
-    for (var i = 0; i < items.length; i++) {
-      var li = items[i];
+    var visible = 0;
+    items.forEach(function (li) {
       var hay = (li.getAttribute('data-subjek') + ' ' +
                  li.getAttribute('data-tag') + ' ' +
                  li.textContent).toLowerCase();
-      li.classList.toggle('is-hidden', q !== '' && hay.indexOf(q) === -1);
-    }
-  });
+      var hit = q === '' || hay.indexOf(q) !== -1;
+      li.classList.toggle('is-hidden', !hit);
+      if (hit) visible++;
+    });
+    Array.prototype.forEach.call(list.querySelectorAll('.subject'), function (h) {
+      var n = h.nextElementSibling, any = false;
+      while (n && !n.classList.contains('subject')) {
+        if (!n.classList.contains('is-hidden')) any = true;
+        n = n.nextElementSibling;
+      }
+      h.classList.toggle('is-hidden', !any);
+    });
+    if (count) count.textContent = visible + ' catatan' + (q ? ' dari ' + items.length : '');
+  }
+
+  input.addEventListener('input', refresh);
+  refresh();
 })();
 </script>
 </body>

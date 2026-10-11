@@ -129,11 +129,13 @@ Setelah catatan dibuat, tambahkan **satu** `<li>` ke `<ul id="notes">` di `Non-k
 ```html
 <li data-subjek="bisnis" data-tag="bep,biaya,keuangan">
   <a href="bisnis/bep-break-even.html">Break-even point</a>
-  <span class="tags">bisnis · bep, biaya · 2026-10-11</span>
+  <span class="tags">bep · biaya, keuangan · 2026-10-11</span>
 </li>
 ```
 
-`data-subjek` dan `data-tag` **wajib** (dipakai filter). Path `href` relatif dari `index.html`.
+`data-subjek` dan `data-tag` **wajib** (dipakai filter). Subjek tidak perlu ditulis ulang
+di `.tags` — daftar **dikelompokkan otomatis per `data-subjek`** oleh JS (tanpa JS tetap
+daftar datar). Path `href` relatif dari `index.html`.
 
 ---
 
