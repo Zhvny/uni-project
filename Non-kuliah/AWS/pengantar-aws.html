@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pengantar Amazon Web Services — AWS</title>
+
+<!-- Tema hljs (dimuat sebelum note.css agar note.css menetralkan padding/latar) -->
+<link rel="stylesheet" href="../assets/hljs/github.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/hljs/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="../assets/note.css">
+
+<!-- MathJax 4 — JANGAN set throwOnError (dihapus di v4). Wajib matikan speech/Braille. -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  options: {
+    enableSpeech: false,
+    enableBraille: false,
+    menuOptions: {
+      settings: { enrich: false, speech: false, braille: false, assistiveMml: false }
+    }
+  }
+};
+</script>
+<script src="../assets/mathjax/tex-svg.js" defer></script>
+<script src="../assets/hljs/hljs.min.js" defer></script>
+</head>
+<body>
+<div class="layout">
+
+<details class="toc">
+  <summary>Daftar isi</summary>
+  <nav aria-label="Daftar isi">
+    <ol>
+      <li><a href="#tldr">TL;DR</a></li>
+      <li><a href="#peta">Peta konsep</a></li>
+      <li><a href="#konsep">Konsep inti</a></li>
+      <li><a href="#kode">Kode</a></li>
+      <li><a href="#latihan">Latihan</a></li>
+      <li><a href="#faq">Jebakan &amp; FAQ</a></li>
+      <li><a href="#glosarium">Glosarium</a></li>
+      <li><a href="#checklist">Checklist</a></li>
+      <li><a href="#sumber">Sumber</a></li>
+    </ol>
+  </nav>
+</details>
+
+<article>
+
+<!-- ===================== WAJIB #0 META ===================== -->
+<header class="meta">
+  <a class="back" href="../index.html">&larr; Daftar catatan</a>
+  <p class="eyebrow">AWS</p>
+  <h1>Pengantar Amazon Web Services</h1>
+  <dl>
+    <dt>Prasyarat</dt><dd>Dasar TI (server, jaringan, basis data)</dd>
+    <dt>Dibuat</dt><dd>2026-10-11</dd>
+    <dt>Status</dt><dd>solid</dd>
+    <dt>Estimasi baca</dt><dd>20 menit</dd>
+  </dl>
+</header>
+
+<!-- ===================== WAJIB #1 TL;DR ===================== -->
+<section class="tldr" id="tldr">
+  <h2>TL;DR</h2>
+  <ul>
+    <li>Komputasi cloud = sumber daya TI sesuai permintaan, bayar sesuai pakai.</li>
+    <li>Tiga model deployment: on-premises, cloud, hybrid.</li>
+    <li>Enam keuntungan: bayar sesuai pakai, skala ekonomi, tanpa menebak
+    kapasitas, cepat &amp; tangkas, hemat biaya, jangkauan global.</li>
+    <li>Infrastruktur global: Region &rarr; Availability Zone; edge location
+    untuk cache (Amazon CloudFront).</li>
+    <li>Interaksi via Console, CLI, SDK. Keamanan = tanggung jawab bersama;
+    akses diatur oleh IAM.</li>
+  </ul>
+</section>
+
+<!-- ===================== OPSIONAL #2 PETA ===================== -->
+<figure class="map" id="peta">
+  <h2>Peta konsep</h2>
+  <pre class="mermaid">
+flowchart TD
+  A[Komputasi cloud] --> B[Model deployment]
+  B --> B1[On-premises]
+  B --> B2[Cloud]
+  B --> B3[Hybrid]
+  A --> C[Infrastruktur global]
+  C --> C1[Region]
+  C1 --> C2[Availability Zone]
+  C --> C3[Edge location]
+  A --> D[Cara berinteraksi]
+  D --> D1[Console]
+  D --> D2[CLI]
+  D --> D3[SDK]
+  A --> E[Keamanan bersama]
+  E --> E1[AWS mengamankan awan]
+  E --> E2[Pelanggan mengamankan isi]
+  </pre>
+  <figcaption>Kerangka modul: dari definisi cloud sampai keamanan dan akses.</figcaption>
+</figure>
+
+<!-- ===================== WAJIB #3 KONSEP ===================== -->
+<section class="concept" id="konsep">
+  <h2>Konsep inti</h2>
+
+  <h3>Apa itu komputasi cloud</h3>
+  <p>Komputasi cloud adalah penyediaan sumber daya TI sesuai permintaan dengan
+  harga bayar sesuai penggunaan. Perusahaan tidak lagi memiliki dan memelihara
+  pusat data sendiri; penyedia seperti AWS yang menyediakan dan mengelolanya.</p>
+  <p>Penting karena tugas repetitif yang tidak membedakan bisnis (memasang VM,
+  menyimpan cadangan) diserahkan ke penyedia, sehingga tim fokus pada hal yang
+  menjadi pembeda.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: cloud bukan sekadar "server milik orang lain". Yang berubah
+    adalah model belanja: dari belanja modal di muka menjadi biaya sesuai pemakaian.</p>
+  </aside>
+
+  <h3>Tiga model deployment</h3>
+  <p><strong>On-premises</strong> meng-host perangkat keras di pusat data sendiri.
+  <strong>Cloud</strong> menjalankan semuanya di penyedia cloud. <strong>Hybrid</strong>
+  menghubungkan sumber daya cloud dengan sistem internal yang sudah ada.</p>
+  <p>Penting untuk memilih tingkat kontrol, fleksibilitas, dan manajemen yang sesuai
+  kebutuhan. Contoh: lingkungan QA tambahan di cloud bisa dibuat dalam hitungan
+  menit, sementara on-premises butuh membeli dan memasang perangkat keras.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: hybrid bukan "cloud setengah jalan". Ini pola sah untuk
+    memperluas infrastruktur organisasi ke cloud sambil mempertahankan sistem lama.</p>
+  </aside>
+
+  <h3>Enam keuntungan komputasi cloud</h3>
+  <ul>
+    <li><strong>Bayar sesuai penggunaan</strong> &mdash; hanya membayar sumber daya
+    yang dipakai, bukan investasi penuh yang menganggur.</li>
+    <li><strong>Skala ekonomi besar</strong> &mdash; gabungan ratusan ribu pelanggan
+    menurunkan biaya variabel.</li>
+    <li><strong>Berhenti menebak kapasitas</strong> &mdash; naik-turun skala sesuai
+    kebutuhan dengan pemberitahuan singkat.</li>
+    <li><strong>Kecepatan dan ketangkasan</strong> &mdash; sumber daya tersedia
+    dengan sekali klik, dari hitungan minggu menjadi menit.</li>
+    <li><strong>Hemat biaya</strong> &mdash; fokus pada pelanggan, bukan menyiapkan
+    dan mengaktifkan infrastruktur fisik.</li>
+    <li><strong>Jangkauan global cepat</strong> &mdash; deploy ke banyak Region
+    dalam beberapa klik, latensi lebih rendah.</li>
+  </ul>
+
+  <h3>Infrastruktur global: Region dan Availability Zone</h3>
+  <p><strong>Region</strong> adalah lokasi geografis tempat AWS meng-host pusat
+  datanya; tiap Region punya nama dan kode, mis. <code>us-east-1</code> (N. Virginia).
+  Di dalam Region ada klaster <strong>Availability Zone</strong> (AZ): satu atau
+  lebih pusat data dengan daya, jaringan, dan konektivitas redundan. Kode AZ =
+  kode Region + satu huruf, mis. <code>us-east-1a</code>.</p>
+  <p>Penting karena Region terisolasi: tanpa izin eksplisit, data tidak direplikasi
+  antar Region. Untuk aplikasi yang selalu tersedia, replikasi workload ke
+  <em>minimal dua</em> AZ agar satu AZ yang gagal bisa digantikan.</p>
+  <p><strong>Edge location</strong> adalah lokasi global tempat konten di-cache
+  (lebih dari 400 lokasi). Amazon CloudFront merutekan tiap permintaan ke lokasi
+  berlatensi terendah, sehingga konten sampai lebih cepat.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: memilih Region bukan sekadar soal jarak. Pertimbangkan empat
+    aspek: latensi, harga, ketersediaan layanan, dan kepatuhan data.</p>
+  </aside>
+
+  <h3>Cara berinteraksi dengan AWS</h3>
+  <p>Tiap tindakan di AWS adalah panggilan API yang terautentikasi dan terotorisasi.
+  Tiga jalurnya: <strong>AWS Management Console</strong> (web), <strong>AWS CLI</strong>
+  (baris perintah, bisa diskrip), dan <strong>AWS SDK</strong> (dari kode aplikasi).</p>
+  <p>Penting karena pemilihan jalur menentukan otomatisasi. Konsol untuk eksplorasi
+  awal; CLI untuk tugas berulang terjadwal; SDK untuk mengintegrasikan aplikasi.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: mengubah Region di konsol berarti mengirim permintaan ke Region
+    lain (URL berubah), bukan memindahkan sumber daya yang sudah ada.</p>
+  </aside>
+
+  <h3>Model tanggung jawab bersama</h3>
+  <p>Keamanan adalah tanggung jawab bersama. AWS bertanggung jawab atas
+  <em>keamanan awan</em> (infrastruktur, perangkat keras, perangkat lunak, jaringan
+  yang menjalankan layanan). Pelanggan bertanggung jawab atas <em>keamanan di dalam
+  awan</em>: konfigurasi layanan dan aplikasi, serta keamanan data.</p>
+  <p>Penting karena tingkat tanggung jawab pelanggan bergantung pada jenis layanan.
+  Layanan infrastruktur (mis. Amazon EC2) menuntut pelanggan mengelola sistem operasi
+  dan platform; layanan terabstraksi (mis. Amazon S3) hanya menuntut pelanggan
+  mengelola data dan aksesnya.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: "AWS sudah mengamankan semuanya" salah. AWS mengamankan awan,
+    tetapi salah konfigurasi (bucket terbuka, izin terlalu luas) tetap salah pelanggan.</p>
+  </aside>
+
+  <h3>Pengguna root dan MFA</h3>
+  <p>Awalnya akun AWS punya satu identitas dengan akses penuh: <strong>pengguna
+  root</strong>, diakses dengan email dan kata sandi. Kredensialnya ada dua: email
+  + kata sandi (untuk konsol) dan <em>kunci akses</em> (untuk CLI/API).</p>
+  <p>Penting karena root sangat kuat: akses ke semua sumber daya, termasuk
+  penagihan. Praktik terbaik: kata sandi kuat, aktifkan <strong>MFA</strong>,
+  jangan bagikan, hapus kunci akses root, dan jangan pakai root untuk tugas
+  harian &mdash; buat pengguna IAM sebagai gantinya.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: nama pengguna + kata sandi saja cukup. Autentikasi faktor
+    tunggal mudah ditebak (rekayasa sosial, bot); MFA menambah lapisan kedua
+    &mdash; "sesuatu yang Anda miliki/know" &mdash; sehingga satu kebocoran tidak fatal.</p>
+  </aside>
+
+  <h3>IAM: identitas dan izin</h3>
+  <p>Dua istilah kunci. <strong>Autentikasi</strong> menjawab "Apakah Anda benar
+  Anda?". <strong>Otorisasi</strong> menjawab "Tindakan apa yang bisa Anda lakukan?".
+  AWS Identity and Access Management (IAM) mengelola keduanya dan memberi tampilan
+  terpusat siapa yang boleh berbuat apa.</p>
+  <p><strong>Pengguna IAM</strong> mewakili orang atau layanan; kredensialnya
+  permanen sampai dirotasi. <strong>Grup IAM</strong> mengumpulkan pengguna; semua
+  anggotanya mewarisi izin grup (praktik terbaik, skalabel). <strong>Kebijakan
+  IAM</strong> (policy) adalah dokumen JSON yang menyatakan izin dan dilampirkan
+  ke identitas. <strong>Peran IAM</strong> (role) memberi kredensial sementara
+  (15 menit&ndash;36 jam) dan lebih efisien dirawat daripada banyak pengguna.</p>
+  <p>Penting karena akses harus terperinci: berikan hanya izin yang diperlukan
+  (prinsip hak istimewa minimal), dan gunakan peran bila memungkinkan alih-alih
+  kredensial jangka panjang.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: IAM untuk login pengguna situs web. Bukan. IAM mengamankan
+    akses ke akun dan sumber daya AWS, bukan memberi fungsi masuk/daftar pengguna
+    aplikasi, dan tidak melindungi sistem operasi atau jaringan.</p>
+  </aside>
+</section>
+
+<!-- ===================== OPSIONAL #5 KODE ===================== -->
+<section class="code" id="kode">
+  <h2>Kode</h2>
+  <p>Tiga jalur interaksi. Console tidak perlu kode; berikut CLI dan SDK.</p>
+  <p><strong>AWS CLI</strong> &mdash; mengelola layanan dari baris perintah:</p>
+  <pre><code class="language-bash"># daftar bucket S3 di akun Anda
+aws s3api list-buckets
+
+# jalankan di Region tertentu
+aws ec2 describe-instances --region us-east-1
+</code></pre>
+  <p>Respons CLI berupa JSON:</p>
+  <pre><code class="language-json">{
+  "Owner": { "DisplayName": "tech-essentials" },
+  "Buckets": [
+    { "Name": "aws-tech-essentials" },
+    { "Name": "aws-tech-essentials-employee-directory-app" }
+  ]
+}
+</code></pre>
+  <p><strong>AWS SDK</strong> (Python, Boto3) &mdash; memanggil layanan dari kode:</p>
+  <pre><code class="language-python">import boto3
+
+ec2 = boto3.client('ec2')
+instances = ec2.describe_instances()
+print(instances)
+</code></pre>
+  <p><strong>Kebijakan IAM</strong> (JSON) &mdash; contoh kebijakan administrator:</p>
+  <pre><code class="language-json">{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "*",
+      "Resource": "*"
+    }
+  ]
+}
+</code></pre>
+  <p>Kebijakan terperinci: tolak akses S3 di luar akun tepercaya.</p>
+  <pre><code class="language-json">{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyS3OutsideMyBoundary",
+      "Effect": "Deny",
+      "Action": ["s3:*"],
+      "Resource": "*",
+      "Condition": {
+        "StringNotEquals": {
+          "aws:ResourceAccount": ["222222222222"]
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+  <p><strong>Apa yang berubah kalau X diubah:</strong> mengganti
+  <code>Effect</code> dari <code>Allow</code> ke <code>Deny</code> membalik
+  kebijakan &mdash; karena itu <code>Deny</code> eksplisit selalu menang.</p>
+</section>
+
+<!-- ===================== WAJIB #6 LATIHAN ===================== -->
+<section class="practice" id="latihan">
+  <h2>Latihan mandiri</h2>
+
+  <p>1. Ada empat aspek untuk memilih AWS Region. Sebutkan dan beri satu contoh
+  singkat masing-masing.</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p><strong>Latensi</strong> (pilih dekat basis pengguna, mis. game/IoT),
+    <strong>harga</strong> (tarif berbeda antar Region), <strong>ketersediaan
+    layanan</strong> (tak semua layanan ada di semua Region), dan <strong>kepatuhan
+    data</strong> (regulasi mengharuskan data di wilayah tertentu).</p>
+  </details>
+
+  <p>2. Jelaskan perbedaan "keamanan awan" dan "keamanan di dalam awan".</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>"Keamanan awan" = tanggung jawab AWS: melindungi Region, AZ, pusat data,
+    perangkat keras, sistem operasi host, dan jaringan yang menjalankan layanan.
+    "Keamanan di dalam awan" = tanggung jawab pelanggan: konfigurasi layanan
+    dengan benar, mengamankan dan mengenkripsi data, serta mengatur kontrol akses.</p>
+  </details>
+
+  <p>3. Kenapa memakai grup IAM lebih baik daripada memberi izin langsung ke tiap
+  pengguna?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Izin dilampirkan sekali ke grup dan diwarisi semua anggotanya, jadi
+    pengelolaan lebih mudah dan diskalabel. Saat orang berganti peran, cukup
+    pindahkan antar-grup tanpa mengedit izin satu per satu.</p>
+  </details>
+</section>
+
+<!-- ===================== OPSIONAL #7 FAQ ===================== -->
+<section class="faq" id="faq">
+  <h2>Jebakan &amp; FAQ</h2>
+  <p><strong>Apakah IAM berbayar?</strong> Tidak, IAM dapat digunakan secara
+  gratis; hanya sumber daya AWS yang dipakai yang ditagih.</p>
+  <p><strong>Bolehkah pengguna jadi anggota banyak grup?</strong> Boleh. Tapi
+  grup tidak boleh menjadi bagian dari grup lain (tidak ada sarang grup).</p>
+  <p><strong>Apakah kredensial IAM kedaluwarsa sendiri?</strong> Kredensial
+  pengguna permanen sampai admin merotasinya. Peran IAM justru memberi kredensial
+  sementara yang kedaluwarsa dalam 15 menit&ndash;36 jam.</p>
+  <p><strong>Apakah pengguna root boleh untuk tugas harian?</strong> Jangan.
+  Gunakan root hanya untuk tugas yang memang butuh root, dan buat pengguna IAM
+  untuk tugas sehari-hari.</p>
+  <p><strong>Apakah data otomatis ada di semua Region?</strong> Tidak. Region
+  terisolasi; data tidak direplikasi antar Region tanpa izin dan otorisasi eksplisit.</p>
+  <p><strong>Apakah AWS mengamankan data pelanggan?</strong> AWS mengamankan
+  infrastrukturnya, tetapi pelanggan tetap bertanggung jawab mengamankan datanya
+  sendiri (enkripsi, cadangan, kontrol akses).</p>
+</section>
+
+<!-- ===================== OPSIONAL #8 GLOSARIUM ===================== -->
+<section class="glossary" id="glosarium">
+  <h2>Glosarium</h2>
+  <dl>
+    <dt>Komputasi cloud</dt><dd>Sumber daya TI sesuai permintaan, bayar sesuai pakai.</dd>
+    <dt>Region</dt><dd>Lokasi geografis tempat AWS meng-host pusat data.</dd>
+    <dt>Availability Zone</dt><dd>Klaster pusat data redundan di dalam satu Region.</dd>
+    <dt>Edge location</dt><dd>Titik global tempat konten di-cache untuk latensi rendah.</dd>
+    <dt>Kunci akses</dt><dd>ID + kunci rahasia untuk akses terprogram ke AWS.</dd>
+    <dt>MFA</dt><dd>Autentikasi multifaktor: butuh dua metode verifikasi atau lebih.</dd>
+    <dt>IAM</dt><dd>Layanan pengelolaan akses ke akun dan sumber daya AWS.</dd>
+    <dt>Kebijakan IAM</dt><dd>Dokumen JSON yang menyatakan izin (Allow/Deny).</dd>
+    <dt>Peran IAM</dt><dd>Identitas berizin sementara yang diambil (di-asumsikan).</dd>
+    <dt>SDK</dt><dd>Pustaka untuk memanggil layanan AWS dari kode bahasa tertentu.</dd>
+    <dt>Tanggung jawab bersama</dt><dd>Pembagian keamanan antara AWS dan pelanggan.</dd>
+  </dl>
+</section>
+
+<!-- ===================== OPSIONAL #9 CHECKLIST ===================== -->
+<section class="checklist" id="checklist">
+  <h2>Checklist kelulusan</h2>
+  <ul>
+    <li>Bisa definisikan komputasi cloud dan tiga model deployment.</li>
+    <li>Bisa sebut keenam keuntungan komputasi cloud.</li>
+    <li>Bisa jelaskan Region, Availability Zone, dan edge location.</li>
+    <li>Bisa sebut empat aspek memilih Region.</li>
+    <li>Bisa bedakan keamanan awan vs keamanan di dalam awan.</li>
+    <li>Bisa jelaskan autentikasi vs otorisasi dan peran IAM.</li>
+    <li>Bisa sebut praktik terbaik melindungi pengguna root.</li>
+  </ul>
+</section>
+
+<!-- ===================== WAJIB #10 SUMBER ===================== -->
+<section class="sources" id="sumber">
+  <h2>Sumber</h2>
+  <ol>
+    <li>Modul kursus <em>AWS Technical Essentials</em>, Bagian 1 &mdash;
+    pengantar Amazon Web Services (transkrip lokal).</li>
+    <li>Dokumentasi resmi AWS: <em>Global Infrastructure</em>,
+    <em>Shared Responsibility Model</em>, <em>IAM user guide</em>.</li>
+  </ol>
+</section>
+
+</article>
+</div>
+
+<script src="../assets/note.js" defer></script>
+</body>
+</html>
