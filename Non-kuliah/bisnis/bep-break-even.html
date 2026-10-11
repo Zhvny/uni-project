@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Break-even point — Bisnis</title>
+
+<link rel="stylesheet" href="../assets/hljs/github.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/hljs/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="../assets/note.css">
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  options: {
+    enableSpeech: false,
+    enableBraille: false,
+    menuOptions: {
+      settings: { enrich: false, speech: false, braille: false, assistiveMml: false }
+    }
+  }
+};
+</script>
+<script src="../assets/mathjax/tex-svg.js" defer></script>
+<script src="../assets/hljs/hljs.min.js" defer></script>
+</head>
+<body>
+<div class="layout">
+
+<nav class="toc" aria-label="Daftar isi">
+  <h2>Isi</h2>
+  <ol>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#peta">Peta konsep</a></li>
+    <li><a href="#konsep">Konsep inti</a></li>
+    <li><a href="#rumus">Rumus</a></li>
+    <li><a href="#kode">Kode</a></li>
+    <li><a href="#latihan">Latihan</a></li>
+    <li><a href="#faq">Jebakan &amp; FAQ</a></li>
+    <li><a href="#glosarium">Glosarium</a></li>
+    <li><a href="#checklist">Checklist</a></li>
+    <li><a href="#sumber">Sumber</a></li>
+  </ol>
+</nav>
+
+<article>
+
+<!-- ===================== WAJIB #0 META ===================== -->
+<header class="meta">
+  <dl>
+    <dt>Subjek</dt><dd>Bisnis</dd>
+    <dt>Topik</dt><dd>Break-even point</dd>
+    <dt>Prasyarat</dt><dd><a href="#glosarium">biaya tetap &amp; biaya variabel</a></dd>
+    <dt>Dibuat</dt><dd>2026-10-11</dd>
+    <dt>Status</dt><dd>solid</dd>
+    <dt>Estimasi baca</dt><dd>15 menit</dd>
+  </dl>
+</header>
+
+<!-- ===================== WAJIB #1 TL;DR ===================== -->
+<section class="tldr" id="tldr">
+  <h2>TL;DR</h2>
+  <ul>
+    <li>BEP = volume penjualan saat laba tepat nol.</li>
+    <li>Ditentukan oleh biaya tetap, harga jual, biaya variabel.</li>
+    <li>Rumus unit: \(BEP_{unit} = \dfrac{FC}{P - VC}\).</li>
+    <li>Setiap unit di atas BEP menambah laba sebesar margin kontribusi.</li>
+  </ul>
+</section>
+
+<!-- ===================== #2 PETA KONSEP ===================== -->
+<figure class="map" id="peta">
+  <h2>Peta konsep</h2>
+  <pre class="mermaid">
+flowchart TD
+  A[Biaya tetap FC] --> B{Total pendapatan = total biaya?}
+  C[Biaya variabel VC] --> B
+  D[Harga jual P] --> B
+  B -->|ya| E[Titik BEP]
+  B -->|tidak| F[Di atas BEP: laba]
+  B -->|tidak| G[Di bawah BEP: rugi]
+  </pre>
+  <figcaption>Komponen yang menentukan posisi BEP.</figcaption>
+</figure>
+
+<!-- ===================== WAJIB #3 KONSEP ===================== -->
+<section class="concept" id="konsep">
+  <h2>Konsep inti</h2>
+
+  <h3>Margin kontribusi</h3>
+  <p>Margin kontribusi adalah harga jual dikurangi biaya variabel per unit
+     ( \(P - VC\) ). Setiap unit yang terjual menyumbang sebesar itu untuk
+     menutup biaya tetap.</p>
+  <p>Penting karena BEP tercapai tepat saat total margin kontribusi menutup
+     seluruh biaya tetap. Setelah itu, margin yang sama berubah menjadi laba.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: BEP bukan &ldquo;target laba maksimum&rdquo;. Di titik itu laba
+       persis nol, hanya cukup menutup biaya.</p>
+  </aside>
+
+  <h3>Dua bentuk BEP</h3>
+  <p><strong>BEP unit</strong> menyatakan berapa unit harus terjual.
+     <strong>BEP rupiah</strong> menyatakan nilai penjualan yang harus dicapai.
+     Keduanya menggambarkan titik yang sama, hanya beda satuan.</p>
+  <p>Bila bauran produk lebih dari satu, hitung BEP per bauran lalu pecah ke
+     tiap produk sesuai proporsi kontribusinya.</p>
+</section>
+
+<!-- ===================== #4 RUMUS ===================== -->
+<section class="formula" id="rumus">
+  <h2>Rumus</h2>
+  <p>$$ BEP_{unit} = \frac{FC}{P - VC} $$</p>
+  <p>$$ BEP_{rupiah} = \frac{FC}{1 - \frac{VC}{P}} $$</p>
+  <p>$$ MOS = \frac{Penjualan - BEP}{Penjualan} $$</p>
+  <table>
+    <thead><tr><th>Simbol</th><th>Arti</th></tr></thead>
+    <tbody>
+      <tr><td>\(FC\)</td><td>Total biaya tetap</td></tr>
+      <tr><td>\(P\)</td><td>Harga jual per unit</td></tr>
+      <tr><td>\(VC\)</td><td>Biaya variabel per unit</td></tr>
+      <tr><td>\(MOS\)</td><td>Margin of safety</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Kapan dipakai:</strong> menaksir volume minimum agar tidak rugi,
+     menilai kelayakan harga, atau mengukur bantalan keamanan.</p>
+  <p><strong>Kapan tidak:</strong> bila harga atau biaya berubah tiap unit
+     (gunakan pendekatan bertahap), atau biaya tetap ikut berubah pada rentang
+     volume yang besar.</p>
+  <p>Contoh: FC = 2.000.000, P = 30.000, VC = 20.000.
+     Maka \(BEP_{unit} = 2\,000\,000 / 10\,000 = 200\) unit, dan
+     \(BEP_{rupiah} = 200 \times 30\,000 = 6\,000\,000\).</p>
+</section>
+
+<!-- ===================== #5 KODE ===================== -->
+<section class="code" id="kode">
+  <h2>Kode</h2>
+  <pre><code class="language-python">import math
+
+def bep_unit(fixed_cost, price, variable_cost):
+    margin = price - variable_cost
+    if margin &lt;= 0:
+        raise ValueError("harga harus di atas VC")
+    return math.ceil(fixed_cost / margin)
+
+def bep_rupiah(fixed_cost, price, variable_cost):
+    ratio = variable_cost / price
+    return fixed_cost / (1 - ratio)
+
+print(bep_unit(2_000_000, 30_000, 20_000))
+print(bep_rupiah(2_000_000, 30_000, 20_000))
+</code></pre>
+  <p><strong>Apa yang berubah kalau X diubah:</strong> menaikkan \(FC\)
+     menaikkan BEP; menaikkan \(P\) menurunkannya; menaikkan \(VC\)
+     menaikkan BEP dan dapat membuat margin negatif.</p>
+</section>
+
+<!-- ===================== WAJIB #6 LATIHAN ===================== -->
+<section class="practice" id="latihan">
+  <h2>Latihan mandiri</h2>
+
+  <p>1. FC = 2.000.000, P = 30.000, VC = 20.000. Berapa BEP unit?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Margin = 30.000 &minus; 20.000 = 10.000.
+       \(BEP = 2\,000\,000 / 10\,000 = 200\) unit.</p>
+  </details>
+
+  <p>2. Dari soal 1, bila penjualan aktual 260 unit, berapa margin of safety
+     dalam unit dan persen?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Selisih = 260 &minus; 200 = 60 unit.
+       \(MOS = 60 / 260 \approx 23{,}1\%\).
+       Menandakan penjualan boleh turun ~23% sebelum menyentuh BEP.</p>
+  </details>
+</section>
+
+<!-- ===================== #7 FAQ ===================== -->
+<section class="faq" id="faq">
+  <h2>Jebakan &amp; FAQ</h2>
+  <p><strong>Apakah BEP sama dengan titik impas kas?</strong> Tidak selalu.
+     Penyusutan (biaya non-kas) masuk sebagai biaya tetap, sehingga BEP akuntansi
+     biasanya lebih tinggi daripada titik impas kas.</p>
+  <p><strong>Apakah laba nol berarti perusahaan sehat?</strong> Tidak dengan
+     sendirinya. BEP hanya ambang tidak rugi; kesehatan usaha juga bergantung
+     pada arus kas, utang, dan pertumbuhan.</p>
+</section>
+
+<!-- ===================== #8 GLOSARIUM ===================== -->
+<section class="glossary" id="glosarium">
+  <h2>Glosarium</h2>
+  <dl>
+    <dt>Break-even point</dt><dd>Titik volume saat laba nol.</dd>
+    <dt>Biaya tetap</dt><dd>Biaya yang tidak berubah oleh volume produksi.</dd>
+    <dt>Biaya variabel</dt><dd>Biaya yang berubah sebanding volume produksi.</dd>
+    <dt>Margin kontribusi</dt><dd>Harga jual dikurangi biaya variabel per unit.</dd>
+    <dt>Margin of safety</dt><dd>Selisih penjualan aktual dari BEP.</dd>
+  </dl>
+</section>
+
+<!-- ===================== #9 CHECKLIST ===================== -->
+<section class="checklist" id="checklist">
+  <h2>Checklist kelulusan</h2>
+  <ul>
+    <li>Bisa turunkan rumus BEP dari definisi laba nol.</li>
+    <li>Bisa hitung BEP unit dan rupiah dari satu set angka.</li>
+    <li>Bisa jelaskan efek perubahan FC, P, dan VC terhadap BEP.</li>
+    <li>Bisa jelaskan arti margin of safety tanpa membuka catatan.</li>
+  </ul>
+</section>
+
+<!-- ===================== WAJIB #10 SUMBER ===================== -->
+<section class="sources" id="sumber">
+  <h2>Sumber</h2>
+  <ol>
+    <li>Catatan kuliah manajemen keuangan, pertemuan 4.</li>
+    <li>Buku teks akuntansi biaya, bab analisis biaya-volume-laba.</li>
+  </ol>
+</section>
+
+</article>
+</div>
+
+<script src="../assets/note.js" defer></script>
+</body>
+</html>
