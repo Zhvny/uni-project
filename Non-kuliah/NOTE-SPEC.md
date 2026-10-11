@@ -14,7 +14,7 @@ Setiap catatan = satu `<article>` berisi urutan blok. **Wajib:** #0, #1, #3, #6,
 
 | # | Blok | Kelas | Wajib? |
 |---|---|---|---|
-| 0 | Meta | `header.meta` + `dl` (subjek, topik, prasyarat, dibuat, status, estimasi baca) | ✅ |
+| 0 | Meta (masthead) | `header.meta` + back-link + `p.eyebrow` (subjek) + `h1` (topik) + `dl` (prasyarat, dibuat, status, estimasi baca) | ✅ |
 | 1 | TL;DR | `section.tldr` (maks 5 baris) | ✅ |
 | 2 | Peta konsep | `figure.map` + `pre.mermaid` atau SVG inline | — |
 | 3 | Konsep inti | `section.concept` (1 blok = 1 ide) + `aside.pitfall` | ✅ |
@@ -30,9 +30,10 @@ Contoh potongan (sesuai `_templates/note.html`):
 
 ```html
 <header class="meta">
+  <a class="back" href="../index.html">&larr; Daftar catatan</a>
+  <p class="eyebrow">Bisnis</p>
+  <h1>Break-even point</h1>
   <dl>
-    <dt>Subjek</dt><dd>Bisnis</dd>
-    <dt>Topik</dt><dd>Break-even point</dd>
     <dt>Prasyarat</dt><dd><a href="../bisnis/biaya-tetap-variabel.html">biaya tetap &amp; variabel</a></dd>
     <dt>Dibuat</dt><dd>2026-10-11</dd>
     <dt>Status</dt><dd>solid</dd>
@@ -68,6 +69,15 @@ Contoh potongan (sesuai `_templates/note.html`):
 <section class="sources"><h2>Sumber</h2><ol><li>…</li></ol></section>
 ```
 
+Di dalam `.layout`, **sebelum** `<article>`, ada daftar isi (salin dari template):
+
+```html
+<details class="toc">
+  <summary>Daftar isi</summary>
+  <nav aria-label="Daftar isi"><ol><li><a href="#tldr">TL;DR</a></li>…</ol></nav>
+</details>
+```
+
 Aturan isi: bahasa prosa **Indonesia** (istilah teknis tetap Inggris); 1 blok konsep = 1 ide;
 setiap rumus **wajib** punya "kapan dipakai / kapan tidak"; jawaban latihan **wajib** `<details>`.
 
@@ -75,7 +85,7 @@ setiap rumus **wajib** punya "kapan dipakai / kapan tidak"; jawaban latihan **wa
 
 ## 2. Kelas yang diizinkan + larangan gaya inline
 
-- **Hanya** kelas di tabel §1 (dan `nav.toc`, `aside.pitfall`, `dl/dt/dd`, `pre > code`).
+- **Hanya** kelas di tabel §1 (dan `details.toc` + `summary`, `aside.pitfall`, `dl/dt/dd`, `p.eyebrow`, `a.back`, `pre > code`).
 - **Dilarang** atribut `style="…"`. Semua gaya berasal dari `assets/note.css`.
 - **Dilarang** menambah elemen/kelas baru; kalau butuh sesuatu yang belum ada, hentikan
   dan laporkan (jangan mengarang CSS).

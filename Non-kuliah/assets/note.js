@@ -54,6 +54,16 @@
     for (var j = 0; j < all.length; j++) { all[j].open = true; }
   });
 
+  // (5) TOC: buka di desktop, lipat di layar kecil (progresif; tanpa JS tetap terbuka)
+  var toc = document.querySelector('details.toc');
+  if (toc && window.matchMedia) {
+    var mq = window.matchMedia('(min-width: 1100px)');
+    var applyToc = function () { toc.open = mq.matches; };
+    applyToc();
+    if (mq.addEventListener) { mq.addEventListener('change', applyToc); }
+    else if (mq.addListener) { mq.addListener(applyToc); }
+  }
+
   // (1) Mermaid — lazy + run eksplisit (startOnLoad:false; hindari race RF7)
   if (document.querySelector('.mermaid')) {
     var s = document.createElement('script');
