@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to Serverless Development — AWS</title>
+
+<!-- Tema hljs (dimuat sebelum note.css agar note.css menetralkan padding/latar) -->
+<link rel="stylesheet" href="../../../assets/hljs/github.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../../../assets/hljs/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="../../../assets/note.css">
+
+<!-- MathJax 4 — JANGAN set throwOnError (dihapus di v4). Wajib matikan speech/Braille. -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  options: {
+    enableSpeech: false,
+    enableBraille: false,
+    menuOptions: {
+      settings: { enrich: false, speech: false, braille: false, assistiveMml: false }
+    }
+  }
+};
+</script>
+<script src="../../../assets/mathjax/tex-svg.js" defer></script>
+<script src="../../../assets/hljs/hljs.min.js" defer></script>
+</head>
+<body>
+<div class="layout">
+
+<details class="toc">
+  <summary>Daftar isi</summary>
+  <nav aria-label="Daftar isi">
+    <ol>
+      <li><a href="#tldr">TL;DR</a></li>
+      <li><a href="#peta">Peta konsep</a></li>
+      <li><a href="#konsep">Konsep inti</a></li>
+      <li><a href="#kode">Kode</a></li>
+      <li><a href="#latihan">Latihan</a></li>
+      <li><a href="#faq">Jebakan &amp; FAQ</a></li>
+      <li><a href="#glosarium">Glosarium</a></li>
+      <li><a href="#checklist">Checklist</a></li>
+      <li><a href="#sumber">Sumber</a></li>
+    </ol>
+  </nav>
+</details>
+
+<article>
+
+<!-- ===================== WAJIB #0 META ===================== -->
+<header class="meta">
+  <a class="back" href="../../../index.html">&larr; Daftar catatan</a>
+  <p class="eyebrow">AWS</p>
+  <h1>Introduction to Serverless Development</h1>
+  <dl>
+    <dt>Prasyarat</dt><dd>Dasar pemrograman &amp; konsep cloud</dd>
+    <dt>Dibuat</dt><dd>2026-10-12</dd>
+    <dt>Status</dt><dd>solid</dd>
+    <dt>Estimasi baca</dt><dd>20 menit</dd>
+  </dl>
+</header>
+
+<!-- ===================== WAJIB #1 TL;DR ===================== -->
+<section class="tldr" id="tldr">
+  <h2>TL;DR</h2>
+  <ul>
+    <li>Nirserver (serverless) = Anda menulis fungsi; penyedia mengurus server,
+    penskalaan, dan ketersediaan.</li>
+    <li>Modelnya <strong>event-driven</strong>: sesuatu terjadi &rarr; fungsi
+    dijalankan. Bayar per pemakaian, bukan per server menganggur.</li>
+    <li>Inti AWS: <strong>Lambda</strong> (kode), <strong>API Gateway</strong>
+    (HTTP), <strong>DynamoDB</strong> (data), S3/SNS/SQS (event).</li>
+    <li>Fungsi Lambda harus <strong>stateless</strong>; status disimpan di
+    layanan eksternal.</li>
+    <li>Dikelola sebagai infrastruktur-sebagai-kode: SAM / Serverless Framework /
+    CDK; diuji lokal, di-log via CloudWatch.</li>
+  </ul>
+</section>
+
+<!-- ===================== OPSIONAL #2 PETA ===================== -->
+<figure class="map" id="peta">
+  <h2>Peta konsep</h2>
+  <pre class="mermaid">
+flowchart LR
+  U[Pengguna] --> G[API Gateway]
+  G --> L[Fungsi Lambda]
+  E[Event S3 SNS SQS] --> L
+  L --> D[DynamoDB]
+  L --> C[CloudWatch Logs]
+  L --> X[AWS X-Ray]
+  </pre>
+  <figcaption>Alur event-driven khas: permintaan/kejadian memicu fungsi Lambda.</figcaption>
+</figure>
+
+<!-- ===================== WAJIB #3 KONSEP ===================== -->
+<section class="concept" id="konsep">
+  <h2>Konsep inti</h2>
+
+  <h3>Apa itu pengembangan nirserver</h3>
+  <p>Nirserver (serverless) adalah model di mana Anda hanya menulis dan mengunggah
+  <em>kode fungsi</em>; penyedia cloud mengurus server, penskalaan, penambalan,
+  dan ketersediaan. Server tetap ada &mdash; Anda hanya tidak mengelolanya.</p>
+  <p>Penting karena beban operasional dan biaya infrastruktur menganggur hilang:
+  Anda membayar saat kode benar-benar berjalan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: "tanpa server" berarti tanpa server. Server tetap ada; yang
+    hilang adalah pekerjaan mengelolanya.</p>
+  </aside>
+
+  <h3>Memulai secara serverless</h3>
+  <p>Model mentalnya <strong>event-driven</strong>: sebuah kejadian (permintaan
+  HTTP, unggahan berkas, pesan antrean, jadwal) memicu fungsi yang singkat dan
+  terfokus. Rangkaian layanan khas AWS:</p>
+  <ul>
+    <li><strong>AWS Lambda</strong> &mdash; menjalankan kode fungsi.</li>
+    <li><strong>Amazon API Gateway</strong> &mdash; pintu HTTP/REST ke Lambda.</li>
+    <li><strong>Amazon DynamoDB</strong> &mdash; basis data nirserver.</li>
+    <li><strong>Amazon S3, SNS, SQS, EventBridge</strong> &mdash; sumber event.</li>
+  </ul>
+  <p>Penting karena Anda merangkai layanan terkelola alih-alih mengoperasikan
+  satu server tunggal yang menanggung semuanya.</p>
+
+  <h3>Menulis fungsi Lambda</h3>
+  <p>Fungsi Lambda punya satu titik masuk (<strong>handler</strong>) yang menerima
+  dua argumen: <code>event</code> (data pemicu) dan <code>context</code> (informasi
+  runtime). Runtime populer: Python, Node.js, Java, Go, .NET.</p>
+  <p>Hal kunci: fungsi harus <strong>stateless</strong>. Tiap pemanggilan bisa
+  berjalan di lingkungan berbeda, jadi status harus disimpan di layanan luar
+  (DynamoDB, S3). Anda juga mengatur memori, waktu tunggu (timeout), dan
+  <strong>peran IAM</strong> yang menentukan izin fungsi.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: variabel global di fungsi aman disimpan. Bisa saja
+    dipakai-ulang, tetapi tidak dijamin &mdash; jangan andalkan status antar
+    pemanggilan.</p>
+  </aside>
+
+  <h3>Mengelola aplikasi nirserver</h3>
+  <p>Aplikasi nirserver jarang satu fungsi; biasanya banyak fungsi + API + tabel
+  + izin. Semuanya dikelola sebagai <strong>infrastruktur-sebagai-kode</strong>:
+  AWS SAM, Serverless Framework, atau AWS CDK.</p>
+  <p>Konsep pengelolaan penting: <em>versioning</em> dan <em>alias</em> (mengarahkan
+  trafik ke versi tertentu), <em>environment variable</em>, konfigurasi per tahap
+  (dev/prod), serta pipeline CI/CD. Deployment menjadi dapat diulang, bukan
+  klik manual di konsol.</p>
+
+  <h3>Pengujian dan debugging</h3>
+  <p>Uji lokal dengan SAM CLI (<code>sam local invoke</code>) untuk menjalankan
+  fungsi di mesin sendiri. Uji unit dengan memanggil handler langsung dan menyuplai
+  objek <code>event</code> buatan.</p>
+  <p>Di produksi, jejaknya lewat <strong>Amazon CloudWatch Logs</strong> (pesan
+  <code>print</code>/<code>console.log</code>) dan <strong>AWS X-Ray</strong> untuk
+  melacak alur antar-layanan. Perhatikan pula <em>cold start</em>: pemanggilan
+  pertama setelah lama menganggur terasa lebih lambat.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: bug bisa di-debug dengan breakpoint seperti aplikasi biasa.
+    Di cloud, debugging berbasis <em>log</em> dan <em>trace</em>, bukan
+    menempelkan debugger ke proses.</p>
+  </aside>
+
+  <h3>Kapan serverless cocok (dan tidak)</h3>
+  <table>
+    <thead><tr><th>Situasi</th><th>Serverless</th></tr></thead>
+    <tbody>
+      <tr><td>Trafik naik-turun tak terduga</td><td>Cocok</td></tr>
+      <tr><td>Beban merata &amp; berat terus-menerus</td><td>Kurang cocok</td></tr>
+      <tr><td>Tugas singkat, berbasis kejadian</td><td>Cocok</td></tr>
+      <tr><td>Komputasi panjang/lama</td><td>Kurang cocok</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===================== OPSIONAL #5 KODE ===================== -->
+<section class="code" id="kode">
+  <h2>Kode</h2>
+  <p><strong>Handler Lambda</strong> (Python): <code>event</code> membawa data
+  pemicu, nilai balik dibungkus sebagai respons.</p>
+  <pre><code class="language-python">import json
+
+def lambda_handler(event, context):
+    name = event.get("name", "dunia")
+    return {
+        "statusCode": 200,
+        "body": json.dumps({"pesan": f"Halo, {name}!"}),
+    }
+</code></pre>
+  <p><strong>Definisi infrastruktur</strong> dengan AWS SAM (YAML): fungsi +
+  endpoint API dalam satu berkas.</p>
+  <pre><code class="language-yaml">AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  FungsiHalo:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.lambda_handler
+      Runtime: python3.12
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /halo
+            Method: get
+</code></pre>
+  <p><strong>Alur kerja SAM</strong>:</p>
+  <pre><code class="language-bash">sam build                 # bangun artefak
+sam local invoke FungsiHalo -e event.json   # uji di lokal
+sam deploy --guided       # deploy ke AWS
+</code></pre>
+  <p><strong>Apa yang berubah kalau X diubah:</strong> menambah nilai
+  <code>Timeout</code> memberi ruang proses lebih lama, tetapi biaya ikut naik
+  dan batas maksimum platform tetap berlaku.</p>
+</section>
+
+<!-- ===================== WAJIB #6 LATIHAN ===================== -->
+<section class="practice" id="latihan">
+  <h2>Latihan mandiri</h2>
+
+  <p>1. Kenapa fungsi Lambda harus <em>stateless</em>, dan di mana status
+  sebaiknya disimpan?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Karena pemanggilan bisa berjalan di lingkungan/instance berbeda, sehingga
+    variabel lokal tak terjamin bertahan. Status disimpan di layanan luar seperti
+    DynamoDB atau S3.</p>
+  </details>
+
+  <p>2. Apa beda <em>event</em> dan <em>context</em> pada handler Lambda?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p><code>event</code> = data pemicu (mis. isi permintaan HTTP atau unggahan
+    S3). <code>context</code> = informasi runtime (nama fungsi, sisa waktu,
+    identitas pemanggil).</p>
+  </details>
+
+  <p>3. Kapan serverless <em>kurang</em> cocok dipakai?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Untuk beban berat yang merata terus-menerus atau komputasi panjang, di mana
+    server/VM tetap lebih murah dan sesuai; serverless paling untung saat trafik
+    naik-turun dan tugas singkat.</p>
+  </details>
+
+  <p>4. Bagaimana cara men-debug aplikasi nirserver di produksi?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Lewat <strong>CloudWatch Logs</strong> (jejak cetak) dan <strong>AWS
+    X-Ray</strong> (trace alur antar-layanan), bukan dengan menempelkan debugger
+    ke proses.</p>
+  </details>
+</section>
+
+<!-- ===================== OPSIONAL #7 FAQ ===================== -->
+<section class="faq" id="faq">
+  <h2>Jebakan &amp; FAQ</h2>
+  <p><strong>Apakah serverless benar-benar tanpa server?</strong> Bukan. Server
+  ada, tetapi dikelola penyedia; Anda hanya mengurus kode.</p>
+  <p><strong>Apakah bayar selalu lebih murah?</strong> Tidak selalu. Untuk beban
+  berat yang merata, server/VM bisa lebih murah; serverless unggul saat
+  pemakaian naik-turun.</p>
+  <p><strong>Apa itu cold start?</strong> Keterlambatan saat fungsi dipanggil
+  pertama kali setelah lama menganggur, karena runtime perlu disiapkan.</p>
+  <p><strong>Bisakah fungsi Lambda menyimpan file permanen?</strong> Tidak
+  andal &mdash; penyimpanan sementara bersifat sementara. Simpan ke S3/DynamoDB.</p>
+  <p><strong>Perlu izin apa agar Lambda bisa akses sumber daya lain?</strong>
+  Sebuah peran IAM dengan hak istimewa minimal yang dilampirkan ke fungsi.</p>
+</section>
+
+<!-- ===================== OPSIONAL #8 GLOSARIUM ===================== -->
+<section class="glossary" id="glosarium">
+  <h2>Glosarium</h2>
+  <dl>
+    <dt>Nirserver</dt><dd>Model menjalankan kode tanpa mengelola server.</dd>
+    <dt>AWS Lambda</dt><dd>Layanan penjalan fungsi berbasis kejadian.</dd>
+    <dt>Event-driven</dt><dd>Arsitektur yang dipicu oleh kejadian.</dd>
+    <dt>Handler</dt><dd>Fungsi titik masuk yang menerima event &amp; context.</dd>
+    <dt>Stateless</dt><dd>Tak menyimpan status antar-pemanggilan.</dd>
+    <dt>API Gateway</dt><dd>Pintu HTTP/REST ke fungsi Lambda.</dd>
+    <dt>DynamoDB</dt><dd>Basis data key-value nirserver dari AWS.</dd>
+    <dt>SAM</dt><dd>Kerangka infrastruktur-sebagai-kode untuk serverless AWS.</dd>
+    <dt>Cold start</dt><dd>Keterlambatan pemanggilan pertama setelah menganggur.</dd>
+    <dt>CloudWatch</dt><dd>Layanan log &amp; metrik untuk observabilitas.</dd>
+    <dt>X-Ray</dt><dd>Alat pelacakan alur permintaan antar-layanan.</dd>
+  </dl>
+</section>
+
+<!-- ===================== OPSIONAL #9 CHECKLIST ===================== -->
+<section class="checklist" id="checklist">
+  <h2>Checklist kelulusan</h2>
+  <ul>
+    <li>Bisa definisikan nirserver dan bedakan dari server biasa.</li>
+    <li>Bisa jelaskan model event-driven dan layanan inti AWS.</li>
+    <li>Bisa tulis handler Lambda yang stateless.</li>
+    <li>Bisa jelaskan versioning, alias, dan infrastruktur-sebagai-kode.</li>
+    <li>Bisa jelaskan cara menguji &amp; men-debug di lokal dan produksi.</li>
+    <li>Bisa sebut kapan serverless cocok dan kapan tidak.</li>
+  </ul>
+</section>
+
+<!-- ===================== WAJIB #10 SUMBER ===================== -->
+<section class="sources" id="sumber">
+  <h2>Sumber</h2>
+  <ol>
+    <li>Kerangka kursus <em>Introduction to Serverless Development (Indonesian)</em>
+    &mdash; AWS Developer Learning Plan. <strong>Catatan:</strong> berkas sumber
+    hanya memuat daftar judul tanpa badan materi.</li>
+    <li>Karena berkas kosong, isi catatan disusun dari <strong>dokumentasi umum</strong>:
+    AWS (<em>What is AWS Lambda</em>, <em>AWS SAM Developer Guide</em>),
+    Amazon API Gateway &amp; Amazon DynamoDB layanan terkait.</li>
+  </ol>
+</section>
+
+</article>
+</div>
+
+<script src="../../../assets/note.js" defer></script>
+</body>
+</html>
