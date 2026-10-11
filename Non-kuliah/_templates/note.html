@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TOPIK — SUBJEK</title>
+
+<!-- Tema hljs (dimuat sebelum note.css agar note.css menetralkan padding/latar) -->
+<link rel="stylesheet" href="../assets/hljs/github.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/hljs/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="../assets/note.css">
+
+<!-- MathJax 4 — JANGAN set throwOnError (dihapus di v4). Wajib matikan speech/Braille. -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  options: {
+    enableSpeech: false,
+    enableBraille: false,
+    menuOptions: {
+      settings: { enrich: false, speech: false, braille: false, assistiveMml: false }
+    }
+  }
+};
+</script>
+<script src="../assets/mathjax/tex-svg.js" defer></script>
+<script src="../assets/hljs/hljs.min.js" defer></script>
+</head>
+<body>
+<div class="layout">
+
+<nav class="toc" aria-label="Daftar isi">
+  <h2>Isi</h2>
+  <ol>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#peta">Peta konsep</a></li>
+    <li><a href="#konsep">Konsep inti</a></li>
+    <li><a href="#rumus">Rumus</a></li>
+    <li><a href="#kode">Kode</a></li>
+    <li><a href="#latihan">Latihan</a></li>
+    <li><a href="#faq">Jebakan &amp; FAQ</a></li>
+    <li><a href="#glosarium">Glosarium</a></li>
+    <li><a href="#checklist">Checklist</a></li>
+    <li><a href="#sumber">Sumber</a></li>
+  </ol>
+</nav>
+
+<article>
+
+<!-- ===================== WAJIB #0 META ===================== -->
+<header class="meta">
+  <dl>
+    <dt>Subjek</dt><dd><!-- GANTI -->Bisnis</dd>
+    <dt>Topik</dt><dd><!-- GANTI -->Break-even point</dd>
+    <dt>Prasyarat</dt><dd><a href="../bisnis/biaya-tetap-variabel.html"><!-- GANTI -->biaya tetap &amp; variabel</a></dd>
+    <dt>Dibuat</dt><dd><!-- GANTI -->2026-10-11</dd>
+    <dt>Status</dt><dd><!-- GANTI -->solid</dd>
+    <dt>Estimasi baca</dt><dd><!-- GANTI -->15 menit</dd>
+  </dl>
+</header>
+
+<!-- ===================== WAJIB #1 TL;DR ===================== -->
+<section class="tldr" id="tldr">
+  <h2>TL;DR</h2>
+  <!-- GANTI: maksimal 5 baris; kalau semua lupa, ini yang tersisa -->
+  <ul>
+    <li>BEP adalah volume penjualan saat laba = 0.</li>
+    <li>Dipengaruhi biaya tetap, harga jual, biaya variabel.</li>
+    <li>Rumus utama: \(BEP_{unit} = \dfrac{FC}{P - VC}\).</li>
+  </ul>
+</section>
+
+<!-- ===================== OPSIONAL: hapus bila tidak relevan #2 PETA ===================== -->
+<figure class="map" id="peta">
+  <h2>Peta konsep</h2>
+  <!-- GANTI: satu diagram Mermaid -->
+  <pre class="mermaid">
+flowchart TD
+  A[Biaya tetap FC] --> B{Total pendapatan = total biaya?}
+  C[Biaya variabel VC] --> B
+  D[Harga jual P] --> B
+  B -->|ya| E[Titik BEP]
+  B -->|tidak| F[Laba atau rugi]
+  </pre>
+  <figcaption><!-- GANTI -->Hubungan komponen yang menentukan BEP.</figcaption>
+</figure>
+
+<!-- ===================== WAJIB #3 KONSEP (1 blok = 1 ide) ===================== -->
+<section class="concept" id="konsep">
+  <h2>Konsep inti</h2>
+  <!-- GANTI: satu blok = satu ide; definisi 1 kalimat + kenapa penting + contoh minimal -->
+  <h3>Margin kontribusi</h3>
+  <p><!-- GANTI -->Margin kontribusi adalah harga jual dikurangi biaya variabel per unit ( \(P - VC\) ).</p>
+  <p><!-- GANTI -->Penting karena setiap unit yang terjual menyumbang penutup biaya tetap; BEP tercapai saat kontribusi total menutup FC.</p>
+  <aside class="pitfall">
+    <p><!-- GANTI -->Miskonsepsi: BEP bukan "laba maksimum" — di titik itu laba tepat nol.</p>
+  </aside>
+</section>
+
+<!-- ===================== OPSIONAL: #4 RUMUS ===================== -->
+<section class="formula" id="rumus">
+  <h2>Rumus</h2>
+  <!-- GANTI: LaTeX display; rumus maksimal ±60 karakter per baris, pecah dengan aligned bila perlu -->
+  <p>$$ BEP_{unit} = \frac{FC}{P - VC} $$</p>
+  <table>
+    <thead><tr><th>Simbol</th><th>Arti</th></tr></thead>
+    <tbody>
+      <tr><td>\(FC\)</td><td>Total biaya tetap</td></tr>
+      <tr><td>\(P\)</td><td>Harga jual per unit</td></tr>
+      <tr><td>\(VC\)</td><td>Biaya variabel per unit</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Kapan dipakai:</strong> <!-- GANTI -->menaksir volume minimum agar tidak rugi.</p>
+  <p><strong>Kapan tidak:</strong> <!-- GANTI -->bila harga/biaya berubah tiap unit (gunakan pendekatan bertahap).</p>
+  <p><!-- GANTI contoh angka lengkap --></p>
+</section>
+
+<!-- ===================== OPSIONAL: #5 KODE ===================== -->
+<section class="code" id="kode">
+  <h2>Kode</h2>
+  <!-- GANTI: ≤ 72 karakter per baris -->
+  <pre><code class="language-python">def bep_unit(fc, price, vc):
+    if price <= vc:
+        raise ValueError("harga harus di atas biaya variabel")
+    return fc / (price - vc)
+
+print(bep_unit(1_000_000, 25_000, 15_000))
+</code></pre>
+  <p><strong>Apa yang berubah kalau X diubah:</strong> <!-- GANTI -->menaikkan \(FC\) menaikkan BEP.</p>
+</section>
+
+<!-- ===================== WAJIB #6 LATIHAN (min 1 soal) ===================== -->
+<section class="practice" id="latihan">
+  <h2>Latihan mandiri</h2>
+  <!-- GANTI: soal dulu, jawaban di <details>. Minimal 1 soal. -->
+  <p>1. FC = 2.000.000, P = 30.000, VC = 20.000. Berapa BEP unit?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p><!-- GANTI -->\(BEP = 2\,000\,000 / (30\,000 - 20\,000) = 200\) unit.</p>
+  </details>
+</section>
+
+<!-- ===================== OPSIONAL: #7 FAQ ===================== -->
+<section class="faq" id="faq">
+  <h2>Jebakan &amp; FAQ</h2>
+  <!-- GANTI -->
+  <p><strong>Apakah BEP sama dengan titik impas kas?</strong> Tidak selalu — penyusutan non-kas dimasukkan di FC.</p>
+</section>
+
+<!-- ===================== OPSIONAL: #8 GLOSARIUM ===================== -->
+<section class="glossary" id="glosarium">
+  <h2>Glosarium</h2>
+  <!-- GANTI: istilah asing -> definisi Indonesia. Pakai <dl>, bukan tabel. -->
+  <dl>
+    <dt>Break-even point</dt><dd>Titik volume saat laba nol.</dd>
+    <dt>Contribution margin</dt><dd>Harga jual dikurangi biaya variabel per unit.</dd>
+  </dl>
+</section>
+
+<!-- ===================== OPSIONAL: #9 CHECKLIST ===================== -->
+<section class="checklist" id="checklist">
+  <h2>Checklist kelulusan</h2>
+  <!-- GANTI: daftar "bisa jelaskan tanpa buka catatan" -->
+  <ul>
+    <li>Bisa turunkan rumus BEP dari definisi laba.</li>
+    <li>Bisa jelaskan efek perubahan FC terhadap BEP.</li>
+  </ul>
+</section>
+
+<!-- ===================== WAJIB #10 SUMBER ===================== -->
+<section class="sources" id="sumber">
+  <h2>Sumber</h2>
+  <!-- GANTI -->
+  <ol>
+    <li>Catatan kuliah manajemen keuangan, pertemuan 4.</li>
+  </ol>
+</section>
+
+</article>
+</div>
+
+<script src="../assets/note.js" defer></script>
+</body>
+</html>
