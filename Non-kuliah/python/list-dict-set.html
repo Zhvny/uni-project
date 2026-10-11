@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>List, dict, dan set — Python</title>
+
+<!-- Tema hljs (dimuat sebelum note.css agar note.css menetralkan padding/latar) -->
+<link rel="stylesheet" href="../assets/hljs/github.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/hljs/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="../assets/note.css">
+
+<!-- MathJax 4 — JANGAN set throwOnError (dihapus di v4). Wajib matikan speech/Braille. -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' },
+  options: {
+    enableSpeech: false,
+    enableBraille: false,
+    menuOptions: {
+      settings: { enrich: false, speech: false, braille: false, assistiveMml: false }
+    }
+  }
+};
+</script>
+<script src="../assets/mathjax/tex-svg.js" defer></script>
+<script src="../assets/hljs/hljs.min.js" defer></script>
+</head>
+<body>
+<div class="layout">
+
+<nav class="toc" aria-label="Daftar isi">
+  <h2>Isi</h2>
+  <ol>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#peta">Peta konsep</a></li>
+    <li><a href="#konsep">Konsep inti</a></li>
+    <li><a href="#rumus">Rumus</a></li>
+    <li><a href="#kode">Kode</a></li>
+    <li><a href="#latihan">Latihan</a></li>
+    <li><a href="#faq">Jebakan &amp; FAQ</a></li>
+    <li><a href="#glosarium">Glosarium</a></li>
+    <li><a href="#checklist">Checklist</a></li>
+    <li><a href="#sumber">Sumber</a></li>
+  </ol>
+</nav>
+
+<article>
+
+<!-- ===================== WAJIB #0 META ===================== -->
+<header class="meta">
+  <dl>
+    <dt>Subjek</dt><dd>Python</dd>
+    <dt>Topik</dt><dd>List, dict, dan set</dd>
+    <dt>Prasyarat</dt><dd>Dasar Python (variabel, tipe data)</dd>
+    <dt>Dibuat</dt><dd>2026-10-11</dd>
+    <dt>Status</dt><dd>solid</dd>
+    <dt>Estimasi baca</dt><dd>15 menit</dd>
+  </dl>
+</header>
+
+<!-- ===================== WAJIB #1 TL;DR ===================== -->
+<section class="tldr" id="tldr">
+  <h2>TL;DR</h2>
+  <ul>
+    <li><strong>list</strong>: urutan, akses indeks \(O(1)\), cari \(O(n)\).</li>
+    <li><strong>dict</strong>: pemetaan key &rarr; value, cari key \(O(1)\).</li>
+    <li><strong>set</strong>: kumpulan unik, membership \(O(1)\).</li>
+    <li>Butuh urutan &rarr; list; butuh pemetaan &rarr; dict; butuh keunikan &rarr; set.</li>
+    <li>Dedup &amp; membership cepat selalu lewat set/dict, bukan list.</li>
+  </ul>
+</section>
+
+<!-- ===================== OPSIONAL #2 PETA ===================== -->
+<figure class="map" id="peta">
+  <h2>Peta konsep</h2>
+  <pre class="mermaid">
+flowchart TD
+  A{Perlu urutan / indeks?} -->|ya| L[Gunakan list]
+  A -->|tidak| B{Perlu pemetaan key-value?}
+  B -->|ya| D[Gunakan dict]
+  B -->|tidak| C{Perlu unik / cek cepat?}
+  C -->|ya| S[Gunakan set]
+  C -->|tidak| T[Pertimbangkan tuple]
+  </pre>
+  <figcaption>Alur memilih struktur data Python berdasarkan kebutuhan.</figcaption>
+</figure>
+
+<!-- ===================== WAJIB #3 KONSEP ===================== -->
+<section class="concept" id="konsep">
+  <h2>Konsep inti</h2>
+
+  <h3>List: urutan yang bisa diindeks</h3>
+  <p>List adalah kumpulan yang <em>terurut</em> dan boleh punya duplikat; setiap elemen
+  punya posisi (indeks) mulai dari 0. Akses lewat indeks \(O(1)\), tetapi mencari
+  sebuah nilai harus memindai sampai ketemu, yaitu \(O(n)\).</p>
+  <p>Penting karena list adalah struktur default saat urutan dan perubahan dinamis
+  dibutuhkan: menambah di akhir, menyisip, mengurutkan.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: `x in list` untuk list besar sering dipanggil; itu \(O(n)\)
+    tiap kali, jadi loop yang menyisir list berulang bisa jadi lambat.</p>
+  </aside>
+
+  <h3>Dict: pemetaan key &rarr; value</h3>
+  <p>dict menyimpan pasangan key-value dan mencari nilai lewat key dengan hash,
+  sehingga rata-rata \(O(1)\). Sejak Python 3.7 urutan penyisipan tetap dipertahankan.</p>
+  <p>Penting karena dict mengubah "cari di mana" dari pemindaian menjadi lompatan
+  langsung; ini dasar dari tabel lookup, cache, dan menghitung frekuensi.</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: urutan dict bukan berarti bisa diakses lewat indeks angka;
+    `d[0]` mencari key `0`, bukan elemen pertama.</p>
+  </aside>
+
+  <h3>Set: kumpulan unik</h3>
+  <p>set adalah kumpulan <em>tanpa</em> duplikat dan tanpa indeks; anggotanya harus
+  <dfn>hashable</dfn>. Cek keanggotaan rata-rata \(O(1)\), jadi set ideal untuk
+  membership dan deduplikasi.</p>
+  <p>Penting ketika pertanyaannya hanya "apakah X ada?" atau "berapa nilai unik?",
+  bukan "di posisi berapa".</p>
+  <aside class="pitfall">
+    <p>Miskonsepsi: set tidak terurut, jadi `set[0]` error; untuk urutan tetap
+    pakai list atau `dict.fromkeys` (yang menjaga urutan).</p>
+  </aside>
+</section>
+
+<!-- ===================== OPSIONAL #4 RUMUS ===================== -->
+<section class="formula" id="rumus">
+  <h2>Rumus</h2>
+  <p>Kompleksitas rata-rata pencarian (look-up):</p>
+  <p>$$ \text{list}: O(n) \quad \text{dict/set}: O(1) $$</p>
+  <table>
+    <thead><tr><th>Simbol</th><th>Arti</th></tr></thead>
+    <tbody>
+      <tr><td>\(n\)</td><td>Jumlah elemen</td></tr>
+      <tr><td>\(O(1)\)</td><td>Waktu konstan (rata-rata)</td></tr>
+      <tr><td>\(O(n)\)</td><td>Waktu tumbuh linier</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Kapan dipakai:</strong> menaksir biaya saat look-up dipanggil berulang
+  di dalam loop besar.</p>
+  <p><strong>Kapan tidak:</strong> operasi sekali jalan pada data kecil; beda
+  \(O(1)\) vs \(O(n)\) tak terasa.</p>
+  <p>Contoh: mencari 1.000 kali di list 10.000 elemen &asymp; \(10^7\) langkah;
+  di set hanya &asymp; \(10^3\).</p>
+</section>
+
+<!-- ===================== OPSIONAL #5 KODE ===================== -->
+<section class="code" id="kode">
+  <h2>Kode</h2>
+  <p>Operasi umum: akses, tambah, hapus, dan cari.</p>
+  <pre><code class="language-python"># list: urutan penting, akses indeks O(1)
+buah = ["apel", "jeruk", "mangga"]
+buah.append("nanas")        # tambah di akhir
+buah.remove("jeruk")        # hapus by value (O(n))
+print(buah[0])              # akses indeks -> apel
+
+# dict: key -> value, cari key O(1)
+harga = {"apel": 5000, "jeruk": 4000}
+harga["mangga"] = 6000      # tambah / ubah
+del harga["apel"]           # hapus key
+print(harga["mangga"])      # -> 6000
+
+# set: unik, tanpa indeks
+seen = {"apel", "jeruk"}
+seen.add("mangga")          # tambah
+seen.discard("apel")        # hapus (aman bila absen)
+print("apel" in seen)       # -> True (O(1))
+
+# cari di list O(n): dipindai satu per satu
+print("nanas" in buah)      # -> True
+
+# deduplikasi: set membuang duplikat
+kata = ["a", "b", "a", "c", "b"]
+print(set(kata))            # -> {'a', 'b', 'c'}
+</code></pre>
+  <p>Pola membership cepat dan deduplikasi yang menjaga urutan.</p>
+  <pre><code class="language-python"># membership cepat dengan set
+ip_terlihat = set()
+
+def sudah_dilihat(ip):
+    if ip in ip_terlihat:   # O(1)
+        return True
+    ip_terlihat.add(ip)
+    return False
+
+# dedup sambil pertahankan urutan (dict 3.7+)
+def unik_urut(data):
+    return list(dict.fromkeys(data))
+
+print(unik_urut(["a", "b", "a", "c"]))
+# -> ['a', 'b', 'c']
+</code></pre>
+  <p><strong>Apa yang berubah kalau X diubah:</strong> menaikkan jumlah elemen
+  \(n\) tidak mengubah cari di dict/set, tetapi memperlambat cari di list.</p>
+</section>
+
+<!-- ===================== WAJIB #6 LATIHAN ===================== -->
+<section class="practice" id="latihan">
+  <h2>Latihan mandiri</h2>
+
+  <p>1. Diberi `angka = [1, 2, 2, 3, 1]`. Bagaimana membuang duplikat dengan satu
+  panggilan, dan apa hasilnya?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>Pakai set, mis. `set(angka)` &rarr; `{1, 2, 3}`, atau `list(set(angka))`
+    bila hasil harus list. Biayanya \(O(n)\) untuk menyisir sekali.</p>
+  </details>
+
+  <p>2. Kenapa `3 in daftar_besar` (list) lebih lambat daripada `3 in himpunan_besar`
+  (set) saat data besar?</p>
+  <details>
+    <summary>Lihat jawaban</summary>
+    <p>List memindai elemen satu per satu, jadi \(O(n)\). Set menghitung hash dan
+    melompat langsung ke posisi bucket, rata-rata \(O(1)\), jadi tak tumbuh
+    dengan \(n\).</p>
+  </details>
+</section>
+
+<!-- ===================== OPSIONAL #7 FAQ ===================== -->
+<section class="faq" id="faq">
+  <h2>Jebakan &amp; FAQ</h2>
+  <p><strong>Kapan list lebih tepat dari dict?</strong> Saat elemen cukup
+  diurutkan dan diakses lewat posisi, tanpa label key.</p>
+  <p><strong>Kenapa set tidak bisa menyimpan list?</strong> Karena list tidak
+  hashable (bisa berubah); set butuh hash yang stabil. Pakai tuple sebagai gantinya.</p>
+  <p><strong>Apakah urutan dict dijamin?</strong> Ya sejak Python 3.7; tetapi
+  ini jaminan urutan penyisipan, bukan pengurutan nilai.</p>
+  <p><strong>Apakah kompleksitas \(O(1)\) selalu benar?</strong> Itu rata-rata;
+  pada worst case (banyak hash bentrok) dict/set bisa turun mendekati \(O(n)\).</p>
+  <p><strong>Kapan dict lebih tepat dari dua list paralel?</strong> Selalu, bila
+  data berpasangan label-nilai; dict menghindari risiko list tak sinkron.</p>
+</section>
+
+<!-- ===================== OPSIONAL #8 GLOSARIUM ===================== -->
+<section class="glossary" id="glosarium">
+  <h2>Glosarium</h2>
+  <dl>
+    <dt>Hashable</dt><dd>Objek yang punya hash tetap dan bisa jadi key/anggota set.</dd>
+    <dt>Membership test</dt><dd>Cek keanggotaan lewat `in`, mis. `x in set`.</dd>
+    <dt>Kompleksitas rata-rata</dt><dd>Biaya tipikal, bukan kasus terburuk.</dd>
+    <dt>Deduplikasi</dt><dd>Membuang duplikat sehingga tersisa nilai unik.</dd>
+    <dt>Look-up</dt><dd>Mencari nilai berdasarkan key atau posisi.</dd>
+  </dl>
+</section>
+
+<!-- ===================== OPSIONAL #9 CHECKLIST ===================== -->
+<section class="checklist" id="checklist">
+  <h2>Checklist kelulusan</h2>
+  <ul>
+    <li>Bisa pilih list, dict, atau set dari kebutuhan urutan/key/keunikan.</li>
+    <li>Bisa jelaskan kenapa cari di list \(O(n)\) dan di dict/set \(O(1)\).</li>
+    <li>Bisa tulis deduplikasi set dan yang menjaga urutan.</li>
+    <li>Bisa jelaskan syarat hashable untuk key dict dan anggota set.</li>
+  </ul>
+</section>
+
+<!-- ===================== WAJIB #10 SUMBER ===================== -->
+<section class="sources" id="sumber">
+  <h2>Sumber</h2>
+  <ol>
+    <li>Dokumentasi resmi Python 3: <em>Data Structures</em> (docs.python.org/3/tutorial).</li>
+    <li>Dokumentasi resmi Python 3: <em>TimeComplexity</em> (wiki.python.org).</li>
+    <li>Catatan kuliah struktur data, pertemuan tentang tabel hash.</li>
+  </ol>
+</section>
+
+</article>
+</div>
+
+<script src="../assets/note.js" defer></script>
+</body>
+</html>
