@@ -18,6 +18,9 @@ Please note:
   - Algorithms & Programming Fundamentals
   - Data Structures
   - (and possibly late-night caffeine-fueled experiments ☕)
+- Study notes per session (`Notion/*.md`, format `TEMPLATE_CATATAN.md`), e.g.
+  `Semester_5/Cloud Interfacing with Virtualization/Notion/01_...md`
+- `Non-kuliah/`: offline HTML study-note system (see `Non-kuliah/README.md`)
 
 ---
 
@@ -37,6 +40,8 @@ You're *not* welcome to submit this as your own work unless your goal is to fail
 3. Read the comments.
 4. Understand what's going on.
 5. Say "Ohhh, that's how it works."
+6. Study notes: open `Non-kuliah/index.html` in a browser (offline), or read
+   `Semester_*/<Course>/Notion/*.md` (importable via `import_to_notion.py`).
 
 ---
 

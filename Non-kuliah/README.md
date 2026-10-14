@@ -2,6 +2,8 @@
 
 Catatan: HTML statis offline (`file://`), library terpusat di `assets/`, satu topik = satu file di folder subjek. Kontrak agent: `NOTE-SPEC.md`. Daftar: `index.html`.
 
+Catatan kuliah (per sesi, format Markdown siap import Notion) ada di `Semester_*/<Mata Kuliah>/Notion/*.md`, mis. `Semester_5/Cloud Interfacing with Virtualization/Notion/`.
+
 ## Library (versi terpin)
 
 | Library | Versi | File | Ukuran | Sumber |
