@@ -42,7 +42,16 @@ graph TD
 
 ### 3. Mengakses Blob via Go (azblob SDK)
 
-- Project: folder baru → VS Code → `go mod init namapackage`. Install `github.com/Azure/azure-sdk-for-go/sdk/storage/azblob@v1.8.1` dan `github.com/joho/godotenv` (pembaca `.env`).
+- Project: folder baru → VS Code → terminal:
+```bash
+go mod init namapackage
+go get github.com/Azure/azure-sdk-for-go/sdk/storage/azblob@v1.8.1
+go get github.com/joho/godotenv
+```
+- Connection string (portal → Storage Account → Access keys) disimpan di `.env`, bukan di kode:
+```
+CONNECTION_STRING=connection_string_dari_azure
+```
 - Connection string diambil dari portal (Storage Account → Access keys) lalu disimpan di `.env` sebagai `CONNECTION_STRING=...` — jangan hardcode di kode.
 - Pola koneksi:
 ```go
@@ -56,8 +65,41 @@ fmt.Printf("%s", client.URL())
 
 ### 4. Upload, Download, List
 
-- Upload: buka file lokal (`os.OpenFile("namafile.txt", os.O_RDONLY, 0)`), lalu `client.UploadFile(context.TODO(), "tes", "namafile.txt", file, nil)`. Cek di portal → Containers → `tes`.
-- Download: siapkan file tujuan (`os.Create("read_test.txt")`), lalu `client.DownloadFile(context.TODO(), "tes", "namafile.txt", file, nil)` (return `n` = ukuran buffer).
+- Upload: buka file lokal lalu unggah ke container `tes` (cek di portal → Containers → `tes`):
+```go
+file, err := os.OpenFile("namafile.txt", os.O_RDONLY, 0)
+if err != nil {
+    fmt.Printf("%s", err)
+    return
+}
+_, err = client.UploadFile(
+    context.TODO(),
+    "tes",
+    "namafile.txt",
+    file,
+    nil,
+)
+if err != nil {
+    fmt.Printf("%s", err)
+    return
+}
+```
+- Download: siapkan file tujuan, unduh, lalu cetak ukuran buffer (`n`):
+```go
+file, err = os.Create("read_test.txt")
+n, err := client.DownloadFile(
+    context.TODO(),
+    "tes",
+    "namafile.txt",
+    file,
+    nil,
+)
+if err != nil {
+    fmt.Printf("%s", err)
+    return
+}
+fmt.Printf("Buffer Size: %d", n)
+```
 - List semua blob pakai pager (data dibagi per halaman):
 ```go
 pager := client.NewListBlobsFlatPager("tes", nil)

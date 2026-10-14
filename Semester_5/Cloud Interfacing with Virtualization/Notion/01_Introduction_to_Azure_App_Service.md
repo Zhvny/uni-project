@@ -89,10 +89,50 @@ docker push username_docker_hub/nama_repository:tag_image
 
 ### 7. Deploy via GitHub (Code)
 
-- Source code di-push dulu ke repo GitHub baru (`git init`, `add`, `commit`, set user bila diminta, `remote add origin`, `push`).
+- Source code di-push dulu ke repo GitHub baru:
+```bash
+git init
+git add .
+git commit -m "Initial Commit"
+git branch -M main
+git remote add origin <url>
+git push origin main
+```
+- Kalau `git` protes identitas, set dulu (sesuai akun GitHub), lalu ulangi perintah yang error:
+```bash
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+```
 - Web App kedua dibuat dengan **Publish: Code**, Runtime stack **Node 22 LTS**, Linux, East Asia. Di tab Deployment: Continuous Deployment = Enable, sambungkan akun GitHub → pilih repo → branch `main`.
-- Azure otomatis membuat folder `.github/workflows` berisi file `main_<app>.yml`: workflow terpicu saat push ke `main` (atau manual), tahap *build* (checkout, setup Node 22, `npm install/build/test`, upload artifact) lalu tahap *deploy* (download artifact, login Azure via OIDC, `azure/webapps-deploy`).
-- Satu setting wajib sesudahnya: Settings → Configuration → Stack Settings → **Startup command** diisi `pm2 serve /home/site/wwwroot/dist --no-daemon --spa` → Apply. Tanpa ini, hasil build Vite (`dist/`) tidak disajikan.
+- Azure otomatis membuat folder `.github/workflows` berisi file `main_<app>.yml`: workflow terpicu saat push ke `main` (atau manual), tahap *build* (checkout, setup Node 22, `npm install/build/test`, upload artifact) lalu tahap *deploy* (download artifact, login Azure via OIDC, `azure/webapps-deploy`). Kerangka strukturnya:
+```yaml
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with: { node-version: '22.x' }
+      - run: npm install / npm run build / npm run test
+      - uses: actions/upload-artifact@v4
+        with: { name: node-app, path: . }
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v4
+      - uses: azure/login@v2
+      - uses: azure/webapps-deploy@v3
+        with: { app-name: '<nama-app>', slot-name: 'Production', package: . }
+```
+- Satu setting wajib sesudahnya: Settings → Configuration → Stack Settings → **Startup command** diisi seperti di bawah → Apply. Tanpa ini, hasil build Vite (`dist/`) tidak disajikan.
+```
+pm2 serve /home/site/wwwroot/dist --no-daemon --spa
+```
 
 ---
 

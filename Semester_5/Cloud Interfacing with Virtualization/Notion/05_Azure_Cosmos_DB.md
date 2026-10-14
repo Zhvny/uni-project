@@ -38,7 +38,12 @@ graph TD
 
 ### 3. Project Go dan Koneksi
 
-- Folder project → VS Code → `main.go` minimal → `go mod init sesi5` → `go get github.com/Azure/azure-sdk-for-go/sdk/data/azcosmos`. Pastikan extension Go terinstall.
+- Folder project → VS Code → `main.go` minimal, lalu di terminal:
+```bash
+go mod init sesi5
+go get github.com/Azure/azure-sdk-for-go/sdk/data/azcosmos
+```
+- Pastikan extension Go terinstall.
 - Koneksi memakai connection string (Cosmos DB → Keys → Primary Connection String), disimpan di konstanta:
 ```go
 const connStr = "AccountEndpoint=...;AccountKey=...;"
@@ -67,8 +72,38 @@ type Item struct {
     Category string `json:"category"`
 }
 ```
-- **Upsert** (insert bila belum ada, update bila ID sudah ada): ambil reference container (`db.NewContainer("product")`), tentukan partition key (`azcosmos.NewPartitionKeyString("electronic")` karena item ber-`category: electronic`), marshal struct (`json.Marshal`), lalu `container.UpsertItem(ctx, pk, payload, nil)`.
-- **Read** langsung butuh dua info: partition key + ID: `container.ReadItem(ctx, pk, "1", nil)` → `resp.Value` masih byte → `json.Unmarshal(resp.Value, &decodedItem)` (hasil mis. `{1 laptop electronic}`).
+- **Upsert** (insert bila belum ada, update bila ID sudah ada):
+```go
+container, err := db.NewContainer("product")
+if err != nil {
+    log.Fatalf("%s\n", err)
+}
+pk := azcosmos.NewPartitionKeyString("electronic")
+payload, err := json.Marshal(Item{
+    ID: "1", Name: "laptop", Category: "electronic",
+})
+if err != nil {
+    log.Fatalf("%s\n", err)
+}
+_, err = container.UpsertItem(ctx, pk, payload, nil)
+if err != nil {
+    log.Fatalf("%s\n", err)
+}
+```
+- **Read** langsung butuh dua info: partition key + ID, lalu decode byte ke struct:
+```go
+pk := azcosmos.NewPartitionKeyString("electronic")
+resp, err := container.ReadItem(ctx, pk, "1", nil)
+if err != nil {
+    log.Fatalf("%s\n", err)
+}
+var decodedItem Item
+err = json.Unmarshal(resp.Value, &decodedItem)
+if err != nil {
+    log.Fatalf("%s\n", err)
+}
+log.Printf("Decoded item: %v\n", decodedItem)
+```
 - **Query** bila partition key tak diketahui: `container.NewQueryItemsPager("SELECT * FROM c", azcosmos.NewPartitionKey(), nil)` — `c` alias item. Hasil dibagi halaman, jadi iterasi:
 ```go
 for pager.More() {
@@ -80,7 +115,15 @@ for pager.More() {
 }
 ```
 - `SELECT *` ikut mengambil atribut bawaan Cosmos (`_rid`, `_self`, `_etag`, `_attachments`, `_ts`).
-- **Delete** butuh partition key + ID: `container.DeleteItem(ctx, pk, "1", nil)` → cek item `1 | laptop | electronic` hilang dari Data Explorer.
+- **Delete** butuh partition key + ID:
+```go
+pk := azcosmos.NewPartitionKeyString("electronic")
+_, err = container.DeleteItem(ctx, pk, "1", nil)
+if err != nil {
+    log.Fatalf("%s\n", err)
+}
+```
+- Cek item `1 | laptop | electronic` hilang dari Data Explorer.
 
 ### 5. Alur Keseluruhan
 

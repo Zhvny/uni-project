@@ -20,7 +20,19 @@
 ### 1. Ide Besar: File Datang, Kode Jalan
 
 - Tujuannya: Azure Function (Go) otomatis berjalan setiap blob **dibuat atau dihapus**. Alurnya: upload ke Blob Storage → Event Grid menerima notifikasi → Event Subscription meneruskan → Function `HandleFileUpload` mengeksekusi logic → log ke Application Insights.
-- Poin arsitektur: Blob Storage menyimpan file; Event Grid hanya mengirim **metadata** (tipe event, path subject, waktu, URL, content type, ukuran) — isi file tetap di storage dan diambil terpisah bila perlu.
+- Poin arsitektur: Blob Storage menyimpan file; Event Grid hanya mengirim **metadata** (tipe event, path subject, waktu, URL, content type, ukuran) — isi file tetap di storage dan diambil terpisah bila perlu. Contoh payload `BlobCreated`:
+```json
+{
+  "eventType": "Microsoft.Storage.BlobCreated",
+  "subject": "/blobServices/default/containers/data/blobs/tes.txt",
+  "eventTime": "2026-09-30T08:00:00Z",
+  "data": {
+    "url": "https://sesi4sa.blob.core.windows.net/data/tes.txt",
+    "contentType": "text/plain",
+    "contentLength": 120
+  }
+}
+```
 
 #### **Alur Event**
 ```mermaid
@@ -43,7 +55,13 @@ graph LR
 
 ### 3. Prasyarat dan Resource
 
-- Subscription Azure + izin buat RG/Storage/Function App/topic/subscription. Tools: Go 1.24+, Functions Core Tools 4.12+, Azure CLI 2.87+ (`go version`, `func --version`, `az version`), VS Code + extension Functions & Go. Storage Account tipe StorageV2/BlobStorage/BlockBlobStorage; Go Functions masih preview di Flex Consumption.
+- Subscription Azure + izin buat RG/Storage/Function App/topic/subscription. Cek tools sebelum mulai:
+```bash
+go version
+func --version
+az version
+```
+- VS Code + extension Functions & Go. Storage Account tipe StorageV2/BlobStorage/BlockBlobStorage; Go Functions masih preview di Flex Consumption.
 - Resource Group `sesi4-rg` (East Asia) → Storage Account unik huruf-kecil-angka (mis. `sesi4sa`, Standard, LRS) → buat container `data` (Private).
 - Function App: Flex Consumption, Go, 2048 MB, zone redundancy Disabled, storage runtime sendiri, Application Insights On, public access On, VNet Off, continuous deployment Disabled, skip Durable.
 - Project lokal: folder kosong (mis. `FileUpload`) → *Create New Project* (Go) → `go mod tidy`. Ingat 5 file: `main.go`, `go.mod`, `go.sum`, `host.json`, `local.settings.json`.

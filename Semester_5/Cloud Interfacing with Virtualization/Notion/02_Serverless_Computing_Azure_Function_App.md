@@ -50,6 +50,50 @@ graph LR
 - File penting: `main.go` (entry point + registrasi trigger), `host.json` (konfigurasi host), `local.settings.json` (env lokal, tidak ikut publish).
 - Pola `main.go`: `app := sdk.FunctionApp()`, daftarkan endpoint (`app.HTTP("hello", handler, sdk.WithMethods("GET","POST"), sdk.WithAuth("function"))`), tutup dengan `worker.Start(app)`. Tiga level auth yang dipakai: `anonymous` (bebas), `function` (butuh function/host key), `admin` (butuh master key).
 - Handler memakai signature standar `net/http`: baca `r.URL.Query().Get("name")`, tulis via `fmt.Fprintf(w, ...)`, dan log dengan `slog.InfoContext(r.Context(), ..., "method", r.Method, "path", r.URL.Path)`.
+- Tools lokal dipasang via:
+```bash
+winget install --id Microsoft.Azure.FunctionsCoreTools --exact
+```
+- Kerangka `main.go` (tiga level auth):
+```go
+package main
+
+import (
+    "fmt"
+    "log/slog"
+    "net/http"
+
+    "github.com/azure/azure-functions-golang-worker/sdk"
+    "github.com/azure/azure-functions-golang-worker/worker"
+)
+
+func main() {
+    app := sdk.FunctionApp()
+    app.HTTP("hello", HTTPTriggerHandlerFunction,
+        sdk.WithMethods("GET", "POST"), sdk.WithAuth("function"))
+    app.HTTP("hello2", HTTPTriggerHandlerAnonymous,
+        sdk.WithMethods("GET", "POST"), sdk.WithAuth("anonymous"))
+    app.HTTP("hello3", HTTPTriggerHandlerAdmin,
+        sdk.WithMethods("GET", "POST"), sdk.WithAuth("admin"))
+    worker.Start(app)
+}
+
+func HTTPTriggerHandlerFunction(w http.ResponseWriter, r *http.Request) {
+    slog.InfoContext(r.Context(), "Function endpoint called",
+        "method", r.Method, "path", r.URL.Path)
+    name := r.URL.Query().Get("name")
+    if name == "" {
+        name = "world"
+    }
+    fmt.Fprintf(w, "Hello from function auth, %s!", name)
+}
+```
+- Test endpoint via curl (key lewat query atau header), dan cek subscription aktif:
+```bash
+curl -i "https://<nama-function-app>.azurewebsites.net/api/hello?code=<function-key>"
+curl "https://<nama-function-app>.azurewebsites.net/api/hello" -H "x-functions-key: <function-key>"
+az account show
+```
 
 ### 5. Authorization, Key, dan Test via curl
 
@@ -62,6 +106,28 @@ graph LR
 
 - Timer trigger = function terjadwal, bukan endpoint URL. Handler Go menerima `(ctx context.Context, timer bindings.TimerInfo)` dan mengembalikan `error` (tambah `return nil` saat sukses).
 - Registrasi: `app.Timer("cronJob", handleCronJob, sdk.WithSchedule("0 0 13 * * *"))`. Format **NCRONTAB 6 field**: detik menit jam tanggal bulan hari-minggu. Contoh: `0 0 13 * * *` = tiap hari 13:00; `0 */5 * * * *` = tiap 5 menit; `0 30 9 * * 1-5` = hari kerja 09:30.
+- Handler timer (perhatikan ejaan: `handleCronJob`, `ctx`, `bindings.TimerInfo`, `ScheduleStatus.Next`, `return nil`):
+```go
+func handleCronJob(ctx context.Context, timer bindings.TimerInfo) error {
+    slog.InfoContext(ctx, "Cron job success",
+        "next_schedule", timer.ScheduleStatus.Next)
+    return nil
+}
+
+func main() {
+    app := sdk.FunctionApp()
+    app.Timer("cronJob", handleCronJob,
+        sdk.WithSchedule("0 0 13 * * *"))
+    worker.Start(app)
+}
+```
+- Contoh jadwal lain (ingat Timer Azure jalan di UTC; 13:00 WIB = 06:00 UTC):
+```bash
+0 0 13 * * *    # tiap hari 13:00 (server time)
+0 */5 * * * *   # tiap 5 menit
+0 30 9 * * 1-5  # hari kerja 09:30
+0 0 6 * * *     # 13:00 WIB dalam UTC
+```
 - Jebakan: `* * 13 * * *` = tiap detik selama jam 13 (log meledak). Timer Azure memakai **UTC**; Flex Consumption Linux tak mendukung `WEBSITE_TIME_ZONE`, jadi 13:00 WIB = `0 0 6 * * *`.
 - Deploy: simpan `main.go` → `go mod tidy` bila import baru → *Deploy to Function App* → pilih app → cek function `cronJob` + pesannya di Monitor/Application Insights.
 
