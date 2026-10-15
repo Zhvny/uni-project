@@ -5,60 +5,56 @@
 ---
 
 ## 🔑 Cues
-- PaaS (Platform as a Service)
-- Azure App Service + App Service Plan
-- Resource Group (Region East Asia)
-- Deploy via Container vs via GitHub (Code)
-- Dockerfile multi-stage (Node build → nginx serve)
-- Continuous deployment + webhook Docker Hub
-- Startup command (`pm2 serve ... --spa`)
-- Runtime Status: Healthy vs Issues Detected
+- PaaS: bawa aplikasi, Azure urus mesin
+- App Service Plan sebagai "paket kos"
+- Region East Asia + nama unik global
+- Dua pintu rilis: image vs source
+- Dockerfile dua fase (build lalu serve)
+- Webhook continuous deployment
+- Startup command SPA
+- Runtime Status sebagai lampu kesehatan
 
 ---
 
 ## 📖 Materi Utama
 
-### 1. Azure App Service itu PaaS
+### 1. Cara Berpikir PaaS: Sewa Kamar Furnished, Bukan Tanah Kosong
 
-- App Service adalah wujud **Platform as a Service**: kita cukup membawa kode/image, Azure yang mengurus server, OS, dan runtime di bawahnya.
-- Konsekuensinya: tidak ada SSH ke VM, tidak ada instalasi OS — yang kita atur hanya aplikasi, konfigurasi (environment variable, networking), dan cara deploy-nya.
-- Pola deploy yang dipraktikkan ada dua: dari **container image** (Docker Hub) dan dari **source code di GitHub** (Code + GitHub Actions).
+- Analogi sendiri: VM itu seperti sewa tanah kosong — bangun fondasi (OS), pasang listrik (runtime), baru dirikan rumah (aplikasi). App Service itu kamar kos furnished: kasur, lemari, Wi-Fi sudah ada; penghuni tinggal bawa koper (kode atau image).
+- Konsekuensi praktisnya: tidak ada akses SSH ke OS, tidak ada install manual. Yang dikendalikan hanya tiga hal: isi koper (aplikasi), label koper (environment variable, networking), dan kurir pengantar (metode deploy).
+- "Kamar" ini disewa lewat **App Service Plan** — paket yang menentukan jatah CPU/RAM. Saat Web App dibuat, plan ini ter-generate otomatis; performa mentok biasanya urusan plan, bukan kode.
 
-#### **Alur Umum Deploy**
+#### **Memilih Kurir Rilis**
 ```mermaid
 graph TD
-    Code[Kode frontend] -->|Dockerfile| Image[Image di Docker Hub]
-    Image -->|Webhook / Continuous deployment| WebApp[Azure Web App]
-    Code -->|Push ke GitHub| Actions[GitHub Actions CI/CD]
-    Actions --> WebApp
-    WebApp --> URL[Default domain]
+    Need[Situs statis hasil build Vite perlu online] --> Q{Punya Dockerfile custom?}
+    Q -- Ya, image sudah jadi --> Kiri[Jalur Container: push image ke Docker Hub]
+    Q -- Tidak, mau dari source langsung --> Kanan[Jalur Code: push kode ke GitHub]
+    Kiri --> Whook[Webhook: image baru otomatis ditarik]
+    Kanan --> Acts[Actions: workflow build lalu deploy]
+    Whook --> Web[Web App + Default domain]
+    Acts --> Web
 ```
 
-### 2. Persiapan: Resource Group
+### 2. Fondasi Bersama: Resource Group dan Aturan Main
 
-- Semua resource lab dikumpulkan dalam satu **Resource Group** supaya gampang dilacak dan (nanti) dihapus sekaligus.
-- Caranya: portal → *Resource groups* → *Create* → isi nama → **Region East Asia** → *Review + create* → *Create* → *Go to resource group*.
-- Kalau notifikasi pembuatannya kelewat, refresh lalu klik nama resource group-nya.
+- Semua resource lab dikumpulkan dalam satu **Resource Group** agar gampang dilacak dan dihapus sekaligus. Alur portal: *Resource groups → Create →* isi nama → **Region East Asia** → *Review + create → Create → Go to resource group*.
+- Dua jebakan klasik sesi ini: region harus East Asia, dan nama Web App harus unik sedunia (bila ditolak, tambah angka seperti `contoh1`).
+- Setelah resource jadi, alamat publiknya ada di **Default domain** (Overview → Properties). Variabel lingkungan ditambah via Settings → Environment variables; koneksi ke database via Settings → Networking.
 
-### 3. Membuat Web App Berbasis Container
+### 3. Jalur Image: Dari Laptop ke Docker Hub ke Azure
 
-- Portal → cari *App Services* → *Create* → **Web App**. Isian pentingnya:
-  - Resource Group: pakai yang baru dibuat. Nama: harus unik global (kalau error, tambah angka, mis. `contoh1`).
-  - **Publish: Container**, OS: Linux, Region: East Asia.
-  - Saat form ini diisi, Azure otomatis men-generate **App Service Plan** — di sinilah jatah CPU/RAM aplikasi ditentukan.
-- Lanjut *Next* sampai tab **Container**: *Image Source* = *Other container registries*, *Registry server URL* diisi alamat registry Docker Hub (`.../username_docker_hub`), *Image and tag* = `nama:latest`.
-- Tab **Monitor + secure**: *Application Insights* = Yes. Terus *Review + create* → *Create* → *Go to resource*.
-- Di halaman resource: link hasil ada di **Default domain** (Overview → Properties). Environment variable bisa ditambah lewat Settings → Environment variables. Konektivitas (mis. ke database) diatur di Settings → Networking.
-- Supaya tiap ada image baru langsung ter-deploy, buka Deployment → **Deployment Center**: centang *Continuous deployment*, klik *Enable* pada Webhook URL, dan centang *SCM Basic Auth Publishing Credentials* + Apply.
+- Pembuatan Web App: portal → cari *App Services → Create →* **Web App**, Resource Group yang tadi, **Publish: Container**, OS Linux, region East Asia.
+- Di tab **Container**: *Image Source = Other container registries*, *Registry server URL* diisi alamat registry Docker Hub (format `.../username_docker_hub`), *Image and tag* diisi `nama:latest`.
+- Di tab **Monitor + secure**: *Application Insights = Yes*. Lalu *Review + create → Create → Go to resource*.
+- Agar rilis berjalan sendiri, buka Deployment → **Deployment Center**: aktifkan *Continuous deployment*, klik *Enable* pada Webhook URL, centang *SCM Basic Auth Publishing Credentials* lalu Apply. Salin Webhook URL ini.
+- Di sisi Docker Hub: buat repository (namanya harus sama dengan segmen `nama` pada `nama:latest`) → tab **Webhooks** → nama bebas + paste URL tadi. Sejak itu setiap `docker push` memicu Azure menarik image terbaru.
 
-### 4. Menghubungkan ke Docker Hub
+### 4. Isi Koper Jalur Image: Dockerfile Dua Fase
 
-- Webhook URL dari Deployment Center disalin, lalu di Docker Hub: buat repository (namanya samakan dengan bagian `nama` pada `nama:latest`) → tab **Webhooks** → isi nama bebas + paste URL tadi.
-- Artinya: setiap `docker push` image baru ke repo itu, Docker Hub memanggil webhook Azure dan Web App menarik image terbaru.
+- Project frontend dibuat dari `npm create vite@latest` (React + TypeScript + ESLint). Di root project, `Dockerfile` dibagi dua fase agar image akhir ramping: fase `builder` merakit file statis, fase `runner` hanya menyajikannya.
+- Fase pertama memakai Node, fase kedua memakai nginx:
 
-### 5. Dockerfile: Build React, Serve via Nginx
-
-- Project frontend dibuat dengan `npm create vite@latest` (React + TypeScript + ESLint), lalu di root project dibuat file `Dockerfile` dua tahap:
 ```dockerfile
 FROM node:22-alpine AS builder
 WORKDIR /app
@@ -71,25 +67,21 @@ WORKDIR /usr/share/nginx/html
 COPY --from=builder /app/dist ./
 CMD ["nginx", "-g", "daemon off;"]
 ```
-- Idenya: tahap pertama mem-build static file (`/app/dist`), tahap kedua hanya menyajikan hasilnya lewat nginx — image akhir jadi kecil.
-- Build dan push (sesuaikan username, nama repo, tag, dan folder):
+
+- Build lalu dorong ke registry (sesuaikan username, nama repo, tag, folder):
+
 ```bash
 docker build -t username_docker_hub/nama_repository:tag_image .\nama_folder\
 docker images
 docker push username_docker_hub/nama_repository:tag_image
 ```
-- `docker images` dipakai memastikan image lokal sudah terbentuk; tulisan `latest: digest: ...` sesudah push artinya upload berhasil.
 
-### 6. Mengecek Hasil Deploy
+- `docker images` memastikan image lokal terbentuk; baris `latest: digest: ...` setelah push berarti upload sukses. Cek silang di Docker Hub tab General bahwa tag baru masuk.
 
-- Docker Hub → tab General repo untuk memastikan tag baru masuk.
-- Portal → Web App → Overview → Properties → **Runtime Status**: `Healthy` = sukses dan Default Domain bisa dibuka.
-- Kalau `Issues Detected`: klik tulisannya. `Unknown` = masih proses, tunggu + refresh beberapa menit. `Error` = baca info error-nya atau tanya aslab.
-- Uji continuous deploy: ubah `<h1>` di `App.tsx` (mis. jadi `Get started V2`), build + push ulang, refresh Default Domain — perubahan harus muncul tanpa klik apa pun di portal.
+### 5. Jalur Source: Dari Git ke Workflow Otomatis
 
-### 7. Deploy via GitHub (Code)
+- Dorong kode ke repo GitHub baru:
 
-- Source code di-push dulu ke repo GitHub baru:
 ```bash
 git init
 git add .
@@ -98,13 +90,17 @@ git branch -M main
 git remote add origin <url>
 git push origin main
 ```
-- Kalau `git` protes identitas, set dulu (sesuai akun GitHub), lalu ulangi perintah yang error:
+
+- Bila `git` menuntut identitas, set sesuai akun lalu ulangi perintah yang gagal:
+
 ```bash
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
 ```
-- Web App kedua dibuat dengan **Publish: Code**, Runtime stack **Node 22 LTS**, Linux, East Asia. Di tab Deployment: Continuous Deployment = Enable, sambungkan akun GitHub → pilih repo → branch `main`.
-- Azure otomatis membuat folder `.github/workflows` berisi file `main_<app>.yml`: workflow terpicu saat push ke `main` (atau manual), tahap *build* (checkout, setup Node 22, `npm install/build/test`, upload artifact) lalu tahap *deploy* (download artifact, login Azure via OIDC, `azure/webapps-deploy`). Kerangka strukturnya:
+
+- Web App kedua dibuat dengan **Publish: Code**, runtime **Node 22 LTS**, Linux, East Asia. Di tab Deployment: Continuous Deployment = Enable, hubungkan akun GitHub, pilih repo dan branch `main`.
+- Azure lalu menanam folder `.github/workflows` berisi `main_<app>.yml`. Alurnya dua tahap: *build* (checkout, setup Node 22, `npm install`/`build`/`test`, upload artifact) lalu *deploy* (download artifact, login via OIDC, `azure/webapps-deploy`). Kerangka padatnya:
+
 ```yaml
 on:
   push:
@@ -129,17 +125,27 @@ jobs:
       - uses: azure/webapps-deploy@v3
         with: { app-name: '<nama-app>', slot-name: 'Production', package: . }
 ```
-- Satu setting wajib sesudahnya: Settings → Configuration → Stack Settings → **Startup command** diisi seperti di bawah → Apply. Tanpa ini, hasil build Vite (`dist/`) tidak disajikan.
+
+- Satu setting penentu: Settings → Configuration → Stack Settings → **Startup command**, isi lalu Apply:
+
 ```
 pm2 serve /home/site/wwwroot/dist --no-daemon --spa
 ```
 
+- Tanpa perintah itu, output build Vite (`dist/`) tidak disajikan sebagai SPA.
+
+### 6. Membaca Lampu Kesehatan
+
+- Portal → Web App → Overview → Properties → **Runtime Status**. `Healthy` berarti Default Domain siap dibuka.
+- `Unknown` artinya masih proses — tunggu dan refresh beberapa menit. `Error` berarti baca detail error-nya (atau tanya aslab), jangan langsung menghapus resource.
+- Uji rilis otomatis: ubah `<h1>` di `App.tsx` (misalnya jadi `Get started V2`), build + push ulang, refresh Default Domain — perubahan muncul tanpa klik apa pun di portal.
+
 ---
 
 ## 🛠️ Use Case / Implementasi Nyata
-- **Skenario:** Frontend statis (hasil build Vite) perlu online cepat tanpa mengurus server.
-- **Masalah yang Diatasi:** Instalasi OS/runtime, konfigurasi web server, dan deploy manual yang rawan lupa langkah.
-- **Keuntungan:** Dua jalur deploy (image & source) + continuous deployment membuat rilis cukup dengan `push`.
+- **Skenario:** Tim frontend punya situs statis hasil build Vite yang harus bisa dibuka publik sore ini juga, tanpa ada anggota paham administrasi server.
+- **Masalah yang Diatasi:** Urutan manual yang panjang dan mudah terlewat: siapkan OS, install runtime, konfigurasi web server, copy file, restart service.
+- **Keuntungan:** Dengan PaaS, rilis menyusut jadi satu kebiasaan: `push`. Pilihan image cocok saat butuh lingkungan custom; pilihan source cocok saat ingin pipeline CI yang transparan di GitHub.
 
 ---
 
@@ -147,31 +153,35 @@ pm2 serve /home/site/wwwroot/dist --no-daemon --spa
 
 | Istilah | Definisi | Contoh / Catatan |
 |---------|----------|-----------------|
-| PaaS | Model cloud di mana platform (OS, runtime) dikelola penyedia | App Service: bawa kode/image saja |
-| App Service Plan | Penentu kuota CPU/RAM aplikasi | Ter-generate otomatis saat create |
-| Resource Group | Wadah logis resource Azure | Region East Asia untuk lab |
-| Continuous deployment | Deploy ulang otomatis tiap ada perubahan | Webhook (container) / Actions (GitHub) |
-| Startup command | Perintah jalan saat app start | `pm2 serve ... --spa` untuk SPA |
-| Runtime Status | Indikator kesehatan deploy | Healthy / Unknown / Error |
+| PaaS | Layanan platform: OS dan runtime diurus penyedia | App Service: kirim kode/image saja |
+| App Service Plan | Paket kuota CPU/RAM untuk aplikasi | Dibuat otomatis saat Web App dibuat |
+| Resource Group | Amplop logis pengelompok resource | Satu grup per sesi lab |
+| Continuous deployment | Penarikan rilis otomatis tiap ada versi baru | Via webhook atau Actions |
+| Startup command | Perintah eksekusi saat aplikasi start | `pm2 serve ... --spa` untuk SPA |
+| Runtime Status | Lampu kesehatan hasil deploy | Healthy / Unknown / Error |
 
 ---
 
 ## 📊 Tabel Ringkasan
 
-| Aspek | Jalur Container | Jalur GitHub (Code) |
+| Aspek | Jalur Container | Jalur Code (GitHub) |
 |-------|----------------|---------------------|
-| Yang di-push | Image ke Docker Hub | Kode ke branch `main` |
-| Pemicu deploy | Webhook Docker Hub | GitHub Actions workflow |
-| Runtime serving | nginx (dari Dockerfile) | Node + `pm2 serve dist` |
-| Cocok untuk | Image custom / multi-stage | Source langsung, CI terlihat |
+| Artefak yang di-push | Image (`nama:latest`) ke Docker Hub | Source ke branch `main` |
+| Pemicu rilis | Webhook registry | Workflow GitHub Actions |
+| Penyaji file | nginx di dalam image | Node + `pm2 serve dist` |
+| Kapan dipilih | Butuh image custom multi-stage | Ingin build log terlihat di repo |
 
 ---
 
 ## ⚠️ Catatan Penting
-> **Region dan nama itu jebakan klasik** — selalu East Asia; nama Web App harus unik global. Kalau deploy gagal, cek Runtime Status dulu sebelum mengulang dari awal: `Unknown` cukup ditunggu, `Error` baru di-debug.
+> **Keputusan region dan nama tidak bisa ditawar** — East Asia dan nama unik global. Saat deploy bermasalah, baca Runtime Status dulu: `Unknown` diobati dengan menunggu, `Error` diobati dengan membaca pesan, bukan mengulang dari nol.
 
 ---
 
 ## 📝 Materi Tambahan (Visual Insights)
-- Screenshot portal pada tiap langkah (resource group, form Web App, Deployment Center, webhook Docker Hub, Runtime Status) — jadikan acuan urutan klik, bukan sekadar bacaan.
-- Kalau `npm` tidak dikenali di terminal, install Node.js dulu; kalau `git` protes identitas, set `user.email`/`user.name` sesuai akun GitHub.
+
+### Trik Hafalan Klik Portal
+- Ingat rantai tempat setting tersebar: identitas aplikasi (Overview → Default domain), rahasia (Environment variables), koneksi (Networking), otomasi (Deployment Center). Empat pintu itu mencakup hampir semua klik sesi ini.
+
+### Gangguan Lingkungan Lokal
+- Terminal protes `npm` tidak dikenal berarti Node.js belum terinstall; `git` protes identitas berarti `user.email`/`user.name` belum di-set sesuai akun GitHub.

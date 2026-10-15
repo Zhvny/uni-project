@@ -125,6 +125,6 @@ erDiagram
 ## ✅ Standar Visual & Orisinalitas (bar jual — wajib untuk semua catatan)
 
 - **Sintesis orisinal**: struktur, diagram, dan contoh milik sendiri. Sumber (materi aslab/dosen) hanya referensi fakta. Jangan cerminkan urutan langkah, nama contoh, atau naskah sumber.
-- **Satu diagram ter-render per catatan** (minimal): tulis diagram sebagai fence ` ```mermaid ` bertipe valid (`flowchart`/`graph`/`sequenceDiagram`/lainnya inti); pipeline import me-render jadi gambar + menyimpan sumber di toggle. Diagram gagal render = fallback blok kode + warning (perbaiki, jangan biarkan).
+- **Satu diagram ter-render per catatan** (minimal): tulis diagram sebagai fence ` ```mermaid ` bertipe valid (`flowchart`/`graph`/`sequenceDiagram`/lainnya inti); pipeline import me-render jadi gambar + menyimpan sumber di toggle. Diagram gagal render = fallback blok kode + warning (perbaiki, jangan biarkan). Jebakan: tanda `-` di dalam nilai `text:` requirementDiagram merusak parser — tulis ulang tanpa hubung (`waktu nyata`, bukan `real-time`).
 - **Konsistensi visual**: judul `# MK | Sesi N: Judul`, callout pembuka, cues ≤15 dalam toggle, tabel selalu ber-header, blok kode ≤2000 char (lebih = pecah), ikon + cover judul terisi otomatis saat import.
 - **Jujur provenance**: bila sumber hanya kerangka/tanpa isi, tulis di Sumber bahwa isi disusun dari dokumentasi umum.

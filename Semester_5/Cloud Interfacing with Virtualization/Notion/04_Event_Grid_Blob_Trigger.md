@@ -5,22 +5,48 @@
 ---
 
 ## 🔑 Cues
-- Event-driven: Blob Storage → Event Grid → Function
-- Event Grid menerima metadata, bukan isi file
-- Komponen: source, system topic, subscription, endpoint, filter/delivery
-- Event type: `BlobCreated` / `BlobDeleted`
-- Handler Go: `app.EventGrid(...)` + `bindings.EventGridEvent`
-- Idempotent (aman di-retry)
-- KQL: `traces | where ...`
+- Event-driven: reaksi, bukan polling
+- Grid kirim metadata, bukan isi file
+- Rantai: source, topic, subscription, endpoint
+- Event BlobCreated dan BlobDeleted
+- Handler Go via app.EventGrid
+- Idempotent karena retry
+- Observasi via Monitor dan KQL
 
 ---
 
 ## 📖 Materi Utama
 
-### 1. Ide Besar: File Datang, Kode Jalan
+### 1. Kenapa Menunggu Kabar Lebih Murah dari Patroli
 
-- Tujuannya: Azure Function (Go) otomatis berjalan setiap blob **dibuat atau dihapus**. Alurnya: upload ke Blob Storage → Event Grid menerima notifikasi → Event Subscription meneruskan → Function `HandleFileUpload` mengeksekusi logic → log ke Application Insights.
-- Poin arsitektur: Blob Storage menyimpan file; Event Grid hanya mengirim **metadata** (tipe event, path subject, waktu, URL, content type, ukuran) — isi file tetap di storage dan diambil terpisah bila perlu. Contoh payload `BlobCreated`:
+- Analogi sendiri: polling itu seperti satpam yang tiap 5 menit menggedor gudang menanyakan "ada barang baru?". Event-driven itu seperti bel pintu: satpam duduk tenang, baru bergerak saat bel berbunyi.
+- Tujuannya di lab: Function Go otomatis berjalan setiap blob **dibuat atau dihapus**, tanpa cron yang mengecek storage terus-menerus. Reaksi terjadi detik setelah upload, biaya hanya keluar saat event benar-benar ada.
+- Aturan mainnya: Function tidak jalan saat subscription dibuat — ia jalan saat event yang cocok terjadi *sesudah* subscription aktif. File lama yang sudah ada sebelumnya tidak diproses otomatis; upload ulang sesudahnya.
+
+#### **Bel Berbunyi, Satpam Bergerak**
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as Uploader
+    participant B as Blob Storage
+    participant G as Event Grid
+    participant F as HandleFileUpload
+    participant L as App Insights
+    U->>B: Upload tes.txt ke data/
+    B->>G: BlobCreated + metadata
+    G->>F: Route via subscription
+    alt Created
+        F->>L: Log new blob is uploaded
+    else Deleted
+        F->>L: Log blob is deleted
+    end
+```
+
+### 2. Isi Amplop: Metadata, Bukan Kardusnya
+
+- Event Grid tidak mengirim isi file — ia mengirim **amplop metadata**: tipe event, path subject, waktu, URL, content type, ukuran. Isi file tetap di storage dan diambil terpisah bila dibutuhkan.
+- Contoh payload `BlobCreated`:
+
 ```json
 {
   "eventType": "Microsoft.Storage.BlobCreated",
@@ -34,41 +60,34 @@
 }
 ```
 
-#### **Alur Event**
-```mermaid
-graph LR
-    U[Upload tes.txt] --> B[Blob Storage]
-    B -->|BlobCreated| T[Event Grid System Topic]
-    T --> S[Event Subscription]
-    S --> F[HandleFileUpload Function]
-    F --> L[Application Insights]
-```
+### 3. Kantor Pos: Empat Peran Pengiriman
 
-### 2. Komponen Event Grid
+- **Event source**: pengirim surat — di sini Storage Account (misalnya `sesi4sa`).
+- **System topic**: cap kantor pos yang dikelola Azure untuk penerbit itu (misalnya topic `blob-event-channel` milik `sesi4sa`).
+- **Event Subscription**: slip routing — source apa, event type apa (`Blob Created`, `Blob Deleted`), endpoint mana, plus filter subject, retry, dan dead-letter.
+- **Endpoint**: alamat tujuan — di sini Function `HandleFileUpload` (alternatif di luar lab: Webhook, Logic App, Event Hub, Service Bus, Storage Queue).
+- Filter subscription bisa dipersempit per container/path (misalnya hanya container `data`). Pengiriman bersifat asinkron dengan retry, sehingga handler production wajib **idempotent**: event yang sama boleh tiba dua kali tanpa merusak data.
 
-- **Event source**: penerbit event — di sini Storage Account (mis. `sesi4sa`).
-- **System topic**: representasi layanan penerbit yang dikelola Azure (mis. topic `blob-event-channel` untuk `sesi4sa`).
-- **Event Subscription**: aturan routing — source apa, event type apa (`Blob Created`, `Blob Deleted`), endpoint mana, plus filter, retry, dan dead-letter.
-- **Endpoint**: tujuan event — di sini Function `HandleFileUpload` (alternatif: Webhook, Logic App, Event Hub, Service Bus, Storage Queue).
-- **Filter & delivery**: subscription bisa difilter per container/path; pengiriman asinkron dengan retry. Handler production wajib **idempotent** supaya event ganda tidak merusak data.
-- Contoh payload `BlobCreated`: `eventType`, `subject` (`/.../containers/data/blobs/tes.txt`), `eventTime`, dan `data` berisi `url`, `contentType`, `contentLength`. File yang sudah ada sebelum subscription aktif tidak diproses otomatis — upload ulang sesudahnya.
+### 4. Merakit Kabel: Resource dan Wiring Portal
 
-### 3. Prasyarat dan Resource
+- Prasyarat: subscription Azure + izin membuat RG/Storage/Function/topic/subscription. Cek perkakas:
 
-- Subscription Azure + izin buat RG/Storage/Function App/topic/subscription. Cek tools sebelum mulai:
 ```bash
 go version
 func --version
 az version
 ```
-- VS Code + extension Functions & Go. Storage Account tipe StorageV2/BlobStorage/BlockBlobStorage; Go Functions masih preview di Flex Consumption.
-- Resource Group `sesi4-rg` (East Asia) → Storage Account unik huruf-kecil-angka (mis. `sesi4sa`, Standard, LRS) → buat container `data` (Private).
+
+- Butuh VS Code + extension Functions dan Go. Tipe Storage Account: StorageV2/BlobStorage/BlockBlobStorage; Go Functions masih preview di Flex Consumption.
+- Resource Group `sesi4-rg` (East Asia) → Storage Account unik huruf-kecil-angka (misalnya `sesi4sa`, Standard, LRS) → container `data` (Private).
 - Function App: Flex Consumption, Go, 2048 MB, zone redundancy Disabled, storage runtime sendiri, Application Insights On, public access On, VNet Off, continuous deployment Disabled, skip Durable.
-- Project lokal: folder kosong (mis. `FileUpload`) → *Create New Project* (Go) → `go mod tidy`. Ingat 5 file: `main.go`, `go.mod`, `go.sum`, `host.json`, `local.settings.json`.
+- Project lokal: folder kosong (misalnya `FileUpload`) → *Create New Project* (Go) → `go mod tidy`. Kenali lima file: `main.go`, `go.mod`, `go.sum`, `host.json`, `local.settings.json`.
+- Wiring di portal: di Storage Account sumber buka Events → **+ Event Subscription** → nama (misalnya `blob-to-function`), schema *Event Grid Schema*, system topic (misalnya `blob-event-channel`), event *Blob Created* + *Blob Deleted*, endpoint **Azure Function** → pilih app + function. Filter subject untuk container `data` bila perlu; retry/dead-letter biarkan default untuk lab.
 
-### 4. Handler Event Grid di Go
+### 5. Penerima Surat: Handler Go dan Cara Mengintipnya
 
-- Struct data blob didefinisikan sendiri, lalu handler men-decode `event.Data`:
+- Struct data blob didefinisikan sendiri, lalu handler men-decode `event.Data` dan bercabang per tipe event:
+
 ```go
 type blobEventData struct {
     URL         string `json:"url"`
@@ -99,14 +118,11 @@ func main() {
     worker.Start(app)
 }
 ```
-- Field penting `EventGridEvent`: `EventType`, `Subject` (path container/blob), `Data` (metadata), `Id`, `EventTime`. Validasi dengan `go mod tidy` + `go build ./...`.
-- Deploy seperti biasa dari VS Code (*Deploy to Function App*), pastikan `HandleFileUpload` muncul di menu Functions (`az account show` bila subscription ambigu).
 
-### 5. Subscription, Test, dan Log
+- Field penting `EventGridEvent`: `EventType`, `Subject` (path container/blob), `Data` (metadata), `Id`, `EventTime`. Validasi lokal via `go mod tidy` + `go build ./...`, deploy dari VS Code (*Deploy to Function App*), pastikan `HandleFileUpload` muncul di menu Functions (`az account show` bila subscription ambigu).
+- Test: upload `tes.txt` baru ke container `data`, tunggu beberapa detik, hapus (uji Deleted), upload ulang (uji Created).
+- Observasi: buka function → Monitor/Log stream **dulu**, baru upload (log lama tidak muncul retroaktif). Alternatif Application Insights → Logs:
 
-- Di Storage Account sumber: Events → **+ Event Subscription** → nama (mis. `blob-to-function`), schema *Event Grid Schema*, system topic (mis. `blob-event-channel`), event *Blob Created* + *Blob Deleted*, endpoint **Azure Function** → pilih app + function. Tambahkan subject filter untuk container `data` bila perlu; retry/dead-letter biarkan default untuk lab. Function tidak jalan saat subscription dibuat — ia jalan saat event cocok terjadi.
-- Test: upload `tes.txt` baru ke container `data`, tunggu detik, hapus (uji Deleted), upload ulang (uji Created).
-- Log: buka function → Monitor/Log stream **sesudah** view dibuka baru upload (log lama tak muncul). Atau Application Insights → Logs:
 ```
 traces | where message contains "file upload trigger executed" | order by timestamp desc
 traces | where message contains "event_type" | order by timestamp desc
@@ -115,9 +131,9 @@ traces | where message contains "event_type" | order by timestamp desc
 ---
 
 ## 🛠️ Use Case / Implementasi Nyata
-- **Skenario:** Setiap file masuk harus diproses (validasi, thumbnail, parsing) tanpa polling.
-- **Masalah yang Diatasi:** Cron/polling boros yang mengecek storage terus-menerus.
-- **Keuntungan:** Reaksi detik-setelah-upload, biaya hanya saat event terjadi.
+- **Skenario:** Setiap file yang masuk harus segera diproses — divalidasi, dibuatkan thumbnail, atau di-parsing — tanpa ada proses yang sibuk mengecek folder tiap menit.
+- **Masalah yang Diatasi:** Pola cron/polling yang boros: bangun tiap interval hanya untuk menemukan "tidak ada yang baru".
+- **Keuntungan:** Bel pintu event bereaksi detik setelah upload dan diam (gratis) saat tidak ada file.
 
 ---
 
@@ -126,11 +142,11 @@ traces | where message contains "event_type" | order by timestamp desc
 | Istilah | Definisi | Contoh / Catatan |
 |---------|----------|-----------------|
 | Event source | Penerbit event | Storage Account `sesi4sa` |
-| System topic | Wakilan layanan penerbit | `blob-event-channel` |
-| Event Subscription | Aturan routing event → endpoint | Blob Created/Deleted → Function |
+| System topic | Cap layanan penerbit milik Azure | `blob-event-channel` |
+| Event Subscription | Slip routing event ke endpoint | Created/Deleted → Function |
 | Endpoint | Tujuan pengiriman event | `HandleFileUpload` |
-| Payload | Metadata event (bukan isi file) | URL, contentType, ukuran |
-| Idempotent | Aman dijalankan berulang | Wajib karena ada retry |
+| Payload | Metadata event, bukan isi file | URL, contentType, ukuran |
+| Idempotent | Aman dieksekusi berulang | Wajib karena ada retry |
 
 ---
 
@@ -138,17 +154,19 @@ traces | where message contains "event_type" | order by timestamp desc
 
 | Tahap | Di mana | Kunci |
 |-------|---------|-------|
-| Simpan file | Blob container `data` | Private, upload sesudah subscription aktif |
+| Simpan file | Blob container `data` | Private; upload sesudah subscription aktif |
 | Rute event | Event Subscription | Schema, filter subject, endpoint Function |
-| Eksekusi | Function Go | `app.EventGrid`, switch `EventType` |
+| Eksekusi | Function Go | `app.EventGrid` + switch `EventType` |
 | Observasi | Monitor / App Insights | KQL `traces \| where ...` |
 
 ---
 
 ## ⚠️ Catatan Penting
-> **Urutan itu segalanya**: file lama tidak diproses otomatis — upload harus terjadi *sesudah* subscription aktif. Dan buka Log stream *sebelum* meng-upload, kalau tidak log-nya tidak terlihat. Untuk production: selalu asumsikan event bisa datang dua kali (idempotent).
+> **Dua urutan yang tidak bisa dibalik**: upload harus sesudah subscription aktif, dan Log stream harus dibuka sebelum upload. Ditambah satu asumsi production: setiap event bisa tiba dua kali, jadi handler harus idempotent.
 
 ---
 
 ## 📝 Materi Tambahan (Visual Insights)
-- Hafalkan rantai lima komponen (source → system topic → subscription → endpoint → log) sebagai satu kalimat; sisanya (klik portal, KQL) tinggal mengikuti rantai itu.
+
+### Hafalan Satu Kalimat
+- Source → system topic → subscription → endpoint → log. Lima kata itu adalah seluruh rantai sesi ini; klik portal dan query KQL hanyalah detail yang menempel pada rantainya.

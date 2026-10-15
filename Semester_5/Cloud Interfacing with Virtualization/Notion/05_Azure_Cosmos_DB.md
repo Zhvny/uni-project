@@ -5,53 +5,63 @@
 ---
 
 ## 🔑 Cues
-- NoSQL: Account → Database → Container → Items (JSON)
-- Partition key (`/category`) = pengelompokan logis
+- NoSQL dokumen JSON, bukan tabel kaku
+- Hierarki: account, database, container, item
+- Partition key sebagai alamat gang
 - Cosmos DB for NoSQL; backup Periodic vs Continuous
-- Go SDK `azcosmos`: client → database → container
-- CRUD via Upsert / ReadItem / Query(pager) / DeleteItem
-- Query butuh pager; `SELECT *` ikut atribut bawaan (`_rid`, `_etag`, ...)
+- SDK azcosmos: client, database, container
+- Baca langsung vs query + pager
+- Upsert, Read, Delete butuh partition key
+- Atribut bawaan _rid, _etag ikut SELECT *
 
 ---
 
 ## 📖 Materi Utama
 
-### 1. Cosmos DB dan Struktur Datanya
+### 1. Dari Tabel Kaku ke Dokumen Bebas
 
-- Cosmos DB adalah database **NoSQL** terkelola Azure. Tidak ada tabel/kolom — data berupa **item/dokumen JSON** dengan hierarki: Account → Database (mis. `tesdb`, wadah container) → Container (mis. `product`, wadah item) → Items.
-- **Partition key** (mis. `/category`) menentukan pengelompokan logis: item dengan `category` sama berada di logical partition yang sama. Mengetahui partition key membuat pencarian langsung ke partition itu (efisien); tanpanya, gunakan query. Path boleh nested mengikuti struktur JSON.
+- Analogi sendiri: SQL itu seperti formulir kelurahan — kolomnya tetap, semua warga mengisi field yang sama. Cosmos DB itu seperti map berisi amplop JSON: tiap amplop (**item**) boleh beda isi, selama punya `id`.
+- Hierarkinya: Account (gedung) → Database `tesdb` (lantai, wadah container) → Container `product` (lemari, wadah item) → Items (amplop JSON). Tidak ada tabel/kolom; ada dokumen.
+- **Partition key** (misalnya `/category`) adalah "nama gang": amplop dengan `category` sama tinggal di gang logis yang sama. Path boleh nested mengikuti struktur JSON.
 
-#### **Hierarki**
+#### **Dua Cara Menemukan Amplop**
 ```mermaid
-graph TD
-    A[Cosmos DB Account] --> DB[Database: tesdb]
-    DB --> C[Container: product]
-    C --> P1[Partition: electronic]
-    C --> P2[Partition: ...]
-    P1 --> I[Item JSON id 1]
+flowchart TD
+    Q[Mau baca item] --> K{Tahu category + id?}
+    K -- Ya --> R[ReadItem langsung ke gang itu]
+    K -- Tidak --> S[Query + pager sisir semua gang]
+    R --> D[Decode ke struct]
+    S --> D
+    D --> E[Selesai]
 ```
 
-### 2. Membuat Account, Database, Container
+### 2. Mendirikan Gedung: Account, Database, Container
 
-- Portal: Resource Group → Cosmos DB → Create → **Azure Cosmos DB for NoSQL**. Basics: Location boleh beda dari RG (error `RequestDisallowedByAzure` = region dilarang policy → ganti region). Networking: All networks (biar bisa dari internet). Backup: Periodic (interval mis. 240 menit + retensi) atau Continuous (restore ke titik waktu ≤7 hari). Security default → Review + Create.
-- Database: Cosmos DB → Data Explorer → New Database → ID `tesdb`. Container dibuat dari kode (bagian 3) dengan partition key `/category` — hasilnya `tesdb → product → Items`. Tips: kalau error, comment dulu blok Create Container (konflik karena container sudah ada).
+- Portal: Resource Group → Cosmos DB → Create → **Azure Cosmos DB for NoSQL**. Location boleh beda dari RG; bila muncul `RequestDisallowedByAzure` berarti region dilarang policy — ganti region. Networking: All networks (agar bisa dari internet). Backup: Periodic (interval misalnya 240 menit + retensi) atau Continuous (restore ke titik waktu ≤7 hari). Security biarkan default → Review + Create.
+- Database: Cosmos DB → Data Explorer → New Database → ID `tesdb`. Container dibuat dari kode (bagian 3) dengan partition key `/category`, hasilnya `tesdb → product → Items`. Tips lab: bila error container, comment dulu blok Create Container — biasanya konflik karena container sudah ada.
 
-### 3. Project Go dan Koneksi
+### 3. Kunci Gedung: Project Go dan Koneksi
 
 - Folder project → VS Code → `main.go` minimal, lalu di terminal:
+
 ```bash
 go mod init sesi5
 go get github.com/Azure/azure-sdk-for-go/sdk/data/azcosmos
 ```
+
 - Pastikan extension Go terinstall.
 - Koneksi memakai connection string (Cosmos DB → Keys → Primary Connection String), disimpan di konstanta:
+
 ```go
 const connStr = "AccountEndpoint=...;AccountKey=...;"
 client, err := azcosmos.NewClientFromConnectionString(connStr, nil)
 if err != nil { log.Fatalf("%s\n", err) }
 ```
-- Reference database: `db, err := client.NewDatabase("tesdb")`. Container:
+
+- Reference database lalu buat container:
+
 ```go
+db, err := client.NewDatabase("tesdb")
 ctx := context.Background()
 _, err = db.CreateContainer(ctx, azcosmos.ContainerProperties{
     ID: "product",
@@ -60,11 +70,13 @@ _, err = db.CreateContainer(ctx, azcosmos.ContainerProperties{
     },
 }, nil)
 ```
-- `[]string{"/category"}` = slice string berisi path atribut JSON yang jadi partition key. Jalankan `go run .\main.go`, cek Data Explorer → `tesdb → product → Items`.
 
-### 4. CRUD: Upsert, Read, Query, Delete
+- `[]string{"/category"}` adalah slice berisi path atribut JSON yang jadi partition key. Jalankan `go run .\main.go`, verifikasi di Data Explorer → `tesdb → product → Items`.
 
-- Model struct merepresentasikan item:
+### 4. Empat Gerakan: Tulis, Baca Langsung, Cari, Hapus
+
+- Model struct sebagai cetakan amplop:
+
 ```go
 type Item struct {
     ID       string `json:"id"`
@@ -72,7 +84,9 @@ type Item struct {
     Category string `json:"category"`
 }
 ```
-- **Upsert** (insert bila belum ada, update bila ID sudah ada):
+
+- **Upsert** (tambah bila ID belum ada, timpa bila sudah ada):
+
 ```go
 container, err := db.NewContainer("product")
 if err != nil {
@@ -90,7 +104,9 @@ if err != nil {
     log.Fatalf("%s\n", err)
 }
 ```
-- **Read** langsung butuh dua info: partition key + ID, lalu decode byte ke struct:
+
+- **Read** langsung — butuh dua info: partition key + ID — lalu decode byte ke struct:
+
 ```go
 pk := azcosmos.NewPartitionKeyString("electronic")
 resp, err := container.ReadItem(ctx, pk, "1", nil)
@@ -104,8 +120,11 @@ if err != nil {
 }
 log.Printf("Decoded item: %v\n", decodedItem)
 ```
-- **Query** bila partition key tak diketahui: `container.NewQueryItemsPager("SELECT * FROM c", azcosmos.NewPartitionKey(), nil)` — `c` alias item. Hasil dibagi halaman, jadi iterasi:
+
+- **Query** bila partition key tidak diketahui — `c` adalah alias item; hasil dibagi halaman sehingga perlu iterasi:
+
 ```go
+pager := container.NewQueryItemsPager("SELECT * FROM c", azcosmos.NewPartitionKey(), nil)
 for pager.More() {
     page, err := pager.NextPage(ctx)
     if err != nil { log.Fatalf("%s\n", err) }
@@ -114,8 +133,10 @@ for pager.More() {
     }
 }
 ```
-- `SELECT *` ikut mengambil atribut bawaan Cosmos (`_rid`, `_self`, `_etag`, `_attachments`, `_ts`).
-- **Delete** butuh partition key + ID:
+
+- `SELECT *` ikut mengambil atribut bawaan Cosmos (`_rid`, `_self`, `_etag`, `_attachments`, `_ts`) — jangan kaget melihatnya.
+- **Delete** — butuh pasangan yang sama seperti Read (partition key + ID):
+
 ```go
 pk := azcosmos.NewPartitionKeyString("electronic")
 _, err = container.DeleteItem(ctx, pk, "1", nil)
@@ -123,18 +144,19 @@ if err != nil {
     log.Fatalf("%s\n", err)
 }
 ```
-- Cek item `1 | laptop | electronic` hilang dari Data Explorer.
 
-### 5. Alur Keseluruhan
+- Verifikasi: item `1 | laptop | electronic` hilang dari Data Explorer.
 
-- Portal: Resource Group → Cosmos DB Account → Database `tesdb` → Container `product` (partition key `/category`). Kode: project Go → SDK `azcosmos` → connection string → client → database → container. Operasi: Upsert (tulis/ubah) → Read (baca langsung) → Query (cari) → Delete (hapus).
+### 5. Peta Perjalanan Satu Paragraf
+
+- Portal menyiapkan gedung (RG → account → `tesdb` → `product` dengan `/category`); kode menyiapkan kurir (project Go → SDK `azcosmos` → connection string → client → database → container); operasi menyiapkan gerakan (Upsert untuk tulis/ubah, Read untuk baca langsung, Query untuk cari bebas, Delete untuk hapus).
 
 ---
 
 ## 🛠️ Use Case / Implementasi Nyata
-- **Skenario:** Katalog produk JSON yang butuh skala global dan akses per kategori.
-- **Masalah yang Diatasi:** Skema kaku SQL dan query lintas-partition yang lambat.
-- **Keuntungan:** Partition key mengarahkan baca/tulis ke partition tepat; query + pager menutup kasus pencarian bebas.
+- **Skenario:** Katalog produk JSON yang skemanya bisa berubah-ubah dan butuh skala global, dengan akses terbanyak per kategori.
+- **Masalah yang Diatasi:** Skema SQL yang kaku (tambah field = migrasi) dan pencarian lintas-partition yang lambat karena tidak tahu gangnya.
+- **Keuntungan:** Partition key mengarahkan baca/tulis langsung ke gang yang tepat; query + pager menutup kasus "pokoknya cari saja" saat gangnya tidak diketahui.
 
 ---
 
@@ -142,12 +164,12 @@ if err != nil {
 
 | Istilah | Definisi | Contoh / Catatan |
 |---------|----------|-----------------|
-| Item | Dokumen JSON di container | `{"id":"1","name":"laptop",...}` |
-| Partition key | Atribut pengelompok logis | `/category` → `electronic` |
-| Upsert | Insert-atau-update by ID | `UpsertItem` |
+| Item | Amplop dokumen JSON di container | `{"id":"1","name":"laptop",...}` |
+| Partition key | Nama gang pengelompok logis | `/category` → `electronic` |
+| Upsert | Tulis-atau-timpa berdasar ID | `UpsertItem` |
 | Pager | Iterasi hasil query per halaman | `More()` / `NextPage(ctx)` |
-| Connection string | Kredensial SDK | Keys → Primary Connection String |
-| Periodic backup | Backup interval + retensi | Mis. tiap 240 menit |
+| Connection string | Kredensial akses SDK | Keys → Primary Connection String |
+| Periodic backup | Backup interval + retensi | Misalnya tiap 240 menit |
 | Continuous backup | Restore point-in-time | ≤ 7 hari |
 
 ---
@@ -164,9 +186,11 @@ if err != nil {
 ---
 
 ## ⚠️ Catatan Penting
-> **Read/Delete tanpa partition key tidak bisa** — hafalkan pasangan (partition key + ID). Untuk query ingat pager-nya (`More`/`NextPage`), dan jangan kaget atribut `_rid/_etag` ikut muncul di `SELECT *`.
+> **Read dan Delete buta tanpa gang** — hafalkan pasangan (partition key + ID). Untuk query hafalkan pasangannya yang lain (`More`/`NextPage`), dan ingat `SELECT *` selalu membawa atribut bawaan `_rid`/`_etag` serta kawan-kawannya.
 
 ---
 
 ## 📝 Materi Tambahan (Visual Insights)
-- Satu diagram hierarki (Account → tesdb → product → partition → item) + satu alur portal-vs-kode sudah mencakup 80% sesi ini; sisanya variasi empat operasi CRUD.
+
+### Cara Mengingat 80% Sesi Ini
+- Satu keputusan (tahu gang atau tidak) menentukan seluruh operasi baca; sisanya hanya variasi tulis-ubah-hapus di sekitar keputusan itu. Diagram flowchart di atas sudah merangkumnya.

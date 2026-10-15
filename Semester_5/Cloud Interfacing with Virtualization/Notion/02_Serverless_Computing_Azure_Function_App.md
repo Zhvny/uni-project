@@ -5,56 +5,61 @@
 ---
 
 ## 🔑 Cues
-- Serverless: fokus ke fungsi + trigger, bukan server
-- Azure Functions (Go, Flex Consumption)
-- HTTP trigger vs Timer/Cron trigger (NCRONTAB 6 field)
-- Authorization level: anonymous / function / admin
-- Function key via `?code=` atau header `x-functions-key`
-- Structured logging (`slog` + `r.Context()`)
-- Deploy dari VS Code, observasi via Application Insights
-- Timer Azure pakai UTC (WIB = UTC+7)
+- Serverless: bayar per eksekusi, bukan per jam sewa
+- Function App Go di Flex Consumption
+- Trigger HTTP vs Timer terjadwal
+- Auth: anonymous, function, admin
+- Function key via query atau header
+- NCRONTAB 6 kolom + jebakan UTC
+- Logging terstruktur dengan slog
+- Deploy via VS Code, intip via Insights
 
 ---
 
 ## 📖 Materi Utama
 
-### 1. Arsitektur HTTP Tradisional vs Serverless
+### 1. Logika Tagihan Baru: Sewa Mobil vs Ojek
 
-- Di arsitektur tradisional, aplikasi **terus hidup** di VM/container: OS, web server, dan runtime harus disiapkan dan dijaga. Di dalam aplikasi ada **router/multiplexer** (mis. `http.HandleFunc("/hello", HelloHandler)`) yang mengarahkan request ke **handler function** berisi business logic.
-- Beban developer di model ini: provisioning kapasitas, patching OS, scaling, load balancing, logging/monitoring — dan bayar penuh walau trafik sepi.
-- Di **Azure Functions**, yang kita tulis hanya fungsi + trigger-nya. Platform yang mengurus host, worker bahasa, scaling, key, log, dan integrasi. Client tetap mengirim HTTP biasa; platform yang memetakan event ke function.
+- Analogi sendiri: VM itu seperti sewa mobil harian — dibayar penuh walau diparkir. Serverless itu seperti ojek: argo jalan hanya saat ada perjalanan (eksekusi fungsi), diam berarti nyaris nol biaya.
+- Di model sewa mobil (tradisional), developer menanggung semuanya: siapkan OS, jaga web server, tulis router (`http.HandleFunc("/hello", ...)`) yang mengarahkan request ke handler, plus atur scaling, patching, dan monitoring.
+- Di model ojek (Azure Functions), yang ditulis hanya fungsi dan pemicunya (**trigger**). Sisanya — host, worker bahasa, scaling, key, log, integrasi — dikerjakan platform. Client tetap mengirim HTTP biasa; platform yang memetakan event ke fungsi yang tepat.
 
-#### **Perbandingan Alur Request**
+#### **Siapa Mengerjakan Apa Saat Request Masuk**
 ```mermaid
-graph LR
-    C[Client] -->|HTTP| T[Tradisional: VM + Web Server + Router] --> H[Handler] -->|Response| C
-    C2[Client] -->|HTTP| P[Functions Platform] --> HT[HTTP Trigger] --> FH[Function Handler Go] -->|Response| C2
+sequenceDiagram
+    autonumber
+    participant C as Client
+    participant P as Functions Platform
+    participant H as Handler Go
+    participant I as App Insights
+    C->>P: GET /api/hello?name=... (+ key)
+    P->>H: Panggil handler + context
+    H-->>P: Body Hello... + status
+    P-->>C: HTTP response
+    H->>I: slog terstruktur
 ```
 
-### 2. Yang Di-handle Siapa
+### 2. Anatomi Function App: Host, Worker, Trigger, Binding
 
-- **Client** mengurus: endpoint benar (`https://<app>.azurewebsites.net/api/hello`), method/header/query/body sesuai, menyertakan function key bila levelnya `function`/`admin`, dan membaca status + body response.
-- **Platform Functions** mengurus: menerima event, menjalankan host + language worker, scaling sesuai hosting plan, serta integrasi (Application Insights, log, deployment, storage, access key) dan trigger/binding lain (Blob, Queue, Service Bus, Event Grid, Event Hubs, Timer).
+- **Client** bertanggung jawab: endpoint benar (`https://<app>.azurewebsites.net/api/hello`), method/query/body sesuai, menyertakan key bila levelnya `function`/`admin`, dan membaca status + body balasan.
+- **Platform** bertanggung jawab: menerima event, menjalankan host + language worker, scaling mengikuti hosting plan, serta menyediakan integrasi (Application Insights, log, deployment, storage, access key) dan ragam trigger/binding (HTTP, Timer, Blob, Queue, Service Bus, Event Grid, Event Hubs).
+- Pembedanya: **trigger** adalah pintu masuk eksekusi (HTTP, Timer), **binding** adalah konektor deklaratif ke layanan lain tanpa SDK manual.
 
-### 3. Membuat Function App (Portal)
+### 3. Merakit dari Nol: Portal, Perkakas, Project Go
 
-- Resource Group baru `sesi2-rg`, lalu Create **Function App** dengan kombinasi lab:
-  - Hosting: **Flex Consumption**. Nama: `sesi2-function-app`. Region: **East Asia**. Runtime: **Go** (versi tersedia; Go masih public preview, butuh ≥1.24 untuk dev lokal). Instance: 2048 MB. Zone redundancy: Disabled.
-  - Storage: biarkan Azure buatkan (dipakai runtime untuk metadata, host storage, key, 일부 trigger).
-  - Monitoring: Application Insights = Yes. Networking: public access On, VNet integration Off. Deployment: continuous deployment Disabled (deploy manual dari VS Code). Durable Functions: skip (belum didukung Go preview).
-- Tools lokal: `winget install --id Microsoft.Azure.FunctionsCoreTools --exact`, plus Go 1.24+, Azure CLI, dan extension Azure Functions + Go di VS Code.
+- Resource Group baru `sesi2-rg`, lalu Create **Function App** dengan resep lab: hosting **Flex Consumption**, nama `sesi2-function-app`, region **East Asia**, runtime **Go** (masih public preview; dev lokal butuh Go ≥1.24), instance 2048 MB, zone redundancy Disabled.
+- Storage biarkan dibuatkan Azure (menyimpan metadata runtime, host storage, dan key). Monitoring: Application Insights = Yes. Networking: public access On, VNet integration Off. Deployment: continuous deployment Disabled (rilis manual dari VS Code). Durable Functions dilewati (belum didukung Go preview).
+- Perkakas lokal:
 
-### 4. Project Go di VS Code
-
-- Command palette → *Azure Functions: Create New Project* (Current directory, language Go) → `go mod tidy` untuk merapikan dependency (`go.mod`/`go.sum`).
-- File penting: `main.go` (entry point + registrasi trigger), `host.json` (konfigurasi host), `local.settings.json` (env lokal, tidak ikut publish).
-- Pola `main.go`: `app := sdk.FunctionApp()`, daftarkan endpoint (`app.HTTP("hello", handler, sdk.WithMethods("GET","POST"), sdk.WithAuth("function"))`), tutup dengan `worker.Start(app)`. Tiga level auth yang dipakai: `anonymous` (bebas), `function` (butuh function/host key), `admin` (butuh master key).
-- Handler memakai signature standar `net/http`: baca `r.URL.Query().Get("name")`, tulis via `fmt.Fprintf(w, ...)`, dan log dengan `slog.InfoContext(r.Context(), ..., "method", r.Method, "path", r.URL.Path)`.
-- Tools lokal dipasang via:
 ```bash
 winget install --id Microsoft.Azure.FunctionsCoreTools --exact
 ```
-- Kerangka `main.go` (tiga level auth):
+
+- Butuh juga Go 1.24+, Azure CLI, serta extension Azure Functions dan Go di VS Code.
+- Project: Command palette → *Azure Functions: Create New Project* (current directory, bahasa Go) → `go mod tidy` untuk merapikan `go.mod`/`go.sum`. File yang wajib dikenal: `main.go` (entry + registrasi), `host.json` (konfigurasi host), `local.settings.json` (env lokal, tidak ikut publish).
+- Pola `main.go`: buat app (`sdk.FunctionApp()`), daftarkan endpoint dengan method dan level auth, lalu `worker.Start(app)`. Handler memakai signature `net/http` standar: baca `r.URL.Query().Get("name")`, tulis via `fmt.Fprintf(w, ...)`, log via `slog.InfoContext(r.Context(), ..., "method", r.Method, "path", r.URL.Path)`.
+- Kerangka tiga level auth:
+
 ```go
 package main
 
@@ -88,25 +93,27 @@ func HTTPTriggerHandlerFunction(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Hello from function auth, %s!", name)
 }
 ```
-- Test endpoint via curl (key lewat query atau header), dan cek subscription aktif:
+
+### 4. Kunci Masuk: Level Auth dan Cara Mengetes
+
+- Level auth dicek di portal (tab Integration → Trigger → Authorization level). URL uji diambil dari **Code + Test → Get function URL**, bentuknya `https://<app>.azurewebsites.net/api/<function>?code=<key>`. Alternatifnya kirim key via header `x-functions-key`.
+- Aturannya: `anonymous` tanpa `?code=`; `function` menerima function key atau host key; `admin` wajib master key. Beri user biasa function key saja; key bocor cukup di-regenerate di portal. Catatan jujur: key bukan pengganti autentikasi penuh untuk production.
+- Cara mengetes dari terminal:
+
 ```bash
 curl -i "https://<nama-function-app>.azurewebsites.net/api/hello?code=<function-key>"
 curl "https://<nama-function-app>.azurewebsites.net/api/hello" -H "x-functions-key: <function-key>"
 az account show
 ```
 
-### 5. Authorization, Key, dan Test via curl
+- `curl -i "<function-url>"` yang sehat mengembalikan `200 OK` + body handler; `401` berarti key salah atau tidak terkirim. `az account show` memastikan subscription yang dipakai benar.
+- Bila tab Log kosong padahal request sukses, bukan function-nya rusak — handler memang belum menulis log. Tambahkan `slog`, deploy ulang, baru cek Log/Monitor/Application Insights.
 
-- Cek level auth function di Portal (tab Integration → Trigger → Authorization level). Ambil URL di tab **Code + Test → Get function URL**: bentuknya `https://<app>.azurewebsites.net/api/<function>?code=<key>`. Key alternatif dikirim lewat header `x-functions-key`.
-- Aturan key: auth `function` bisa pakai function key atau host key; `admin` wajib master key; `anonymous` tanpa `?code=`. Beri user biasa function key saja; kalau key bocor, regenerate di portal (key ≠ autentikasi penuh untuk production).
-- Test: `curl -i "<function-url>"`. Harapkan `200 OK` + body dari handler; `401` = key salah/tidak dikirim.
-- Kalau tab Log kosong padahal request sukses, berarti handler belum menulis log — tambahkan `slog` lalu deploy ulang, baru cek Log/Monitor/Application Insights.
+### 5. Fungsi Tanpa URL: Timer dan Perang Melawan Zona Waktu
 
-### 6. Trigger Lain: Timer/Cron
+- Timer trigger adalah fungsi kalender: tidak punya URL, dijalankan jadwal. Handler Go menerima `(ctx context.Context, timer bindings.TimerInfo)` dan wajib `return nil` saat sukses.
+- Pendaftaran dan handler:
 
-- Timer trigger = function terjadwal, bukan endpoint URL. Handler Go menerima `(ctx context.Context, timer bindings.TimerInfo)` dan mengembalikan `error` (tambah `return nil` saat sukses).
-- Registrasi: `app.Timer("cronJob", handleCronJob, sdk.WithSchedule("0 0 13 * * *"))`. Format **NCRONTAB 6 field**: detik menit jam tanggal bulan hari-minggu. Contoh: `0 0 13 * * *` = tiap hari 13:00; `0 */5 * * * *` = tiap 5 menit; `0 30 9 * * 1-5` = hari kerja 09:30.
-- Handler timer (perhatikan ejaan: `handleCronJob`, `ctx`, `bindings.TimerInfo`, `ScheduleStatus.Next`, `return nil`):
 ```go
 func handleCronJob(ctx context.Context, timer bindings.TimerInfo) error {
     slog.InfoContext(ctx, "Cron job success",
@@ -121,22 +128,25 @@ func main() {
     worker.Start(app)
 }
 ```
-- Contoh jadwal lain (ingat Timer Azure jalan di UTC; 13:00 WIB = 06:00 UTC):
+
+- Format **NCRONTAB 6 kolom** (detik menit jam tanggal bulan hari-minggu), bukan cron Linux 5 kolom:
+
 ```bash
-0 0 13 * * *    # tiap hari 13:00 (server time)
+0 0 13 * * *    # tiap hari 13:00 (waktu server)
 0 */5 * * * *   # tiap 5 menit
 0 30 9 * * 1-5  # hari kerja 09:30
-0 0 6 * * *     # 13:00 WIB dalam UTC
+0 0 6 * * *     # 13:00 WIB bila server UTC
 ```
-- Jebakan: `* * 13 * * *` = tiap detik selama jam 13 (log meledak). Timer Azure memakai **UTC**; Flex Consumption Linux tak mendukung `WEBSITE_TIME_ZONE`, jadi 13:00 WIB = `0 0 6 * * *`.
-- Deploy: simpan `main.go` → `go mod tidy` bila import baru → *Deploy to Function App* → pilih app → cek function `cronJob` + pesannya di Monitor/Application Insights.
+
+- Dua jebakan: `* * 13 * * *` berarti tiap detik selama jam 13 (log meledak) — yang benar `0 0 13 * * *`. Dan Timer Azure berjalan di **UTC**; Flex Consumption Linux tidak mendukung `WEBSITE_TIME_ZONE`, sehingga 13:00 WIB = `0 0 6 * * *` (kurangi 7 jam).
+- Rilis timer: simpan `main.go` → `go mod tidy` bila import bertambah → *Deploy to Function App* → pilih app → pastikan `cronJob` muncul dan pesannya terlihat di Monitor/Application Insights.
 
 ---
 
 ## 🛠️ Use Case / Implementasi Nyata
-- **Skenario:** Endpoint `/hello` dan job harian tanpa menyewa VM idle.
-- **Masalah yang Diatasi:** Provisioning, patching, dan scaling server untuk beban kecil/tak menentu.
-- **Keuntungan:** Bayar per eksekusi; trigger siap pakai (HTTP, Timer, Blob, Queue, Event Grid).
+- **Skenario:** Dibutuhkan endpoint sapaan `/hello` dan satu job harian, tapi trafiknya kecil dan tidak menentu sehingga menyewa VM idle itu boros.
+- **Masalah yang Diatasi:** Provisioning kapasitas, patching OS, dan scaling manual untuk beban yang sebenarnya hanya butuh beberapa detik eksekusi.
+- **Keuntungan:** Bayar per eksekusi dengan trigger siap pakai (HTTP untuk endpoint, Timer untuk jadwal, plus Blob/Queue/Event Grid bila nanti dibutuhkan).
 
 ---
 
@@ -144,32 +154,36 @@ func main() {
 
 | Istilah | Definisi | Contoh / Catatan |
 |---------|----------|-----------------|
-| Trigger | Pemicu eksekusi function | HTTP, Timer, Blob, Queue |
-| Binding | Koneksi deklaratif ke layanan | Input/output tanpa SDK manual |
-| Flex Consumption | Hosting plan serverless elastis | Dipakai di lab sesi ini |
+| Trigger | Pemicu yang membangunkan fungsi | HTTP, Timer, Blob, Queue |
+| Binding | Konektor deklaratif ke layanan | Tanpa SDK manual |
+| Flex Consumption | Paket hosting elastis serverless | Resep lab sesi ini |
 | Auth level | Syarat key pada HTTP trigger | anonymous / function / admin |
-| Function key | Kredensial panggil endpoint | Query `?code=` / header |
-| NCRONTAB | Format jadwal Timer Azure | 6 field, detik di depan, UTC |
-| Structured logging | Log key-value, bukan teks polos | `slog.InfoContext` + Insights |
+| Function key | Kredensial pemanggil endpoint | `?code=` atau header |
+| NCRONTAB | Format jadwal Timer Azure | 6 kolom, detik di depan, UTC |
+| Structured logging | Log key-value yang bisa di-query | `slog.InfoContext` + Insights |
 
 ---
 
 ## 📊 Tabel Ringkasan
 
-| Aspek | Tradisional (VM) | Azure Functions |
-|-------|-----------------|-----------------|
-| Unit deploy | Aplikasi utuh always-on | Fungsi per trigger |
-| Scaling | Manual / diatur sendiri | Otomatis oleh platform |
-| Biaya sepi | Tetap bayar server | Mendekati nol |
-| Tanggung jawab | OS s/d monitoring | Kode + konfigurasi trigger |
+| Aspek | Sewa Mobil (VM) | Ojek (Functions) |
+|-------|----------------|------------------|
+| Unit rilis | Aplikasi utuh always-on | Satu fungsi per trigger |
+| Scaling | Diatur manual | Otomatis oleh platform |
+| Biaya saat sepi | Tetap bayar penuh | Mendekati nol |
+| Tanggung jawab dev | OS sampai monitoring | Kode + konfigurasi trigger |
 
 ---
 
 ## ⚠️ Catatan Penting
-> **Tiga sumber nilai klasik**: nama resource unik + region East Asia; NCRONTAB 6 field diawali detik (`0 0 13 * * *` bukan `* * 13 * * *`); timer jalan di UTC (kurangi 7 jam dari WIB). Plus: log kosong = handler belum `slog`, bukan function yang rusak.
+> **Tiga angka yang menentukan nilai**: nama unik + East Asia; NCRONTAB 6 kolom diawali detik; timer memakai UTC (WIB dikurangi 7 jam). Ditambah satu diagnosa cepat: log kosong artinya handler belum `slog`, bukan platform yang rusak.
 
 ---
 
 ## 📝 Materi Tambahan (Visual Insights)
-- Diagram alur request tradisional vs serverless — pahami dulu siapa mengerjakan apa sebelum menghafal klik portal.
-- Perhatikan ejaan istilah (Serverless, Continuous deployment, Configure later, Zone redundancy, VNet integration, Cron/Timer trigger) karena materi aslinya menandai koreksinya.
+
+### Ejaan yang Ditandai Materi Asli
+- Perhatikan penulisan yang dikoreksi sumber: Serverless, Continuous deployment, Configure later, Zone redundancy, VNet integration, Cron/Timer trigger. Salah eja di ujian praktik membuat opsi atau menu susah ditemukan.
+
+### Cara Menghafal Cepat
+- Hafalkan kalimat rantai tanggung jawab: client membawa URL + key, platform membawa host + scaling + log, handler hanya membawa business logic + `return nil` untuk timer.
