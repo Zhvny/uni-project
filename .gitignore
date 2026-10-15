@@ -3,3 +3,5 @@ Non-kuliah/assets/mermaid/
 Non-kuliah/assets/hljs/
 # Kredensial aktif (token Notion) — jangan pernah commit; repo ini publik
 import_to_notion.py
+# Backup lokal pra-tulis-ulang — jangan commit
+*.bak
