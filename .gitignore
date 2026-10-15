@@ -3,3 +3,6 @@ Non-kuliah/assets/mermaid/
 Non-kuliah/assets/hljs/
 # Backup lokal pra-tulis-ulang — jangan commit
 *.bak
+# File kerja lokal: berisi token aktif / state mesin — jangan commit
+import_to_notion.py
+**/.import_history.json
