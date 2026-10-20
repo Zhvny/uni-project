@@ -1,19 +1,7 @@
-# 🎓 University Project – *Don't Just Copy, Learn*
+# Everything About Collage
+## What's Inside?
 
-Hey there, curious wanderer of GitHub! 👀  
-This repository contains various assignments and projects I worked on during my university courses.
-
-Please note:
-
-> ⚠️ **This is not a free code buffet.**  
-> If you're looking to **copy-paste answers** for your coursework,  
-> close this tab and reflect on your academic decisions. 🙃
-
----
-
-## 📂 What's Inside?
-
-- Code written under extreme pressure and snack deprivation 🥲
+- Code written under extreme pressure and snack deprivation (AI)
 - Assignments for subjects like:
   - Algorithms & Programming Fundamentals
   - Data Structures
@@ -24,7 +12,7 @@ Please note:
 
 ---
 
-## ❗ Important
+## Note
 
 > **This code was meant for learning, not cloning.**
 
