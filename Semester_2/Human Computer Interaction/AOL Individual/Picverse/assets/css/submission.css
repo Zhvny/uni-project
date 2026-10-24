@@ -1,0 +1,109 @@
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: block;
+}
+
+.error-input {
+    border-color: #e74c3c !important;
+    box-shadow: 0 0 0 1px #e74c3c !important;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-message {
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    display: none;
+}
+
+.form-message.error {
+    background-color: #fde8e8;
+    color: #e74c3c;
+    border: 1px solid #f5c6cb;
+    display: block;
+}
+
+.form-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: block;
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    min-height: 30px;
+    padding: 5px 0;
+}
+
+.tag-item {
+    background-color: var(--color-dark);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.tag-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 238, 255, 0.2);
+}
+
+.tag-remove {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 238, 255, 0.15);
+    margin-left: 6px;
+    transition: all 0.2s ease;
+}
+
+.tag-remove:hover {
+    background: rgba(0, 238, 255, 0.3);
+}
+
+.tag-suggestions {
+    position: absolute;
+    background: var(--color-dark);
+    border: 1px solid var(--color-primary);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 238, 255, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    width: calc(100% - 40px);
+    z-index: 100;
+    top: 100%;
+    margin-top: 5px;
+}
+
+.tag-suggestion {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tag-suggestion:hover {
+    background-color: rgba(0, 238, 255, 0.1);
+}
+
+.tag-suggestion:hover {
+    background-color: rgba(0, 238, 255, 0.1);
+}
