@@ -1,0 +1,576 @@
+LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+LogWorld: BeginTearingDown for /Game/VehicleTemplate/Maps/UEDPIE_0_IL
+LogWorld: UWorld::CleanupWorld for IL, bSessionEnded=true, bCleanupResources=true
+LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+LogWorldPartition: UWorldPartition::Uninitialize : World = /Game/VehicleTemplate/Maps/UEDPIE_0_IL.IL
+LogPlayLevel: Display: Shutting down PIE online subsystems
+LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+LogAudio: Display: Audio Device unregistered from world 'None'.
+LogAudioMixer: Deinitializing Audio Bus Subsystem for audio device with ID 15
+LogAudioMixer: Display: FMixerPlatformXAudio2::StopAudioStream() called. InstanceID=15, StreamState=4
+LogAudioMixer: Display: FMixerPlatformXAudio2::StopAudioStream() called. InstanceID=15, StreamState=2
+LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+LogLearning: Display: Terminating Subprocess...
+LogLearning: Display: Subprocess: INFO: Mapped existing shared memory with name: {2BC61516-41BB-AE64-C4B6-A698823C3AF6}
+LogUObjectHash: Compacting FUObjectHashTables data took   2.61ms
+LogPlayLevel: Display: Destroying online subsystem :Context_19
+LogDebuggerCommands: Repeating last play command: Selected Viewport
+LogContentBundle: [IL(Editor)] Generating Streaming for 0 Content Bundles.
+LogWorldPartition: Display: GenerateStreaming for 'IL' started...
+LogWorldPartition: Display: GenerateStreaming for 'IL' took 1.270 ms (total: 14.845 ms)
+LogPlayLevel: PlayLevel: No blueprints needed recompiling
+LogPlayLevel: Creating play world package: /Game/VehicleTemplate/Maps/UEDPIE_0_IL
+LogWorldPartition: Display: UWorldPartition::PostDuplicatePIE started...
+LogWorldPartition: Display: UWorldPartition::PostDuplicatePIE took 14.003 ms (total: 156.239 ms)
+LogPlayLevel: PIE: StaticDuplicateObject took: (0.206909s)
+LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/VehicleTemplate/Maps/IL.IL to /Game/VehicleTemplate/Maps/UEDPIE_0_IL.IL (0.206989s)
+LogUObjectHash: Compacting FUObjectHashTables data took   3.19ms
+LogChaosDD: Creating Chaos Debug Draw Scene for world IL
+LogWorldPartition: ULevel::OnLevelLoaded(IL)(bIsOwningWorldGameWorld=1, bIsOwningWorldPartitioned=1, InitializeForMainWorld=1, InitializeForEditor=0, InitializeForGame=1)
+LogWorldPartition: Display: WorldPartition initialize started...
+LogWorldPartition: UWorldPartition::Initialize : World = /Game/VehicleTemplate/Maps/UEDPIE_0_IL.IL, World Type = PIE, IsMainWorldPartition = 1, Location = V(0), Rotation = R(0), IsEditor = 0, IsGame = 0, IsPIEWorldTravel = 0, IsCooking = 0
+LogWorldPartition: UWorldPartition::Initialize Context : World NetMode = Standalone, IsServer = 0, IsDedicatedServer = 0, IsServerStreamingEnabled = 0, IsServerStreamingOutEnabled = 0, IsUsingMakingVisibleTransaction = 0, IsUsingMakingInvisibleTransaction = 0
+LogWorldPartition: Display: WorldPartition initialize took 16.811 ms (total: 796.383 ms)
+LogPlayLevel: PIE: World Init took: (0.021783s)
+LogAudio: Display: Creating Audio Device:                 Id: 16, Scope: Unique, Realtime: True
+LogAudioMixer: Display: Audio Mixer Platform Settings:
+LogAudioMixer: Display:     Sample Rate:                          48000
+LogAudioMixer: Display:     Callback Buffer Frame Size Requested: 1024
+LogAudioMixer: Display:     Callback Buffer Frame Size To Use:    1024
+LogAudioMixer: Display:     Number of buffers to queue:           1
+LogAudioMixer: Display:     Max Channels (voices):                32
+LogAudioMixer: Display:     Number of Async Source Workers:       4
+LogAudio: Display: AudioDevice MaxSources: 32
+LogAudio: Display: Audio Spatialization Plugin: None (built-in).
+LogAudio: Display: Audio Reverb Plugin: None (built-in).
+LogAudio: Display: Audio Occlusion Plugin: None (built-in).
+LogAudioMixer: Display: Initializing audio mixer using platform API: 'XAudio2'
+LogAudioMixer: Display: Using Audio Hardware Device Speakers (Realtek(R) Audio)
+LogAudioMixer: Display: Initializing Sound Submixes...
+LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
+LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
+LogAudioMixer: FMixerPlatformXAudio2::StartAudioStream() called. InstanceID=16
+LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048, InstanceID=16
+LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal(), InstanceID=16
+LogAudioMixer: Display: FMixerPlatformXAudio2::SubmitBuffer() called for the first time. InstanceID=16
+LogInit: FAudioDevice initialized with ID 16.
+LogAudio: Display: Audio Device (ID: 16) registered with world 'IL'.
+LogAudioMixer: Initializing Audio Bus Subsystem for audio device with ID 16
+LogLoad: Game class is 'BP_VehicleAdvGameMode_C'
+LogWorld: Bringing World /Game/VehicleTemplate/Maps/UEDPIE_0_IL.IL up for play (max tick rate 60) at 2026.05.21-15.30.24
+LogWorld: Bringing up level for play took: 0.005998
+LogOnline: OSS: Created online subsystem instance for: :Context_20
+LogLearning: Display: LearningAgentsManager: Adding Agent BP_IL_VehicleAdvSportsCar1_C_0 with id 0.
+PIE: Server logged in
+PIE: Play in editor total start time 0.533 seconds.
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 0
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.86
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 1
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.35
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 2
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.32
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 3
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.38
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 4
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.98
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 5
+LogEOSSDK: LogEOS: Updating Product SDK Config, Time: 1464.813110
+LogEOSSDK: LogEOS: SDK Config Product Update Request Completed - No Change
+LogEOSSDK: LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 1465.317627, Update Interval: 344.283569
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 6
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.31
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 7
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.1
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 8
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 9
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.12
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 10
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.43
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 11
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.67
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 12
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 13
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.25
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 14
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.52
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 15
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 16
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.55
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 17
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.72
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 18
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 19
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.57
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 20
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.38
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 21
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 12.15
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 22
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.54
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 23
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.41
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 24
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.73
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 25
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.45
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 26
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.46
+LogEOSSDK: LogEOS: Updating Product SDK Config, Time: 1822.066650
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 27
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.08
+LogEOSSDK: LogEOS: SDK Config Product Update Request Completed - No Change
+LogEOSSDK: LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 1822.383301, Update Interval: 356.876129
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 28
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.13
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 29
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.28
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 30
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 31
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.62
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 32
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.69
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 33
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.5
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 34
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 35
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.56
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 36
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.35
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 37
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.63
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 38
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.54
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 39
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.7
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 40
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.57
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 41
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.92
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 42
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.1
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 43
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.19
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 44
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.34
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 45
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.17
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 46
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.19
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 47
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.71
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 48
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.53
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 49
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 50
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.41
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 51
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.39
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 52
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.6
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 53
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.43
+LogEOSSDK: LogEOS: Updating Product SDK Config, Time: 2201.364014
+LogEOSSDK: LogEOS: SDK Config Product Update Request Completed - No Change
+LogEOSSDK: LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 2201.882812, Update Interval: 310.666229
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 54
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 55
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.62
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 56
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 57
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.15
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 58
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.59
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 59
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.64
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 60
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.63
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 61
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.67
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 62
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.19
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 63
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 12.21
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 64
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 65
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.2
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 66
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.94
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 67
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 68
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.32
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 69
+LogEOSSDK: LogEOS: Updating Product SDK Config, Time: 2543.238525
+LogEOSSDK: LogEOS: SDK Config Product Update Request Completed - No Change
+LogEOSSDK: LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 2543.557129, Update Interval: 305.028229
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 70
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.28
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 71
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 72
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.14
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 73
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.6
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 74
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.3
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 75
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.8
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 76
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.54
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 77
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.45
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 78
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.07
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 79
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.99
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 80
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.33
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 81
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 82
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.41
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 83
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 84
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.06
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 85
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.05
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 86
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.6
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 87
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.94
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 88
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.0
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 89
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.66
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 90
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.36
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 91
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.25
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 92
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.35
+LogEOSSDK: LogEOS: Updating Product SDK Config, Time: 2907.907959
+LogEOSSDK: LogEOS: SDK Config Product Update Request Completed - No Change
+LogEOSSDK: LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 2908.256836, Update Interval: 342.002014
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 93
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.15
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 94
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.02
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 95
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.42
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 96
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.62
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 97
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.65
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 98
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.52
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 99
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.73
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 100
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.91
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 101
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.47
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 102
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.3
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 103
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.61
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 104
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.21
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 105
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 106
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.56
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 107
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.96
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 108
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.28
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 109
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.05
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 110
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.02
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 111
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.13
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 112
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.42
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 113
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 114
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.2
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 115
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.49
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 116
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 117
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.47
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 118
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.54
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 119
+LogEOSSDK: LogEOS: Updating Product SDK Config, Time: 3306.860840
+LogEOSSDK: LogEOS: SDK Config Product Update Request Completed - No Change
+LogEOSSDK: LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 3307.260986, Update Interval: 344.089478
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 120
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.52
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 121
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 122
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.28
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 123
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.97
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 124
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.14
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 125
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 126
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.12
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 127
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.93
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 128
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.9
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 129
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 130
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.43
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 131
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.69
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 132
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.83
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 133
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.37
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 134
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.38
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 135
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.72
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 136
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.3
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 137
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.5
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 138
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 13.42
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 139
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.66
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 140
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.69
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 141
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.08
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 142
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.47
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 143
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.62
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 144
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.23
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 145
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.12
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 146
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.81
+LogEOSSDK: LogEOS: Updating Product SDK Config, Time: 3690.459961
+LogEOSSDK: LogEOS: SDK Config Product Update Request Completed - No Change
+LogEOSSDK: LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 3690.778809, Update Interval: 326.148254
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 147
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.34
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 148
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.72
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 149
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.2
+LogDerivedDataCache: C:/Users/Aurelius/AppData/Local/UnrealEngine/Common/DerivedDataCache: Maintenance finished in +00:00:00.000 and deleted 0 files with total size 0 MiB and 0 empty folders. Scanned 0 files in 1 folders with total size 0 MiB.
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 150
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.54
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 151
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.3
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 152
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.2
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 153
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.56
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 154
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.04
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 155
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.18
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 156
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.03
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 157
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.6
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 158
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.95
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 159
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.47
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 160
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.76
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 161
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.26
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 162
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 163
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.17
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 164
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.02
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 165
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 166
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.21
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 167
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.45
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 168
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.38
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 169
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 170
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.05
+LogEOSSDK: LogEOS: Updating Product SDK Config, Time: 4049.700928
+LogEOSSDK: LogEOS: SDK Config Product Update Request Completed - No Change
+LogEOSSDK: LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 4050.019775, Update Interval: 307.906738
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 171
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.29
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 172
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.05
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 173
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 174
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.57
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 175
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.82
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 176
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.77
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 177
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.71
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 178
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.46
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 179
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.05
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 180
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.95
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 181
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.1
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 182
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.02
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 183
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 184
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.52
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 185
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.17
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 186
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.53
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 187
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.62
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 188
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.39
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 189
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.72
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 190
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.75
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 191
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.34
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 192
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.43
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 193
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 12.13
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 194
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.4
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 195
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.57
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 196
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.85
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 197
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.5
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 198
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.5
+LogEOSSDK: LogEOS: Updating Product SDK Config, Time: 4404.307617
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 199
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.77
+LogEOSSDK: LogEOS: SDK Config Product Update Request Completed - No Change
+LogEOSSDK: LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 4404.625000, Update Interval: 355.744507
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 200
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.1
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 201
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.82
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 202
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.41
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 203
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.62
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 204
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.74
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 205
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.79
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 206
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.48
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 207
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.6
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 208
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.48
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 209
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.47
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 210
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.29
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 211
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.04
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 212
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.35
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 213
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.83
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 214
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.02
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 215
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.5
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 216
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.46
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 217
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.47
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 218
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.2
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 219
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.9
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 220
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.0
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 221
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 222
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.52
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 223
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.85
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 224
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.32
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 225
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 226
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.18
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 227
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.77
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 228
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.79
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 229
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.08
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 230
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.47
+LogEOSSDK: LogEOS: Updating Product SDK Config, Time: 4794.000000
+LogEOSSDK: LogEOS: SDK Config Product Update Request Completed - No Change
+LogEOSSDK: LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 4794.832520, Update Interval: 321.764587
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 231
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 232
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.85
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 233
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.47
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 234
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.02
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 235
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.43
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 236
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.48
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 237
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.78
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 238
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.38
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 239
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.02

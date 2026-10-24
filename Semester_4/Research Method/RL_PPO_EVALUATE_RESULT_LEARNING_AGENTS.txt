@@ -1,0 +1,671 @@
+
+LogAudio: Display: Creating Audio Device:                 Id: 16, Scope: Unique, Realtime: True
+LogAudioMixer: FMixerPlatformXAudio2::StartAudioStream() called. InstanceID=16
+LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048, InstanceID=16
+LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal(), InstanceID=16
+LogAudioMixer: Display: FMixerPlatformXAudio2::SubmitBuffer() called for the first time. InstanceID=16
+LogInit: FAudioDevice initialized with ID 16.
+LogAudio: Display: Audio Device (ID: 16) registered with world 'IL'.
+LogAudioMixer: Initializing Audio Bus Subsystem for audio device with ID 16
+LogLearning: Display: LearningAgentsManager: Adding Agent BP_VehicleAdvSportsCar_C_UAID_40C2BA858A00ACDC02_1999729125 with id 0.
+LogBlueprintUserMessages: [BP_IL_VehicleAdvSportsCar1_C_0] Could not find Learning Agents manager. Did we forget to add one to the scene?
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 0
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.41
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.496948
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 1
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.05
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.66363
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 2
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.4
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.435967
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 3
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.92
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.457701
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 4
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.97
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.539232
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 5
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 16.83
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.506107
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 6
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.74
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.459668
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 7
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.69
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.464249
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 8
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.5
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.439558
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 9
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.54
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.654892
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 10
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.56
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.615321
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 11
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.91
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.530893
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 12
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.37
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.449833
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 13
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.04
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.499688
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 14
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.87
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.496304
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 15
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.61
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.476018
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 16
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.92
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.454817
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 17
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.98
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.448351
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 18
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.21
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.436241
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 19
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.62
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.469866
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 20
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.56
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.522147
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 21
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.27
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.443538
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 22
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.66
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.520861
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 23
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.97
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.48405
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 24
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.71
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.517017
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 25
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.56
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.477994
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 26
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.87
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.484944
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 27
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.82
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.469027
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 28
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.89
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.540965
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 29
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.56
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.473978
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 30
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.68
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.418281
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 31
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.32
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.492787
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 32
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.47
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.43727
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 33
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.71
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.460256
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 34
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.92
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.461169
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 35
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.66
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.419498
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 36
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.45
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.486531
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 37
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.69
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.437906
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 38
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.81
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.462261
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 39
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.89
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.458009
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 40
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.46
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.493199
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 41
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.64
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.411164
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 42
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.72
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.466765
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 43
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.59
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.471723
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 44
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.76
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.415362
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 45
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.69
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.465112
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 46
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.95
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.449568
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 47
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.04
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.456179
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 48
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.77
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.454056
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 49
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.85
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.547899
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 50
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.55
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.430784
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 51
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.68
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.470873
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 52
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.71
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.476074
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 53
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.54
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.444455
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 54
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.79
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.495805
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 55
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.58
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.450304
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 56
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.36
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.481146
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 57
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.16
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.444067
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 58
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.04
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.457506
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 59
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.9
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.454175
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 60
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.75
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.463583
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 61
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.55
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.436504
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 62
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.77
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.494148
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 63
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.59
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.497231
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 64
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.43
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.445859
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 65
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.76
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.460335
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 66
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.99
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.457474
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 67
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.72
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.417939
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 68
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.82
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.467166
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 69
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.84
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.470101
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 70
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.76
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.472453
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 71
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.97
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.461181
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 72
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.82
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.46593
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 73
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.54
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.437361
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 74
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.78
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.452565
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 75
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.77
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.468554
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 76
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.65
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.425733
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 77
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.64
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.475717
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 78
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 15.89
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.469821
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 79
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.7
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.465736
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 80
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.76
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.415864
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 81
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.73
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.465725
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 82
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.82
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.462637
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 83
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.63
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.469149
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 84
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.71
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.424154
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 85
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.94
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.4745
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 86
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 18.33
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.499209
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 87
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.64
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.434109
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 88
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.56
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.468248
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 89
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.02
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.455379
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 90
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.22
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.435183
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 91
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.07
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.458779
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 92
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.96
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.468645
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 93
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.76
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.458728
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 94
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.57
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.42529
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 95
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.54
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.474616
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 96
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.76
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.461395
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 97
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.51
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.438642
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 98
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.94
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.462233
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 99
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.73
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.461489
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 100
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.56
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.42618
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 101
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.66
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.468044
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 102
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.86
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.461765
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 103
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.29
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.431568
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 104
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.08
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.54019
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 105
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.9
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.285474
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 106
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.76
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.451806
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 107
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 108
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.01
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.426094
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 109
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.52
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.469928
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 110
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.95
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.459068
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 111
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 15.48
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.422457
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 112
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.75
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.512375
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 113
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.55
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.605191
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 114
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 12.08
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.589932
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 115
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.41
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.465669
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 116
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.27
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.435869
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 117
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.82
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.476944
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 118
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.81
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.460301
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 119
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.63
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.473568
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 120
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.57
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.428965
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 121
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.48
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.4689
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 122
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.68
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.415302
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 123
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.6
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.480166
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 124
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.71
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.479251
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 125
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.47
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.439551
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 126
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.81
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.495802
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 127
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.73
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.473155
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 128
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.69
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.429066
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 129
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.86
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.465529
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 130
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.61
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.487734
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 131
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.34
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.437184
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 132
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.13
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.458647
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 133
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.65
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.461566
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 134
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.62
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.416832
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 135
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.92
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.46707
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 136
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.6
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.467573
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 137
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.71
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.461439
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 138
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.59
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.419068
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 139
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.64
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.469009
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 140
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.7
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.469195
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 141
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.8
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.419924
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 142
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.92
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.470164
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 143
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.7
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.507847
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 144
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.32
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.442251
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 145
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.69
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.470576
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 146
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.5
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.486297
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 147
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.88
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.405792
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 148
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.27
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.161234
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 149
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.06
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.4965
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 150
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.19
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.436597
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 151
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.62
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.474847
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 152
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.59
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.421528
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 153
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 12.87
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.464665
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 154
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.02
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.461289
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 155
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.77
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.465326
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 156
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.78
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.554122
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 157
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.69
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.43143
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 158
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.77
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.472336
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 159
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.57
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.465254
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 160
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.89
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.464037
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 161
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.57
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.427805
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 162
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.49
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.4802
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 163
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.8
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.425965
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 164
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.68
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.495807
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 165
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.03
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.451649
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 166
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.77
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.462547
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 167
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.57
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.444756
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 168
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.65
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.467649
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 169
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.81
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.46649
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 170
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.75
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.470179
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 171
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.98
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.448669
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 172
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.64
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.428344
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 173
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.54
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.470532
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 174
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.04
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.464475
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 175
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.48
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.44139
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 176
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.7
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.469292
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 177
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.38
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.427528
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 178
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.8
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.452531
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 179
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.65
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.478198
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 180
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.0
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.457522
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 181
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.2
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.456417
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 182
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.74
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.485632
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 183
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.66
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.433286
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 184
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.52
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.493972
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 185
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.75
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.479371
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 186
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.29
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.438114
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 187
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 188
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.07
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.430185
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 189
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.74
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.467653
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 190
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.68
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.420534
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 191
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.0
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.465538
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 192
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.78
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.497152
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 193
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.64
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.459454
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 194
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.7
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.474756
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 195
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.84
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.424607
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 196
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.88
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.46916
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 197
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.86
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.458765
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 198
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.55
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.485533
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 199
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.02
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.457419
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] LAP FAILED
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 200
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 201
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 11.08
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.438397
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 202
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.59
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.425556
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 203
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.98
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.464396
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 204
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.5
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.530094
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 205
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.78
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.556083
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 206
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.84
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.493287
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 207
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.56
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.515536
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 208
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.79
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.493411
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 209
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.11
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.497646
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 210
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.67
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.477322
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 211
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.01
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.500278
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 212
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.78
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.50666
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 213
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.43
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.645455
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 214
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.31
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.478218
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 215
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.88
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.541306
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 216
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.62
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.619074
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 217
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.82
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.6345
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 218
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.71
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.506862
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 219
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 10.25
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.490022
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Episodes: 220
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Lap Seconds: 9.29
+LogBlueprintUserMessages: [Lap_Collision_C_UAID_40C2BA858A004CDB02_1995139135] Cumul Reward: 0.514482
