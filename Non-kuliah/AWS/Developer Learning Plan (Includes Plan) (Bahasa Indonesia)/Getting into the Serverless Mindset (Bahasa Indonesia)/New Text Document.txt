@@ -1,0 +1,13 @@
+Getting into the Serverless Mindset (Indonesian) (Na)
+Tinjauan
+
+MASUK KE POLA PIKIR TANPA SERVER
+Arsitektur yang Biasa Digunakan
+
+Bagaimana Serverless Dapat Membantu?
+
+Layanan Terkelola yang Terhubung oleh Fungsi
+
+Mempersingkat Durasi dengan Paralelisasi
+
+Lebih Banyak Lingkungan, Lebih Banyak Inovasi

@@ -1,0 +1,685 @@
+1. Jenis Penyimpanan
+
+Dengan komputasi cloud, Anda dapat membuat, menghapus, dan memodifikasi solusi penyimpanan dalam hitungan menit.
+
+Untuk menonton video tentang jenis penyimpanan, pilih tombol putar.
+
+Play Video
+Layanan penyimpanan AWS dikelompokkan menjadi tiga kategori: penyimpanan file, penyimpanan blok, dan penyimpanan objek. Dalam penyimpanan file, data disimpan sebagai file dalam sebuah hierarki. Dalam penyimpanan blok, data disimpan dalam bentuk blok-blok berukuran tetap. Sedangkan dalam penyimpanan objek, data disimpan sebagai objek dalam bucket.
+
+
+
+Penyimpanan file
+
+Anda mungkin sudah terbiasa dengan penyimpanan file jika Anda telah berinteraksi dengan sistem penyimpanan file seperti Windows File Explorer atau Finder di macOS. File diatur dalam hierarki seperti pohon yang terdiri dari folder dan subfolder. Misalnya, jika Anda memiliki ratusan foto kucing di laptop Anda, Anda mungkin ingin membuat folder bernama Foto kucing, dan meletakkan gambar-gambar tersebut di dalam folder tersebut untuk mengaturnya. Karena Anda tahu bahwa gambar-gambar ini akan digunakan dalam suatu aplikasi, Anda mungkin ingin menempatkan folder Foto kucing di dalam folder lain yang disebut File aplikasi.
+
+Dalam penyimpanan file, data disimpan dalam file, dan file-file tersebut diatur ke dalam hierarki folder dan direktori.
+
+Setiap file memiliki metadata seperti nama file, ukuran file, dan tanggal file dibuat. File juga memiliki jalur, misalnya, computer/Application_files/Cat_photos/cats-03.png. Saat Anda perlu mengambil file, sistem Anda dapat menggunakan jalur tersebut untuk menemukannya dalam hierarki file.
+
+Penyimpanan file ideal saat Anda memerlukan akses terpusat ke file yang harus mudah dibagikan dan dikelola oleh beberapa komputer host. Umumnya, penyimpanan ini dipasang ke beberapa host, dan memerlukan penguncian dan integrasi file dengan protokol komunikasi sistem file yang ada.
+
+Kasus penggunaan untuk penyimpanan file
+
+Untuk mempelajari selengkapnya, buka tiap kategori berikut.
+
+
+Penyajian web
+Solusi penyimpanan file cloud mengikuti protokol tingkat file umum, konvensi penamaan file, dan izin yang sudah dipahami oleh developer. Oleh karena itu, penyimpanan file dapat diintegrasikan ke dalam aplikasi web.
+
+
+
+Analitik
+Banyak workload analitik berinteraksi dengan data melalui antarmuka file dan mengandalkan fitur seperti penguncian file atau penulisan ke porsi tertentu sebuah file. Penyimpanan file berbasis cloud mendukung protokol tingkat file dan memiliki kemampuan untuk menskalakan kapasitas dan kinerja. Oleh karena itu, penyimpanan file dapat diintegrasikan secara mudah ke dalam alur kerja analitik.
+
+
+Media dan hiburan
+Banyak bisnis menggunakan deployment cloud hybrid dan memerlukan akses terstandarisasi menggunakan protokol sistem file (NFS atau SMB) atau akses protokol serentak. Penyimpanan file cloud mengikuti semantik sistem file yang ada. Oleh karena itu, penyimpanan konten kaya media untuk pemrosesan dan kolaborasi dapat diintegrasikan untuk produksi konten, rantai pasokan digital, streaming media, pemutaran siaran, analitik, dan pengarsipan.
+
+
+Direktori beranda
+Bisnis yang ingin memanfaatkan skalabilitas dan manfaat biaya dari cloud memperluas akses ke direktori beranda untuk banyak penggunanya. Sistem penyimpanan file cloud mematuhi protokol tingkat file umum dan model izin standar. Oleh karena itu, pelanggan dapat melakukan memindahkan aplikasi yang memerlukan kemampuan ini secara lift and shift ke cloud.
+
+Penyimpanan blok
+
+Penyimpanan file memperlakukan file sebagai unit tunggal, sedangkan penyimpanan blok membagi file menjadi potongan data dengan ukuran tetap yang disebut blok yang memiliki alamatnya sendiri-sendiri. Tiap blok adalah satu penyimpanan potongan data tunggal. Karena tiap blok memiliki alamat masing-masing, blok dapat diambil secara efisien. Anggap penyimpanan blok sebagai rute yang lebih langsung untuk mengakses data.
+
+Saat data diminta, alamat tersebut digunakan oleh sistem penyimpanan untuk mengatur blok dalam urutan yang benar guna membentuk file lengkap untuk disajikan kembali kepada peminta. Selain alamat, tidak ada metadata tambahan yang terkait dengan setiap blok.
+
+Mengubah satu karakter dalam sebuah file 1 GB dengan penyimpanan blok
+
+
+Jika Anda ingin mengubah karakter dalam file, Anda hanya perlu mengubah blok, atau bagian dari file, yang berisi karakter tersebut. Kemudahan akses inilah yang menjadi alasan mengapa solusi penyimpanan blok dapat berjalan dengan cepat dan menggunakan bandwidth yang lebih sedikit.
+
+Kasus penggunaan penyimpanan blok
+
+Karena dioptimalkan untuk operasi latensi rendah, penyimpanan blok adalah penyimpanan yang lebih disukai untuk workload korporasi berkinerja tinggi serta aplikasi transaksional intensif I/O yang vital untuk misi.
+
+Untuk mempelajari selengkapnya, buka tiga kategori berikut satu per satu.
+
+
+Beban kerja transaksional
+Organisasi yang memproses transaksi peka waktu dan vital untuk misi menyimpan workload tersebut di dalam basis data latensi rendah, kapasitas tinggi, dan memiliki toleransi kesalahan yang baik. Penyimpanan blok memungkinkan developer untuk membangun basis data transaksional yang kokoh, dapat diskalakan, dan sangat efisien. Karena tiap blok merupakan satu unit tersendiri, basis data berkinerja optimal, bahkan ketika data yang disimpan bertambah banyak.
+
+
+Kontainer
+Developer menggunakan penyimpanan blok untuk menyimpan aplikasi dalam kontainer di cloud. Kontainer adalah paket perangkat lunak yang berisi aplikasi dan file-file sumber dayanya untuk di-deploy di lingkungan komputasi mana pun. Seperti kontainer, penyimpanan blok juga fleksibel, dapat diskalakan, dan efisien. Dengan penyimpanan blok, developer dapat memigrasikan kontainer secara mulus antarserver, lokasi, dan lingkungan operasi.
+
+
+Mesin virtual
+Penyimpanan blok mendukung hypervisor mesin virtual (VM) populer. Pengguna dapat menginstal sistem operasi, sistem file, dan sumber daya komputasi lainnya di volume penyimpanan blok. Mereka melakukannya dengan memformat volume penyimpanan blok dan mengubahnya menjadi sistem file VM. Jadi, mereka dapat langsung menambah atau mengurangi ukuran drive virtual dan mentransfer penyimpanan virtual antar-host.
+
+Penyimpanan objek
+
+Dalam penyimpanan objek, file disimpan sebagai objek. Objek, seperti halnya file, diperlakukan sebagai unit data tunggal terpisah saat disimpan. Namun, berbeda dengan penyimpanan file, objek-objek tersebut disimpan dalam sebuah bucket menggunakan struktur rata, yang artinya tidak ada folder, direktori, atau hierarki kompleks. Masing-masing objek mengandung pengidentifikasi khusus. Pengidentifikasi ini, beserta metadata tambahan apa pun, dikemas bersama dengan data dan disimpan.
+
+Mengubah satu karakter dalam sebuah file 1 GB dengan penyimpanan objek
+
+
+
+Mengubah satu karakter di sebuah objek lebih sulit dilakukan dengan penyimpanan blok. Saat Anda ingin mengubah satu karakter dalam sebuah objek, seluruh objek harus diperbarui.
+
+Kasus penggunaan untuk penyimpanan objek
+
+Dengan penyimpanan objek, Anda dapat menyimpan hampir semua jenis data, dan tidak ada batas untuk jumlah objek yang disimpan, yang membuatnya dapat diskalakan dengan mudah. Penyimpanan objek umumnya berguna ketika menyimpan set data besar dan tidak terstruktur.
+
+Untuk mempelajari selengkapnya, buka tiga kategori berikut satu per satu.
+
+
+Pengarsipan data
+Penyimpanan objek cloud sangat ideal untuk retensi data jangka panjang. Anda dapat mengarsipkan konten media dalam jumlah besar dan mempertahankan data peraturan wajib dalam jangka waktu yang lebih lama. Anda juga dapat menggunakan penyimpanan objek cloud untuk mengganti infrastruktur arsip tape dan disk on-premises. Solusi penyimpanan ini menyediakan ketahanan data yang lebih baik, waktu pengambilan instan, keamanan dan kepatuhan yang lebih baik, serta aksesibilitas data yang lebih tinggi. 
+
+
+Pencadangan dan pemulihan
+Anda dapat mengonfigurasi sistem penyimpanan objek untuk mereplikasi konten sehingga apabila terdapat perangkat fisik yang gagal, perangkat penyimpanan objek ganda menjadi tersedia. Hal ini memastikan sistem dan aplikasi Anda terus berjalan tanpa gangguan. Anda juga dapat mereplikasi data di beberapa pusat data dan wilayah geografis.
+
+
+Sarat media
+Dengan penyimpanan objek, Anda dapat mempercepat aplikasi dan mengurangi biaya penyimpanan file sarat media seperti video, gambar digital, dan musik. Dengan menggunakan kelas penyimpanan dan fitur replikasi, Anda dapat membuat arsitektur yang hemat biaya dan direplikasi secara global untuk menghadirkan media ke pengguna yang tersebar.
+
+Berkaitan kembali dengan sistem penyimpanan tradisional
+
+Jika Anda pernah bekerja dengan penyimpanan on-premises, Anda mungkin sudah terbiasa dengan penyimpanan blok, file, dan objek. Pertimbangkan teknologi berikut ini dan bagaimana kaitannya dengan sistem yang mungkin telah Anda lihat sebelumnya:
+
+•
+Penyimpanan blok di cloud dianalogikan dengan penyimpanan terpasang langsung (DAS) atau jaringan area penyimpanan (SAN).
+
+•
+Sistem penyimpanan file sering kali didukung dengan server penyimpanan yang terpasang jaringan (NAS).
+
+Penambahan penyimpanan di dalam pusat data tradisional adalah proses yang kaku; solusi penyimpanan harus dibeli, diinstal, dan dikonfigurasi. Dengan menggunakan komputasi cloud, prosesnya lebih fleksibel. Anda dapat membuat, menghapus, dan memodifikasi solusi penyimpanan dalam hitungan menit.
+
+2. Penyimpanan File dengan Amazon EFS dan Amazon FSx
+
+Gunakan berbagai solusi penyimpanan cloud untuk beralih secara mudah ke penyimpanan file terkelola tanpa ada perubahan pada aplikasi atau alur kerja Anda.
+
+Amazon Elastic File System (Amazon EFS)
+
+Ikon Amazon EFS.
+
+Amazon Elastic File System (Amazon EFS)
+
+Amazon Elastic File System (Amazon EFS) adalah sistem file sederhana yang secara otomatis tumbuh dan menyusut seiring Anda menambahkan atau menghapus file. Anda tidak perlu melakukan penyediaan atau pengelolaan kapasitas dan kinerja penyimpanan. Amazon EFS dapat digunakan dengan layanan komputasi AWS dan sumber daya on-premises. Anda dapat menghubungkan puluhan, ratusan, bahkan ribuan instans komputasi ke sistem file Amazon EFS secara bersamaan, dan Amazon EFS dapat menyediakan kinerja yang konsisten untuk tiap instans komputasi.
+
+Dengan antarmuka web sederhana Amazon EFS, Anda dapat membuat dan mengonfigurasi sistem file dengan cepat tanpa ada ongkos minimum atau biaya penyiapan apa pun. Anda hanya membayar sesuai penyimpanan yang digunakan dan Anda dapat memilih dari berbagai kelas penyimpanan yang dirancang sesuai kasus penggunaan Anda. 
+
+Kelas penyimpanan standar
+
+Kelas penyimpanan one zone
+
+EFS Standard dan EFS Standard-Infrequent Access (Standard-IA) menawarkan ketahanan Multi-AZ dan tingkat ketahanan dan ketersediaan tertinggi.
+
+EFS One Zone dan EFS One Zone-Infrequent Access (EFS One Zone-IA) memberikan penghematan tambahan dengan menyimpan data Anda dalam satu availability zone.
+
+Amazon FSx
+
+Ikon Amazon FSx.
+
+Amazon FSx
+
+Amazon FSx adalah layanan terkelola penuh yang menawarkan keandalan, keamanan, skalabilitas, dan set kemampuan yang luas yang menjadikannya mudah dan hemat biaya untuk meluncurkan, menjalankan, dan menskalakan sistem file kinerja tinggi di cloud. Dengan Amazon FSx, Anda dapat memilih antara empat sistem file yang banyak digunakan: Lustre, NetApp ONTAP, OpenZFS, dan Windows File Server. Anda dapat memilih berdasarkan apakah Anda terbiasa dengan sistem file tertentu atau apakah workload Anda memerlukan set fitur, profil kinerja, dan kemampuan manajemen data tertentu.
+
+Untuk mempelajari tiap sistem file, perluas blok yang sesuai.
+
+
+Amazon FSx for NetApp ONTAP
+Amazon FSx for NetApp ONTAP adalah layanan yang terkelola sepenuhnya. Layanan ini mengombinasikan fitur, kinerja, kemampuan, dan operasi API populer dari sistem file NetApp on-premises dengan ketangkasan, skalabilitas, dan kemudahan layanan AWS yang terkelola penuh. FSx for ONTAP dapat berfungsi sebagai pengganti langsung untuk deployment ONTAP yang sudah ada, sehingga memberi pelanggan kemampuan untuk meluncurkan dan menjalankan sistem file ONTAP di cloud.
+
+FSx for ONTAP menyediakan fitur manajemen data kaya dan penyimpanan file bersama yang fleksibel yang dapat diakses secara luas dari instans komputasi Linux, Windows, dan macOS yang berjalan di AWS atau secara on-premises.
+
+Ikon FSx for ONTAP.
+
+
+Amazon FSx for OpenZFS
+Amazon FSx for OpenZFS adalah layanan penyimpanan file terkelola sepenuhnya yang membantu Anda memindahkan data yang berada di ZFS on-premise atau server file berbasis Linux lainnya ke AWS tanpa mengubah kode aplikasi atau cara Anda mengelola data. Dengan FSx for OpenZFS, Anda sudah tidak perlu mengkhawatirkan penyiapan dan penyediaan server file dan volume penyimpanan. Anda juga tidak harus berurusan dengan replikasi data, penginstalan dan patching perangkat lunak server file, deteksi dan penanganan kegagalan perangkat keras, atau pencadangan manual.
+
+
+
+FSx for OpenZFS menghadirkan kinerja terdepan untuk workload peka latensi dan file kecil dengan kemampuan manajemen data NAS populer (snapshot, dan kloning), dengan harga yang lebih rendah daripada alternatif berlisensi komersial.
+
+Ikon FSx for OpenZFS.
+
+
+Amazon FSx for Windows File Server
+Amazon FSx for Windows File Server menyediakan server file Microsoft Windows yang terkelola sepenuhnya, sangat andal, dan dapat diskalakan, didukung oleh sistem file Windows asli sepenuhnya. FSx for Windows File Server menyediakan penyimpanan file yang dapat diakses lewat protokol Blok Pesan Layanan (SMB) dan memiliki kemampuan untuk berfungsi sebagai pengganti langsung untuk deployment server file Windows yang sudah ada. 
+
+
+
+Sebagai layanan yang terkelola penuh, FSx for Windows File Server menyingkirkan tugas-tugas administrasi seperti penyiapan dan penyediaan server file serta volume penyimpanan dan memberikan kemudahan penggunaan bagi pelanggan yang membangun dan menjalankan aplikasi Windows.
+
+Ikon FSx for Windows File Server.
+
+
+Amazon FSx for Lustre
+Sistem file Lustre sumber terbuka dirancang untuk aplikasi yang memerlukan penyimpanan cepat, agar penyimpanan Anda dapat mengimbangi komputasi Anda. Amazon FSx for Lustre membuatnya mudah dan hemat biaya untuk meluncurkan, menjalankan, dan menskalakan sistem file berkinerja tinggi yang populer. Anda dapat mengaitkan sistem file FSx for Lustre ke repositori data di Amazon Simple Storage Service (Amazon S3) atau ke penyimpanan data on-premises.
+
+
+
+FSx for Lustre menghadirkan tingkat tertinggi untuk throughput (hingga 1+ TB/dtk) dan IOPS (jutaan). Pelanggan dapat secara mudah mengintegrasikan, mengakses, dan memproses set data Amazon S3 mereka menggunakan sistem file kinerja tinggi Lustre.
+
+Ikon FSx for Lustre.
+
+3. Penyimpanan Blok dengan Penyimpanan Instans Amazon EC2 dan Amazon EBS
+
+Karakteristik unikpenyimpanan blok menjadikannya opsi yang disukai untuk aplikasi transaksional, kritis, dan intensif I/O.
+
+Untuk menonton video tentang penyimpanan blok dengan Amazon EC2 dan Amazon EBS, pilih tombol putar.
+
+Play Video
+Penyimpanan instans Amazon EC2
+
+Penyimpanan instans Amazon Elastic Compute Compute (Amazon EC2) menyediakan penyimpanan tingkat blok sementara untuk instans. Penyimpanan ini terletak pada disk yang secara fisik tersambung ke komputer host. Penyimpanan ini mengikat siklus hidup data ke siklus hidup instans EC2. Jika Anda menghapus instans, penyimpanan instans juga akan terhapus. Oleh karena itu, penyimpanan instans dianggap sebagai penyimpanan sementara. Baca selengkapnya tentang hal ini dalam dokumentasi Amazon EC2 yang terdapat di bagian sumber daya di akhir pelajaran ini.
+
+Penyimpanan instans ideal jika Anda meng-host aplikasi yang mereplikasi data ke instans EC2 lain, seperti klaster Hadoop. Untuk workload berbasis klaster ini, memiliki kecepatan volume lokal yang terpasang dan ketahanan data yang direplikasi membantu Anda mencapai distribusi data dengan performa tinggi. Penyimpanan ini juga ideal untuk penyimpanan sementara informasi yang sering berubah, seperti buffer, cache, data scratch, dan konten sementara lainnya.
+
+Dua tipe penyimpanan blok di AWS adalah penyimpanan instans Amazon EC2 dan Amazon EBS.
+
+Amazon EBS
+
+Sesuai namanya, Amazon Elastic Block Store (Amazon EBS) adalah penyimpanan tingkat blok yang dapat Anda pasang ke instans Amazon EC2. Anda dapat membandingkannya dengan cara Anda harus memasang drive eksternal ke laptop Anda. Penyimpanan yang dapat dipasan ini disebut volume EBS. Ada beberapa kemiripan fungsi volume EBS ini dengan drive eksternal.
+
+•
+Dapat dilepas: Anda dapat melepaskan volume EBS dari satu instans EC2 dan memasangnya ke instans EC2 lain di Availability Zone yang sama untuk mengakses data di dalamnya.
+
+•
+Terpisah: Drive eksternal terpisah dari komputer. Artinya, jika terjadi kecelakaan dan komputer mati, Anda masih memiliki cadangan data di drive eksternal tersebut. Hal yang sama juga berlaku untuk volume EBS.
+
+•
+Ukuran terbatas: Anda dibatasi pada ukuran drive eksternal, karena ada batasan tetap pada seberapa besar skalabilitasnya. Misalnya, Anda mungkin memiliki drive eksternal sebesar 2 TB, yang berarti Anda hanya dapat menyimpan konten sebesar 2 TB di dalamnya. Hal ini juga berlaku untuk volume EBS, karena volume juga memiliki batasan maksimum jumlah konten yang dapat Anda simpan di dalamnya.
+
+•
+Koneksi 1-ke-1: Sebagian besar drive eksternal hanya dapat dihubungkan dengan satu komputer dalam satu waktu. Sebagian besar volume EBS memiliki hubungan satu lawan satu dengan instans EC2, sehingga volume tidak dapat dibagi dengan atau terpasang pada beberapa instans pada waktu yang sama.
+
+AWS telah mengumumkan fitur Amazon EBS multipasang yang memungkinkan volume SSD Provisioned IOPS (io1 atau io2) untuk dipasang ke beberapa instans EC2 secara bersamaan. Fitur ini tidak tersedia untuk semua tipe instans, dan semua instans harus berada di Availability Zone yang sama. (Baca selengkapnya tentang hal ini di dalam dokumentasi Amazon EBS di bagian sumber daya pada akhir materi ini.)
+
+Menskalakan volume Amazon EBS
+
+Anda dapat menskalakan volume EBS dengan dua cara. Untuk mempelajari suatu kategori, pilih tab yang sesuai.
+
+Tingkatan Ukuran Volume
+
+Tingkatkan ukuran volume hanya jika tidak melebihi batas ukuran maksimum. Tergantung volume yang dipilih, Amazon EBS saat ini mendukung ukuran volume maksimum 64 tebibita (TiB). Misalnya, jika Anda menyediakan volume Block Express io2 berukuran 5 TiB, Anda dapat memilih untuk meningkatkan ukuran volume Anda sampai Anda mencapai 64 TiB.
+
+Melampirkan Beberapa Volume
+
+Lampirkan beberapa volume ke satu instans EC2. Amazon EC2 memiliki hubungan satu lawan banyak dengan volume EBS. Anda dapat menambahkan volume tambahan ini selama atau setelah pembuatan instans EC2 untuk menyediakan lebih banyak kapasitas penyimpanan untuk host Anda.
+
+Kasus Penggunaan Amazon EBS
+
+Amazon EBS berguna ketika Anda harus mengambil data dengan cepat dan memiliki data yang bertahan dalam jangka panjang. Volume umumnya digunakan dalam skenario berikut.
+
+Untuk mempelajari selengkapnya, buka tiap kategori berikut.
+
+
+Sistem operasi
+Volume boot dan root dapat digunakan untuk menyimpan sistem operasi. Perangkat root untuk instans yang diluncurkan dari Amazon Machine Image (AMI) biasanya merupakan volume EBS. Ini umumnya disebut AMI yang dicadangkan EBS.
+
+
+Basis data
+Sebagai lapisan penyimpanan untuk basis data yang berjalan di Amazon EC2 yang akan diskalakan bersama kebutuhan kinerja Anda dan menyediakan kinerja yang konsisten dan berlatensi rendah.
+
+
+Aplikasi korporasi
+Amazon EBS menyediakan penyimpanan blok dengan ketersediaan tinggi dan ketahanan tinggi untuk menjalankan aplikasi yang vital untuk bisnis.
+
+
+Mesin analitik big data
+Amazon EBS menawarkan persistensi data, penyesuaian kinerja dinamis, dan kemampuan untuk melepaskan dan melampirkan kembali volume, sehingga Anda dapat menyesuaikan ukuran klaster untuk analitik big data.
+
+Tipe volume EBS
+
+Volume EBS diatur menjadi dua kategori utama: - solid-state drive (SSD) dan hard disk drive (HDD). SSD digunakan untuk workload transaksional dengan operasi baca/tulis yang sering dilakukan dengan ukuran I/O kecil. HDD digunakan untuk workload streaming besar yang membutuhkan performa throughput tinggi. AWS menawarkan dua jenis masing-masing.
+
+Dua tabel berikut dapat membantu Anda memutuskan volume EBS mana yang merupakan opsi yang tepat untuk beban kerja Anda.
+
+Untuk mempelajari selengkapnya, buka dua kategori berikut.
+
+
+Volume SSD
+**Catatan: Untuk pengguna dengan pembaca layar, gunakan mode tabel untuk membaca tabel.
+
+Tujuan Umum 
+Volume SSD
+
+IOPS yang disediakan 
+Volume SSD
+
+Tipe volume
+
+gp3
+
+gp2
+
+io2 Block Express
+
+io2
+
+io1
+
+Deskripsi
+
+Memberikan keseimbangan harga dan kinerja untuk berbagai macam beban kerja transaksional
+
+Menyediakan SSD berkinerja tinggi yang dirancang untuk beban kerja transaksional yang sensitif terhadap latensi
+
+Ukuran volume
+
+1 GiB–16 TiB
+
+4 GiB–64 TiB
+
+4GiB–16 TiB
+
+IOPS Maksimal 
+per volume
+
+16.000
+
+256.000
+
+64.000
+
+Throughput maksimum per volume
+
+1.000 MiB/d
+
+250 MiB/d
+
+4.000 MiB/d
+
+1.000 MiB/d
+
+Amazon EBS Multi-attach
+
+Tidak didukung
+
+Didukung
+
+
+Volume HDD
+**Catatan: Untuk pengguna dengan pembaca layar, gunakan mode tabel untuk membaca tabel.
+
+Volume HDD yang Dioptimalkan untuk Throughput
+
+Volume HDD dingin
+
+Tipe volume
+
+st1
+
+sc1
+
+Deskripsi
+
+HDD berbiaya rendah yang dirancang untuk beban kerja yang sering diakses dan membutuhkan throughput yang tinggi
+
+HDD berbiaya terendah yang dirancang untuk beban kerja yang jarang diakses
+
+Ukuran volume
+
+125 GiB–16 TiB
+
+IOPS Maksimum per volume
+
+500
+
+250
+
+Throughput maksimum per volume
+
+500 MiB/d
+
+250 MiB/d
+
+Amazon EBS Multi-attach
+
+Tidak didukung
+
+Manfaat Amazon EBS
+
+Untuk mempelajari manfaat Amazon EBS, pilih kartu flash berikut untuk membaliknya.
+
+Ketersediaan tinggi
+Ketika Anda buat, volume EBS akan secara otomatis direplikasi di Availability Zone-nya untuk mencegah kehilangan data dari titik kegagalan tunggal.
+
+Persistensi data
+Penyimpanan tetap bertahan bahkan saat instans Anda sudah tidak ada.
+
+Enkripsi data
+Ketika diaktifkan oleh pengguna, semua volume EBS mendukung enkripsi 
+
+Fleksibilitas
+Volume EBS mendukung perubahan instan. Modifikasi tipe volume, ukuran volume, dan kapasitas operasi input/output per detik (IOPS) tanpa menghentikan instans Anda.
+
+Pencadangan
+Amazon EBS menyediakan kemampuan untuk menciptakan cadangan volume EBS apa pun.
+
+Snapshot Amazon EBS
+
+Kesalahan kadang terjadi. Salah satu kesalahan adalah tidak mencadangkan data dan data tersebut hilang. Untuk mencegah hal ini terjadi pada Anda, selalu cadangkan data Anda, bahkan di AWS. Karena volume EBS Anda terdiri dari data dari instans EC2 Anda, Anda harus membuat cadangan yang disebut snapshot untuk volume tersebut.
+
+
+
+Snapshot EBS adalah cadangan tambahan, sehingga yang disimpan hanyalah blok pada volume yang telah berubah setelah snapshot terbaru Anda. Misalnya, jika Anda memiliki data 10 GB di sebuah volume dan hanya 2 GB dari data tersebut yang telah dimodifikasi sejak snapshot terakhir, maka hanya 2 GB yang telah diubah saja yang akan dituliskan ke Amazon S3.
+
+Saat Anda membuat snapshot dari volume EBS Anda, cadangan disimpan secara redundan di beberapa Availability Zone menggunakan Amazon S3. Aspek penyimpanan cadangan di Amazon S3 ini diurus oleh AWS, sehingga Anda tidak perlu berinteraksi dengan Amazon S3 untuk menggunakan snapshot EBS Anda. Anda mengelolanya di konsol Amazon EBS, yang merupakan bagian dari konsol Amazon EC2.
+
+Snapshot EBS dapat digunakan untuk membuat beberapa volume baru, baik yang berada di Availability Zone yang sama atau yang berbeda. Saat Anda membuat volume baru dari sebuah snapshot, volume tersebut merupakan salinan yang sama persis dengan volume asli pada saat snapshot diambil.
+
+4. Penyimpanan Objek dengan Amazon S3
+
+Penyimpanan objek dibangun untuk cloud dan menghadirkan skalabilitas tidak terbatas, durabilitas tinggi, dan efektivitas biaya.
+
+Untuk menonton video tentang penyimpanan objek dengan Amazon S3, pilih tombol putar.
+
+Play Video
+Amazon S3
+
+Tidak seperti Amazon EBS, Amazon Simple Storage Service (Amazon S3) adalah solusi penyimpanan mandiri yang tidak terikat dengan komputasi. Dengan Amazon S3, Anda dapat mengambil data Anda dari mana saja di web. Jika Anda telah menggunakan layanan penyimpanan daring untuk membuat cadangan data dari mesin lokal Anda, maka Anda kemungkinan besar telah menggunakan layanan yang mirip dengan Amazon S3. Perbedaan besar antara layanan penyimpanan online tersebut dan Amazon S3 adalah jenis penyimpanannya.
+
+Amazon S3 adalah layanan penyimpanan objek. Penyimpanan objek menyimpan data dalam struktur rata. Objek adalah file yang dikombinasikan dengan metadata. Anda dapat menyimpan sebanyak mungkin objek yang Anda mau. Semua karakteristik penyimpanan objek juga dimiliki oleh Amazon S3.
+
+Konsep Amazon S3
+
+Konsep Amazon S3 mencakup objek, kunci, bucket, dan Region.
+
+Di Amazon S3, Anda menyimpan objek Anda dalam kontainer yang disebut bucket. Anda tidak dapat mengunggah objek apa pun, bahkan satu foto pun, ke Amazon S3 tanpa membuat bucket terlebih dahulu. Ketika Anda menyimpan objek dalam bucket, kombinasi nama bucket, kunci, dan ID versi mengidentifikasi objek secara unik.
+
+Ketika Anda membuat bucket, Anda menentukan minimal dua detail: nama bucket dan AWS Region tempat Anda ingin menyimpan bucket.
+
+Untuk mempelajari selengkapnya, pilih masing-masing penanda bernomor.
+
+Buat opsi bucket di Amazon S3.
+
+
+Nama bucket Amazon S3
+
+Amazon S3 mendukung bucket global. Oleh karena itu, tiap nama bucket harus unik di semua akun AWS di semua AWS Region di dalam suatu partisi. Partisi adalah pengelompokan Region. Saat ini AWS memiliki tiga partisi: Region Standar, Region Tiongkok, dan AWS GovCloud (AS). Ketika memberi nama sebuah bucket, pilihlah nama yang relevan untuk Anda atau bisnis Anda. Misalnya, sebaiknya Anda menghindari penggunaan AWS atau Amazon dalam nama bucket Anda.
+
+Berikut ini adalah beberapa contoh aturan yang berlaku untuk penamaan bucket di Amazon S3. Untuk melihat daftar aturan lengkapnya, buka tautan di bagian sumber daya. 
+
+Nama bucket minimal terdiri dari 3 karakter dan maksimal 63 karakter.
+Nama bucket hanya dapat terdiri dari huruf kecil, angka, titik (.), dan tanda hubung (-).
+Nama bucket harus dimulai dan diakhiri dengan huruf atau angka.
+Bucket tidak boleh dalam format alamat IP.
+Nama bucket tidak dapat digunakan oleh akun AWS lain di dalam Partisi yang sama sampai bucket tersebut dihapus.
+Jika aplikasi Anda membuat bucket secara otomatis, pilihlah skema penamaan bucket yang kemungkinan tidak menyebabkan konflik penamaan dan akan memilih nama berbeda apabila suatu nama telah dipakai.
+
+Nama kunci objek
+
+Kunci objek (nama kunci) secara unik mengidentifikasi objek di dalam bucket Amazon S3. Saat Anda membuat objek, Anda menentukan nama kunci. Seperti yang dijelaskan sebelumnya, model Amazon S3 adalah struktur rata, yang artinya tidak ada hierarki sub-bucket atau subfolder. Namun, konsol Amazon S3 mendukung konsep folder. Dengan menggunakan awalan dan pembatas nama kunci, Anda dapat menyiratkan sebuah hierarki logis.
+
+Misalnya, anggaplah bucket Anda yang disebut testbucket memiliki dua objek dengan kunci objek berikut: 2022-03-01/AmazonS3.html dan 2022-03-01/Cats.jpg. Konsol menggunakan awalan nama kunci, 2022-03-01, dan pemisah (/) untuk menyajikan struktur folder.
+
+Dengan menggunakan awalan dan pembatas, Anda dapat menyiratkan sebuah hierarki logis yang mirip folder.
+
+Amazon S3 mendukung bucket dan objek dan tidak ada hierarki. Namun, dengan menggunakan awalan dan pembatas nama kunci objek, konsol Amazon S3 dan AWS SDK dapat menyimpulkan hierarki dan memperkenalkan konsep folder.
+
+Kasus penggunaan Amazon S3
+
+Amazon S3 adalah layanan penyimpanan yang banyak digunakan, dengan kasus penggunaan yang jauh lebih banyak hingga tidak bisa dimuat dalam satu layar. Untuk mempelajari selengkapnya, buka masing-masing dari enam kategori berikut.
+
+
+Cadangan dan penyimpanan
+Amazon S3 adalah tempat yang lazim untuk mencadangkan file karena sifatnya yang sangat redundan. Seperti disebutkan di materi terakhir, AWS menyimpan snapshot EBS Anda di Amazon S3 untuk memanfaatkan ketersediannya yang tinggi.
+
+
+Hosting media
+Karena Anda dapat menyimpan objek tak terbatas, dan masing-masing objek dapat berukuran hingga 5 TB, Amazon S3 adalah lokasi yang ideal untuk meng-host unggahan video, foto, dan musik.
+
+
+Penyajian perangkat lunak
+Anda dapat menggunakan Amazon S3 untuk meng-host aplikasi perangkat lunak yang dapat diunduh pelanggan.
+
+
+Danau data
+Amazon S3 adalah fondasi optimal untuk danau data karena skalabilitasnya yang hampir tak terbatas. Anda dapat meningkatkan penyimpanan dari konten berukuran gigabita ke petabita, dengan hanya membayar yang Anda gunakan.
+
+
+Situs web statis
+Anda dapat mengonfigurasi bucket S3 Anda untuk meng-host situs web statis HTML, CSS, dan skrip sisi klien.
+
+
+Konten statis
+Karena penskalaan tanpa batas, dukungan untuk file besar, dan fakta bahwa Anda dapat mengakses objek apa pun lewat web kapan saja, Amazon S3 adalah tempat yang sempurna untuk menyimpan konten statis.
+
+Keamanan di Amazon S3
+
+Segala hal di Amazon S3 bersifat privat secara default. Artinya semua sumber daya Amazon S3, seperti bucket, folder, dan objek hanya dapat dilihat oleh pengguna atau akun AWS yang menciptakan sumber daya tersebut. Semua sumber daya Amazon S3 bersifat pribadi dan terlindungi sejak awal.
+
+Jika Anda memutuskan bahwa Anda ingin semua orang di internet melihat foto Anda, Anda dapat memilih untuk menjadikan bucket dan objek Anda publik. Sumber daya publik berarti semua orang di internet dapat melihatnya. Sering kali, Anda tidak mau izin Anda menjadi semua atau tidak sama sekali. Biasanya, Anda ingin lebih terperinci tentang cara Anda menyediakan akses ke sumber daya Anda.
+
+Secara default, semua sumber daya Amazon S3 - bucket, objek, dan sumber daya terkait bersifat privat. Akses ke sumber daya dapat diberikan kepada orang lain dengan menuliskan kebijakan akses.
+
+Agar lebih spesifik tentang siapa yang dapat melakukan tindakan dan tindakan apa yang dapat dilakukannya pada sumber daya Amazon S3 Anda, Amazon S3 menyediakan beberapa fitur manajemen keamanan: kebijakan IAM, kebijakan bucket S3, dan enkripsi untuk mengembangkan dan mengimplementasikan kebijakan keamanan Anda sendiri.
+
+Amazon S3 dan kebijakan IAM
+
+Sebelumnya, Anda telah mempelajari pembuatan dan penggunaan kebijakan AWS Identity and Access Management (IAM). Sekarang, Anda dapat menerapkan pengetahuan tersebut untuk Amazon S3. Ketika kebijakan IAM dilampirkan ke sumber daya Anda (bucket dan objek) atau pengguna, grup, dan peran IAM, kebijakan tersebut menentukan tindakan mana yang dapat mereka lakukan. Kebijakan akses yang Anda lampirkan ke sumber daya Anda disebut sebagai kebijakan berbasis sumber daya dan kebijakan akses yang dilampirkan ke pengguna di akun Anda disebut kebijakan pengguna.
+
+
+
+Anda harus menggunakan kebijakan IAM untuk bucket privat di dalam dua skenario berikut ini:
+
+Anda memiliki banyak bucket dengan persyaratan izin yang berbeda-beda. Alih-alih menetapkan banyak kebijakan bucket S3 yang berbeda-beda, Anda dapat menggunakan kebijakan IAM.
+Anda ingin agar semua kebijakan berada di satu lokasi terpusat. Menggunakan kebijakan IAM, Anda dapat mengelola semua informasi kebijakan di satu lokasi.
+Kebijakan bucket Amazon S3
+
+Seperti kebijakan IAM, kebijakan bucket S3 ditetapkan dalam format JSON. Tidak seperti kebijakan IAM, yang dilampirkan ke sumber daya dan pengguna, kebijakan bucket S3 hanya dapat dilampirkan ke bucket S3. Kebijakan yang ditempatkan di bucket dapat berlaku untuk objek di dalamnya. Kebijakan bucket S3 menentukan tindakan apa yang diizinkan atau ditolak pada bucket.
+
+
+
+Anda harus menggunakan kebijakan bucket S3 di dalam skenario berikut:
+
+Anda memerlukan cara yang sederhana untuk melakukan akses lintas akun ke Amazon S3, tanpa menggunakan role IAM.
+Kebijakan IAM Anda terhalang batas ukuran yang ditetapkan. Kebijakan bucket S3 memiliki batas ukuran yang lebih besar.
+Untuk contoh kebijakan bucket, lihat tautan Contoh Kebijakan Bucket(opens in a new tab) di sini atau di bagian sumber daya.
+
+Enkripsi Amazon S3
+
+Amazon S3 memperkuat enkripsi saat bergerak (saat bergerak ke dan dari Amazon S3) dan saat tidak digunakan. Untuk melindungi data, Amazon S3 secara otomatis mengenkripsi semua objek saat diunggah dan menerapkan enkripsi sisi server dengan kunci yang dikelola S3 sebagai tingkat dasar enkripsi untuk setiap bucket di Amazon S3 tanpa biaya tambahan.
+
+Kelas penyimpanan Amazon S3
+
+Ketika Anda mengunggah objek ke Amazon S3 dan Anda tidak menentukan kelas penyimpanan, Anda mengunggahnya ke kelas penyimpanan default, yang sering disebut sebagai penyimpanan standar. Dalam pelajaran sebelumnya, Anda telah mempelajari tentang kelas penyimpanan standar Amazon S3 default.
+
+Kelas penyimpanan Amazon S3 memungkinkan Anda mengubah tingkatan penyimpanan saat karakteristik data Anda berubah. Misalnya, jika Anda jarang mengakses foto-foto lama Anda, Anda mungkin ingin mengubah kelas penyimpanan untuk foto tersebut agar menghemat biaya.
+
+Kelas Penyimpanan
+
+Deskripsi
+
+S3 Standard
+
+Ini dianggap penyimpanan serba guna untuk aplikasi cloud, situs web dinamis, distribusi konten, aplikasi seluler dan permainan, serta analitik big data.
+
+S3 Intelligent-Tiering
+
+Tingkat ini berguna jika data Anda memiliki pola akses yang tidak diketahui atau berubah. S3 Intelligent-Tiering menyimpan objek dalam tiga tingkatan: tingkatan akses sering, tingkatan akses tidak jarang, dan tingkatan akses instans arsip. Amazon S3 memantau pola akses data Anda dan secara otomatis memindahkan data Anda ke tingkat penyimpanan yang paling hemat biaya berdasarkan frekuensi akses.
+
+S3 Standard-Infrequent Access (S3 Standard-IA)
+
+Tingkatan ini diperuntukkan bagi data yang jarang diakses tetapi memerlukan akses cepat saat dibutuhkan. S3 Standard-IA menawarkan daya tahan tinggi, throughput tinggi, dan latensi rendah dari S3 Standard, dengan harga penyimpanan per GB dan biaya pengambilan per GB yang rendah. Tingkat penyimpanan ini ideal jika Anda ingin menyimpan backup jangka panjang, file pemulihan bencana, dan sebagainya.
+
+S3 One Zone-Infrequent Access (S3 One Zone-IA)
+
+Tidak seperti kelas penyimpanan S3 lain yang menyimpan data dalam minimal tiga Availability Zone, S3 One Zone-IA menyimpan data dalam satu Availability Zone, yang membuatnya lebih murah daripada S3 Standard-IA. S3 One Zone-IA ideal bagi pelanggan yang menginginkan opsi berbiaya lebih rendah untuk data yang jarang diakses, tetapi tidak memerlukan ketersediaan dan ketahanan S3 Standard atau S3 Standard-IA. Ini merupakan pilihan yang baik untuk menyimpan salinan cadangan sekunder data on-premise atau data yang dapat dibuat ulang dengan mudah.
+
+S3 Glacier Instant Retrieval
+
+Gunakan S3 Glacier Instant Retrieval untuk mengarsipkan data yang jarang diakses dan memerlukan pengambilan milidetik. Data yang disimpan dalam kelas penyimpanan ini menawarkan penghematan biaya hingga 68 persen dibandingkan dengan kelas penyimpanan S3 Standard-IA, dengan latensi dan kinerja throughput yang sama.
+
+S3 Glacier Flexible Retrieval
+
+S3 Glacier Flexible Retrieval menawarkan penyimpanan berbiaya rendah untuk data arsip yang diakses 1–2 kali per tahun. Dengan S3 Glacier Flexible Retrieval, data Anda dapat diakses hanya dalam waktu 1–5 menit menggunakan pengambilan yang dipercepat. Anda juga dapat meminta pengambilan massal gratis hingga 5–12 jam. Ini adalah solusi ideal untuk kebutuhan backup, pemulihan bencana, penyimpanan data di luar lokasi, dan saat beberapa data terkadang harus diambil dalam hitungan menit.
+
+S3 Glacier Deep Archive
+
+S3 Glacier Deep Archive adalah kelas penyimpanan Amazon S3 dengan biaya terendah. Kelas ini mendukung retensi dan preservasi digital jangka panjang untuk data yang mungkin diakses satu atau dua kali dalam setahun. Data yang disimpan di kelas penyimpanan S3 Glacier Deep Archive memiliki waktu pengambilan default 12 jam. Kelas ini dirancang agar pelanggan dapat mempertahankan set data selama 7 tahun atau lebih untuk memenuhi persyaratan kepatuhan peraturan. Contohnya termasuk mereka yang bergerak di industri yang sangat diatur, seperti layanan keuangan, pelayanan kesehatan, dan sektor publik.
+
+S3 di Outpost
+
+Amazon S3 on Outposts memberikan penyimpanan objek ke lingkungan AWS Outposts on-premise Anda menggunakan API dan fitur S3. Untuk beban kerja yang mengharuskan terpenuhinya persyaratan residensi data lokal atau perlu menyimpan data dekat dengan aplikasi lokal karena alasan kinerja, kelas penyimpanan S3 Outposts merupakan pilihan ideal. 
+
+Penentuan versi Amazon S3
+
+Seperti dijelaskan sebelumnya, Amazon S3 mengidentifikasi objek sebagian dengan menggunakan nama objek. Misalnya, saat Anda mengunggah foto karyawan ke Amazon S3, Anda dapat memberi nama objek employee.jpg dan menyimpannya dalam bucket yang disebut karyawan. Tanpa versi Amazon S3, setiap kali Anda mengunggah objek bernama employee.jpg ke bucket karyawan, objek tersebut akan menimpa objek aslinya.
+Hal ini dapat menjadi masalah karena beberapa alasan, termasuk yang berikut:
+
+Nama umum: Nama objek employee.jpg adalah nama umum untuk objek foto karyawan. Anda atau orang lain yang memiliki akses ke bucket mungkin tidak bermaksud menimpanya, tetapi begitu ditimpa, objek asli tidak dapat diakses.
+Pelestarian versi: Anda mungkin ingin melestarikan versi berbeda dari employee.jpg. Tanpa versioning, jika Anda ingin membuat versi baru dari employee.jpg, Anda perlu mengunggah objek dan memilih nama yang berbeda untuk objek tersebut. Memiliki beberapa objek dengan sedikit perbedaan dalam variasi penamaan dapat menyebabkan kebingungan dan kekacauan dalam bucket S3.
+Untuk mengatasi masalah ini, Anda dapat menggunakan versioning Amazon S3. Versioning menyimpan beberapa versi dari satu objek dalam bucket yang sama. Versioning ini mempertahankan versi lama dari sebuah objek tanpa menggunakan nama yang berbeda, yang memudahkan pemulihan objek dari penghapusan dan penimpaan yang tidak disengaja, atau kegagalan aplikasi.
+
+Simpan beberapa versi dari satu objek dalam bucket yang sama.
+
+Jika Anda mengaktifkan versioning untuk sebuah bucket, Amazon S3 secara otomatis menghasilkan ID versi unik untuk objek tersebut. Dalam satu bucket, misalnya, Anda dapat memiliki dua objek dengan kunci yang sama tetapi ID versi yang berbeda, seperti employeephoto.jpg (versi 111111) dan employeephoto.jpg (versi 121212).
+
+Dengan menggunakan bucket yang mendukung versi, Anda dapat memulihkan objek dari penghapusan atau penimpaan yang tidak disengaja. Berikut ini adalah contohnya:
+
+•
+Penghapusan objek tidak menghapus objek tersebut secara permanen. Sebaliknya, Amazon S3 menempatkan penanda pada objek yang menunjukkan bahwa Anda pernah mencoba untuk menghapusnya. Jika Anda ingin memulihkan objek tersebut, Anda dapat menghapus penanda lalu objek tersebut dikembalikan.
+
+•
+Jika Anda menimpa sebuah objek, hasilnya adalah versi objek baru dalam bucket. Anda masih memiliki akses ke versi objek sebelumnya.
+
+Status versioning
+
+Bucket dapat memiliki salah satu dari tiga status. Status versioning berlaku untuk semua objek di dalam bucket tersebut. Biaya penyimpanan dikenakan untuk semua objek dalam bucket Anda, termasuk semua versi. Untuk menekan tagihan Amazon S3 Anda, Anda mungkin ingin menghapus versi sebelumnya dari objek Anda ketika sudah tidak diperlukan.
+
+Untuk mempelajari selengkapnya, buka tiga kategori berikut satu per satu.
+
+
+Tanpa versi (default)
+Tidak ada objek baru dan lama di dalam bucket yang memiliki versi.
+
+
+Versioning-aktif
+Versioning diaktifkan untuk semua objek di dalam bucket. Setelah Anda mengaktifkan versi untuk sebuah bucket, bucket tersebut tidak akan pernah dapat kembali ke status tanpa versi. Namun, Anda dapat menangguhkan versioning pada bucket tersebut.
+
+
+Versioning-ditangguhkan
+Versioning ditangguhkan untuk objek-objek baru. Semua objek baru dalam bucket tidak akan memiliki versi. Namun, semua objek lama tetap mempertahankan versi objeknya.
+
+Mengelola siklus hidup penyimpanan Anda
+
+Jika Anda terus mengubah objek secara manual, seperti foto karyawan, dari satu tingkat penyimpanan ke tingkat penyimpanan lain, Anda mungkin ingin mengotomatisasi proses dengan mengonfigurasi siklus hidup Amazon S3-nya. Saat Anda membuat konfigurasi siklus hidup untuk suatu objek atau grup objek, Anda dapat memilih untuk mengotomatisasi antara dua jenis tindakan: pengalihan dan pengakhiran.
+
+Tindakan transisi menentukan kapan objek harus bertransisi ke kelas penyimpanan lain.
+Tindakan kedaluwarsa menentukan kapan objek kedaluwarsa dan harus dihapus secara permanen.
+Misalnya, Anda dapat memilih untuk mengalihkan objek ke kelas penyimpanan S3 Standard-IA 30 hari setelah Anda membuatnya. Atau Anda dapat mengarsipkan objek ke kelas penyimpanan S3 Glacier Deep Archive 1 tahun setelah Anda membuatnya.
+
+Pilih tindakan pengalihan dan pengakhiran untuk objek dengan siklus hidup penyimpanan.
+
+Kasus-kasus berikut ini adalah kandidat bagus untuk penggunaan aturan konfigurasi siklus hidup:
+
+Log berkala: Jika Anda mengunggah log berkala ke suatu bucket, aplikasi Anda mungkin memerlukannya selama seminggu atau sebulan. Setelah itu, Anda mungkin ingin menghapusnya.
+Data yang berubah dalam frekuensi akses: Beberapa dokumen sering diakses untuk jangka waktu terbatas. Setelah itu, dokumen tersebut jarang diakses. Pada titik tertentu, Anda mungkin tidak memerlukan akses waktu nyata ke dokumen tersebut. Namun, organisasi Anda atau peraturan mungkin mengharuskan Anda mengarsipkannya selama jangka waktu tertentu. Setelah itu, Anda dapat menghapusnya.
+
+5. Memilih Layanan Penyimpanan yang Tepat
+Untuk menonton demonstrasi tentang memilih layanan penyimpanan yang tepat, pilih tombol putar.
+
+Play Video
+Penyimpanan instans Amazon EC2
+Penyimpanan instans adalah penyimpanan blok sementara. Ini adalah penyimpanan yang dikonfigurasi sebelumnya di server fisik yang sama yang meng-host instans EC2 dan tidak dapat dilepaskan dari Amazon EC2. Anda dapat menganggapnya seperti drive bawaan untuk instans EC2 Anda.
+
+ 
+
+Penyimpanan instans umumnya cocok untuk penyimpanan sementara informasi yang terus berubah, seperti buffer, cache, dan data scratch. Layanan ini tidak dimaksudkan untuk data persisten atau tahan lama. Jika Anda membutuhkan penyimpanan blok jangka panjang persisten yang dapat dilepas dari Amazon EC2 dan memberikan fleksibilitas manajemen yang lebih besar, seperti meningkatkan ukuran volume atau membuat snapshot, Anda harus menggunakan Amazon EBS.
+
+
+
+Amazon EBS
+Amazon EBS dimaksudkan untuk data yang sering berubah dan harus bertahan melalui penghentian instans, pengakhiran, atau kegagalan perangkat keras. Amazon EBS memiliki dua jenis volume: volume dicadangkan SSD dan volume dicadangkan HDD.
+
+
+
+Kinerja volume dicadangkan SSD bergantung pada IOPS dan ideal untuk workload transaksional, seperti basis data dan volume boot. 
+
+
+
+Kinerja volume yang dicadangkan HDD bergantung pada megabita per detik (MBps) dan ideal untuk workload intensif throughput, seperti big data, gudang data, pemrosesan log, dan I/O data sekuensial.
+
+
+
+Berikut adalah beberapa fitur penting Amazon EBS yang perlu Anda tahu saat membandingkannya dengan layanan lain.
+
+Ini adalah penyimpanan blok.
+Anda membayar sesuai yang Anda sediakan (Anda harus menyediakan penyimpanan di awal).
+Volume EBS direplikasi di beberapa server di satu Availability Zone.
+Sebagian besar volume EBS hanya dapat dilampirkan ke satu instans EC2 pada satu waktu.
+
+
+Amazon S3
+Jika data Anda tidak sering berubah, Amazon S3 mungkin adalah solusi penyimpanan yang hemat biaya dan dapat diskalakan untuk Anda. Amazon S3 ideal untuk menyimpan konten web statis dan media, cadangan dan pengarsipan, dan data untuk analitik. Layanan ini juga meng-host seluruh situs web statis dengan nama domain kustom.
+
+
+
+Berikut adalah beberapa fitur penting Amazon S3 yang perlu diketahui dibandingkan dengan layanan lain.
+
+Ini adalah penyimpanan objek.
+Anda membayar sesuai yang Anda gunakan (Anda tidak harus menyediakan penyimpanan di awal).
+Amazon S3 mereplikasi objek Anda di beberapa Availability Zone di suatu Region.
+Amazon S3 bukanlah penyimpanan yang dilampirkan ke komputasi.
+
+
+Amazon EFS
+Amazon EFS menyediakan penyimpanan file yang sangat dioptimalkan untuk berbagai workload dan aplikasi. Layanan ini adalah satu-satunya sistem file bersama cloud-native dengan manajemen siklus hidup yang sepenuhnya otomatis. Sistem file Amazon EFS dapat melakukan penskalaan secara otomatis dari data berukuran gigabita hingga petabita tanpa perlu menyediakan penyimpanan. Puluhan, ratusan, atau bahkan ribuan instans komputasi dapat mengakses sistem file Amazon EFS secara bersamaan.
+
+
+
+Kelas penyimpanan Amazon EFS Standard ideal untuk workload yang mengharuskan tingkat durabilitas dan ketersediaan tertinggi. Kelas penyimpanan EFS One Zone ideal untuk workload seperti lingkungan pengembangan, pembangunan, dan pentahapan.
+
+
+
+Berikut adalah beberapa fitur penting Amazon EFS yang perlu diketahui dibandingkan dengan layanan lain.
+
+Ini adalah penyimpanan file.
+Amazon EFS bersifat elastis, dan secara otomatis menaikkan atau menurunkan skala seiring Anda menambahkan atau menghapus file. Anda hanya membayar atas apa yang Anda gunakan.
+Amazon EFS memiliki ketersediaan tinggi dan dirancang berdaya tahan tinggi. Semua file dan direktori disimpan secara redundan di dalam dan lintas beberapa Availability Zone. 
+Amazon EFS menawarkan manajemen siklus hidup asli untuk file Anda dan berbagai kelas penyimpanan untuk Anda pilih.
+
+
+Amazon FSx
+Amazon FSx menyediakan kompatibilitas asli dengan sistem file pihak ketiga. Anda dapat memilih dari NetApp ONTAP, OpenZFS, Windows File Server, dan Lustre. Dengan Amazon FSx, Anda tidak perlu mengkhawatirkan pengelolaan server dan penyimpanan file. Alasannya adalah karena Amazon FSx mengotomatisasi tugas administrasi yang menyita waktu seperti penyediaan perangkat keras, konfigurasi perangkat lunak, patching, dan pencadangan. Dengan begitu, Anda lebih leluasa untuk fokus pada aplikasi, pengguna akhir, dan bisnis Anda.
+
+Sistem file Amazon FSx menawarkan rangkaian fitur, profil kinerja, dan kemampuan manajemen data yang mendukung berbagai kasus penggunaan dan workload. Di antara contohnya adalah machine learning, analitik, aplikasi komputasi kinerja tinggi (HPC), serta media dan hiburan.
+
+Sistem File
+
+Deskripsi
+
+Amazon FSx for NETAPP ONTAP
+
+Penyimpanan bersama yang dikelola sepenuhnya dibangun di atas sistem file ONTAP populer NetApp
+
+Amazon FSx for OpenZFS
+
+Penyimpanan bersama yang dikelola sepenuhnya dibangun di atas sistem file OpenZFS yang populer
+
+Amazon FSx for Windows File Server
+
+Penyimpanan bersama yang dikelola sepenuhnya dibangun di Windows Server
+
+Amazon FSx for Lustre
+
+Penyimpanan bersama yang dikelola sepenuhnya dibangun di atas sistem file berkinerja tinggi paling populer di dunia

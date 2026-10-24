@@ -1,0 +1,599 @@
+Deskripsi
+AWS Technical Essentials, Bagian 1 dan Bagian 2, memperkenalkan Anda pada Amazon Web Services yang penting dan solusi umum. Kursus ini mencakup konsep dasar AWS yang terkait dengan komputasi, basis data, penyimpanan, jaringan, monitoring, dan keamanan. Anda akan mulai bekerja di AWS melalui pengalaman kursus langsung. Kursus ini mencakup konsep yang diperlukan untuk meningkatkan pemahaman Anda tentang layanan AWS sehingga Anda dapat membuat keputusan yang tepat tentang solusi yang memenuhi kebutuhan bisnis. Sepanjang kursus, Anda akan memperoleh informasi tentang cara membangun, membandingkan, dan menerapkan solusi cloud yang sangat tersedia, toleran terhadap kesalahan, dapat diskalakan, dan hemat biaya. Tingkat kursus: Dasar. Durasi: 240 menit. Catatan: Kursus ini memiliki transkrip/subtitle lokal. Narasi disampaikan dalam bahasa Inggris. Untuk menampilkan subtitle, klik tombol CC di sudut kanan bawah pemutar. Kursus ini mencakup materi interaktif, demonstrasi, dan pertanyaan tes pengetahuan.
+
+Tujuan
+Menjelaskan terminologi dan konsep yang terkait dengan layanan AWS.
+Menavigasi Konsol Manajemen AWS.
+Mengungkapkan konsep utama langkah-langkah keamanan AWS dan AWS Identity and Access Management (IAM).
+Membedakan beberapa layanan komputasi AWS, termasuk Amazon Elastic Compute Cloud (Amazon EC2) dan AWS Lambda.
+Membedakan beberapa layanan kontainer AWS, termasuk Amazon Elastic Container Service (Amazon ECS) dan Amazon Elastic Kubernetes Services (Amazon EKS).
+Menjelaskan penawaran basis data dan penyimpanan AWS, termasuk Amazon Relational Database Service (Amazon RDS), Amazon DynamoDB, dan Amazon Simple Storage Service (Amazon S3).
+Menjelajahi layanan jaringan AWS.
+Mengakses dan konfigurasikan fitur monitoring Amazon CloudWatch.
+
+Layanan AWS
+Amazon DynamoDB
+Amazon Elastic Compute Cloud
+AWS Identity and Access Management
+
+Sasaran Peserta
+Individu yang bertanggung jawab untuk mengartikulasikan manfaat teknis layanan AWS kepada pelanggan
+Individu yang tertarik mempelajari cara memulai dengan AWS
+Administrator SysOps
+Solutions architect
+Pengembang
+
+Pengetahuan sebelumnya yang direkomendasikan
+Kami menyarankan agar peserta kursus ini memiliki latar belakang berikut: Pengalaman IT, Pengetahuan dasar tentang arsitektur dan komponen pusat data umum (server, jaringan, basis data, aplikasi, dan sebagainya). Tidak diperlukan pengalaman komputasi cloud atau AWS sebelumnya.
+
+1. Apa Itu AWS?
+
+
+Komputasi cloud adalah penyediaan sumber daya IT sesuai permintaan dengan harga bayar sesuai penggunaan.
+
+Model deployment komputasi cloud
+
+Komputasi cloud membekali developer dan departemen IT dengan kemampuan untuk fokus pada hal-hal paling penting dengan menghindari tugas seperti pengadaan, pemeliharaan, dan perencanaan kapasitas. Seiring dengan makin populernya komputasi cloud, beberapa strategi deployment telah muncul untuk membantu memenuhi kebutuhan spesifik beragam pengguna. Tiap jenis metode deployment memberi Anda berbagai tingkat kontrol, fleksibilitas, dan manajemen. Memahami perbedaan antara tiap strategi deployment ini dapat membantu Anda menentukan rangkaian layanan yang tepat untuk kebutuhan Anda. 
+
+Model deployment on-premises, cloud, dan hybrid.
+
+On-premises
+
+Sebelum adanya cloud, perusahaan dan organisasi meng-host dan memelihara perangkat keras seperti komputasi, penyimpanan, dan peralatan jaringan di pusat data mereka sendiri. Mereka sering mengalokasikan seluruh departemen infrastruktur untuk mengurus pusat data mereka, yang mengakibatkan operasi mahal yang membuat beberapa workload dan eksperimen tidak mungkin dilakukan. 
+
+Karena penggunaan internet menjadi lebih luas, permintaan untuk komputasi, penyimpanan, dan peralatan jaringan meningkat. Bagi beberapa perusahaan dan organisasi, biaya untuk memelihara fasilitas fisik yang besar tidaklah berkelanjutan. Untuk mengatasi masalah ini, muncullah komputasi cloud.
+
+Cloud
+
+Komputasi cloud adalah pengiriman sumber daya IT sesuai permintaan melalui internet yang sebagian besarnya dengan harga bayar sesuai penggunaan. Dengan komputasi cloud, perusahaan tidak harus mengelola dan memelihara perangkat keras dan pusat data mereka sendiri. Sebagai gantinya, perusahaan seperti Amazon Web Services (AWS) memiliki dan memelihara pusat data dan menyediakan teknologi serta layanan pusat data virtual untuk perusahaan dan pengguna di internet.
+
+Hybrid
+
+Opsi ketiga adalah deployment hybrid. Jenis deployment ini adalah cara untuk menghubungkan infrastruktur dan aplikasi antara sumber daya berbasis cloud dan sumber daya yang tidak berada di cloud. Metode deployment hybrid yang paling umum antara cloud dan infrastruktur on-premises yang sudah ada menghubungkan sumber daya cloud dengan sistem internal untuk memperluas dan mengembangkan infrastruktur organisasi ke dalam cloud.
+
+Model deployment komputasi on-premises dan cloud.
+Untuk membantu membedakan antara beban kerja yang berjalan secara on-premise dan di cloud, pertimbangkan skenario di mana pengembang harus men-deploy fitur aplikasi baru. Sebelum mereka men-deploy, tim ingin menguji fitur tersebut di lingkungan quality assurance (QA) terpisah yang memiliki konfigurasi yang sama seperti produksi. Dalam solusi on-premises, lingkungan tambahan mengharuskan Anda membeli dan menginstal perangkat keras, menghubungkan kabel yang diperlukan, menyediakan daya, menginstal sistem operasi, dan banyak lagi. Tugas-tugas ini bisa memakan waktu dan mahal. Sementara itu, kecepatan memasarkan fitur baru tersebut bertambah sementara developer menunggu lingkungan QA. 
+
+Sebaliknya, dengan menjalankan aplikasi Anda di cloud, Anda dapat mereplikasi seluruh lingkungan produksi dalam hitungan menit atau bahkan detik. Solusinya dikelola melalui internet, bukan dengan memasang perangkat keras dan menghubungkan kabel secara fisik.
+
+Penggunaan komputasi cloud menghemat waktu selama penyiapan dan menyingkirkan tugas-tugas redundan dan tidak perlu. Jika melihat aplikasi apa pun, Anda akan melihat bahwa beberapa aspeknya sangat penting untuk bisnis Anda, seperti kode. Namun, aspek lain tidak berbeda dari aplikasi lainnya yang mungkin Anda buat – misalnya, komputasi tempat kode berjalan. Beberapa tugas umum yang repetitif tidak memberikan diferensiasi pada bisnis Anda, seperti menginstal mesin virtual (VM) atau menyimpan cadangan. Dengan menyingkirkan tugas-tugas ini, Anda dapat berfokus pada hal-hal yang menjadi pembeda strategis bagi bisnis Anda dan memungkinkan AWS untuk menangani tugas-tugas yang menyita waktu yang tidak membedakan Anda dengan kompetitor. Kami menyebut hal ini dengan istilah menyingkirkan "beban berat yang tidak mendatangkan diferensiasi". Di situlah peran AWS.
+
+
+
+AWS menyediakan layanan komputasi cloud. Sumber daya IT yang disebutkan dalam definisi komputasi cloud adalah layanan AWS. Untuk aplikasi direktori perusahaan kursus ini, Anda akan menggunakan layanan AWS untuk merancang infrastruktur yang dapat diskalakan, sangat tersedia, dan hemat biaya untuk meng-host aplikasi direktori perusahaan. Dengan begitu, Anda bisa meluncurkan aplikasi dengan cepat, tanpa mengelola perangkat keras fisik yang berat.
+
+Enam keuntungan komputasi cloud
+
+Untuk mempelajari selengkapnya, buka masing-masing dari enam kategori berikut.
+
+
+Bayar sesuai penggunaan
+Model komputasi cloud menggunakan model bayar hanya untuk sumber daya yang Anda gunakan. Hal ini berbeda dengan model on-premises yang mengharuskan investasi pada pusat data dan perangkat keras yang mungkin tidak digunakan sepenuhnya.
+
+
+
+
+Mendapatkan manfaat dari skala ekonomi yang besar
+Dengan menggunakan komputasi cloud, Anda dapat memperoleh biaya variabel yang lebih rendah dibandingkan dengan yang bisa Anda dapatkan sendiri. Karena penggunaan dari ratusan ribu pelanggan digabungkan di cloud, AWS dapat mencapai skala ekonomi yang lebih tinggi, yang berujung pada harga bayar sesuai penggunaan yang lebih rendah.
+
+
+
+
+Berhenti menebak-nebak kapasitas
+Berhenti menduga-duga kebutuhan kapasitas infrastruktur Anda. Jika Anda mengambil keputusan kapasitas sebelum men-deploy aplikasi, sering kali sumber daya menjadi tidak efektif dan berbiaya tinggi, atau Anda menjumpai masalah dengan keterbatasan kapasitas. Dengan komputasi cloud, masalah ini hilang. Anda dapat mengakses sebanyak atau sesedikit mungkin kapasitas yang dibutuhkan, serta menaikkan dan menurunkan skala sesuai kebutuhan hanya dengan pemberitahuan beberapa menit sebelumnya.
+
+
+
+
+Meningkatkan kecepatan dan ketangkasan
+Sumber daya IT dapat diperoleh dengan satu klik saja, sehingga mempersingkat waktu untuk menyediakan sumber daya bagi developer dari hitungan minggu menjadi menit. Hasil ini sangat meningkatkan ketangkasan bagi organisasi, karena biaya dan waktu yang dibutuhkan untuk bereksperimen dan berkembang secara signifikan lebih rendah.
+
+
+
+
+Mewujudkan penghematan biaya
+Perusahaan dapat fokus pada proyek-proyek yang membedakan bisnis mereka dan menyingkirkan "tugas berat tanpa diferensiasi" tanpa perlu memelihara pusat data. Dengan komputasi cloud, Anda dapat fokus pada pelanggan, bukan penyusunan, penumpukan, dan pengaktifan infrastruktur fisik.
+
+
+
+
+Merambah dunia global dalam waktu singkat
+Aplikasi dapat di-deploy di beberapa Region di seluruh dunia dengan beberapa klik. Ini berarti Anda dapat menyediakan latensi yang lebih rendah dan pengalaman yang lebih baik bagi pelanggan dengan biaya minimal.
+
+2. 
+Infrastruktur ada sebagai fondasi setiap aplikasi cloud.
+
+Untuk menyaksikan video tentang Infrastruktur Global AWS, pilih tombol putar.
+
+Infrastruktur, seperti pusat data dan konektivitas jaringan, masih ada sebagai fondasi dari setiap aplikasi cloud. Di AWS, infrastruktur fisik ini membentuk Infrastruktur Global AWS, dalam bentuk Region dan Availability Zone.
+
+Region
+
+AWS Cloud mencakup 93 Availability Zone di dalam 29 Region geografis di seluruh dunia
+
+Region adalah lokasi geografis di seluruh dunia di mana AWS meng-host pusat datanya. AWS Region diberi nama menurut lokasi tempatnya berada. Misalnya di Amerika Serikat, Region di Virginia Utara disebut Region Northern Virginia dan Region di Oregon disebut Region Oregon. AWS memiliki Region di Asia Pasifik, Tiongkok, Eropa, Timur Tengah, Amerika Utara, dan Amerika Selatan. Kami juga terus melakukan ekspansi untuk memenuhi kebutuhan pelanggan.
+
+Tiap AWS Region dikaitkan dengan sebuah nama geografis dan kode Region.
+
+Berikut adalah contoh-contoh kode Region:
+
+us-east-1 adalah Region pertama yang dibuat di area AS timur. Nama geografis untuk Region ini adalah N. Virginia.
+ap-northeast-1 adalah Region pertama yang dibuat di area Asia Pasifik timur laut. Nama geografis untuk Region ini adalah Tokyo.
+Tampilan menurun AWS Region di AWS Management Console.
+
+Di dalam Konsol AWS, Anda dapat memilih region yang tersedia dari menu menurun
+
+Memilih AWS Region yang tepat
+
+AWS Region tidak bergantung satu sama lain. Tanpa izin dan otorisasi eksplisit dari pelanggan, data tidak direplikasi dari satu Region ke Region lain. Saat Anda memutuskan AWS Region yang akan Anda gunakan untuk meng-host aplikasi dan workload, pertimbangkan empat aspek utama: latensi, harga, ketersediaan layanan, dan kepatuhan.
+
+Untuk mempelajari suatu kategori, pilih tab yang sesuai.
+
+Latensi
+Jika aplikasi Anda sensitif terhadap latensi (penundaan antara permintaan data dan respons), pilih Region yang dekat dengan basis pengguna Anda. Hal ini membantu mencegah waktu tunggu yang lama untuk pelanggan Anda. Aplikasi sinkron seperti game, telephony, WebSockets, dan Internet untuk Segala (IoT) sangat dipengaruhi oleh latensi tinggi. Workload asinkron, seperti aplikasi perdagangan elektronik, juga dapat mengalami penundaan konektivitas pengguna.
+
+Harga
+Karena ekonomi lokal dan sifat fisik pusat data operasi, harga pun bervariasi dari satu Region ke Region lainnya. Konektivitas internet, biaya peralatan impor, bea cukai, tanah dan bangunan, serta faktor lainnya memengaruhi harga suatu Region. AWS tidak mengenakan tarif datar di seluruh dunia, tetapi mengenakan tarif berdasarkan faktor keuangan yang spesifik untuk setiap Region.
+
+Ketersediaan Layanan
+Beberapa layanan mungkin tidak tersedia di beberapa Region. Dokumentasi AWS menyediakan tabel yang menampilkan layanan yang tersedia di setiap Region.
+
+Kepatuhan Data
+Perusahaan korporasi sering kali harus mematuhi peraturan yang mengharuskan data pelanggan disimpan di wilayah geografis tertentu. Jika perlu, pilih Region yang memenuhi persyaratan kepatuhan Anda.
+
+Availability Zone
+
+Di dalam setiap Region terdapat sebuah klaster Availability Zone (AZ). Availability Zone terdiri dari satu atau beberapa pusat data dengan daya, jaringan, dan konektivitas redundan. Semua pusat data ini beroperasi di fasilitas khusus di lokasi yang dirahasiakan. Semuanya terhubung menggunakan tautan berkecepatan tinggi dan latensi rendah yang redundan.
+
+Availability Zone juga memiliki nama kode. Karena berada di dalam Region, pusat data dapat disebut dengan menambahkan sebuah huruf di akhir nama kode Region. Berikut ini adalah contoh-contoh kode Availability Zone:
+
+us-east-1a adalah sebuah Availability Zone di us-east-1 (Region N. Virginia).
+sa-east-1b adalah Availability Zone di sa-east-1 (Region São Paulo).
+Oleh karena itu, jika Anda melihat bahwa terdapat sebuah sumber daya di us-east-1c, Anda dapat menyimpulkan bahwa sumber daya tersebut berlokasi di Availability Zone c di Region us-east-1.
+
+Di sebuah Region, Availability Zone terdiri dari satu pusat data atau lebih.
+
+Cakupan layanan AWS
+
+Tergantung layanan AWS yang Anda gunakan, sumber daya Anda di-deploy pada tingkat Availability Zone, Region, atau Global. Setiap layanan berbeda, sehingga Anda harus memahami bagaimana ruang lingkup layanan dapat mempengaruhi arsitektur aplikasi Anda.
+
+Saat Anda mengoperasikan layanan dalam lingkup Region tertentu, Anda hanya perlu memilih Region yang ingin Anda gunakan. Jika Anda tidak diminta untuk menentukan satu Availability Zone sebagai tempat untuk men-deploy layanan, ini adalah indikator bahwa layanan tersebut beroperasi pada tingkat lingkup Region. Untuk layanan lingkup Region, AWS melakukan tindakan untuk meningkatkan daya tahan data dan ketersediaan secara otomatis.
+
+Di sisi lain, beberapa layanan meminta Anda untuk menentukan Availability Zone. Dengan layanan-layanan tersebut, Anda sering kali bertanggung jawab meningkatkan daya tahan data dan ketersediaan tinggi dari sumber daya ini.
+
+Mempertahankan ketahanan
+
+Agar aplikasi selalu tersedia, Anda harus mempertahankan ketersediaan dan ketahanan yang tinggi. Praktik terbaik yang terkenal untuk arsitektur cloud adalah menggunakan layanan terkelola lingkup Region. Layanan-layanan ini dilengkapi dengan ketersediaan dan ketahanan bawaan. Ketika hal ini tidak memungkinkan, pastikan workload Anda direplikasi di beberapa Availability Zone. Minimal, Anda harus menggunakan dua Availability Zone. Dengan begitu, jika ada Availability Zone yang gagal, aplikasi Anda akan memiliki infrastruktur yang aktif dan berjalan di Availability Zone kedua untuk mengambil alih lalu lintas.
+
+Replikasi workload Anda di beberapa Availability Zone untuk mempertahankan ketersediaan dan ketahanan yang tinggi.
+
+Lokasi edge
+
+Lokasi edge adalah lokasi global tempat konten di-cache. Misalnya, jika konten media Anda berada di London dan Anda ingin berbagi file video dengan pelanggan di Sydney, video Anda dapat di-cache di lokasi edge yang paling dekat dengan Sydney. Dengan begitu, pelanggan dapat mengakses video yang di-cache tersebut lebih cepat daripada mengaksesnya dari London. Saat ini, terdapat lebih dari 400 lokasi edge secara global.
+
+Amazon CloudFront mengirimkan konten Anda melalui jaringan lokasi edge di seluruh dunia. Ketika pengguna meminta konten yang dilayani dengan CloudFront, permintaan akan dirutekan ke lokasi yang menyediakan latensi terendah. Sehingga konten dikirimkan dengan kinerja yang terbaik. CloudFront mempercepat distribusi konten Anda dengan merutekan tiap permintaan pengguna melalui jaringan backbone AWS ke lokasi edge yang dapat menampilkan konten Anda dengan cara terbaik.
+
+Buat cache konten Anda di lokasi edge paling dekat dengan pelanggan.
+
+3. Berinteraksi dengan AWS
+
+Setiap tindakan yang Anda buat di AWS adalah panggilan API yang diautentikasi dan diotorisasi.
+
+Untuk menonton video tentang berinteraksi dengan AWS, pilih tombol putar.
+
+Play Video
+Tiap tindakan yang Anda buat di AWS adalah panggilan API yang diautentikasi dan diotorisasi. Di AWS, Anda dapat membuat panggilan API ke layanan dan sumber daya melalui AWS Management Console, AWS Command Line Interface (AWS CLI), atau AWS SDK.
+
+AWS Management Console
+
+Salah satu cara untuk mengelola sumber daya cloud adalah melalui konsol berbasis web, tempat Anda masuk dan memilih layanan yang diinginkan. Ini bisa menjadi cara termudah untuk membuat dan mengelola sumber daya saat Anda pertama kali mulai bekerja dengan cloud. Berikut adalah tangkapan layar yang menunjukkan halaman arahan saat Anda pertama kali masuk ke konsol. 
+
+Halaman arahan AWS Management Console.
+
+Di pojok kiri atas, Anda bisa memilih Layanan untuk melihat layanan AWS yang dikelompokkan berdasarkan kategori, seperti Komputasi, Penyimpanan, Basis Data, dan Analitik.
+
+Di pojok kanan atas adalah tombol pilihan Region. Jika Anda memilih dan mengubah Region, Anda akan membuat permintaan ke layanan di Region yang dipilih. URL juga akan berubah. Jika Anda mengubah pengaturan Region, browser Anda akan membuat permintaan ke AWS Region yang berbeda, diwakili oleh subdomain yang berbeda.
+
+AWS CLI
+
+Pertimbangkan skenario di mana Anda menjalankan banyak server di AWS untuk frontend aplikasi Anda. Anda ingin menjalankan laporan untuk mengumpulkan data dari semua server. Anda perlu melakukannya setiap hari secara terprogram karena detail server mungkin berubah. Alih-alih masuk ke konsol secara manual, kemudian menyalin dan menyisipkan informasi, Anda dapat menjadwalkan skrip AWS CLI dengan panggilan API untuk menarik data ini untuk Anda.
+
+AWS CLI adalah alat terpadu yang dapat Anda gunakan untuk mengelola layanan-layanan AWS. Anda dapat mengunduh dan mengonfigurasi satu alat yang dapat Anda gunakan untuk mengontrol beberapa layanan AWS dari baris perintah dan mengotomatiskannya dengan skrip. AWS CLI merupakan sumber terbuka, dan penginstalnya tersedia untuk Windows, Linux, serta macOS.
+
+Misalnya, Anda menjalankan panggilan API berikut untuk suatu layanan menggunakan AWS CLI:
+aws s3api list-buckets
+Anda akan mendapatkan respons seperti berikut ini, yang memberikan daftar bucket di akun AWS Anda:
+
+{
+    "Owner": {
+        "DisplayName": "tech-essentials", 
+        "ID": "d9881f40b83adh2896eb276f44ffch53677faec805422c83dfk60cc335a7da92"
+    }, 
+    "Buckets": [
+        {
+            "CreationDate": "2023-01-10T15:50:20.000Z", 
+            "Name": "aws-tech-essentials"
+        }, 
+        {
+            "CreationDate": "2023-01-10T16:04:15.000Z", 
+            "Name": "aws-tech-essentials-employee-directory-app"
+        } 
+    ]
+}
+AWS SDK
+
+Panggilan API ke AWS juga dapat dilakukan dengan menjalankan kode dengan bahasa pemrograman. Anda dapat melakukan ini dengan menggunakan AWS SDK. SDK adalah sumber terbuka dan dikelola oleh AWS untuk bahasa pemrograman paling populer, seperti C++, Go, Java, JavaScript, .NET, Node.js, PHP, Python, Ruby, Rust, dan Swift.
+
+Pengembang biasanya menggunakan AWS SDK untuk mengintegrasikan kode sumber aplikasi mereka dengan layanan AWS. Misalnya, pertimbangkan sebuah aplikasi dengan frontend yang berjalan di Python. Setiap kali menerima sebuah foto, aplikasi tersebut akan mengunggahnya ke layanan penyimpanan. Tindakan ini dapat dicapai dalam kode sumber dengan menggunakan AWS SDK untuk Python (Boto3). Berikut ini adalah contoh kode yang dapat Anda implementasikan untuk bekerja dengan sumber daya AWS menggunakan SDK untuk Python.
+
+import boto3
+ec2 = boto3.client('ec2')
+respons = ec2.describe_instance ()
+print(response)
+
+4. Keamanan dan Model Tanggung Jawab Bersama AWS
+
+Keamanan dan kepatuhan adalah tanggung jawab bersama antara AWS dan Anda.
+
+Untuk menonton video tentang model tanggung jawab bersama AWS, pilih tombol putar.
+
+Play Video
+Ketika Anda bekerja dengan AWS Cloud, mengelola keamanan dan kepatuhan adalah tanggung jawab bersama antara AWS dan Anda. Sebagai wujud tanggung jawab bersama ini, AWS menciptakan model tanggung jawab bersama. Pemisahan tanggung jawab ini biasanya disebut sebagai keamanan dari cloud dan keamanan di cloud. 
+
+Model tanggung jawab bersama AWS menunjukkan pemisahan antara tanggung jawab AWS dan tanggung jawab pelanggan.
+
+Tanggung jawab AWS
+
+AWS bertanggung jawab atas keamanan cloud. Artinya, AWS melindungi dan mengamankan infrastruktur yang menjalankan layanan yang ditawarkan di AWS Cloud. AWS bertanggung jawab atas hal-hal berikut:
+
+Melindungi dan mengamankan AWS Region, Availability Zone, dan pusat data, hingga keamanan fisik bangunan.
+AWS mengelola komponen perangkat keras, perangkat lunak, dan jaringan yang menjalankan layanan AWS, seperti server fisik, sistem operasi host, lapisan virtualisasi, dan komponen jaringan AWS.
+Tingkat tanggung jawab yang dimiliki AWS ditentukan oleh layanan. AWS mengelompokkan layanan ke dalam tiga kategori. Tabel berikut memberikan informasi tentang setiap kategori, termasuk tanggung jawab AWS.
+
+Perluas kategori berikut untuk mempelajari selengkapnya.
+
+
+Tanggung jawab AWS
+Tanggung jawab pelanggan
+
+Pelanggan bertanggung jawab atas keamanan di cloud. Ketika menggunakan layanan AWS, pelanggan bertanggung jawab untuk mengonfigurasi layanan dan aplikasi mereka dengan benar, selain untuk memastikan bahwa data mereka aman.
+
+Tingkat tanggung jawab pelanggan ditentukan oleh layanan AWS. Beberapa layanan mengharuskan pelanggan untuk melakukan semua konfigurasi keamanan dan tugas manajemen yang diperlukan. Layanan lain yang lebih terabstraksi hanya mengharuskan pelanggan untuk mengelola data dan mengontrol akses ke sumber daya mereka. Menggunakan dua kategori layanan AWS tersebut, pelanggan dapat menentukan tingkat tanggung jawab mereka untuk setiap layanan AWS yang digunakan.
+
+Perluas kategori berikut untuk mempelajari selengkapnya.
+
+
+Tanggung jawab pelanggan
+**Catatan: Untuk pengguna dengan pembaca layar, gunakan mode tabel untuk membaca tabel.
+
+Kategori
+
+Contoh Layanan AWS dalam Kategori
+
+Tanggung Jawab Pelanggan 
+
+Layanan infrastruktur
+
+Layanan komputasi, seperti Amazon Elastic Compute Cloud (Amazon EC2)
+
+Pelanggan mengendalikan sistem operasi dan platform aplikasi, selain mengenkripsi, melindungi, dan mengelola data pelanggan.
+
+Layanan terabstraksi
+
+Layanan yang memerlukan sedikit manajemen dari pelanggan, seperti Amazon Simple Storage Service (Amazon S3)
+
+Pelanggan bertanggung jawab atas data pelanggan, mengenkripsi data, dan melindunginya melalui firewall jaringan dan backup.
+
+Karena adanya berbagai tingkat upaya, pelanggan harus mempertimbangkan layanan AWS yang mereka gunakan dan meninjau tingkat tanggung jawab yang diperlukan untuk mengamankan setiap layanan. Mereka juga harus meninjau bagaimana model tanggung jawab bersama AWS selaras dengan standar keamanan di lingkungan IT mereka, di samping undang-undang dan peraturan yang berlaku.
+
+Konsep utamanya adalah pelanggan mempertahankan kontrol penuh data mereka dan bertanggung jawab untuk mengelola keamanan yang terkait dengan konten mereka. Misalnya, Anda bertanggung jawab atas hal-hal berikut:
+
+Memilih Region untuk sumber daya AWS berdasarkan peraturan kedaulatan data.
+Mengimplementasikan mekanisme perlindungan data, seperti enkripsi dan pencadangan terjadwal.
+Menggunakan kontrol akses untuk membatasi orang-orang yang dapat mengakses data dan sumber daya AWS Anda.
+
+5. Melindungi Pengguna Root AWS
+
+Saat pertama kali mengakses AWS, Anda memulai dengan identitas masuk tunggal yang disebut pengguna root.
+
+Untuk menonton video tentang perlindungan pengguna root AWS, pilih tombol putar.
+
+Play Video
+Pengguna root AWS
+
+Ketika pertama kali membuat akun AWS, Anda memulainya dengan satu identitas masuk yang memiliki akses lengkap ke semua layanan dan sumber daya AWS di akun tersebut. Identitas ini disebut sebagai pengguna root AWS dan diakses dengan cara masuk menggunakan alamat email dan kata sandi yang Anda gunakan untuk membuat akun. 
+
+Kredensial pengguna root AWS
+
+Pengguna root AWS memiliki dua set kredensial yang terkait dengannya. Satu set kredensial adalah alamat email dan kata sandi yang digunakan untuk membuat akun. Pasangan kredensial ini memungkinkan Anda untuk mengakses AWS Management Console. Set kredensial kedua disebut kunci akses, yang memungkinkan Anda membuat permintaan terprogram dari AWS Command Line Interface (AWS CLI) atau AWS API.
+
+Kunci akses terdiri dari dua bagian:
+
+ID kunci akses: misalnya, A2lAl5EXAMPLE
+Kunci akses rahasia: misalnya, wJalrFE/KbEKxE
+Mirip dengan kombinasi nama pengguna dan kata sandi, Anda memerlukan ID kunci akses dan kunci akses rahasia untuk mengautentikasi permintaan Anda melalui AWS CLI atau AWS API. Kunci akses harus dikelola dengan keamanan yang sama seperti alamat email dan kata sandi.
+
+Hapus kunci akses Anda agar tetap aman!
+
+Jika Anda belum memiliki kunci akses untuk pengguna root akun AWS, jangan membuatnya kecuali Anda benar-benar membutuhkannya. Jika Anda memiliki kunci akses untuk pengguna root akun AWS Anda dan ingin menghapus kunci tersebut, ikuti langkah-langkah berikut:
+
+Di AWS Management Console, navigasi nama pengguna Anda di bagian kanan atas di bilah navigasi. Dari menu dropdown, buka halaman Kredensial Keamanan Saya, dan masuk dengan alamat email dan kata sandi pengguna root Anda.
+Buka bagian Kunci akses.
+Di bawah Tindakan, pilih Hapus.
+Pilih Ya.
+Praktik terbaik pengguna root AWS
+
+Pengguna root memiliki akses lengkap ke semua layanan AWS dan sumber daya di akun Anda, termasuk informasi penagihan dan informasi pribadi Anda. Oleh karena itu, Anda harus mengamankan kredensial yang berkaitan dengan pengguna root dan tidak menggunakan jenis pengguna ini untuk tugas harian. Kunjungi tautan di akhir materi ini untuk mempelajari lebih lanjut tentang kapan pengguna root AWS harus digunakan.
+
+Untuk memastikan keamanan pengguna root, ikuti praktik terbaik berikut:
+
+Pilih kata sandi yang kuat untuk pengguna root.
+
+Aktifkan autentikasi multifaktor (MFA) untuk pengguna root.
+
+Jangan pernah membagikan kata sandi atau kunci akses pengguna root kepada siapa pun.
+
+Nonaktifkan atau hapus kunci akses yang terkait dengan pengguna root.
+
+Buat pengguna Identity and Access Management (IAM) untuk tugas administratif atau tugas sehari-hari.
+
+
+
+Autentikasi multifaktor
+
+Ketika Anda membuat akun AWS dan pertama kali masuk ke akun, Anda menggunakan autentikasi faktor tunggal. Autentikasi faktor tunggal adalah bentuk autentikasi yang paling sederhana dan paling umum. Autentikasi ini hanya memerlukan satu metode autentikasi. Dalam hal ini, Anda menggunakan nama pengguna dan kata sandi untuk mengautentikasi sebagai pengguna root AWS. Bentuk lain dari autentikasi faktor tunggal adalah pin keamanan atau token keamanan.
+
+Namun, terkadang kata sandi pengguna mudah ditebak. Misalnya, kata sandi rekan kerja Anda, Bob, yakni ILoveCats222, mungkin mudah ditebak oleh seseorang yang mengenal Bob secara pribadi, karena ini adalah kombinasi dari informasi yang mudah diingat dan mencakup fakta tertentu tentang Bob (Bob mencintai kucing, dan ulang tahunnya adalah 22 Februari). Jika orang jahat menebak atau memecahkan kata sandi Bob melalui rekayasa sosial, bot, atau skrip, Bob mungkin kehilangan kendali atas akunnya. Sayangnya, ini adalah skenario umum yang sering dihadapi pengguna situs web mana pun. Inilah sebabnya menggunakan autentikasi multifaktor (MFA) penting dalam mencegah akses akun yang tidak diinginkan.
+
+Autentikasi multifaktor memerlukan dua metode autentikasi atau lebih untuk memverifikasi identitas.
+MFA memerlukan dua metode autentikasi atau lebih untuk memverifikasi identitas. Untuk mempelajari lebih lanjut tentang tiga kategori informasi yang diambil oleh MFA, pilih setiap kartu informasi berikut ini untuk membaliknya.
+
+Front of card
+Sesuatu yang Anda ketahui
+
+
+Klik untuk membalik
+Back of card
+Sesuatu yang Anda ketahui, seperti nama pengguna dan kata sandi atau nomor pin
+
+
+Klik untuk membalik
+Front of card
+Sesuatu yang Anda miliki
+
+
+Klik untuk membalik
+Back of card
+Sesuatu yang Anda miliki, seperti kode sandi satu kali dari perangkat keras atau aplikasi seluler
+
+
+Klik untuk membalik
+Front of card
+Sesuatu tentang Anda
+
+
+Klik untuk membalik
+Back of card
+Sesuatu tentang Anda, seperti teknologi sidik jari atau pemindaian wajah
+
+
+Klik untuk membalik
+Dengan perpaduan informasi ini, sistem dapat menyediakan pendekatan berlapis ke akses akun. Jadi, bahkan jika metode autentikasi pertama, seperti kata sandi Bob, diretas oleh orang jahat, metode autentikasi kedua, seperti sidik jari, memberikan tingkat keamanan lain. Lapisan keamanan ekstra ini dapat membantu melindungi akun Anda yang paling penting, itulah sebabnya Anda harus mengaktifkan MFA pada pengguna root AWS Anda.
+
+MFA di AWS
+
+Jika Anda mengaktifkan MFA pada pengguna root Anda, Anda harus menyajikan sepotong informasi identifikasi dari kedua kategori, yakni sesuatu yang Anda ketahui dan sesuatu yang Anda miliki. Bagian informasi identifikasi pertama yang dimasukkan pengguna adalah kombinasi email dan kata sandi. Bagian informasi kedua adalah kode numerik sementara yang disediakan oleh perangkat MFA.
+
+Penggunaan MFA menambahkan lapisan keamanan tambahan karena pengguna harus menggunakan mekanisme MFA yang didukung selain kredensial masuk reguler mereka. Mengaktifkan MFA pada akun pengguna root AWS adalah praktik terbaik AWS.
+
+Perangkat MFA yang didukung
+
+AWS mendukung berbagai mekanisme MFA, seperti perangkat MFA virtual, token kata sandi satu kali yang dibatasi waktu (TOTP) perangkat keras, dan kunci keamanan FIDO. Lihat tabel di bawah untuk mempelajari selengkapnya. Untuk petunjuk tentang cara mengatur setiap metode, lihat bagian Sumber Daya.
+
+Perangkat
+
+Deskripsi
+
+Perangkat yang Didukung
+
+MFA Virtual
+
+Aplikasi perangkat lunak yang berjalan di telepon atau perangkat lain yang menyediakan kode sandi satu kali. Aplikasi ini dapat berjalan pada perangkat seluler yang tidak aman, dan karena itu, mungkin tidak menyediakan tingkat keamanan yang sama seperti perangkat keras atau kunci keamanan FIDO.
+
+Twilio Authy Authenticator, Duo Mobile, LastPass Authenticator, Microsoft Authenticator, Google Authenticator, Symantec VIP
+
+Token TOTP perangkat keras
+
+Perangkat keras, umumnya berupa kunci fob atau perangkat kartu tampilan, yang menghasilkan kode numerik enam digit satu kali berdasarkan algoritma kata sandi satu kali berbasis waktu (TOTP).
+
+Fob kunci, kartu tampilan
+
+Kunci keamanan FIDO
+
+Kunci keamanan perangkat keras bersertifikat FIDO disediakan oleh penyedia pihak ketiga seperti Yubico. Anda dapat menancapkan kunci keamanan FIDO ke port USB di komputer Anda dan mengaktifkannya menggunakan petunjuk berikut.
+
+Produk Bersertifikasi FIDO(opens in a new tab)
+
+6. AWS Identity and Access Management
+
+Autentikasi menjawab pertanyaan, "Apakah Anda benar-benar Anda?" Otorisasi menjawab pertanyaan, "Tindakan apa yang bisa Anda lakukan?"
+
+Untuk menonton video tentang identity and access management, pilih tombol putar.
+
+Play Video
+Autentikasi dan otorisasi
+
+Ketika Anda mengkonfigurasi akses ke akun apa pun, dua istilah sering muncul: autentikasi dan otorisasi. Meskipun istilah ini mungkin tampak dasar, Anda harus sepenuhnya memahami keduanya untuk mengonfigurasi manajemen akses pada AWS dengan benar.
+
+Autentikasi mengonfirmasi identitas pengguna. Otorisasi memberikan izin ke sumber daya.
+
+Autentikasi
+
+Ketika membuat akun AWS, Anda menggunakan kombinasi alamat email dan kata sandi untuk memverifikasi identitas Anda. Jika pengguna mengetikkan email dan kata sandi dengan benar, sistem mengasumsikan bahwa pengguna diperbolehkan untuk masuk dan memberikan akses kepada mereka. Ini adalah proses autentikasi.
+
+Autentikasi memastikan bahwa pengguna adalah benar-benar dirinya sendiri. Nama pengguna dan kata sandi adalah tipe autentikasi paling umum. Tapi Anda mungkin juga bekerja dengan bentuk-bentuk autentikasi lain, seperti autentikasi berbasis token atau data biometrik, seperti sidik jari. Autentikasi hanya menjawab pertanyaan, “Apakah Anda adalah benar-benar Anda?”
+
+Otorisasi
+
+Setelah Anda diautentikasi dan masuk di dalam akun AWS Anda, Anda mungkin ingin tahu tentang tindakan apa yang dapat dilakukan. Di sinilah peran otorisasi. Otorisasi adalah proses memberikan izin kepada pengguna untuk mengakses sumber daya dan layanan AWS. Otorisasi menentukan apakah pengguna dapat melakukan tindakan tertentu, seperti membaca, mengedit, menghapus, atau membuat sumber daya. Otorisasi menjawab pertanyaan, “Tindakan apa yang bisa Anda lakukan?” 
+
+Apa itu IAM?
+
+AWS Identity and Access Management (IAM) adalah layanan AWS yang membantu Anda mengelola akses ke akun dan sumber daya AWS Anda. IAM juga memberikan tampilan terpusat tentang siapa dan apa yang diizinkan di dalam akun AWS Anda (autentikasi), serta siapa dan apa yang memiliki izin untuk menggunakan dan bekerja dengan sumber daya AWS Anda (otorisasi).
+
+Dengan IAM, Anda dapat berbagi akses ke akun dan sumber daya AWS tanpa berbagi set kunci akses atau kata sandi. Anda juga dapat memberikan akses terperinci kepada orang-orang yang bekerja di dalam akun Anda, sehingga orang dan layanan hanya memiliki izin ke sumber daya yang mereka butuhkan. Misalnya, untuk memberikan akses hanya-baca kepada seorang pengguna akun AWS Anda ke layanan AWS tertentu, Anda dapat secara terperinci memilih tindakan dan sumber daya dalam layanan yang dapat mereka akses.
+
+Fitur IAM
+
+Untuk membantu mengontrol akses dan mengelola identitas di akun AWS Anda, IAM menawarkan banyak fitur untuk memastikan keamanan.
+
+Untuk mempelajari selengkapnya, buka masing-masing dari enam kategori berikut.
+
+
+Global
+
+Terintegrasi dengan layanan AWS
+
+Akses bersama
+
+Autentikasi multifaktor
+
+Federasi identitas
+
+Dapat digunakan secara gratis
+Pengguna IAM
+
+Pengguna IAM mewakili orang atau layanan yang berinteraksi dengan AWS. Anda menentukan pengguna di akun AWS Anda. Aktivitas apa pun yang dilakukan oleh pengguna tersebut akan ditagih ke akun Anda. Saat Anda membuat pengguna, pengguna tersebut bisa masuk untuk mendapatkan akses ke sumber daya AWS di dalam akun Anda.
+
+Anda juga bisa menambahkan lebih banyak pengguna ke akun Anda jika perlu. Misalnya, untuk aplikasi foto kucing Anda, Anda dapat membuat pengguna individual di akun AWS Anda yang sesuai dengan orang-orang yang mengerjakan aplikasi Anda. Tiap orang harus memiliki kredensial masuknya masing-masing untuk mencegah pengguna berbagi kredensial.
+
+Kredensial pengguna IAM
+
+Pengguna IAM terdiri dari sebuah nama dan satu set kredensial. Saat Anda membuat pengguna, Anda bisa memberikan tipe-tipe akses berikut ini kepada mereka:
+
+Akses ke AWS Management Console
+Akses terprogram ke AWS CLI dan AWS API
+Untuk mengakses konsol, berikan nama pengguna dan kata sandi kepada pengguna. Untuk akses terprogram, AWS menghasilkan satu set kunci akses yang dapat digunakan dengan AWS CLI dan AWS API. Kredensial pengguna IAM dianggap permanen, yang berarti pengguna terus memilikinya sampai ada rotasi paksa oleh admin.
+
+Ketika Anda membuat pengguna IAM, Anda dapat memberikan izin langsung pada tingkat pengguna. Ini mungkin tampak seperti ide bagus jika Anda hanya memiliki satu atau beberapa pengguna. Namun, seiring bertambahnya jumlah pengguna, mengurusi izin bisa menjadi lebih rumit. Misalnya, jika Anda memiliki 3.000 pengguna di akun AWS Anda, mengelola akses dan mengetahui siapa saja yang dapat melakukan tindakan, tindakan apa yang dilakukan, dan pada sumber daya mana tindakan tersebut dilakukan bisa jadi hal yang menantang.
+
+Untungnya, Anda dapat mengelompokkan pengguna IAM dan melampirkan izin pada tingkat grup.
+
+Grup IAM
+
+Grup IAM adalah sekumpulan pengguna. Semua pengguna dalam grup mewarisi izin yang ditetapkan ke grup. Dengan begitu, izin dapat diberikan kepada beberapa pengguna sekaligus. Ini adalah cara yang lebih mudah dan dapat diskalakan dalam mengelola izin bagi pengguna di akun AWS Anda. Inilah sebabnya menggunakan grup IAM adalah praktik terbaik.
+
+Jika Anda memiliki aplikasi yang Anda coba bangun dan Anda memiliki beberapa pengguna dalam satu akun yang mengerjakan aplikasi tersebut, Anda mungkin mengatur pengguna berdasarkan fungsi pekerjaan. Misalnya, Anda dapat mengatur grup IAM berdasarkan developer, keamanan, dan admin. Anda kemudian dapat menempatkan semua pengguna IAM Anda ke dalam grupnya masing-masing.
+
+Ini menyediakan cara untuk melihat siapa saja yang memiliki izin, serta izin apa yang mereka miliki di organisasi Anda. Ini juga membantu Anda melakukan penskalaan ketika ada orang baru yang bergabung, keluar, dan berganti peran di organisasi Anda.
+
+Grup IAM dapat memiliki banyak pengguna, dan pengguna dapat menjadi bagian dari banyak grup. Grup IAM tidak boleh menjadi bagian dari grup lainnya.
+
+Perhatikan contoh berikut ini:
+
+Ada seorang developer baru yang bergabung dengan akun AWS Anda untuk membantu mengerjakan aplikasi Anda. Anda membuat pengguna baru dan menambahkannya ke grup developer, tanpa memikirkan izin yang mereka butuhkan.
+Seorang developer berganti pekerjaan dan menjadi rekayasawan keamanan. Alih-alih mengedit izin pengguna tersebut secara langsung, Anda menghapusnya dari grup lama dan menambahkannya ke grup baru yang sudah memiliki tingkat akses yang tepat.
+Ingatlah fitur-fitur grup berikut ini:
+
+Grup dapat memiliki banyak pengguna.
+Pengguna dapat menjadi bagian dari banyak grup.
+Grup tidak boleh menjadi bagian dari grup lain.
+Pengguna root dapat melaksanakan semua tindakan pada semua sumber daya di dalam akun AWS secara default. Hal ini berbeda dengan membuat pengguna IAM baru, grup baru, atau peran baru. Untuk mengizinkan identitas IAM melakukan tindakan tertentu di AWS, seperti mengimplementasikan sumber daya, Anda harus memberikan izin yang diperlukan kepada pengguna IAM.
+
+Izin di IAM diberikan dengan menggunakan kebijakan IAM.
+
+Kebijakan IAM
+
+Untuk mengelola akses dan memberikan izin untuk AWS layanan dan sumber daya, Anda membuat kebijakan IAM dan melampirkannya ke identitas IAM. Setiap kali identitas IAM membuat suatu permintaan, AWS mengevaluasi kebijakan yang dikaitkan dengannya. Misalnya, jika Anda memiliki developer di dalam grup developer yang membuat permintaan ke sebuah layanan AWS, AWS mengevaluasi kebijakan yang melekat pada grup developer tersebut dan kebijakan yang dilampirkan ke pengguna developer untuk menentukan apakah permintaan harus diizinkan atau ditolak.
+
+Contoh kebijakan IAM
+
+Sebagian besar kebijakan disimpan di AWS dalam bentuk dokumen JSON dengan beberapa elemen kebijakan. Contoh berikut ini menyediakan akses admin melalui kebijakan berbasis identitas IAM.
+
+{
+"Version": "2012-10-17",
+"Statement": [{
+"Effect": "Allow",
+"Action": "*",
+"Resource": "*"
+}]
+}
+Kebijakan ini memiliki empat elemen JSON utama: Versi, Efek, Tindakan, dan Sumber Daya.
+
+Elemen Versi menentukan versi bahasa kebijakan. Elemen ini menentukan aturan sintaks bahasa yang diperlukan oleh AWS untuk memproses kebijakan. Untuk menggunakan semua fitur kebijakan yang tersedia, sertakan "Version": "2012-10-17" sebelum elemen "Statement" di dalam kebijakan Anda.
+
+Elemen Efek menentukan apakah kebijakan akan mengizinkan atau menolak akses. Dalam kebijakan ini, Efeknya adalah "Izinkan", yang berarti Anda memberikan akses ke sumber daya tertentu.
+
+Elemen Tindakan menjelaskan jenis tindakan yang harus diizinkan atau ditolak. Dalam contoh kebijakan ini, tindakannya adalah "*". Ini disebut wildcard, dan digunakan untuk menyimbolkan setiap tindakan di dalam akun AWS Anda.
+
+Elemen Sumber daya menentukan satu atau beberapa objek yang termasuk dalam pernyataan kebijakan. Dalam contoh kebijakan, sumber daya adalah wildcard "*". Ini mewakili semua sumber daya di dalam konsol AWS Anda.
+
+Dengan menggabungkan semua informasi ini, Anda memiliki kebijakan yang memungkinkan Anda untuk melakukan semua tindakan pada semua sumber daya di akun AWS Anda. Inilah yang kami sebut kebijakan administrator.
+
+Contoh berikutnya menunjukkan kebijakan IAM yang terperinci.
+
+{
+  "Version": "2012-10-17",
+  "Statement":[
+    {
+      "Sid": "DenyS3AccessOutsideMyBoundary",
+      "Effect": "Deny",
+      "Action": [
+        "s3:*"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringNotEquals": {
+          "aws:ResourceAccount": [
+            "222222222222"
+          ]
+        }
+      }
+    }
+  ]
+}
+Kebijakan ini menggunakan efek Tolak untuk memblokir akses ke tindakan Amazon S3, kecuali sumber daya Amazon S3 yang sedang diakses berada di dalam akun 222222222222. Ini memastikan pengguna utama Amazon S3 mana pun hanya mengakses sumber daya yang berada di dalam akun AWS tepercaya.
+
+Peran IAM
+
+Untuk menonton video tentang IAM role, pilih tombol putar.
+
+Play Video
+Praktik terbaik IAM
+
+Selama materi ini, Anda telah belajar tentang beberapa praktik terbaik IAM. Bagian ini merangkum beberapa praktik terbaik IAM paling penting yang harus Anda ketahui sebelum membangun solusi di AWS. 
+
+Untuk mempelajari lebih lanjut tentang tiap praktik terbaik, buka masing-masing dari keenam kategori berikut. 
+
+
+Gembok pengguna root AWS
+Pengguna root adalah identitas yang sangat kuat dan serba tahu di akun AWS Anda. Jika pengguna jahat mendapatkan kontrol atas kredensial pengguna root, mereka akan dapat mengakses setiap sumber daya di akun Anda, termasuk informasi pribadi dan penagihan. Untuk mengunci pengguna root, Anda dapat melakukan hal-hal berikut:
+
+Jangan bagikan kredensial yang terkait dengan pengguna root.
+Pertimbangkan untuk menghapus kunci akses pengguna root.
+Aktifkan MFA pada akun root.
+
+Mematuhi prinsip hak istimewa minimal
+Hak istimewa minimal adalah prinsip keamanan standar yang menyarankan Anda untuk hanya memberikan izin yang diperlukan untuk melakukan pekerjaan tertentu dan tidak lebih. Untuk menerapkan hak istimewa minimal untuk kontrol akses, mulai dengan set minimum izin dalam kebijakan IAM dan kemudian memberikan izin tambahan yang diperlukan untuk pengguna, grup, atau peran.
+
+
+Menggunakan IAM dengan tepat
+IAM digunakan untuk mengamankan akses ke sumber daya dan akun AWS Anda. IAM menyediakan cara untuk membuat dan mengelola pengguna, kelompok, dan peran untuk mengakses sumber daya dalam satu akun AWS. IAM tidak digunakan untuk autentikasi dan otorisasi situs web, seperti membekali pengguna situs web dengan fungsi masuk dan pendaftaran. IAM juga tidak mendukung kontrol keamanan untuk melindungi sistem operasi dan jaringan.
+
+
+Gunakan IAM role bila memungkinkan
+Memelihara role lebih efisien daripada memelihara pengguna. Ketika Anda mengambil sebuah role, IAM secara dinamis menyediakan kredensial sementara yang kedaluwarsa setelah jangka waktu tertentu, antara 15 menit dan 36 jam. Di sisi lain, pengguna memiliki kredensial jangka panjang dalam bentuk kombinasi nama pengguna dan kata sandi atau satu set kunci akses.
+
+Kunci akses hanya kedaluwarsa ketika Anda atau admin akun merotasi kunci. Kredensial masuk pengguna kedaluwarsa jika Anda menerapkan kebijakan kata sandi ke akun Anda yang memaksa pengguna untuk merotasi kata sandi mereka.
+
+
+Pertimbangkan untuk menggunakan penyedia identitas
+Jika Anda memutuskan untuk membuat aplikasi foto kucing Anda menjadi bisnis dan mulai memiliki lebih dari segelintir orang yang mengerjakannya, pertimbangkan untuk mengelola informasi identitas karyawan melalui penyedia identitas (IdP). Menggunakan IdP, baik berupa layanan AWS seperti AWS IAM Identity Center (penerus AWS Single Sign-On) maupun penyedia identitas pihak ketiga, menyediakan satu sumber kebenaran untuk semua identitas dalam organisasi Anda.
+
+Anda tidak lagi harus membuat pengguna IAM terpisah di AWS. Anda dapat menggunakan peran IAM untuk memberikan izin untuk identitas yang digabungkan dari IdP Anda. Penggabungan adalah proses yang memungkinkan transfer informasi identitas dan autentikasi di seluruh set sistem jaringan. 
+
+Misalnya, karyawan Anda, Martha, memiliki akses ke beberapa akun AWS. Alih-alih membuat dan mengelola beberapa pengguna IAM bernama Martha di setiap akun AWS tersebut, Anda bisa mengelola Martha di IdP perusahaan Anda. Jika Martha berganti posisi di perusahaan atau meninggalkan perusahaan, Martha dapat diperbarui di IdP, bukan di setiap akun AWS di perusahaan.
+
+
+Secara rutin, tinjau dan hapus pengguna, role, dan kredensial lain yang sudah tidak digunakan.
+Anda mungkin memiliki pengguna, role, izin, kebijakan, atau kredensial IAM yang sudah tidak Anda gunakan dalam akun Anda. IAM menyediakan informasi yang terakhir diakses untuk membantu Anda mengidentifikasi kredensial yang tidak relevan yang sudah tidak Anda perlukan sehingga Anda dapat menghapusnya. Ini membantu Anda mengurangi jumlah pengguna, role, izin, kebijakan, dan kredensial yang harus Anda pantau.

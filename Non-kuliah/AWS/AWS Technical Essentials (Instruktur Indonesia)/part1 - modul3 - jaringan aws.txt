@@ -1,0 +1,436 @@
+1. Pengantar Jaringan
+
+Jaringan adalah bagaimana Anda menghubungkan komputer di seluruh dunia dan memungkinkan mereka untuk berkomunikasi satu sama lain.
+
+Untuk menonton video tentang jaringan, pilih tombol putar.
+
+Play Video
+Jaringan didefinisikan
+
+Jaringan adalah bagaimana Anda menghubungkan komputer di seluruh dunia dan memungkinkan mereka untuk berkomunikasi satu sama lain. Dalam kursus ini, Anda telah melihat beberapa contoh jaringan. Salah satunya adalah Infrastruktur Global AWS. AWS membangun jaringan sumber daya menggunakan pusat data, Availability Zone, dan Region. 
+
+Dasar-dasar jaringan
+
+Jaringan dapat diibaratkan dengan pengiriman surat. Saat Anda mengirim surat, Anda memberikan tiga elemen berikut:
+
+•
+Surat, di dalam amplop
+
+•
+Alamat pengirim di bagian dari
+
+•
+Alamat penerima di bagian kepada
+
+
+
+Setiap alamat harus berisi informasi khusus:
+
+Nama pengirim atau penerima
+Jalan
+Kota
+Negara bagian atau provinsi
+Kode pos, zip, atau area
+Negara
+Anda memerlukan semua bagian alamat untuk memastikan surat Anda sampai ke tujuan. Tanpa alamat yang benar, pekerja pos tidak dapat mengirimkan surat dengan benar. Di dunia digital, komputer menangani pengiriman pesan dengan cara yang sama. Ini disebut perutean.
+
+Alamat IP
+
+Untuk merutekan pesan Anda ke lokasi dengan benar, Anda memerlukan alamat. Sama seperti setiap rumah memiliki alamat surat, setiap komputer memiliki alamat IP. Namun, alih-alih menggunakan kombinasi jalan, kota, negara bagian, kode pos, dan negara, alamat IP menggunakan kombinasi bit, 0 dan 1.
+
+Berikut adalah contoh alamat 32-bit dalam format biner:
+
+11000000 10101000 00000001 00011110 adalah alamat 32-bit yang ditulis dalam format biner.
+
+Alamat 32-bit yang ditulis dalam format biner.
+
+Alamat ini disebut 32-bit karena Anda memiliki 32 digit. Silakan dihitung!
+
+Notasi IPv4
+
+Biasanya, Anda tidak melihat alamat IP dalam format biner. Sebaliknya, alamat ini diubah menjadi format desimal dan dicatat sebagai alamat IPv4.
+
+Dalam diagram berikut, 32 bit dikelompokkan ke dalam grup 8 bit, juga disebut oktet. Setiap grup ini dikonversi menjadi format desimal yang dipisahkan oleh titik.
+
+Alamat IPv4 ditulis dalam angka desimal yang terdiri dari empat bidang delapan bit yang dipisahkan oleh titik.
+
+Alamat IPv4, misalnya, 192.168.1.30 dikonversi dari empat grup delapan bit.
+
+Pada akhirnya, inilah yang disebut alamat IPv4. Hal ini penting untuk diketahui saat mencoba berkomunikasi ke satu komputer. Tapi ingat, Anda bekerja dengan jaringan. Di sinilah peran Perutean Antardomain Tanpa Kelas (CIDR).
+
+Notasi CIDR
+
+192.168.1.30 adalah alamat IP tunggal. Jika Anda ingin mengekspresikan alamat IP antara rentang 192.168.1.0 dan 192.168.1.255, bagaimana Anda dapat melakukannya?
+
+Salah satu caranya adalah dengan menggunakan notasi CIDR. Notasi CIDR adalah cara terkompresi penentuan rentang alamat IP. Penentuan rentang menentukan berapa banyak alamat IP yang tersedia untuk Anda.
+
+Notasi CIDR ditampilkan di sini.
+
+Angka setelah garis miring menunjukkan jumlah bit dalam suatu alamat IP yang tetap.
+
+Dimulai dengan alamat IP awal dan dipisahkan oleh garis miring (karakter /) diikuti oleh sebuah angka. Angka di akhir menentukan berapa banyak bit dari alamat IP yang tetap. Pada contoh ini, 24 bit pertama alamat IP bersifat tetap. Sisanya (8 bit terakhir) bersifat fleksibel.
+
+Angka terakhir, ‘24’, menetapkan bahwa 24 bit pertama alamat IP bersifat tetap, dan 8 bit terakhir bersifat fleksibel.
+
+32 total bit dikurangi oleh 24 bit tetap menyisakan 8 bit fleksibel. Masing-masing bit fleksibel ini dapat berupa 0 atau 1, karena sifatnya yang biner. Itu berarti bahwa Anda memiliki dua pilihan untuk masing-masing 8 bit, menyediakan 256 alamat IP dalam rentang IP tersebut.
+
+Semakin tinggi angka setelah /, semakin kecil jumlah alamat IP di jaringan Anda. Misalnya, rentang 192.168.1.0/24 lebih kecil dari 192.168.1.0/16.
+
+Saat bekerja dengan jaringan di AWS Cloud, Anda memilih ukuran jaringan Anda dengan menggunakan notasi CIDR. Di AWS, rentang IP terkecil yang dapat Anda miliki adalah /28, yang menyediakan 16 alamat IP. Rentang IP terbesar yang dapat Anda miliki adalah /16, yang menyediakan 65.536 alamat IP.
+
+2. Amazon VPC
+
+Untuk mempertahankan redundansi dan toleransi kesalahan, buatlah sedikitnya dua subnet yang dikonfigurasi di dua Availability Zone.
+
+Untuk menonton video tentang Amazon VPC, pilih tombol putar.
+
+Play Video
+Amazon VPC
+
+Cloud privat virtual (VPC) adalah jaringan terisolasi yang Anda buat di AWS Cloud, mirip dengan jaringan tradisional di pusat data. Ketika Anda membuat Amazon VPC, Anda harus memilih tiga faktor utama:
+
+•
+Nama VPC
+
+•
+Region tempat VPC akan ditempatkan – VPC menjangkau semua Availability Zone di dalam Region yang dipilih.
+
+•
+Rentang IP untuk VPC dalam notasi CIDR – Ini menentukan ukuran jaringan Anda. Setiap VPC bisa memiliki hingga lima CIDR: satu primer dan empat sekunder untuk IPv4. Tiap rentang ini dapat berukuran antara /28 (dalam notasi CIDR) dan /16.
+
+Menggunakan informasi ini, AWS akan menyediakan jaringan dan alamat IP untuk jaringan tersebut.
+
+Saat VPC dibuat, Anda menentukan blok CIDR untuk VPC. VPC akan menjangkau semua AZ di dalam Region yang dipilih.
+
+Membuat subnet
+
+Setelah Anda membuat VPC, Anda harus membuat subnet di dalam jaringan. Pikirkan subnet sebagai jaringan yang lebih kecil di dalam jaringan dasar Anda, atau jaringan area lokal virtual (VLAN) dalam jaringan on-premises tradisional. Dalam jaringan on-premises, kasus penggunaan khas untuk subnet adalah untuk mengisolasi atau mengoptimalkan lalu lintas jaringan. Di AWS, subnet digunakan untuk menyediakan opsi ketersediaan dan konektivitas tinggi untuk sumber daya Anda. Gunakan subnet publik untuk sumber daya yang harus terhubung dengan internet, dan subnet privat untuk sumber daya yang tidak akan terhubung dengan internet.
+
+Anda dapat meluncurkan sumber daya AWS seperti instans EC2 ke VPC tertentu di dalam VPC Anda.
+
+Saat membuat subnet, Anda harus menentukan hal berikut:
+
+VPC untuk menempatkan subnet Anda—dalam hal ini: VPC (10.0.0.0/16)
+Availability Zone untuk menempatkan subnet Anda—dalam hal ini: Availability Zone 1
+Blok CIDR IPv4 untuk subnet Anda, yang harus menjadi bagian dari blok CIDR VPC, dalam hal ini: 10.0.0.0/24.
+Ketika Anda meluncurkan instans EC2, Anda meluncurkannya di dalam subnet, yang akan berlokasi di dalam Availability Zone yang Anda pilih.
+
+Ketersediaan tinggi dengan VPC
+
+Saat Anda membuat subnet, pertimbangkan ketersediaan tinggi. Untuk mempertahankan redundansi dan toleransi kesalahan, buat setidaknya dua subnet yang dikonfigurasi dalam dua Availability Zone.
+
+Seperti yang Anda pelajari sebelumnya, ingatlah bahwa "semuanya gagal sepanjang waktu." Dengan jaringan contoh, jika salah satu Availability Zone gagal, Anda masih akan memiliki sumber daya yang tersedia di Availability Zone lain sebagai cadangan.
+
+Pengadaan sumber daya di beberapa AZ memberikan ketersediaan tinggi dan cadangan untuk sumber daya Anda.
+
+IP Simpanan
+
+Agar AWS dapat mengonfigurasi VPC Anda dengan tepat, AWS menyimpan lima alamat IP di setiap subnet. Semua alamat IP ini digunakan untuk perutean, Sistem Nama Domain (DNS), dan manajemen jaringan.
+
+Misalnya, pertimbangkan VPC dengan rentang IP 10.0.0.0/22. VPC tersebut mencakup total 1.024 alamat IP. Jumlah ini dibagi menjadi empat subnet berukuran sama, masing-masing dengan /24 rentang IP dengan 256 alamat IP. Dari setiap rentang IP tersebut, hanya ada 251 alamat IP yang dapat digunakan karena AWS menyimpan lima.
+
+Grafik pai dengan empat subnet masing-masing dengan 251 alamat IP dan tabel yang menunjukkan alamat IP yang dicadangkan.
+
+Kelima alamat IP tersimpan ini dapat memengaruhi cara Anda merancang jaringan Anda. Langkah awal umum bagi mereka yang baru di cloud adalah membuat VPC dengan rentang IP /16 dan membuat subnet dengan rentang IP /24. Ini menyediakan alamat IP dalam jumlah besar untuk digunakan di tingkat VPC dan subnet.
+
+Gateway
+
+Gateway internet
+Untuk mengaktifkan konektivitas internet untuk VPC Anda, Anda harus membuat gateway internet. Anggap saja gateway ini mirip seperti modem. Sama seperti modem yang menghubungkan komputer Anda ke internet, gateway internet menghubungkan VPC Anda ke internet. Tidak seperti modem Anda di rumah, yang terkadang mati atau terputus, gateway internet sangat tersedia dan dapat diskalakan. Saat Anda membuat gateway internet, Anda melampirkannya ke VPC Anda.
+
+Gateway internet adalah komponen VPC yang memungkinkan komunikasi antara VPC Anda dan internet.
+
+Gateway privat virtual adalah endpoint VPN di sisi Amazon koneksi VPN Anda yang dapat dilampirkan ke satu VPC.
+
+Gateway privat virtual
+Gateway privat vi\ menghubungkan VPC Anda ke jaringan privat lain. Setelah Anda membuat dan melampirkan gateway privat virtual untuk VPC, gateway bertindak sebagai jangkar di sisi koneksi AWS. Di sisi koneksi lain, Anda perlu menghubungkan gateway pelanggan ke jaringan privat lainnya. Perangkat gateway pelanggan adalah perangkat fisik atau aplikasi perangkat lunak di sisi koneksi Anda. Setelah Anda memiliki kedua gateway, Anda kemudian dapat membuat koneksi VPN terenkripsi antara kedua sisi.
+
+AWS Direct Connect
+
+Untuk membuat koneksi fisik yang aman antara pusat data on-premises dan Amazon VPC Anda, Anda dapat menggunakan AWS Direct Connect. Dengan AWS Direct Connect, jaringan internal Anda dikaitkan ke lokasi AWS Direct Connect melalui kabel serat optik Ethernet standar. Koneksi ini memungkinkan Anda membuat antarmuka virtual langsung ke layanan AWS publik atau VPC Anda.
+
+Dengan AWS Direct Connect, lalu lintas jaringan tetap berada di jaringan global AWS dan tidak pernah bersentuhan dengan internet publik.
+
+3. Perutean Amazon VPC
+
+Tabel rute berisi seperangkat aturan, yang disebut rute, yang menentukan ke mana lalu lintas jaringan dari subnet atau gateway Anda diarahkan.
+
+Untuk menonton video tentang perutean Amazon VPC, pilih tombol putar.
+
+Play Video
+Tabel rute utama
+
+Saat Anda membuat VPC, AWS membuat tabel rute yang disebut tabel rute utama. Tabel rute berisi seperangkat aturan, yang disebut rute, yang digunakan untuk menentukan ke mana jaringan lalu lintas diarahkan. AWS mengasumsikan bahwa ketika Anda membuat VPC baru dengan subnet, Anda ingin lalu lintas mengalir di antara mereka. Oleh karena itu, konfigurasi default tabel rute utama adalah untuk mengizinkan lalu lintas di antara semua subnet di jaringan lokal. Aturan berikut ini berlaku untuk tabel rute utama:
+
+Anda tidak dapat menghapus tabel rute utama.
+Anda tidak dapat mengatur tabel rute gateway sebagai tabel rute utama.
+Anda dapat mengganti tabel rute utama dengan tabel rute subnet kustom.
+Anda dapat menambah, melepas, dan memodifikasi rute di dalam tabel rute utama.
+Anda dapat secara eksplisit mengaitkan subnet dengan tabel rute utama, bahkan jika secara implisit sudah dikaitkan.
+Tabel rute kustom
+
+Tabel rute kustom digunakan secara implisit oleh subnet yang tidak memiliki pengaitan tabel rute eksplisit. Namun, Anda mungkin ingin menyediakan rute berbeda per subnet untuk lalu lintas guna mengakses sumber daya di luar VPC. Misalnya, aplikasi Anda mungkin terdiri dari frontend dan basis data. Anda dapat membuat subnet terpisah untuk sumber daya dan menyediakan rute yang berbeda untuk masing-masing.
+
+Jika Anda mengaitkan subnet dengan tabel rute kustom, subnet akan menggunakannya sebagai ganti tabel rute utama. Setiap tabel rute kustom yang Anda buat akan memiliki rute lokal yang sudah ada di dalamnya, memungkinkan komunikasi mengalir antara semua sumber daya dan subnet di dalam VPC. Anda dapat melindungi VPC Anda dengan mengaitkan secara eksplisit tiap subnet baru dengan tabel rute kustom dan membiarkan tabel rute utama dalam kondisi default awal.
+
+4. Keamanan Amazon VPC
+
+Keamanan cloud di AWS adalah prioritas tertinggi. Anda mendapatkan keuntungan dari pembuatan arsitektur jaringan dan pusat data untuk memenuhi kebutuhan organisasi yang paling sensitif dalam hal keamanan.
+
+Untuk menonton video tentang keamanan Amazon VPC, pilih tombol putar.
+
+Play Video
+Subnet aman dengan daftar kontrol akses jaringan
+
+ACL jaringan mengizinkan atau menolak lalu lintas masuk atau keluar tertentu pada tingkat subnet.
+Anggaplah daftar kontrol akses jaringan (ACL jaringan) seperti firewall pada tingkat subnet. ACL jaringan memungkinkan Anda untuk mengontrol jenis lalu lintas yang diizinkan untuk masuk atau meninggalkan subnet Anda. Anda dapat mengonfigurasinya dengan mengatur aturan yang menentukan apa yang ingin Anda filter. Berikut adalah contoh ACL default untuk VPC yang mendukung IPv4.
+
+Perluas blok berikut untuk melihat contoh ACL jaringan default. 
+
+
+ACL jaringan default
+**Catatan: Untuk pengguna dengan pembaca layar, gunakan mode tabel untuk membaca tabel.
+
+Inbound
+
+Aturan #
+
+Jenis
+
+Protokol
+
+Rentang Port
+
+Sumber
+
+Izinkan atau Tolak
+
+100
+
+Semua lalu lintas IPv4
+
+Semua
+
+Semua
+
+0.0.0.0/0
+
+IZINKAN
+
+*
+
+Semua lalu lintas IPv4
+
+Semua
+
+Semua
+
+0.0.0.0/0
+
+TOLAK
+
+Outbound
+
+Aturan #
+
+Jenis
+
+Protokol
+
+Rentang Port
+
+Tujuan
+
+Izinkan atau Tolak
+
+100
+
+Semua lalu lintas IPv4
+
+Semua
+
+Semua
+
+0.0.0.0/0
+
+IZINKAN
+
+*
+
+Semua lalu lintas IPv4
+
+Semua
+
+Semua
+
+0.0.0.0/0
+
+TOLAK
+
+ACL jaringan default yang ditunjukkan dalam tabel sebelumnya mengizinkan semua lalu lintas masuk dan keluar dari subnet. Untuk mengizinkan data mengalir bebas ke subnet, ini adalah tempat awal yang baik.
+
+Namun, Anda mungkin ingin membatasi data pada tingkat subnet. Misalnya, jika Anda memiliki aplikasi web, Anda mungkin membatasi jaringan Anda untuk mengizinkan lalu lintas HTTPS dan lalu lintas Protokol Desktop Jarak Jauh (RDP) ke server web Anda.
+
+Perluas blok berikut untuk melihat contoh ACL jaringan kustom.
+
+
+ACL jaringan kustom
+**Catatan: Untuk pengguna dengan pembaca layar, gunakan mode tabel untuk membaca tabel.
+
+Inbound
+
+Aturan #
+
+IP Sumber
+
+Protokol
+
+Port
+
+Izinkan atau Tolak
+
+Komentar
+
+100
+
+Semua lalu lintas IPv4
+
+TCP
+
+443
+
+IZINKAN
+
+Mengizinkan lalu lintas HTTPS masuk dari mana saja
+
+130
+
+192.0.2.0/24
+
+TCP
+
+3389
+
+IZINKAN
+
+Mengizinkan lalu lintas RDP masuk ke server web dari rentang alamat IP publik jaringan rumah Anda (melalui gateway internet)
+
+*
+
+Semua lalu lintas IPv4
+
+Semua
+
+Semua
+
+TOLAK
+
+Menolak semua lalu lintas masuk yang belum ditangani oleh aturan sebelumnya (tidak dapat diubah)
+
+Outbound
+
+Aturan #
+
+IP Tujuan
+
+Protokol
+
+Port
+
+Izinkan atau Tolak
+
+Komentar
+
+120
+
+0.0.0.0/0
+
+TCP
+
+1025-65535
+
+IZINKAN
+
+Memungkinkan respons keluar ke klien di internet (melayani orang yang mengunjungi server web di subnet)
+
+*
+
+0.0.0.0/0
+
+Semua
+
+Semua
+
+TOLAK
+
+Menolak semua lalu lintas outbound yang belum ditangani oleh aturan sebelumnya (tidak dapat diubah)
+
+Perhatikan bahwa dalam ACL jaringan kustom di contoh sebelumnya, Anda mengizinkan rentang masuk 443 dan rentang keluar 1025-65535. Itu karena HTTP menggunakan port 443 untuk memulai koneksi dan akan merespons port penyimpanan sementara. ACL jaringan dianggap stateless, sehingga Anda perlu untuk memasukkan baik port masuk maupun keluar yang digunakan untuk protokol. Jika Anda tidak menyertakan rentang outbound, server Anda akan merespons tetapi lalu lintas tidak akan pernah meninggalkan subnet.
+
+Karena ACL jaringan dikonfigurasi secara default untuk mengizinkan lalu lintas masuk dan keluar, Anda tidak perlu mengubah pengaturan awal kecuali Anda memerlukan lapisan keamanan tambahan.
+
+Instans EC2 aman dengan grup keamanan
+
+Lapisan keamanan berikutnya adalah untuk instans EC2 Anda. Di sini, Anda dapat membuat firewall virtual yang disebut grup keamanan. Konfigurasi default grup keamanan memblokir semua lalu lintas masuk dan memungkinkan semua lalu lintas keluar.
+
+
+
+Secara default, grup keamanan hanya mengizinkan lalu lintas keluar. Untuk mengizinkan lalu lintas masuk, Anda harus membuat aturan masuk.
+
+Anda mungkin bertanya-tanya, “Bukankah ini akan memblokir semua instans EC2 dari menerima respons dari setiap permintaan pelanggan?” Grup keamanan bersifat stateful. Itu berarti bahwa grup keamanan akan mengingat apakah sambungan awalnya dimulai oleh instans Elastic Compute Cloud atau dari luar, dan sementara mengizinkan lalu lintas untuk merespons tanpa memodifikasi aturan masuk.
+
+Jika Anda ingin instans Elastic Compute Cloud Anda untuk menerima lalu lintas dari internet, Anda harus membuka port instans. Jika Anda memiliki server web, Anda mungkin harus menerima permintaan HTTP dan HTTPS untuk mengizinkan jenis lalu lintas tersebut ke grup keamanan Anda. Anda dapat membuat aturan masuk yang akan memungkinkan port 80 (HTTP) dan port 443 (HTTPS), seperti yang ditunjukkan.
+
+Perluas blok di bawah untuk melihat aturan masuk grup keamanan.
+
+
+Aturan masuk grup keamanan
+**Catatan: Untuk pengguna dengan pembaca layar, gunakan mode tabel untuk membaca tabel.
+
+Aturan inbound
+
+Jenis
+
+Protokol
+
+Rentang Port
+
+Sumber
+
+HTTP (80)
+
+TCP (4)
+
+80
+
+0.0.0.0/0
+
+HTTP (80)
+
+TCP (6)
+
+80
+
+::/0
+
+HTTPS (443)
+
+TCP (4)
+
+443
+
+0.0.0.0/0
+
+HTTPS (443)
+
+TCP (6)
+
+443
+
+::/0
+
+Sebelumnya, Anda telah mempelajari bahwa subnet dapat digunakan untuk memisahkan lalu lintas antar komputer di jaringan Anda. Grup keamanan dapat digunakan dengan cara yang sama. Pola desain yang umum adalah mengatur sumber daya ke dalam grup yang berbeda dan membuat grup keamanan agar masing-masing mengontrol komunikasi jaringan di antara mereka.
+
+Lalu lintas jaringan antara grup-grup sumber daya yang berbeda dapat dikontrol menggunakan grup keamanan.
+
+Contoh ini mendefinisikan tiga tingkat dan mengisolasi setiap tingkat dengan aturan grup keamanan yang ditetapkan. Dalam hal ini, lalu lintas internet ke tingkat web diizinkan lewat HTTPS. Lalu lintas tingkat web ke tingkat aplikasi diizinkan melalui HTTP, dan lalu lintas tingkat aplikasi ke tingkat basis data diizinkan melalui MySQL. Ini berbeda dari lingkungan on-premises tradisional, di mana Anda mengisolasi grup sumber daya dengan konfigurasi VLAN. Di AWS, grup keamanan mengizinkan Anda mencapai isolasi yang sama tanpa mengikat grup keamanan ke jaringan Anda.

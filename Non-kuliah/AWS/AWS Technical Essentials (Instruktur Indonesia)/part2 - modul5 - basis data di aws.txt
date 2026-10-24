@@ -1,0 +1,439 @@
+1. 
+Basis data kinerja tinggi sangat penting bagi organisasi mana pun. Basis data mendukung operasi internal perusahaan dan menyimpan interaksi dengan pelanggan dan pemasok.
+
+Untuk menonton video tentang basis data di Amazon Web Services (AWS), pilih tombol putar.
+
+Play Video
+Sejarah di balik basis data korporasi
+
+Dulu, memilih basis data adalah keputusan yang sederhana. Pelanggan hanya mempunyai beberapa pilihan untuk dipilih. Biasanya, mereka akan mempertimbangkan beberapa vendor dan pasti memilih satu vendor untuk semua aplikasi mereka. Bisnis sering memilih teknologi basis data sebelum mereka sepenuhnya memahami kasus penggunaan mereka. Sejak tahun 1970-an, jenis basis data yang paling sering dipilih oleh bisnis adalah basis data relasional.
+
+Basis data relasional
+
+Basis data relasional mengatur data ke dalam tabel. Data dalam satu tabel dapat ditautkan ke data di tabel lain untuk membuat hubungan—oleh karena itu, bagian relasional dari nama tersebut.
+
+Tabel menyimpan data dalam baris dan kolom. Baris, yang sering disebut catatan, berisi semua informasi tentang entri tertentu. Kolom menggambarkan atribut suatu entri. Gambar berikut ini adalah contoh dari tiga tabel dalam sebuah basis data relasional.
+
+
+
+Gambar sebelumnya menunjukkan sebuah tabel untuk buku, tabel untuk penjualan, dan tabel untuk penulis. Dalam tabel buku, setiap baris mencakup buku Nomor Buku Standar Internasional (ISBN), judul, penulis, dan format. Tiap atribut ini disimpan dalam kolomnya masing-masing. Tabel buku memiliki kesamaan dengan dua tabel lainnya, yakni atribut penulis. Kolom umum tersebut menciptakan hubungan antar tabel.
+
+Tabel, baris, kolom, dan hubungan di antara tabel-tabel tersebut disebut skema logis. Dengan basis data relasional, skema bersifat tetap. Setelah basis data berjalan, skema menjadi sulit diubah. Oleh karena itu, sebagian besar pemodelan data dilakukan di muka sebelum basis data aktif.
+
+Sistem manajemen basis data relasional
+
+Dengan sistem manajemen basis data relasional (RDBMS), Anda dapat membuat, memperbarui, dan mengelola basis data relasional. Berikut ini adalah beberapa contoh umum RDBMS:
+
+MySQL
+PostgreSQL
+Oracle
+Server Microsoft SQL
+Amazon Aurora
+Anda berkomunikasi dengan RDBMS menggunakan kueri bahasa kuersi terstruktur (SQL), mirip dengan contoh berikut:
+
+SELECT * FROM table_name.
+
+Kueri ini memilih semua data dari tabel tertentu. Namun, kekuatan kueri SQL ada pada pembuatan kueri yang lebih kompleks yang menarik data dari beberapa tabel untuk mengidentifikasi pola dan jawaban untuk masalah bisnis. Sebagai contoh, mengkueri tabel penjualan dan tabel buku bersama-sama untuk melihat penjualan dalam kaitannya dengan buku-buku seorang penulis. Mengkueri beberapa tabel bersama-sama agar lebih memahami hubungannya dapat dilakukan dengan “penggabungan”.
+
+Manfaat basis data relasional
+
+Untuk mempelajari manfaat penggunaan basis data relasional, balik kartu flash dengan cara memilihnya satu per satu. 
+
+SQL kompleks
+Dengan SQL, Anda dapat menggabungkan beberapa tabel sehingga Anda dapat lebih memahami hubungan antara data Anda.
+
+Lebih sedikit redundansi
+Anda dapat menyimpan data di satu tabel dan merujuknya dari tabel lain, alih-alin menyimpan data yang sama di tempat-tempat berbeda.
+
+Popularitas
+Karena basis data relasional telah populer sejak 1970-an, tenaga teknis profesional sering kali sudah terbiasa dan berpengalaman dengannya.
+
+Akurasi
+Basis data relasional memastikan data Anda memiliki integritas yang tinggi dan mematuhi pinsip atomisitas, konsistensi, isolasi, dan daya tahan (ACID).
+
+Kasus penggunaan basis data relasional
+
+Banyak hal di dunia berjalan dengan basis data relasional. Bahkan, basis data ini menjadi inti dari banyak aplikasi yang vital bagi misi, dan Anda sendiri mungkin menggunakan beberapa di antaranya dalam kehidupan sehari-hari.
+
+Untuk mempelajari beberapa kasus penggunaan umum untuk basis data relasional, perluas masing-masing dari dua kategori berikut.
+
+
+Aplikasi yang memiliki skema tetap
+Ini adalah aplikasi yang memiliki skema tetap dan tidak sering berubah. Contohnya adalah aplikasi angkat-geser yang mengangkat sebuah aplikasi dari on-premises dan menggesernya ke cloud, dengan sedikit atau tanpa modifikasi.
+
+
+Aplikasi yang memerlukan penyimpanan tetap
+Ini adalah aplikasi yang memerlukan penyimpanan tetap dan mengikuti prinsip ACID, seperti:
+
+Aplikasi perencanaan sumber daya korporasi (ERP)
+Aplikasi manajemen hubungan pelanggan (CRM)
+Aplikasi niaga dan keuangan
+Pilih antara basis data yang terkelola dan tidak terkelola
+
+Jika Anda ingin mengganti basis data on-premises Anda dengan basis data relasional di AWS, Anda harus terlebih dahulu memilih bagaimana Anda ingin menjalankannya – terkelola atau tidak terkelola. Penanganan layanan terkelola dan tidak terkelola mirip dengan model tanggung jawab bersama. Model tanggung jawab bersama membedakan antara tanggung jawab keamanan AWS dan tanggung jawab keamanan pelanggan. Begitu juga dengan layanan terkelola dan tidak terkelola yang dapat dipahami sebagai kompromi antara kenyamanan dan kontrol.
+
+Basis data tidak terkelola
+
+Jika Anda mengoperasikan basis data relasional secara on-premises, Anda bertanggung jawab atas semua aspek operasi. Termasuk di dalamnya adalah keamanan dan listrik pusat data, manajemen mesin host, manajemen basis data, pengoptimalan kueri, dan manajemen data pelanggan. Anda bertanggung jawab atas semua hal, yang berarti Anda memiliki kontrol atas segalanya.
+
+Sekarang, misalkan Anda ingin menggeser beberapa pekerjaan ke AWS dengan menjalankan basis data relasional Anda di Amazon Elastic Compute Cloud (Amazon EC2). Jika Anda meng-host basis data Amazon EC2, AWS mengimplementasikan dan memelihara infrastruktur fisik dan perangkat keras serta menginstal sistem operasi (OS) instans EC2. Namun, Anda tetap bertanggung jawab untuk mengelola instans EC2, mengelola basis data pada host tersebut, mengoptimalkan kueri, dan mengelola data pelanggan.
+
+Ini disebut opsi basis data yang tidak terkelola. Dalam opsi ini, AWS bertanggung jawab dan memiliki kontrol atas perangkat keras serta infrastruktur yang mendasari. Anda bertanggung jawab dan memiliki kontrol atas manajemen host dan basis data.
+
+Diagram yang menggambarkan tingkat tanggung jawab dalam basis data yang di-host secara on-premises dibandingkan dengan Amazon EC2. Lihat keterangan.
+
+Anda bertanggung jawab atas segala hal di basis data yang di-host secara on-premises. AWS memikul lebih banyak tanggung jawab tersebut di basis data yang di-host di Amazon EC2.
+
+Basis data terkelola
+
+Untuk menggeser lebih banyak pekerjaan ke AWS, Anda dapat menggunakan layanan basis data terkelola. Layanan ini menyediakan penyiapan instans EC2 dan basis data, serta menyediakan sistem untuk ketersediaan tinggi, skalabilitas, patching, dan cadangan. Namun, dalam model ini, Anda masih bertanggung jawab atas penyetelan basis data, pengoptimalan kueri, dan memastikan data pelanggan Anda aman. Opsi ini memberikan kenyamanan tertinggi tetapi jumlah kontrol paling sedikit dibandingkan dengan dua opsi sebelumnya.
+
+Gambaran layanan basis data AWS terkelola Pelanggan bertanggung jawab atas pengoptimalan aplikasi. AWS mengurus semua hal lainnya.
+
+2. mazon RDS
+
+Dengan Amazon Relational Database Service (Amazon RDS), Anda dapat memusatkan perhatian pada tugas-tugas yang memberikan diferensiasi pada aplikasi Anda, tanpa mengkhawatirkan tugas-tugas terkait infrastruktur, seperti penyediaan, patching, penskalaan, dan pemulihan.
+
+Untuk menonton video tentang Amazon RDS, pilih tombol putar.
+
+Play Video
+Gambaran umum Amazon RDS
+
+Ikon Amazon RDS
+
+Amazon Relational Database Service (Amazon RDS)
+
+Amazon RDS adalah layanan basis data terkelola yang dapat digunakan oleh pelanggan untuk membuat dan mengelola basis data relasional di cloud tanpa beban operasional manajemen basis data tradisional. Misalnya, bayangkan Anda menjual peralatan pelayanan kesehatan, dan target Anda adalah menjadi penjual nomor satu di Pesisir Barat Amerika Serikat. Membangun basis data tidak serta-merta membantu Anda mencapainya. Namun, memiliki basis data adalah komponen penting untuk mencapainya. 
+
+Dengan Amazon RDS, Anda dapat melimpahkan tugas pembuatan dan pengelolaan basis data. Anda dapat berfokus pada tugas-tugas yang membedakan aplikasi Anda, alih-alih berfokus pada tugas-tugas yang terkait dengan infrastruktur, seperti penyediaan, pemasangan patch, penskalaan, dan pemulihan.
+
+Amazon RDS mendukung sebagian besar RDBMS populer, mulai dari opsi komersial hingga opsi sumber terbuka dan bahkan opsi AWS tertentu. Mesin Amazon RDS yang didukung antara lain:
+
+Komersial: Oracle, SQL Server
+Open source: MySQL, PostgreSQL, MariaDB
+Cloud asli: Aurora 
+
+
+Instans basis data
+
+Sama seperti basis data yang Anda bangun dan kelola sendiri, Amazon RDS dibangun dari komputasi dan penyimpanan. Bagian komputasi disebut instans basis data (DB), yang menjalankan mesin DB. Tergantung mesin yang dipilih, fitur dan konfigurasi yang didukung pada instans akan berbeda-beda. Instans DB dapat berisi beberapa basis data dengan mesin yang sama, dan setiap DB dapat berisi beberapa tabel.
+
+Di bawah instans DB terdapat instans EC2. Namun, instans ini dikelola melalui konsol Amazon RDS, bukan konsol Amazon EC2. Ketika Anda membuat instans DB, Anda memilih jenis dan ukuran instans. Instans DB yang Anda pilih memengaruhi berapa banyak daya dan memori pemrosesan yang dimilikinya.
+
+Untuk mempelajari selengkapnya tentang berbagai kelas instans, pilih masing-masing dari empat penanda bernomor.
+
+Tangkapan layar yang menggambarkan bagaimana opsi konfigurasi instans DB ditentukan oleh mesin DB yang dipilih.
+
+
+
+
+Penyimpanan di Amazon RDS
+
+Bagian penyimpanan instans DB untuk Amazon RDS menggunakan volume Amazon Elastic Block Store (Amazon EBS) untuk basis data dan penyimpanan log. Termasuk di antaranya adalah MySQL, MariaDB, PostgreSQL, Oracle, dan SQL Server. 
+
+Saat menggunakan Aurora, data disimpan dalam volume klaster, yang merupakan volume virtual tunggal yang menggunakan solid state drive (SSD). Sebuah volume klaster berisi salinan data di tiga Availability Zone di sebuah AWS Region. Untuk file sementara nontetap, Aurora menggunakan penyimpanan lokal.
+
+Amazon RDS menyediakan tiga jenis penyimpanan: SSD Tujuan Umum (juga disebut gp2 dan gp3), Provisioned IOPS SSD (juga disebut io1), dan Magnetik (juga disebut standar). Jenis-jenis tersebut berbeda dalam hal karakteristik kinerja dan harga, yang berarti Anda dapat menyesuaikan kinerja penyimpanan dan biaya dengan kebutuhan workload basis data Anda.
+
+Untuk mempelajari selengkapnya tentang berbagai jenis penyimpanan, pilih masing-masing dari tiga penanda bernomor.
+
+Tangkapan layar yang menggambarkan jenis penyimpanan dalam UI.
+
+
+
+Amazon RDS di Amazon Virtual Private Cloud
+
+Ketika Anda membuat instans DB, Anda memilih Amazon Virtual Private Cloud (Amazon VPC) untuk menempatkan basis data Anda. Lalu, Anda memilih subnet yang akan ditetapkan untuk DB Anda. Ini disebut grup subnet DB, dan memiliki setidaknya dua Availability Zone di Regionnya. Subnet di sebuah grup subnet DB harus bersifat privat sehingga tidak memiliki rute ke gateway internet. Hal ini memastikan bahwa instans DB Anda, dan data di dalamnya, hanya dapat diakses oleh backend aplikasi.
+
+Akses ke instans DB dapat dibatasi lebih lanjut dengan menggunakan daftar kontrol akses jaringan (ACL jaringan) dan grup keamanan. Dengan firewall ini, Anda dapat mengontrol pada tingkat yang terperinci jenis lalu lintas yang ingin Anda beri akses ke basis data Anda.
+
+Penggunaan kontrol ini memberikan lapisan keamanan untuk infrastruktur Anda. Ini mempertegas bahwa hanya instans backend yang memiliki akses ke basis data.
+
+Data cadangan
+
+Anda tidak ingin kehilangan data Anda. Untuk melakukan pencadangan instans Amazon RDS Anda secara rutin, Anda dapat menggunakan pencadangan otomatis atau snapshot manual. Untuk mempelajari suatu kategori, pilih tab yang sesuai.
+
+
+Pencadangan Otomatis
+
+Snapshot Manual
+Pencadangan otomatis diaktifkan secara default. Fitur ini mencadangkan seluruh instans DB Anda (bukan hanya basis data individu pada instans) dan log transaksi Anda. Ketika Anda membuat instans DB, Anda menetapkan jadwal pencadangan yakni periode waktu terjadinya pencadanan otomatis. Biasanya, Anda ingin mengatur jendela selama waktu ketika basis data Anda mengalami sedikit aktivitas karena hal itu dapat menyebabkan peningkatan latensi dan waktu henti.
+
+Mempertahankan backup: Backup otomatis disimpan antara 0 dan 35 hari. Anda mungkin bertanya-tanya, “Mengapa mengatur cadangan otomatis selama 0 hari?” Pengaturan 0 hari menghentikan terjadinya cadangan otomatis. Jika Anda mengaturnya ke 0, tindakan itu juga akan menghapus semua cadangan otomatis yang ada. Ini tidak ideal. Manfaat pencadangan otomatis adalah Anda dapat melakukan pemulihan titik waktu.
+
+
+
+Pemulihan tepat waktu: Ini membuat instans DB baru menggunakan data yang dipulihkan dari titik waktu tertentu. Metode pemulihan ini menyediakan lebih banyak keterperincian dengan memulihkan cadangan lengkap dan mengembalikan transaksi ke rentang waktu yang ditentukan.
+
+Tangkapan layar UI Pencadangan otomatis dengan sorotan pada cadangan dan pemulihan titik waktu aktif.
+
+Memilih opsi pencadangan
+
+Anda dianjurkan men-deploy kedua opsi pencadangan. Pencadangan otomatis bermanfaat untuk pemulihan titik waktu. Dengan Snapshot manual, Anda dapat mempertahankan cadangan selama lebih dari 35 hari. 
+
+Redundansi dengan Amazon RDS Multi-AZ
+
+Dalam deployment Amazon RDS Multi-AZ, Amazon RDS menciptakan salinan redundan basis data Anda di Availability Zone lain. Anda akan memiliki dua salinan basis data—salinan utama di subnet dalam satu Availability Zone dan salinan siaga di subnet di Availability Zone kedua.
+
+Salinan utama basis data Anda menyediakan akses ke data Anda sehingga aplikasi dapat melakukan kueri dan menampilkan informasi tersebut. Data di dalam salinan utama direplikasi secara sinkron ke salinan siaga. Salinan siaga tidak dianggap sebagai basis data aktif dan tidak dikueri oleh aplikasi.
+
+Diagram yang menggambarkan Amazon RDS Multi-AZ yang membuat salinan redundan basis data di Availability Zone lain.
+
+Untuk meningkatkan ketersediaan, Amazon RDS Multi-AZ memastikan Anda memiliki dua salinan basis data yang berjalan dan salah satunya memiliki peran utama. Jika muncul masalah ketersediaan, seperti basis data utama kehilangan konektivitas, Amazon RDS memulai failover otomatis.
+
+Ketika Anda membuat instans DB, nama Sistem Nama Domain (DNS) disediakan. AWS menggunakan nama DNS tersebut untuk melakukan failover ke basis data siaga. Dalam failover otomatis, basis data siaga dipromosikan ke role utama, dan kueri dialihkan ke basis data utama yang baru.
+
+Untuk membantu memastikan bahwa Anda tidak kehilangan konfigurasi Multi-AZ, ada dua cara untuk membuat basis data siaga baru. Berikut ini caranya:
+
+Turunkan basis data utama sebelumnya menjadi basis data siaga jika masih aktif dan berjalan.
+Buat instans DB siaga baru.
+Anda dapat memilih beberapa subnet untuk basis data Amazon RDS dikarenakan konfigurasi Multi-AZ. Anda perlu memastikan bahwa Anda telah menggunakan subnet di Availability Zone yang berbeda untuk salinan utama dan siaga Anda.
+
+Keamanan Amazon RDS
+
+Berkaitan dengan keamanan di Amazon RDS, Anda memiliki kontrol atas pengelolaan akses ke sumber daya Amazon RDS Anda, seperti basis data Anda di instans DB. Cara Anda mengelola akses akan ditentukan oleh tugas-tugas yang Anda atau pengguna lain perlu lakukan di Amazon RDS. ACL jaringan dan grup keamanan membantu pengguna menentukan aliran lalu lintas. Jika Anda ingin membatasi tindakan dan sumber daya yang dapat diakses orang lain, Anda dapat menggunakan kebijakan AWS Identity and Access Management (IAM). 
+
+Untuk mempelajari lebih lanjut tentang keamanan di Amazon EBS, pilih tiap kartu flash berikut untuk membaliknya. Untuk berpindah ke kartu sebelumnya, pilih panah kiri. Untuk berpindah ke kartu berikutnya, klik panah kanan.
+
+IAM
+Gunakan kebijakan IAM untuk menetapkan izin yang menentukan siapa yang dapat mengelola sumber daya Amazon RDS. Misalnya, Anda dapat menggunakan IAM untuk menentukan siapa yang dapat membuat, menjelaskan, memodifikasi, dan menghapus instans DB, memberi tag pada sumber daya, atau memodifikasi grup keamanan.
+
+Grup keamanan
+Gunakan grup keamanan untuk mengontrol alamat IP atau instans Amazon EC2 dapat terhubung ke basis data Anda di instans DB. Ketika Anda pertama kali membuat instans DB, semua akses basis data dicegah kecuali melalui aturan yang ditentukan oleh grup keamanan terkait.
+
+Enkripsi Amazon RDS
+Gunakan enkripsi Amazon RDS untuk mengamankan instans DB dan snapshot Anda saat diam.
+
+SSL atau TLS
+Menggunakan koneksi Secure Socket Layer (SSL) atau Transport Layer Security (TLS) dengan instans DB yang menjalankan mesin basis data MySQL, MariaDB, PostgreSQL, Oracle, atau SQL Server.
+
+3. Basis Data yang Dibuat Khusus
+
+AWS menawarkan lebih dari 15 mesin yang dibuat khusus untuk mendukung beragam model data, termasuk basis data relasional, nilai kunci, dokumen, dalam memori, grafik, deret waktu, kolom lebar, dan buku besar.
+
+Untuk menonton video tentang basis yang dibuat khusus, pilih tombol putar.
+
+Play Video
+Basis data yang dibuat khusus untuk semua kebutuhan aplikasi
+
+Kita telah membahas Amazon RDS dan basis data relasional di materi sebelumnya, dan sejak dulu, basis data relasional telah menjadi opsi default. Jenis basis data ini banyak digunakan hampir di semua aplikasi. Basis data relasional mirip dengan perkakas gabungan. Basis data ini bisa melakukan banyak hal, tetapi tidak terlalu cocok untuk satu tugas tertentu. Opsi ini mungkin tidak selalu menjadi pilihan terbaik untuk kebutuhan bisnis Anda. 
+
+Pendekatan satu ukuran untuk semua dalam menggunakan basis data relasional untuk segala hal tidak lagi ideal. Selama beberapa dekade terakhir, telah ada pergeseran dalam lanskap basis data, dan pergeseran ini memunculkan beberapa basis data yang dibuat khusus. Developer dapat mempertimbangkan kebutuhan aplikasi mereka dan memilih basis data yang paling sesuai. 
+
+AWS menawarkan portofolio lengkap dan mendalam untuk basis data yang dibuat khusus untuk mendukung berbagai model data berbeda. Pelanggan dapat menggunakannya untuk membangun aplikasi berbasis data terdistribusi dengan skalabilitas yang tinggi. Anda dapat memilih basis data terbaik untuk menyelesaikan masalah khusus dan beralih dari basis data komersial yang penuh batasan. Anda dapat memusatkan perhatian pada pembuatan aplikasi yang sesuai dengan kebutuhan organisasi Anda.
+
+Ikon Amazon DynamoDB.
+
+Amazon DynamoDB
+
+DynamoDB adalah basis data NoSQL terkelola penuh yang menyediakan kinerja cepat dan konsisten pada skala apa pun. DynamoDB memiliki model penagihan yang fleksibel, integrasi yang ketat dengan infrastruktur sebagai kode (IaC), dan model operasional yang longgar. DynamoDB telah menjadi basis data pilihan untuk dua kategori aplikasi: aplikasi skala tinggi dan aplikasi nirserver. Meskipun merupakan basis data pilihan untuk aplikasi skala tinggi dan nirserver, DynamoDB cocok untuk hampir semua workload aplikasi pemrosesan transaksi online (OLTP). Kita akan menjelajahi DynamoDB lebih lanjut pada materi berikutnya. 
+
+Amazon ElastiCache 
+
+ElastiCache adalah penyimpanan data dalam memori yang terkelola penuh. ElastiCache mendukung dua mesin cache dalam memori sumber terbuka: Redis dan Memcached. Anda tidak bertanggung jawab atas failover instans, pencadangan dan pemulihan, atau pemutakhiran perangkat lunak.
+
+Ikon Amazon ElastiCache.
+
+Ikon Amazon MemoryDB for Redis.
+
+Amazon MemoryDB for Redis
+
+MemoryDB adalah layanan basis data dalam memori yang tahan lama dan kompatibel dengan Redis yang memberikan kinerja sangat cepat. Dengan MemoryDB, Anda dapat mencapai latensi baca mikrodetik, latensi tulis milidetik satu digit, throughput tinggi, dan daya tahan Multi-AZ untuk aplikasi modern, seperti aplikasi yang dibangun dengan arsitektur layanan mikro. Anda dapat menggunakan MemoryDB sebagai basis data utama yang terkelola penuh untuk membangun aplikasi kinerja tinggi. Anda tidak perlu secara terpisah mengelola cache, basis data tahan lama, atau infrastruktur dasar yang diperlukan.
+
+Amazon DocumentDB (dengan kompatibilitas MongoDB)
+
+Amazon DocumentDB adalah basis data dokumen terkelola penuh dari AWS. Basis data dokumen adalah jenis basis data NoSQL yang dapat Anda gunakan untuk menyimpan dan mengkueri dokumen kaya dalam aplikasi Anda. Jenis basis data ini sangat cocok untuk kasus penggunaan berikut: sistem manajemen konten, manajemen profil, serta aplikasi web dan seluler. Amazon DocumentDB memiliki kompatibilitas API dengan MongoDB. Ini artinya Anda dapat menggunakan pustaka sumber terbuka populer untuk berinteraksi dengan Amazon DocumentDB, atau Anda dapat memigrasikan basis data yang ada ke Amazon DocumentDB dengan mudah.
+
+Ikon Amazon DocumentDB (dengan kompatibilitas MongoDB).
+
+Ikon Amazon Keyspaces (untuk Apache Cassandra).
+
+Amazon Keyspaces (untuk Apache Cassandra)
+
+Amazon Keyspaces adalah layanan basis data terkelola yang kompatibel dengan Apache Cassandra yang dapat diskalakan dan memiliki ketersediaan tinggi. Apache Cassandra adalah pilihan populer untuk aplikasi skala tinggi yang membutuhkan kinerja tingkat atas. Amazon Keyspaces adalah opsi yang bagus untuk aplikasi bervolume tinggi dengan pola akses langsung. Dengan Amazon Keyspaces, Anda dapat menjalankan workload Cassandra di AWS menggunakan kode Bahasa Kueri Cassandra (CQL), driver berlisensi Apache 2.0, dan alat-alat yang Anda gunakan saat ini.
+
+Amazon Neptune
+
+Neptune adalah basis data grafik terkelola penuh yang ditawarkan oleh AWS. Basis data grafik adalah pilihan yang bagus untuk data yang sangat terhubung dengan relasi yang sangat beragam. Perusahaan sering menggunakan basis data grafik untuk mesin rekomendasi, deteksi penipuan, dan grafik pengetahuan.
+
+Ikon Amazon Neptune.
+
+Ikon Amazon Timestream.
+
+Amazon Timestream
+
+Timestream adalah layanan basis data deret waktu nirserver yang cepat dan dapat diskalakan untuk Internet untuk Segala (IoT) dan aplikasi operasional. Layanan ini memudahkan penyimpanan dan analisis triliunan event per hari hingga 1.000 kali lebih cepat dan dengan biaya hanya sepersepuluh dari biaya basis data relasional. Data deret waktu adalah urutan titik data yang dicatat di sepanjang interval waktu. Data ini digunakan untuk mengukur event yang berubah dari waktu ke waktu, seperti harga saham atau pengukuran suhu.
+
+Amazon Quantum Ledger Database (Amazon QLDB)
+
+Dengan basis data tradisional, Anda dapat menimpa atau menghapus data, jadi developer menggunakan teknik seperti tabel audit dan trail audit untuk membantu melacak garis data. Pendekatan ini bisa jadi sulit diskalakan dan memberikan beban pada developer aplikasi mengingat semua data harus dipastikan telah terekam. Amazon QLDB adalah basis data buku besar yang dibuat khusus dan menyediakan riwayat yang dapat diverifikasi secara kriptografis dari semua perubahan pada data aplikasi.
+
+4. Amazon DynamoDB
+
+Dengan Amazon DynamoDB, Anda memiliki layanan yang terkelola penuh yang menangani tugas operasional.
+
+Untuk menonton video tentang DynamoDB, pilih tombol putar.
+
+Play Video
+Gambaran umum DynamoDB
+
+DynamoDB adalah layanan basis data NoSQL terkelola penuh yang memberikan kinerja cepat dan dapat diprediksi dengan skalabilitas yang lancar. Dengan DynamoDB, Anda dapat menurunkan beban administratif operasional dan penskalaan basis data terdistribusi. Anda tidak perlu khawatir tentang penyediaan, pengaturan, dan konfigurasi perangkat keras, replikasi, patch perangkat lunak, atau skala klaster.
+
+Ikon Amazon DynamoDB.
+
+Amazon DynamoDB
+
+Dengan DynamoDB, Anda dapat melakukan hal-hal berikut:
+
+Membuat tabel basis data yang dapat menyimpan dan mengambil data dalam jumlah berapa pun serta melayani semua tingkat lalu lintas permintaan. 
+Meningkatkan atau menurunkan skala kapasitas throughput tabel tanpa waktu henti atau penurunan kinerja. 
+Memantau metrik kinerja dan pemanfaatan sumber daya menggunakan AWS Management Console.
+DynamoDB secara otomatis menyebarkan data dan lalu lintas untuk tabel Anda melalui jumlah server yang cukup untuk menangani persyaratan throughput dan penyimpanan Anda. Hal ini dilakukan sambil mempertahankan kinerja yang cepat dan konsisten. Semua data Anda disimpan di SSD dan secara otomatis direplikasi di beberapa Availability Zone di sebuah AWS Region, sehingga memberikan ketersediaan tinggi dan daya tahan data bawaan.
+
+Komponen inti DynamoDB
+
+Di DynamoDB, tabel, item, dan atribut adalah komponen inti yang Anda gunakan. Tabel adalah kumpulan item, dan setiap item adalah kumpulan atribut. DynamoDB menggunakan kunci primer untuk secara unik mengidentifikasi setiap item dalam tabel dan indeks sekunder untuk memberikan fleksibilitas pembuatan kueri yang lebih besar.
+
+Untuk mempelajari selengkapnya, pilih masing-masing dari ketiga penanda bernomor.
+
+Diagram yang menggambarkan item tabel Orang dan atribut uniknya.
+
+
+
+Kasus penggunaan DynamoDB
+
+DynamoDB adalah layanan terkelola penuh yang menangani tugas operasional. Anda dapat mengalihkan beban administratif operasional dan penskalaan basis data terdistribusi kepada AWS.
+
+Anda mungkin ingin mempertimbangkan penggunaan DynamoDB dalam situasi berikut:
+
+•
+Anda sedang mengalami masalah skalabilitas dengan sistem basis data tradisional lain.
+
+•
+Anda sedang berpartisipasi aktif dalam pengembangan suatu aplikasi atau layanan.
+
+•
+Anda sedang mengerjakan workload OLTP.
+
+•
+Anda sedang men-deploy aplikasi yang vital untuk misi yang harus memiliki ketersediaan tinggi setiap waktu tanpa campur tangan manual.
+
+•
+Anda memerlukan daya tahan data tingkat tinggi, apa pun strategi pencadangan dan pemulihan Anda.
+
+DynamoDB digunakan di berbagai workload dikarenakan kemudahannya, dari operasi skala rendah hingga operasi skala supertinggi, seperti yang diperlukan oleh Amazon.com. 
+
+Untuk mempelajari lebih lanjut tentang kasus penggunaan potensial, perluas masing-masing dari empat kategori berikut.
+
+
+Mengembangkan aplikasi perangkat lunak
+Bangun aplikasi berskala internet yang mendukung metadata dan cache konten pengguna yang memerlukan konkurensi dan koneksi tinggi untuk jutaan pengguna dan jutaan permintaan per detik.
+
+
+Membuat penyimpanan metadata media
+Skalakan throughput dan konkurensi untuk analisis workload media dan hiburan seperti streaming video waktu nyata dan konten interaktif. Hadirkan latensi lebih rendah dengan replikasi multi-Region di seluruh Region.
+
+
+Menskalakan platform game
+Pusatkan perhatian untuk mendorong inovasi tanpa biaya operasional. Bangun platform game Anda dengan data pemain, riwayat sesi, dan papan skor untuk jutaan pengguna secara bersamaan.
+
+
+Menghadirkan pengalaman retail yang mulus
+Gunakan pola desain untuk men-deploy keranjang belanja, mesin alur kerja, pelacakan inventaris, dan profil pelanggan. DynamoDB mendukung lalu lintas tinggi, peristiwa berskala ekstrem, dan dapat menangani jutaan kueri per detik.
+
+Keamanan DynamoDB
+
+DynamoDB menyediakan sejumlah fitur keamanan untuk dipertimbangkan saat Anda mengembangkan dan mengimplementasikan kebijakan keamanan Anda sendiri. Termasuk di antaranya adalah:
+
+•
+DynamoDB menyediakan infrastruktur penyimpanan berdaya tahan tinggi yang dirancang untuk penyimpanan data primer dan yang sangat penting. Data disimpan secara redundan pada beberapa perangkat di beberapa fasilitas di sebuah Region DynamoDB.
+
+•
+Semua data pengguna yang tersimpan di DynamoDB dienkripsi sepenuhnya saat diam. Enkripsi data diam DynamoDB memberikan keamanan yang ditingkatkan dengan mengenkripsi semua data diam Anda menggunakan kunci enkripsi yang disimpan di AWS Key Management Service (AWS KMS).
+
+•
+Administrator IAM mengontrol siapa yang dapat diautentikasi dan diotorisasi untuk menggunakan sumber daya DynamoDB. Anda dapat menggunakan IAM untuk mengelola izin akses dan menerapkan kebijakan keamanan.
+
+•
+Sebagai layanan terkelola, DynamoDB dilindungi oleh prosedur keamanan jaringan global AWS.
+
+Untuk mempelajari lebih lanjut tentang praktik terbaik keamanan DynamoDB yang dapat Anda implementasikan, pilih dan balik kartu flash. Untuk berpindah ke kartu sebelumnya, pilih panah kiri. Untuk berpindah ke kartu berikutnya, klik panah kanan.
+
+Menggunakan AWS CloudTrail untuk memantau penggunaan data kunci terkelola AWS
+Jika Anda menggunakan kunci terkelola AWS untuk enkripsi diam, penggunaan kunci direkam di AWS CloudTrail. CloudTrail dapat memberi tahu Anda orang yang melakukan permintaan, layanan yang digunakan, tindakan yang dijalankan, parameter untuk tindakan tersebut, dan elemen respons yang dikembalikan.
+
+Gunakan IAM role untuk mengautentikasi akses ke DynamoDB
+Agar pengguna, aplikasi, dan layanan AWS lain dapat mengakses DynamoDB, semua harus menyertakan kredensial AWS yang valid di dalam permintaan API AWS mereka. Gunakan IAM role untuk memperoleh kunci akses sementara.
+
+Menggunakan kondisi kebijakan IAM untuk kontrol akses terperinci
+Ketika Anda memberikan izin di DynamoDB, Anda dapat menentukan kondisi yang menentukan bagaimana kebijakan izin berlaku. Menerapkan hak istimewa minimal sangat penting dalam mengurangi risiko keamanan dan dampak yang terjadi akibat kesalahan atau tindakan jahat.
+
+Memantau operasi DynamoDB menggunakan CloudTrail
+Saat terjadi aktivitas di DynamoDB, aktivitas tersebut direkam dalam event CloudTrail. Untuk rekaman event yang berkelanjutan di DynamoDB dan di akun AWS Anda, buatlah sebuah trail untuk mengirimkan file log ke bucket Amazon Simple Storage Service (Amazon S3).
+
+5.Memilih Layanan Basis Data yang Tepat
+
+Pilih layanan basis data yang paling sesuai dengan pekerjaan agar Anda lebih mudah mengoptimalkan skala, kinerja, dan biaya saat merancang aplikasi.
+
+Layanan basis data AWS
+
+Seperti yang telah kita pelajari pada materi sebelumnya, AWS memiliki beragam opsi basis data untuk berbagai kasus penggunaan. Tabel berikut ini memperlihatkan sekilas tentang portofolio basis data AWS. 
+
+Layanan AWS
+
+Jenis Basis Data
+
+Kasus Penggunaan
+
+Amazon RDS, Aurora,
+Amazon Redshift
+
+Relasional
+
+Aplikasi tradisional, ERP, CRM, ecommerce
+
+DynamoDB 
+
+Nilai-kunci
+
+Aplikasi web dengan lalu lintas tinggi, sistem e-commerce, aplikasi game
+
+Amazon ElastiCache for Memcached, Amazon ElastiCache for Redis
+
+Dalam memori
+
+Caching, manajemen sesi, papan peringkat game, aplikasi geospasial
+
+Amazon DocumentDB
+
+Dokumen
+
+Manajemen konten, katalog, profil pengguna
+
+Amazon Keyspaces
+
+Kolom lebar
+
+Aplikasi industri skala tinggi untuk pemeliharaan peralatan, manajemen armada, pengoptimalan rute
+
+Neptune
+
+Grafik
+
+Deteksi penipuan, jejaring sosial, mesin rekomendasi
+
+Timestream
+
+Deret waktu
+
+Aplikasi IoT, Operasi Pengembangan (DevOps), telemetri industri
+
+Amazon QLDB
+
+Buku besar
+
+Sistem catatan, rantai pasokan, registrasi, transaksi perbankan
+
+Memecah aplikasi dan basis data
+
+Seiring perubahan industri, aplikasi dan basis data juga berubah. Saat ini, dengan aplikasi yang lebih besar, Anda tidak lagi melihatnya didukung oleh hanya satu basis data. Sebaliknya, aplikasi dipecah menjadi layanan yang lebih kecil, masing-masing dengan basis datanya sendiri yang dibuat khusus untuk mendukungnya. Pergeseran ini menghilangkan ide basis data satu untuk semua dan menggantikannya dengan strategi basis data bebas. Anda dapat memberi setiap basis data sesuai fungsionalitas, kinerja, dan skala yang diperlukan workload.

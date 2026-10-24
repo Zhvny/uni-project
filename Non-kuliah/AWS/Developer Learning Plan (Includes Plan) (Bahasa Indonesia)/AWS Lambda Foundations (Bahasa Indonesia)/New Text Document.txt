@@ -1,0 +1,1116 @@
+AWS Lambda Foundations (Indonesian) (Na)
+
+DASAR-DASAR AWS LAMBDA
+1. Pengantar
+Dalam kursus ini
+
+Dalam kursus ini, kami akan memperkenalkan layanan AWS Lambda dan fokus ke beberapa area utama untuk membantu Anda mulai mengembangkan aplikasi serverless dengan fungsi Lambda.
+
+Membuat fungsi
+Men-deploy dan Memantau Fungsi
+Cara kerja Lambda
+Praktik terbaik untuk menulis fungsi Lambda
+Pertimbangan konfigurasi
+Play Video
+Video ini memperkenalkan Khairul Habib sebagai pembicara dan topik yang akan dibahas. 
+
+Materi setelah video juga merangkum topik-topik ini.
+
+
+Transkrip
++
+Apa itu AWS Lambda?
+
+Komputasi serverless
+
+Komputasi serverless memperluas abstraksi infrastruktur di cloud. Anda fokus pada kode untuk aplikasi Anda. Ada beberapa hal yang perlu dipikirkan secara berbeda ketika Anda menulis dan menguji kode untuk komputasi serverless. Namun pengurangan overhead memungkinkan Anda bereksperimen dan berinovasi lebih cepat setelah beradaptasi ke pendekatan serverless.
+
+
+
+Deployment dan Operasi
+Deployment dan Operasi Serverless
+Konfigurasikan Instans
+Perbarui OS
+Instal App Platform
+Build dan deploy aplikasi
+Konfigurasikan penskalaan otomatis dan load balancing
+Terus amankan dan pantau instans
+Pantau dan pertahankan aplikasi
+Layanan di AWS Serverless Platform
+
+
+AWS Lambda adalah layanan komputasi untuk serverless
+
+
+
+
+
+AWS Serverless Platform mencakup sejumlah layanan terkelola penuh yang terintegrasi erat dengan Lambda dan sangat cocok untuk aplikasi serverless. Ada juga alat developer seperti Serverless Application Model (SAM) yang membantu menyederhanakan deployment
+
+fungsi Lambda dan aplikasi serverless Anda.
+
+
+
+
+AWS Lambda adalah Inti Serverless
+
+Memungkinkan Anda menjalankan kode tanpa menyediakan atau mengelola server.
+Dipicu atas nama Anda dalam menanggapi peristiwa.
+Diskalakan secara otomatis.
+Menyediakan pemantauan dan pencatatan kode bawaan melalui Amazon CloudWatch
+Contoh arsitektur serverless untuk aplikasi web
+
+
+
+
+Fitur AWS Lambda
+
+Front of card
+No image alternative text
+Click to flip
+Back of card
+Kode yang Anda tulis untuk Lambda tidak ditulis dalam bahasa baru yang harus Anda pelajari. Pengembangan di Lambda tidak tergabung erat ke AWS, sehingga Anda dapat mengarahkan kode masuk dan keluar dari AWS dengan mudah.          
+
+
+Click to flip
+Front of card
+No image alternative text
+Click to flip
+Back of card
+Dalam fungsi Lambda, Anda dapat melakukan semua yang dapat dilakukan aplikasi biasa, termasuk memanggil AWS SDK atau memanggil API pihak ketiga, baik di AWS, di pusat data, maupun di internet.
+
+
+Click to flip
+Front of card
+No image alternative text
+Click to flip
+Back of card
+Alih-alih menskalakan dengan menambah server, Lambda menskalakan sebagai respons peristiwa. Anda mengonfigurasi pengaturan memori dan AWS menangani detail seperti CPU, Jaringan, dan throughput IO.
+
+
+Click to flip
+Front of card
+No image alternative text
+Click to flip
+Back of card
+Model izin Lambda menggunakan AWS Identity & Access Management (IAM) untuk memberikan akses aman ke sumber daya yang diinginkan dan memberi Anda kontrol ketat untuk memanggil fungsi.
+
+
+Click to flip
+Front of card
+No image alternative text
+Click to flip
+Back of card
+Karena Lambda adalah layanan terkelola penuh, ketersediaan tinggi dan toleransi kesalahan sudah terpasang tanpa perlu konfigurasi tambahan.
+
+
+Click to flip
+Front of card
+No image alternative text
+Click to flip
+Back of card
+Fungsi Lambda hanya berjalan jika dipicu, Anda tidak membayar kapasitas menganggur.
+
+
+Click to flip
+
+
+2. Izin Fungsi AWS Lambda
+Ikhtisar Izin
+
+Dua sisi izin akses
+
+
+Prinsip dapat berupa pengguna, peran, layanan, atau akun. Namun, dalam kursus ini, kita akan fokus pada kasus penggunaan layanan AWS lain yang memicu fungsi Lambda
+
+Izin yang berbeda untuk tujuan yang berbeda
+
+Mari kita lihat analogi sederhana untuk menyoroti bagaimana kedua komponen berbeda ini menangani izin Lambda.
+
+
+
+
+Peran eksekusi
+
+Peran eksekusi memberikan izin untuk berinteraksi dengan layanan
+
+IAM ROLE
+
+Dipilih atau dibuat ketika Anda membuat fungsi Lambda
+kebijakan IAM termasuk tindakan yang dapat diambil dengan sumber daya
+Kebijakan kepercayaan yang memungkinkan Lambda untuk AssumeRole
+Pembuat harus memiliki izin untuk iam:PassRole
+
+Contoh definisi eksekusi kebijakan peran
+
+
+Kebijakan IAM
+–
+Kebijakan IAM ini memungkinkan fungsi melakukan tindakan PutItem DynamoDB terhadap tabel bernama Uji di wilayah AS-Barat-2.
+
+
+
+Kebijakan kepercayaan
+–
+Dan kebijakan kepercayaan menunjukkan bahwa peran ini memberi Lambda izin untuk mengambil peran dan memanggil fungsi atas nama Anda.
+
+
+Untuk detail lebih lanjut tentang izin yang telah ditetapkan dan menyiapkan peran eksekusi Anda, lihat panduan Developer AWS Lambda, khususnya halaman Izin AWS Lambda(opens in a new tab).
+
+Mengakses sumber daya dalam VPC
+
+Untuk mengaktifkan fungsi Lambda agar mengakses sumber daya dalam virtual private cloud (VPC) privat, Anda harus memberikan informasi konfigurasi khusus VPC tambahan, yang mencakup ID subnet VPC dan ID grup keamanan. Anda juga perlu menyertakan peran eksekusi dengan izin untuk membuat, mendeskripsikan, dan menghapus antarmuka jaringan elastis. Lambda menyediakan kebijakan izin bernama AWSLambdaVPCAccessExecutionRole untuk tujuan ini.
+
+Untuk detail lebih lanjut tentang melampirkan fungsi Lambda ke VPC, lihat Mengonfigurasi Fungsi Lambda untuk Mengakses Sumber Daya dalam VPC(opens in a new tab) dari Panduan Developer AWS Lambda.
+
+
+Entitas IAM apa yang harus disertakan dalam peran eksekusi agar fungsi Lambda berinteraksi dengan layanan lain? Pilih semua yang benar.
+
+
+Kebijakan IAM yang menentukan tindakan yang dapat diambil
+
+Correctly checked
+Kebijakan kepercayaan yang memberikan izin “AssumeRole” ke Lambda
+
+Incorrectly unchecked
+Grup IAM yang menentukan pengguna fungsi Lambda
+
+Incorrectly checked
+Pengguna IAM dengan izin admin untuk fungsi Lambda
+
+Correctly unchecked
+SUBMIT
+
+Incorrect
+Maaf, jawaban yang benar adalah kebijakan IAM yang mendefinisikan tindakan yang dapat diambil Lambda dan kebijakan kepercayaan yang memberikan izin "AssumeRole" untuk Lambda. Anda tidak harus membuat pengguna atau grup IAM untuk mengizinkan Lambda mengambil tindakan.
+
+
+TAKE AGAIN
+Kebijakan sumber daya
+
+Kebijakan sumber daya memberikan izin untuk memanggil
+
+Sebuah kebijakan sumber daya digunakan untuk memberi tahu layanan Lambda peristiwa mana yang memiliki izin untuk memanggil fungsi Lambda. Kebijakan sumber daya juga memudahkan untuk memberikan akses ke fungsi Lambda di seluruh akun AWS.
+
+
+Kebijakan fungsi Lambda
+
+Terkait dengan sumber peristiwa "push"
+Dibuat ketika Anda menambahkan pemicu ke fungsi Lambda
+Mengizinkan sumber peristiwa mengambil tindakan lambda:InvokeFunction
+Untuk detail lebih lanjut tentang pengaturan kebijakan sumber daya, lihat Menggunakan Kebijakan Berbasis Sumber Daya untuk AWS Lambda(opens in a new tab) di Panduan Developer AWS Lambda.
+
+Contoh kebijakan sumber daya (juga disebut kebijakan fungsi Lambda)
+
+
+Kebijakan sumber daya ini memberikan Amazon S3 izin untuk memanggil fungsi Lambda bernama myFirstFunction.
+
+Kebijakan sumber daya dan peran eksekusi pada konsol AWS Lambda
+
+
+
+3. Cara Kerja Lambda
+Play Video
+
+
+Video ini menjelaskan cara kerja layanan Lambda, dan meninjau cara memanggil fungsi Lambda.
+Materi setelah video juga merangkum topik-topik ini.
+
+
+Transkrip
++
+Sumber peristiwa
+
+Banyak layanan yang dapat menjadi sumber peristiwa
+
+Sumber peristiwa adalah entitas yang memublikasikan peristiwa, dan fungsi Lambda adalah kode kustom yang memproses peristiwa. Konfigurasi layanan sebagai pemicu peristiwa disebut sebagai Pemetaan Sumber Peristiwa.
+
+
+
+
+
+Model eksekusi untuk memanggil fungsi Lambda
+
+Setiap sumber peristiwa yang baru saja disebutkan akan memanggil Lambda di salah satu model eksekusi ini:
+
+
+Push sinkronis seperti UPS yang mengantar paket, dan menunggu tanda tangan untuk menyelesaikan pengiriman. Push asinkron adalah tukang pos meninggalkannya di kotak surat agar Anda mengambilnya sesuai jadwal.
+
+
+
+Anggap peristiwa polling sebagai layanan Lambda yang menunggu koper di korsel bagasi bandara dan mengantarkannya ke rumah Anda dalam batch.
+
+
+
+Sumber peristiwa sinkronis vs. asinkron
+
+Sumber Peristiwa Sinkronis
+Sumber Peristiwa Asinkron
+Peristiwa sinkronis mengharapkan respons langsung dari panggilan fungsi.
+
+
+
+Dengan model eksekusi ini, tidak ada percobaan ulang bawaan di Lambda. Anda harus mengelola strategi percobaan ulang dalam kode aplikasi Anda.
+
+
+
+Untuk memanggil Lambda secara sinkronis melalui API, gunakan RequestResponse.
+
+
+Catatan:
+
+Ketika memanggil fungsi Lambda secara terprogram, Anda harus menentukan tipe panggilan.
+Ketika layanan AWS merupakan sumber, tipe panggilan telah ditentukan.
+Untuk kenyamanan Anda, konsol Lambda menunjukkan semua sumber peristiwa untuk fungsi tertentu.
+Bila Anda memilih Uji dari konsol Lambda, panggilan fungsi Lambda selalu dilakukan secara sinkronis.
+
+Contoh layanan AWS yang memanggil Lambda secara sinkronis
++
+
+Contoh layanan AWS yang memanggil Lambda secara asinkron
++
+November 2019: AWS Lambda sekarang mendukung tujuan untuk panggilan asinkron(opens in a new tab). Fitur ini memungkinkan Anda merutekan hasil panggilan asinkron (berhasil atau gagal) ke layanan AWS tanpa menulis kode.
+
+Peristiwa polling
+
+
+
+Aliran vs. antrean 
+
+Satu pertimbangan adalah dengan polling berbasis aliran tidak ada biaya untuk membuat panggilan polling, tetapi dengan polling SQS, tarif SQS standar berlaku untuk setiap permintaan. Selain itu, ada perbedaan utama dalam cara penanganan kesalahan:
+
+
+Dengan aliran, kesalahan dalam shard memblokir proses lebih lanjut
+–
+Kegagalan dalam model ini memblokir Lambda agar tidak membaca rekaman baru dari aliran sampai batch rekaman gagal kedaluwarsa atau berhasil diproses. Ini penting karena peristiwa di setiap shard dari aliran perlu diproses secara berurutan.
+
+
+
+Dengan antrean, kesalahan dalam batch dikembalikan ke antrean
+–
+Lambda akan terus mencoba kembali pesan yang gagal sampai berhasil diproses, atau melampaui percobaan ulang atau periode retensi. Jika gagal di semua percobaan ulang, pesan akan menuju ke DLQ jika dikonfigurasi, atau akan dibuang.
+
+Kesalahan tidak menghentikan pemrosesan batch, tapi mungkin ada perubahan padaurutan pesan yang diproses.
+
+
+
+
+
+
+
+
+
+
+Manakah di antara pernyataan berikut yang benar? Pilih semua yang benar.
+
+
+A - Amazon S3 memicu Lambda melalui push
+
+asinkron
+
+B - Amazon API Gateway memicu Lambda secara sinkronis
+
+C - Ketika Alexa merupakan sumber peristiwa, Lambda akan membuat tiga upaya untuk memanggil fungsi sebelum menempatkan panggilan gagal ke DLQ.
+
+D - DynamoDB harus memiliki peran Eksekusi untuk memanggil Lambda.
+
+E - Jika Lambda tidak dapat memanggil fungsi yang dipicu pesan dalam antrean SQS, panggilan gagal akan menuju ke DLQ (jika ada yang dikonfigurasi).
+
+SUBMIT
+
+
+
+TAKE AGAIN
+Siklus hidup fungsi Lambda
+
+1
+
+1
+Ketika fungsi pertama kali dipanggil, lingkungan eksekusi diluncurkan dan di-bootstrap. Setelah lingkungan di-bootstrap, kode fungsi Anda dieksekusi. Lalu, Lambda membekukan lingkungan eksekusi, mengharapkan panggilan tambahan.
+
+2
+
+2
+Jika permintaan panggilan lain untuk fungsi dibuat saat lingkungan dalam keadaan ini, permintaan itu berjalan melalui warm start. Dengan warm start, container beku yang tersedia dicairkan dan eksekusi kode segera dimulai tanpa melalui proses bootstrap.
+
+3
+
+3
+Siklus pencairan dan pembekuan ini terus berlanjut selama permintaan terus masuk secara konsisten. Tetapi jika lingkungan menganggur terlalu lama, lingkungan eksekusi didaur ulang.
+
+4
+
+4
+Permintaan berikutnya akan mengulang siklus hidup lagi, lingkungan perlu diluncurkan dan di-bootstrap. Ini adalah cold start.
+
+
+Gambar ini menjelaskan siklus cold dan warm start seperti yang dijelaskan dalam empat langkah di atas.
+
+
+
+Pada tahun 2019, AWS memperkenalkan konkurensi yang disediakan(opens in a new tab) untuk memberi Anda kemampuan menjaga sejumlah lingkungan tetap "hangat" untuk mencegah cold start memengaruhi kinerja fungsi Anda.
+
+Praktik terbaik: Menulis fungsi untuk memanfaatkan warm start
+
+1
+
+1
+Simpan dan rujuk dependensi secara lokal.
+
+2
+
+2
+Batasi inisialisasi ulang variabel.
+
+3
+
+3
+Tambahkan kode untuk memeriksa dan menggunakan kembali koneksi yang ada.
+
+4
+
+4
+Gunakan ruang tmp sebagai cache sementara.
+
+5
+
+5
+Periksa apakah proses latar telah selesai.
+
+Praktik terbaik:Minimalkan waktu cold start
+
+Rencana kondisi dunia nyata dan pola lalu lintas—cold start mungkin tidak berdampak banyak pada aplikasi dan Anda dapat menggunakan konkurensi yang disediakan(opens in a new tab) untuk menjaga lingkungan tetap hangat. Meminimalkan dampak cold start adalah ide bagus.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Menganalisis cold start menggunakan AWS X-Ray
+
+Dalam contoh ini, sebuah objek yang ditambahkan ke suatu bucket S3 memicu fungsi panggilan Lambda.
+
+
+
+
+
+
+
+
+
+
+
+Menganalisis warm start menggunakan AWS X-Ray
+
+Sekarang mari kita lihat fungsi yang sama dengan warm start.
+
+
+
+
+
+
+
+
+
+
+Peta lacak X-Ray(opens in a new tab), yang diperkenalkan pada November 2019, memudahkan Anda memahami sekilas layanan mana yang menyebabkan kesalahan dan/atau peningkatan latensi.
+
+4. Menulis Fungsi Lambda
+Play Video
+Video ini membahas opsi yang Anda miliki untuk menulis fungsi dan menyajikan praktik terbaik. 
+
+Materi setelah video juga merangkum topik-topik ini.
+
+
+Transkrip
++
+Model pemrograman AWS Lambda
+
+Bawa kode Anda sendiri
+
+Dengan Lambda, Anda dapat menggunakan bahasa dan IDE yang paling Anda kuasai, dan membawa kode yang sudah Anda tulis. Kode mungkin perlu beberapa penyesuaian untuk membuatnya serverless.
+
+Untuk daftar terbaru runtime yang didukung, lihat Runtime(opens in a new tab) AWS Lambda(opens in a new tab) di Panduan Developer AWS Lambda.
+(opens in a new tab)
+Anda juga dapat menggunakan runtime(opens in a new tab) kustom.
+
+
+
+Memulai dengan metode handler
+
+Metode handler adalah titik masuk yang dipanggil AWS Lambda untuk mulai menjalankan fungsi Lambda Anda. Metode handler memerlukan dua objek: objek peristiwa dan objek konteks.
+
+Objek Peristiwa
+Objek Konteks
+Objek peristiwa memberikan informasi tentang peristiwa yang memicu fungsi Lambda. Ini dapat berupa objek yang telah ditentukan yang dihasilkan layanan AWS, atau objek kustom yang ditentukan pengguna berupa string yang dapat diserialkan. Contohnya, bisa jadi aliran pojo atau json.
+
+
+Praktik terbaik desain
+
+
+Pisahkan logika bisnis
+–
+Pisahkan logika bisnis inti Anda dari metode handler.
+
+Ini tidak hanya membuat kode Anda lebih portabel, ini memungkinkan Anda menargetkan uji unit pada kode tanpa mengkhawatirkan konfigurasi fungsi.
+
+
+
+
+
+Tulis fungsi modular
+–
+Buat fungsi tujuan tunggal.
+
+Ikuti prinsip yang sama yang Anda terapkan untuk mengembangkan layanan mikro.
+
+
+
+
+
+Perlakukan fungsi sebagai stateless
+–
+Tidak ada informasi keadaan yang boleh disimpan dalam konteks fungsi itu sendiri. 
+
+Karena fungsi Anda hanya ada ketika ada pekerjaan, penting bagi aplikasi serverless untuk memperlakukan setiap fungsi sebagai stateless.
+
+
+
+DynamoDB bersifat serverless dan menskalakan secara horizontal untuk menangani panggilan Lambda Anda. DynamoDB juga memiliki latensi milidetik-tunggal, yang membuatnya menjadi pilihan bagus untuk menyimpan informasi keadaan.
+
+
+Pertimbangkan Amazon ElastiCache jika Anda harus menempatkan fungsi Lambda di VPC. Mungkin akan lebih murah dari DynamoDB.
+
+
+Amazon S3 dapat digunakan sebagai cara yang murah untuk menyimpan data keadaan, jika throughput tidak penting dan jenis data keadaan yang Anda simpan tidak akan berubah dengan cepat.
+
+
+
+
+
+
+Hanya sertakan apa yang Anda butuhkan
+–
+Minimalkan dependensi dan ukuran paket deployment Anda.
+Ini bisa berdampak signifikan ke waktu mulai fungsi Anda.
+
+Misalnya, hanya pilih modul yang Anda butuhkan—jangan sertakan seluruh AWS SDK.
+
+
+Kurangi waktu yang dibutuhkan Lambda untuk membongkar paket deployment yang ditulis dalam Java. Letakkan file .jar dependensi Anda di direktori /lib terpisah.
+
+
+Pilih kerangka kerja dependensi Java (IoC) yang lebih sederhana.
+Misalnya pilih Dagger atau Guice, alih-alih yang lebih kompleks seperti Spring Framework.
+
+Praktik terbaik untuk menulis kode
+
+
+Sertakan pernyataan pencatatan
+–
+Fungsi Lambda dapat dan harus mencakup pernyataan pencatatan yang ditulis ke CloudWatch. Berikut adalah contoh pencatatan menggunakan fungsi logger di Python.
+
+
+
+
+
+Sertakan info hasil
+–
+Fungsi harus memberi Lambda informasi tentang hasil eksekusi mereka.
+Gunakan pengodean kembali yang sesuai untuk bahasa pilihan Anda untuk keluar dari kode.
+
+Untuk bahasa seperti Node.js, Lambda menyediakan metode tambahan pada objek konteks untuk callback. Anda menggunakan metode konteks-objek ini untuk memberi tahu Lambda agar mengakhiri fungsi dan mungkin mengembalikan nilai ke pemanggil.
+
+
+
+Gunakan variabel lingkungan
+–
+Manfaatkan variabel lingkungan untuk parameter operasional.
+Variabel ini memungkinkan Anda melewati pengaturan konfigurasi yang diperbarui tanpa perubahan kode. Anda juga dapat menggunakan variabel lingkungan untuk menyimpan informasi sensitif yang diperlukan oleh fungsi.
+
+
+Info lebih lanjut tentang variabel lingkungan di
+https://docs.aws.amazon.com/lambda/latest/dg/env_variables.html(opens in a new tab)
+
+
+
+
+
+
+Hindari kode rekursif
+–
+Hindari situasi di mana fungsi memanggil dirinya sendiri.
+Ini dapat terus memunculkan panggilan baru yang akan membuat Anda kehilangan kendali konkurensi.
+
+
+Anda dapat mengatur batas eksekusi bersamaan ke nol dengan cepat menggunakan konsol atau baris perintah untuk segera membatasi permintaan jika Anda tanpa sengaja men-deploy
+
+kode rekursif.
+
+
+
+Panduan Developer AWS Lambda(opens in a new tab) memiliki detail lebih lanjut dan contoh praktik terbaik, spesifik untuk masing-masing bahasa yang didukung Lambda. Akrabkan diri dengan dokumentasi yang terkait dengan peralatan Anda.
+
+(opens in a new tab)
+
+Contoh fungsi Lambda
+
+Ini adalah fungsi sangat sederhana yang ditulis dalam Node.js, dipanggil oleh Amazon S3.
+
+
+
+
+Cocokkan bagian fungsi Lambda ini.
+
+
+metode handler
+objek konteks
+objek peristiwa
+getRemainingTimeInMillis
+SUBMIT
+
+
+
+
+TAKE AGAIN
+Menulis kode Lambda
+
+Anda dapat menggunakan salah satu dari tiga metode untuk menulis Fungsi Lambda:
+
+Editor Konsol Lambda
+Unggah ke Konsol Lambda
+Tautkan ke Amazon S3
+Edit kode Anda langsung melalui Konsol Manajemen Lambda.
+
+
+Penulisan menggunakan AWS Management Console paling baik untuk:
+
+
+Paket aplikasi mandiri kecil kurang dari 10 MB
+
+Aplikasi fungsi tunggal sederhana tanpa pustaka kustom; eksperimen
+
+Paket berukuran lebih dari 10 MB atau bagian dari aplikasi CI/CD terkelola
+
+SUBMIT
+
+5. Mengonfigurasi Fungsi Lambda Anda
+Play Video
+Video ini meninjau opsi pengaturan memori, batas waktu, dan konkurensi untuk fungsi Lambda Anda. 
+
+Materi setelah video juga merangkum topik-topik ini.
+
+
+Transkrip
++
+Memori dan batas waktu
+
+Tiga komponen inti untuk konfigurasi
+
+Memori, batas waktu, dan konkurensi adalah inti kinerja setiap fungsi. Demi mendapatkan kombinasi terbaik untuk pengalaman pelanggan yang Anda inginkan, lakukan pengujian dalam kondisi dunia nyata terhadap volume puncak dan gunakan opsi pemantauan seperti Amazon CloudWatch dan AWS X-Ray untuk memastikan hasil yang diinginkan untuk aplikasi Anda.
+
+
+Anda ditagih berdasarkan memori + durasi
+
+
+
+
+Temukan sweet spot untuk daya vs. durasi
+
+Tergantung fungsi, Anda mungkin menemukan bahwa tingkat memori lebih tinggi akan lebih murah karena fungsi dapat selesai jauh lebih cepat dibanding konfigurasi memori lebih rendah.
+
+Anda dapat menggunakan alat sumber terbuka yang disebut Lambda Power Tuning(opens in a new tab) untuk menemukan konfigurasi fungsi terbaik. Alat ini dapat membantu Anda memvisualisasikan dan mengatur konfigurasi memori/daya fungsi Lambda. Alat ini berjalan di akun AWS Anda sendiri—didukung oleh AWS Step Functions—dan mendukung tiga strategi optimalisasi: biaya, kecepatan, dan seimbang.
+
+Anda telah diminta untuk memecahkan masalah fungsi Lambda yang ada dalam produksi. Anda telah diberi tahu bahwa fungsi berjalan selama 5 menit, dan Anda telah diminta untuk mengurangi durasi untuk menghemat biaya tagihan. Tindakan mana yang akan Anda ambil? (Pilih semua yang benar.)
+
+
+A - Uji fungsi dari konsol sekali untuk memastikan bahwa fungsi memang berjalan 5 menit.
+
+Incorrectly checked
+B - Pastikan apakah 5 menit adalah durasi umum melalui pemantauan produksi.
+
+Correctly checked
+C - Kurangi batas waktu menjadi 4 menit.
+
+Correctly unchecked
+D - Uji pada konfigurasi memori lebih tinggi dan bandingkan durasi dan biaya pada setiap konfigurasi.
+
+Correctly checked
+E - Periksa apakah ada komponen sdk di paket deployment yang tidak diperlukan.
+
+Correctly checked
+SUBMIT
+
+Incorrect
+Jawaban yang benar adalah B, D, dan E. Anda ingin memastikan bahwa laporan durasi 5 menit tidak mencerminkan suatu panggilan cold start, jadi dibandingkan menjalankannya sekali dari konsol, Anda ingin melihat bagaimana ia berjalan dalam produksi.
+
+Mengurangi batas waktu akan menghemat biaya, tetapi kemungkinan fungsi akan sering gagal selesai. Suatu ide bagus untuk bereksperimen dengan konfigurasi memori berbeda dan memperkirakan apakah konfigurasi memori yang lebih tinggi benar-benar akan lebih murah. Dan melihat apakah ada komponen yang tidak perlu dalam fungsi itu sendiri yang dapat dihapus untuk mempercepat inisialisasi adalah ide bagus.
+
+
+TAKE AGAIN
+Konkurensi dan penskalaan
+
+Eksekusi bersamaan
+
+Konkurensi adalah unit pengukuran skala. Anggap eksekusi bersamaan sebagai kapasitas restoran untuk melayani sejumlah pengunjung pada waktu tertentu.
+
+
+
+
+
+
+
+
+
+Mengapa Anda perlu menetapkan batas konkurensi?
+
+Membatasi Konkurensi
+Mencadangkan Konkurensi
+Anda mungkin ingin memesan fungsi konkurensi:
+
+Untuk menangani antisipasi puncak
+Untuk mengatasi kesalahan panggilan
+
+Bagaimana lonjakan konkurensi dikelola
+
+
+
+
+
+
+Memperkirakan konkurensi
+
+Untuk merencanakan pengaturan batas konkurensi, Anda perlu memahami bagaimana eksekusi bersamaan dihitung, dan dapat mengukur eksekusi bersamaan dalam pengujian realistis.
+
+
+Peristiwa non-polling
+–
+Untuk peristiwa berbasis non-aliran Anda dapat memperkirakan eksekusi bersamaan dengan menggunakan tingkat permintaan - yang dalam hal ini hanyalah tingkat peristiwa mana yang diterbitkan dikali dengan durasi rata-rata fungsi.
+
+
+
+Peristiwa polling aliran
+–
+Atur frekuensi polling untuk tingkat permintaan ke pemrosesan “ukuran-tepat". Ketika mem-polling aliran, Lambda menarik kembali rekaman yang saat ini ada di setiap shard dan memanggil satu fungsi Lambda bersamaan per shard untuk memproses rekaman dari shard itu secara berurutan sampai semua rekaman dari shard peristiwa polling berhasil diproses (atau kedaluwarsa).
+
+Tingkat permintaan = eksekusi bersamaan (# shard) /durasi fungsi rata-rata
+
+
+Peristiwa polling non-aliran (SQS)
+–
+Dengan SQS, ada biaya setiap kali Anda polling, sehingga integrasi Lambda dengan SQS dirancang untuk menemukan keseimbangan antara biaya dan kinerja.
+
+
+Lambda akan polling pada tingkat awal 5 per detik, dan jika kedalaman antrean terus meningkat, aktivitas polling dinaikkan skalanya secara otomatis sampai jumlah eksekusi fungsi bersamaan mencapai 1000, batas konkurensi akun, atau batas fungsi konkurensi (opsional), mana pun yang lebih rendah.
+
+
+
+
+Metrik CloudWatch untuk konkurensi
+
+
+ConcurrentExecutions
+–
+Jumlah eksekusi bersamaan untuk fungsi yang diberikan pada waktu tertentu
+
+Semua fungsi di Fungsi akun 
+yang memiliki batas konkurensi kustom yang ditentukan
+
+UnreservedConcurrentExecutions:
+–
+Jumlah konkurensi fungsi yang tidak memiliki batas konkurensi kustom yang ditentukan.
+
+Konkurensi yang disediakan
+
+Anda dapat mengonfigurasi bagian dari batas konkurensi yang tersedia sebagai konkurensi yang disediakan. Ini memungkinkan Anda memastikan bahwa fungsi panggilan dijalankan di lingkungan terinisialisasi ("hangat"). Untuk informasi lebih lanjut, kunjungi blog Apa yang Baru untuk Desember 2019(opens in a new tab) dan Mengonfigurasi Konkurensi yang Disediakan(opens in a new tab) di Panduan Developer AWS Lambda.          
+
+
+
+Pengujian konkurensi
+
+Mungkin hal yang paling penting untuk memutuskan cara mengatur konkurensi, dan memori Anda dan batas waktu, adalah memastikan Anda menguji di kondisi dunia nyata.
+
+
+Apakah uji kinerja Anda mengantisipasi puncak + ?
+Dapatkah backend Anda yang ada menangani kecepatan permintaan yang akan dikirimkan?
+Apakah penanganan kesalahan Anda bekerja seperti yang diharapkan?
+Anda mungkin ingin menetapkan batas (atau cadangan) konkurensi pada fungsi untuk: Pilih semua yang benar.
+
+
+Mengelola biaya.
+
+Correctly checked
+Mengatur berapa lama waktu yang Anda perlukan untuk memproses batch peristiwa.
+
+Correctly checked
+Mencocokkan dengan sumber daya hilir.
+
+Correctly checked
+Menangani puncak yang diantisipasi.
+
+Correctly checked
+SUBMIT
+
+Correct
+Selesai! Semua ini adalah alasan mengapa Anda perlu mengatur cadangan konkurensi untuk fungsi.
+
+6. Men-deploy dan Menguji Aplikasi Serverless
+Play Video
+Video ini membahas deployment serverless dan meninjau Serverless Application Model (SAM). 
+
+Materi setelah video juga merangkum topik-topik ini.
+
+
+Transkrip
++
+Bagaimana perbedaan deployment serverless?
+
+Deployment berbasis server vs. serverless
+
+
+Deployment berbasis server seperti pindah rumah.
+Anda perlu tahu apa yang didukung infrastruktur dan bagaimana Anda dan keluarga akan cocok di situ, tetapi Anda bekerja dengan apa yang ada. Mengemas barang-barang Anda dan menyerahkannya ke truk. Seperti memeriksa kode Anda, lalu DevOps menempatkan kode Anda ke build dan men-deploynya.
+
+
+
+Serverless lebih seperti membangun rumah.
+
+Anda merancang seluruh struktur untuk spesifikasi yang sangat detail. Anda menyampaikan ini melalui cetak biru. Cetak biru memungkinkan Anda tahu persis seperti apa tampilan rumahnya sebelum dibangun.
+
+
+Deployment serverless
+
+
+Ketika Anda men-deploy fungsi Lambda, cetak biru ini seperti templat AWS CloudFormation.
+
+Anda memodelkan infrastruktur dalam templat CloudFormation dan menggunakannya untuk men-deploy tumpukan yang diinginkan tanpa menulis skrip kustom.
+
+
+Templat adalah satu sumber kebenaran untuk men-deploy tumpukan ke akun apa pun.
+
+Dan setiap kali fungsi dipanggil, fungsi akan mengeksekusi menggunakan informasi dari templat CloudFormation.
+
+Lingkungan pengembangan berbasis server vs. serverless
+
+Lingkungan pengembangan berbasis server
+
+
+
+
+
+
+Lingkungan pengembangan serverless
+
+
+
+
+
+
+
+Menggunakan SAM sebagai kerangka kerja aplikasi serverless Anda
+
+Ada sejumlah kerangka kerja serverless yang tersedia. Temukan framework yang bekerja dengan rantai alat developer Anda dan minimalkan pekerjaan untuk menentukan detail lingkungan eksekusi Anda. Sebagai contoh, kita akan melihat SAM.
+
+
+
+
+
+
+
+Contoh templat SAM
+
+
+
+
+
+
+
+
+Menggunakan SAM untuk men-deploy tumpukan ke beberapa akun
+
+
+Memastikan paritas lingkungan
+
+SAM menyederhanakan pembuatan tumpukan, dan men-deploy tumpukan yang sama persis ke setiap akun. 
+
+Menyederhanakan eksperimen
+
+Tanpa overhead pemeliharaan instans, SAM memungkinkan menjalankan tumpukan untuk cabang fitur yang berbeda dengan cepat dan memungkinkan eksperimen tanpa menimbulkan biaya di luar panggilan sebenarnya yang dijalankan di lingkungan itu.
+
+SAM CLI membantu Anda menguji dan men-deploy
+
+SAM CLI meluncurkan container Docker yang dapat Anda interaksikan untuk menguji dan men-debug kode Fungsi Lambda. Penting untuk dicatat bahwa bahkan dengan alat seperti SAM CLI, pengujian lokal hanya akan mencakup subset dari apa yang perlu diuji sebelum kode harus masuk ke aplikasi produksi Anda.
+
+
+SAM CLI untuk pengujian
+
+Memanggil fungsi dan menjalankan uji otomatis secara lokal.
+Menghasilkan sampel muatan sumber peristiwa.
+Menjalankan API Gateway secara lokal.
+Men-debug kode.
+Meninjau catatan fungsi Lambda.
+Memvalidasi templat SAM.
+SAM CLI
+
+Anda dapat menginstal SAM CLI secara lokal untuk membantu pengujian aplikasi serverless, memvalidasi templat SAM, dan menyederhanakan deployment Anda.
+
+Berikut adalah beberapa perintah utama SAM CLI. Anda dapat menemukan semua detail tentang SAM dan SAM CLI di github(opens in a new tab).
+
+
+init
+–
+Menginisialisasi aplikasi serverless.
+
+
+local
+–
+Menjalankan aplikasi Anda secara lokal.
+
+
+validate
+–
+Memvalidasi templat AWS SAM.
+
+
+package (secara implisit dilakukan dengan deploy)
+–
+Mengemas aplikasi AWS. Alias untuk perintah aws cloudformation package.
+
+
+Pada November, 2019, perintah deploy SAM sekarang secara implisit melakukan fungsi perintah package. Anda dapat menggunakan perintah deploy SAM langsung untuk mengemas dan men-deploy aplikasi Anda. Rujuk perintah deploy.
+
+
+deploy
+–
+Deploy aplikasi AWS SAM.
+
+
+Perintah ini dilengkapi dengan mode panduan interaktif, yang dapat Anda aktifkan dengan menentukan parameter --guided. Mode interaktif memandu Anda melalui parameter yang diperlukan untuk deployment , menyediakan opsi default, dan menyimpan opsi ini di file konfigurasi di folder proyek Anda. Anda dapat menjalankan deployment aplikasi berikutnya dengan menjalankan perintah deploy SAM. Parameter yang dibutuhkan akan diambil dari file konfigurasi AWS SAM CLI.
+
+
+Men-deploy fungsi Lambda melalui AWS CloudFormation membutuhkan bucket Amazon S3 untuk paket deployment Lambda. SAM CLI sekarang membuat dan mengelola bucket
+
+Amazon S3 ini untuk Anda.
+
+
+
+Baca lebih lanjut tentang deploy satu-perintah di blog Apa yang Baru dari November 2019(opens in a new tab).
+
+Baca artikel A Simpler Deployment Experience with AWS SAM CLI(opens in a new tab) di blog Komputasi, November, 2019. 
+
+DEMO: Menggunakan SAM CLI dan AWS Cloud9 untuk Men-deploy Fungsi Lambda
+
+Play Video
+Demo ini menunjukkan kepada Anda cara membuat lingkungan Cloud9 lalu menggunakannya untuk: 1) membuat dan menguji fungsi Lambda, 2) menambahkan sumber peristiwa S3 dan tabel DynamoDB melalui templat SAM, dan 3) memperbarui fungsi untuk menulis informasi peristiwa ke tabel DynamoDB.
+
+Pipeline CI/CD serverless
+
+
+Anda dapat menggabungkan alat tambahan untuk membuat pipeline CI/CD otomatis untuk aplikasi serverless yang terintegrasi dengan SAM. misal:
+
+CodeBuild: mengotomatiskan proses pengemasan kode dan mengeksekusi pengujian sebelum kode di-deploy
+CodeDeploy: menggunakan opsi manajemen versi untuk memastikan deployment yang aman untuk produksi.
+Serverless Application Repository
+
+Aplikasi yang dikemas dengan templat SAM dapat dibagikan di Serverless Application Repository.
+
+Publikasikan aplikasi Anda sendiri(opens in a new tab) untuk dibagikan di seluruh akun AWS Anda atau dengan publik.
+Aplikasi yang dibagikan secara publik mencakup tautan ke kode sumber aplikasi.
+Lencana penulis terverifikasi(opens in a new tab) memungkinkan konsumen dengan mudah menemukan penulis yang mereka kenal.
+Untuk informasi lebih lanjut, lihat https://serverlessrepo.aws.amazon.com/applications(opens in a new tab).
+
+Cocokkan item dengan deskripsi yang sesuai.
+
+
+Templat CloudFormation
+Templat SAM
+SAM CLI
+Serverless Application Repository
+deploy
+Seperti cetak biru rumah, memungkinkan Anda memperlakukan infrastructure as code
+Templat CloudFormation yang disederhanakan untuk aplikasi serverless
+Alat untuk pengujian dan debugging lokal aplikasi serverless
+Digunakan untuk berbagi dan menemukan aplikasi serverless
+Perintah SAM CLI untuk men-deploy templat SAM
+SUBMIT
+
+Correct
+CloudFormation memungkinkan Anda mengekspresikan infrastructure as code. Templat SAM adalah templat CloudFormation yang disederhanakan yang mempermudah untuk men-deploy
+
+aplikasi serverless.
+SAM CLI memungkinkan Anda menguji dan men-debug
+
+aplikasi serverless secara lokal, dan perintah deploy dalam SAM CLI memungkinkan Anda men-deploy templat SAM.
+Serverless Application Repository memungkinkan Anda berbagi aplikasi dengan tim atau dengan publik dan Anda juga bisa mendapatkan kode sumber untuk aplikasi yang telah dibagikan secara publik.
+
+
+TAKE AGAIN
+Pembuatan versi dan alias untuk deployment yang aman
+
+
+Bila Anda membuat fungsi Lambda, hanya ada satu versi, diidentifikasi oleh $LATEST di ARN.
+
+Rujuk versi $Latest fungsi menggunakan Amazon Resource Name (ARN).
+Tambahkan versi dengan tindakan Publikasikan.
+Publikasikan membuat salinan snapshot $Latest
+
+
+Aktifkan pembuatan versi untuk membuat snapshot permanen dari fungsi Anda setiap kali Anda memublikasikannya. 
+
+Publikasikan sebanyak mungkin versi yang Anda butuhkan. 
+Setiap versi menghasilkan nomor versi baru yang berurutan. 
+Tambahkan nomor versi ke ARN fungsi untuk merujuknya.
+Alias mengarah ke versi tertentu
+
+
+Anda dapat menggunakan alias untuk menunjuk ke versi tertentu lalu menggunakan alias di ARN untuk merujuk versi fungsi Lambda saat ini yang terkait dengan alias tersebut.
+
+
+Ini memudahkan promosi atau rollback versi tanpa mengubah kode apa pun. Alias mengabstraksi kebutuhan untuk mengetahui versi mana yang sedang dirujuk.
+
+Menggunakan alias untuk pergeseran lalu lintas
+
+
+
+Mengotomatiskan deployment aman dengan AWS CodeDeploy
+
+Lambda terintegrasi dengan CodeDeploy untuk rollout otomatis dengan pergeseran lalu lintas.
+
+Canary: Lalu lintas bergeser dalam dua kenaikan: pertama X%, sisanya setelah Y menit.
+Linear: Lalu lintas digeser dengan penambahan X yang sama dengan Y menit antara setiap kenaikan.
+Menambahkan konfigurasi CodeDeploy untuk templat SAM
+
+
+
+
+
+Manakah di antara pernyataan berikut yang benar? (Pilih semua yang benar).
+
+
+Saat Anda membuat fungsi Lambda, hanya ada satu versi:
+versi $LATEST.
+
+Correctly checked
+Pembuatan versi adalah opsi yang dapat Anda aktifkan untuk fungsi Lambda.
+
+Correctly checked
+Anda dapat memberikan skema nomor versi yang diinginkan yang akan digunakan Lambda.
+
+Correctly unchecked
+Anda dapat merujuk versi apa pun dengan alias.
+
+Correctly checked
+Anda dapat merujuk versi atau alias di ARN.
+
+Correctly checked
+SUBMIT
+
+Correct
+Anda benar! Semua benar kecuali bahwa versi diberi nomor secara berurutan dan Anda tidak dapat mengubah nomor versi.
+
+
+TAKE AGAIN
+
+
+7. Pemantauan dan Pemecahan Masalah
+Play Video
+Video ini meninjau layanan AWS untuk pemantauan dan pemecahan masalah fungsi Lambda. 
+
+Materi setelah video juga merangkum topik-topik ini.
+
+
+Transkrip
++
+Pemantauan dengan CloudWatch
+
+CloudWatch menyediakan tujuh metrik bawaan untuk Lambda:
+
+
+Panggilan
+–
+Berapa kali suatu fungsi dipanggil sebagai respons terhadap suatu peristiwa atau panggilan API.
+
+
+Metrik ini tersedia langsung dari Dasbor Lambda.
+
+
+Kesalahan
+–
+Jumlah panggilan yang gagal karena kesalahan dalam fungsi
+(kode respons 4XX). 
+
+
+Metrik ini tersedia langsung dari Dasbor Lambda.
+
+
+Durasi
+–
+Waktu yang berlalu dari saat kode fungsi mulai mengeksekusi sampai berhenti mengeksekusi.
+
+
+Metrik ini tersedia langsung dari Dasbor Lambda.
+
+
+Batasan
+–
+Jumlah upaya pemanggilan fungsi Lambda fungsi yang dibatasi karena tingkat panggilan melebihi batas bersamaan pelanggan (kode kesalahan 429).
+
+
+Metrik ini tersedia langsung dari Dasbor Lambda.
+
+
+IteratorAge
+–
+Dipancarkan hanya untuk panggilan berbasis aliran. Mengukur usia rekaman terakhir untuk setiap batch rekaman yang diproses. Usia adalah perbedaan antara waktu Lambda menerima batch dan waktu rekaman terakhir dalam batch ditulis ke aliran.
+
+
+
+
+ConcurrentExecutions
+–
+Mengukur jumlah eksekusi bersamaan untuk fungsi yang diberikan pada titik waktu tertentu. Harus dilihat sebagai metrik rata-rata jika digabungkan dalam periode waktu.
+
+
+UnreservedConcurrentExecutions
+–
+Merupakan jumlah konkurensi fungsi yang tidak memiliki batas konkurensi kustom yang ditentukan. Harus dilihat sebagai metrik rata-rata jika digabungkan dalam periode waktu.
+
+Alat pemantauan dan pemecahan masalah tambahan
+
+AWS X-Ray
+AWS CloudTrail
+Antrean Surat Gagal
+Antrean Surat Gagal (DLQ) membantu Anda menangkap kesalahan aplikasi yang tidak bisa langsung Anda buang tetapi harus ditanggapi. 
+
+Gunakan DLQ untuk menganalisis kegagalan untuk tindak lanjut atau koreksi kode.
+Tersedia untuk peristiwa polling asinkron dan non-aliran
+Dapat berupa topik Amazon SNS atau antrean Amazon SQS
+Anda dapat mengonfigurasi DLQ dari Konsol Lambda.
+
+Cocokkan tugas dengan alat yang akan Anda gunakan untuk melakukannya.
+
+
+Meninjau metrik panggilan, kesalahan, dan pembatasan untuk fungsi lambda.
+Meninjau kesalahan panggilan Lambda yang gagal dan harus diatasi secara manual.
+Meninjau detail pelacakan panggilan untuk mengidentifikasi potensi kemacetan.
+Tindakan audit yang dilakukan terhadap aplikasi Anda.
+Amazon CloudWatch
+DLQ
+AWS X-Ray
+AWS CloudTrail
+SUBMIT
+
+Correct
+Metrik Amazon CloudWatch untuk panggilan, kesalahan, dan pembatasan terlihat langsung di dasbor Konsol Lambda. Gunakan DLQ untuk meninjau panggilan yang gagal secara manual. Gunakan X-Ray untuk menganalisis detail panggilan untuk mencari kemacetan, dan gunakan CloudTrail untuk mengaudit panggilan API yang dibuat ke aplikasi Anda.
+
+
+TAKE AGAIN

@@ -1,0 +1,760 @@
+1. Monitoring
+
+Pemantauan memberi Anda wawasan tentang aplikasi Anda yang membantu Anda mendeteksi, menyelidiki, dan memperbaiki masalah lebih cepat.
+
+Untuk menonton video tentang pemantauan, pilih tombol putar.
+
+Play Video
+Tujuan pemantauan
+
+Saat mengoperasikan situs web seperti aplikasi direktori karyawan di AWS, Anda mungkin memiliki pertanyaan seperti berikut ini:
+
+Berapa orang yang mengunjungi situs saya dari hari ke hari?
+Bagaimana cara melacak jumlah pengunjung dari waktu ke waktu?
+Bagaimana cara saya tahu apakah situs web saya memiliki masalah kinerja atau ketersediaan?
+Apa yang terjadi jika instans Amazon Elastic Compute Cloud (Amazon EC2) saya kehabisan kapasitas?
+Apakah saya akan menerima peringatan jika situs web saya tidak berfungsi?
+Anda memerlukan cara untuk mengumpulkan dan menganalisis data tentang kondisi operasional dan penggunaan sumber daya Anda. Tindakan mengumpulkan, menganalisis, dan menggunakan data untuk membuat keputusan atau menjawab pertanyaan tentang sumber daya dan sistem TI Anda disebut monitoring.
+
+Monitoring memberikan informasi terkini tentang sistem Anda dan membantu menjawab pertanyaan sebelumnya. Anda dapat menggunakan data yang dikumpulkan untuk melihat masalah operasional yang disebabkan oleh peristiwa seperti penggunaan sumber daya berlebihan, kekurangan aplikasi, kesalahan konfigurasi sumber daya, atau peristiwa terkait keamanan. Anggaplah data yang dikumpulkan melalui pemantauan sebagai output dari sistem, atau metrik.
+
+Menggunakan metrik untuk memecahkan masalah
+
+Sumber daya AWS yang meng-host solusi Anda menciptakan berbagai bentuk data yang mungkin menarik untuk Anda kumpulkan. Setiap titik data individu yang diciptakan oleh sumber daya disebut metrik. Metrik yang dikumpulkan dan dianalisis dari waktu ke waktu menjadi statistik, seperti pemanfaatan CPU rata-rata dari waktu ke waktu yang menunjukkan adanya lonjakan.
+
+Grafik yang menggambarkan lonjakan dalam pemanfaatan CPU.
+
+Salah satu cara untuk mengevaluasi kondisi instans EC2 adalah melalui pemanfaatan CPU. Secara umum, pemanfaatan CPU yang tinggi pada instans EC2 dapat diartikan adanya banjir permintaan. Atau, hal ini dapat mencerminkan proses yang mengalami kesalahan dan memakan terlalu banyak CPU. Saat menganalisis pemanfaatan CPU, cari proses yang melebihi ambang batas tertentu dengan durasi yang tidak biasa. Gunakan kejadian abnormal tersebut sebagai isyarat untuk menyelesaikan masalah secara manual atau otomatis melalui tindakan seperti menskalakan instans.
+
+Pemanfaatan CPU adalah satu contoh metrik. Contoh metrik lain yang dimiliki instans EC2 adalah pemanfaatan jaringan, kinerja disk, pemanfaatan memori, dan log yang dibuat oleh aplikasi yang berjalan di atas Amazon EC2.
+
+Jenis metrik
+
+Sumber daya yang berbeda di AWS menciptakan jenis metrik yang berbeda. Untuk melihat contoh metrik yang terkait dengan sumber daya yang berbeda, balikkan setiap kartu flash berikut dengan memilihnya. 
+
+Metrik Amazon Simple Storage Service (Amazon S3)
+Ukuran penyimpanan objek dalam bucket
+Jumlah penyimpanan objek dalam bucket
+Jumlah permintaan HTTP yang dibuat ke bucket
+
+Metrik Amazon Relational Database Service (Amazon RDS)
+Koneksi basis data
+Pemanfaatan CPU sebuah instans
+Konsumsi ruang disk
+
+Metrik Amazon EC2
+Penggunaan CPU
+Pemanfaatan jaringan
+Kinerja disk
+Pemeriksaan status
+
+Manfaat Pemantauan
+
+Pemantauan memberi Anda visibilitas ke sumber daya Anda, tetapi pertanyaannya sekarang adalah, “Mengapa hal itu penting?” Bagian ini menjelaskan beberapa manfaat pemantauan.
+
+Untuk mempelajari selengkapnya, buka tiap lima kategori berikut.
+
+
+Merespons secara proaktif
+Tanggapi masalah operasional secara proaktif sebelum pengguna akhir Anda menyadarinya. Menunggu pengguna akhir untuk memberi tahu Anda ketika aplikasi Anda mengalami penghentian adalah praktik yang buruk. Melalui pemantauan, Anda dapat mengawasi metrik seperti tingkat respons kesalahan dan latensi permintaan. Seiring waktu, metrik membantu memberi isyarat ketika penghentian akan terjadi. Anda dapat melakukan tindakan secara otomatis atau manual untuk mencegah penghentian terjadi, dan memperbaiki masalah sebelum pengguna akhir Anda menyadarinya.
+
+
+Meningkatkan kinerja dan keandalan
+Monitoring dapat meningkatkan kinerja dan keandalan sumber daya Anda. Dengan memantau berbagai sumber daya yang membentuk aplikasi Anda, Anda memperoleh gambaran lengkap tentang bagaimana solusi Anda berperilaku sebagai sebuah sistem. Pemantauan, jika dilakukan dengan baik, dapat menunjukkan kemacetan dan arsitektur yang tidak efisien. Ini membantu Anda mendorong kinerja dan meningkatkan keandalan.
+
+
+Mengenali ancaman dan event keamanan
+Dengan monitoring, Anda dapat mengenali ancaman dan peristiwa keamanan. Ketika Anda memantau sumber daya, event, dan sistem dari waktu ke waktu, Anda membuat sesuatu yang disebut garis acuan. Garis acuan menetapkan aktivitas normal. Dengan menggunakan garis acuan, Anda dapat melihat anomali seperti lonjakan lalu lintas yang tidak biasa atau alamat IP tidak biasa yang mengakses sumber daya Anda. Ketika anomali terjadi, pemberitahuan dapat dikirim atau tindakan dapat diambil untuk menyelidiki event tersebut.
+
+
+Mengambil keputusan berbasis data
+Monitoring membantu Anda membuat keputusan berdasarkan data untuk bisnis Anda. Pemantauan mengawasi kondisi operasional IT dan mendorong keputusan bisnis. Misalnya, Anda meluncurkan fitur baru untuk aplikasi foto kucing Anda dan sekarang Anda ingin tahu apakah fitur tersebut digunakan. Anda dapat mengumpulkan metrik tingkat aplikasi dan melihat jumlah pengguna yang menggunakan fitur baru tersebut. Dengan temuan Anda, Anda dapat memutuskan apakah akan menginvestasikan lebih banyak waktu untuk meningkatkan fitur baru tersebut.
+
+
+Membuat solusi hemat biaya
+Melalui monitoring, Anda dapat menciptakan solusi yang lebih hemat biaya. Anda dapat melihat sumber daya dengan pemanfaatan yang terlalu rendah dan menyesuaikan ukuran sumber daya Anda dengan penggunaan Anda. Hal ini membantu Anda mengoptimalkan biaya dan memastikan Anda tidak mengeluarkan lebih banyak uang dari yang diperlukan.
+
+2. Amazon CloudWatch
+
+Amazon CloudWatch adalah layanan pemantauan dan observabilitas yang mengumpulkan data sumber daya Anda dan menyediakan wawasan yang dapat ditindaklanjuti tentang aplikasi Anda.
+
+Untuk menonton video tentang CloudWatch, pilih tombol putar.
+
+Play Video
+Visibilitas menggunakan CloudWatch
+
+Sumber daya AWS menciptakan data yang dapat Anda pantau melalui metrik, log, lalu lintas jaringan, peristiwa, dan banyak lagi. Data ini berasal dari komponen yang secara alami terdistribusi. Hal ini dapat berimbas pada sulitnya pengumpulan data yang Anda perlukan jika Anda tidak memiliki lokasi terpusat untuk meninjau semuanya. AWS telah mengurus sentralisasi pengumpulan data untuk Anda dengan layanan bernama CloudWatch.
+
+Ikon Amazon CloudWatch.
+
+Amazon CloudWatch
+
+CloudWatch adalah layanan pemantauan dan observabilitas yang menyediakan data dan wawasan yang dapat ditindaklanjuti untuk memantau aplikasi Anda. Dengan CloudWatch, Anda dapat merespons perubahan kinerja di seluruh sistem, mengoptimalkan penggunaan sumber daya, dan mendapatkan pandangan terpadu mengenai kondisi operasional.
+
+Anda dapat menggunakan CloudWatch untuk melakukan hal berikut:
+
+•
+Mendeteksi perilaku anomali di lingkungan Anda.
+
+•
+Menyetel alarm untuk memberi Anda peringatan jika ada hal yang tidak beres.
+
+•
+Memvisualisasikan log dan metrik dengan AWS Management Console.
+
+•
+Mengambil tindakan otomatis seperti penskalaan.
+
+•
+Memecahkan masalah.
+
+•
+Menemukan wawasan untuk menjaga kesehatan aplikasi Anda.
+
+Cara kerja CloudWatch
+
+Dengan CloudWatch, yang Anda butuhkan untuk memulai adalah akun AWS. Ini adalah layanan terkelola yang dapat Anda gunakan untuk memantau tanpa mengelola infrastruktur dasar.
+
+Untuk mempelajari selengkapnya, pilih setiap penanda bernomor. 
+
+Grafik yang menunjukkan fitur-fitur Amazon CloudWatch.
+
+
+
+
+
+Aplikasi direktori karyawan dibangun dengan berbagai layanan AWS yang bekerja bersama-sama sebagai elemen dasar. Pemantauan layanan individu secara mandiri bisa jadi hal yang menantang. Untungnya, CloudWatch bertindak sebagai tempat terpusat di mana metrik dikumpulkan dan dianalisis. 
+
+
+
+Banyak layanan AWS secara otomatis mengirimkan metrik ke CloudWatch secara gratis pada tingkat 1 titik data dengan interval per 5 menit. Ini disebut pemantauan dasar, yang memberi Anda visibilitas tentang sistem Anda tanpa biaya tambahan apa pun. Untuk banyak aplikasi, pemantauan dasar sudah memadai.
+
+Untuk aplikasi yang berjalan pada instans EC2, Anda bisa mendapatkan ketelitian lebih dengan memposting metrik setiap menit, bukan setiap 5 menit, menggunakan fitur seperti pemantauan mendetail. Pemantauan mendetail memakan biaya. Untuk informasi lebih lanjut tentang harga, lihat "Harga Amazon CloudWatch" di bagian Sumber Daya di akhir pelajaran ini.
+
+
+Konsep CloudWatch
+
+Metrik adalah konsep dasar dalam CloudWatch. Metrik mewakili kumpulan titik data yang diurutkan berdasarkan waktu yang dipublikasikan ke CloudWatch. Anggap metrik sebagai variabel untuk dipantau, dan titik data sebagai perwakilan nilai variabel tersebut dari waktu ke waktu. Setiap titik data metrik harus dikaitkan dengan timestamp.
+
+Untuk mempelajari selengkapnya, pilih setiap penanda bernomor.
+
+Grafik yang menggambarkan pemanfaatan CPU dan sebuah timestamp.
+
+
+Layanan AWS yang mengirimkan data ke CloudWatch melampirkan dimensi ke setiap metrik. Dimensi adalah pasangan nama dan nilai yang merupakan bagian dari identitas metrik. Anda dapat menggunakan dimensi untuk memfilter hasil yang dikembalikan oleh CloudWatch. Misalnya, banyak metrik Amazon EC2 menerbitkan InstanceId sebagai nama dimensi dan ID instans sebenarnya sebagai nilai untuk dimensi tersebut.
+
+Tangkapan layar yang menggambarkan metrik dan dimensi yang digunakan untuk memfilter hasil yang dikembalikan oleh CloudWatch.
+
+Secara default, banyak layanan AWS yang menyediakan metrik tanpa biaya untuk sumber daya seperti instans Amazon EC2, volume Amazon Elastic Block Store (Amazon EBS), dan instans basis data (DB) Amazon RDS. Untuk biaya, Anda dapat mengaktifkan fitur seperti pemantauan mendetail atau memublikasikan metrik aplikasi Anda sendiri pada sumber daya seperti instans EC2 Anda. 
+
+Metrik kustom
+
+Anggaplah Anda memiliki aplikasi dan Anda ingin mencatat jumlah penayangan halaman yang diterima situs web Anda. Bagaimana Anda akan mencatat metrik ini dengan CloudWatch? Pertama, metrik ini adalah metrik tingkat aplikasi. Artinya, ini bukan sesuatu yang instans EC2 akan posting ke CloudWatch secara default. Di sinilah peran metrik kustom. Dengan metrik khusus, Anda dapat menerbitkan metrik Anda sendiri ke CloudWatch.
+
+Jika Anda ingin memperoleh visibilitas yang lebih terperinci, Anda dapat menggunakan metrik khusus beresolusi tinggi, yang memungkinkan Anda mengumpulkan metrik khusus hingga resolusi 1 detik. Ini artinya Anda dapat mengirimkan 1 titik data per detik per metrik kustom.
+
+Berikut ini adalah beberapa contoh metrik kustom:
+
+•
+Waktu muat halaman web
+
+•
+Tingkat kesalahan permintaan
+
+•
+Jumlah proses atau thread pada instans Anda
+
+•
+Jumlah tugas yang dijalankan oleh aplikasi Anda
+
+Dasbor CloudWatch
+
+Setelah Anda menyediakan sumber daya AWS dan mereka mengirim metrik ke CloudWatch, Anda dapat memvisualisasikan dan meninjau data tersebut menggunakan dasbor CloudWatch. Dasbor adalah halaman beranda yang dapat disesuaikan yang dapat Anda konfigurasikan untuk visualisasi data untuk satu atau beberapa metrik melalui widget, seperti grafik atau teks.
+
+Anda dapat membuat banyak dasbor khusus, yang masing-masing berfokus pada tampilan lingkungan Anda yang berbeda. Anda bahkan dapat mengambil data dari beberapa AWS Region ke satu dasbor tunggal untuk membuat tampilan global dari arsitektur Anda. Tangkapan layar berikut ini menunjukkan contoh dasbor dengan metrik dari Amazon EC2 dan Amazon EBS.
+
+Tangkapan layar dasbor CloudWatch yang digunakan untuk membuat tampilan metrik dan alarm yang disesuaikan untuk sumber daya AWS.
+
+CloudWatch menggabungkan statistik berdasarkan periode waktu yang Anda tentukan saat Anda membuat grafik atau meminta metrik. Anda juga dapat memilih apakah widget metrik akan menampilkan data langsung. Data langsung adalah data yang dipublikasikan dalam menit terakhir yang belum sepenuhnya dikumpulkan.
+
+Anda tidak terikat untuk menggunakan CloudWatch secara eksklusif untuk semua kebutuhan visualisasi Anda. Anda dapat menggunakan alat eksternal atau kustom untuk menyerap dan menganalisis metrik CloudWatch menggunakan API GetMetricData.
+
+Terkait keamanan, dengan kebijakan AWS Identity and Access Management (IAM), Anda dapat mengontrol siapa saja yang memiliki akses untuk melihat atau mengelola dasbor CloudWatch Anda.
+
+Log Amazon CloudWatch
+
+CloudWatch Logs adalah tempat terpusat bagi log untuk disimpan dan dianalisis. Dengan layanan ini, Anda dapat memantau, menyimpan, dan mengakses file log dari aplikasi yang berjalan di instans EC2, fungsi AWS Lambda, dan sumber lainnya.
+
+Tangkapan layar CloudWatch Logs dengan log terpusat dari seluruh sistem, aplikasi, dan layanan AWS dalam satu layanan tunggal.
+
+Dengan CloudWatch Logs, Anda dapat mengkueri dan memfilter data log Anda. Misalnya, Anda sedang mengamati kesalahan logika aplikasi untuk aplikasi Anda. Anda tahu bahwa saat kesalahan ini terjadi, jejak tumpukan akan dicatat. Karena Anda tahu kesalahan tersebut dimasukkan log, Anda mengkueri log Anda di CloudWatch Logs untuk menemukan jejak tumpukan. Anda juga menyiapkan filter metrik pada log, yang mengubah data log menjadi metrik CloudWatch numerik yang dapat Anda buat grafiknya dan gunakan di dasbor Anda.
+
+Beberapa layanan, seperti Lambda, disiapkan untuk mengirim data log ke CloudWatch Logs dengan upaya minimal. Dengan Lambda, yang perlu Anda lakukan adalah memberikan fungsi Lambda izin IAM yang benar untuk memposting log ke CloudWatch Logs. Layanan lain memerlukan lebih banyak konfigurasi. Misalnya, untuk mengirimkan log aplikasi dari instans EC2 ke dalam CloudWatch Logs, Anda perlu menginstal dan mengonfigurasi agen CloudWatch Logs pada instans EC2 tersebut. Dengan agen CloudWatch Logs, instans EC2 dapat mengirimkan data log secara otomatis ke CloudWatch Logs.
+
+Terminologi CloudWatch Log
+
+Data log yang dikirimkan ke CloudWatch Logs bisa berasal dari berbagai sumber, jadi penting bagi Anda untuk memahami bagaimana data-data tersebut diatur. 
+
+Untuk mempelajari selengkapnya tentang terminologi log, pilih masing-masing dari tiga penanda bernomor.
+
+Tangkapan layar yang menggambarkan metrik dan dimensi yang digunakan untuk memfilter hasil yang dikembalikan oleh CloudWatch.
+
+
+
+Alarm CloudWatch
+
+Anda dapat membuat alarm CloudWatch untuk memulai tindakan secara otomatis berdasarkan perubahan status berkelanjutan metrik Anda. Anda dapat mengonfigurasikan kapan alarm dipanggil serta tindakan yang dilakukan.
+
+Pertama-tama, Anda harus memutuskan metrik apa yang ingin Anda tetapkan sebagai alarm, lalu Anda menentukan ambang batas yang akan memicu alarm. Selanjutnya, Anda menentukan periode waktu ambang batas. Misalnya, anggaplah Anda ingin mengatur alarm untuk instans EC2 yang akan dipicu ketika pemanfaatan CPU melebihi ambang batas 80 persen. Anda harus menentukan jangka waktu di mana pemanfaatan CPU berada di atas ambang batas. 
+
+Anda tidak ingin memicu alarm berdasarkan lonjakan pendek sementara pada CPU. Anda hanya ingin memicu alarm jika CPU tinggi dalam jangka waktu yang lama. Misalnya, jika pemanfaatan CPU lebih dari 80% selama 5 menit atau lebih, mungkin ada masalah sumber daya. Untuk menyetel alarm, Anda perlu memilih metrik, ambang batas, dan periode waktu.
+
+Tangkapan layar yang menggambarkan cara menentukan metrik dan syarat di CloudWatch.
+
+Alarm dapat terpicu ketika terdapat peralihan status. Setelah alarm dipicu, tindakan dapat dimulai. Tindakan bisa berupa tindakan Amazon EC2, tindakan skala otomatis, atau notifikasi yang dikirim ke Amazon Simple Notification Service (Amazon SNS).
+
+Untuk mempelajari lebih lanjut tentang tiga kemungkinan status alarm, balik setiap kartu flash berikut ini dengan memilihnya.
+
+OK
+Metrik berada dalam ambang batas yang ditentukan. Semua terlihat beroperasi seperti biasa.
+
+ALARM
+Metrik berada di luar ambang batas yang ditentukan. Mungkin terdapat masalah operasional.
+
+INSUFFICIENT_DATA
+Alarm baru saja dimulai, metrik tidak tersedia, atau data yang tersedia tidak mencukupi bagi metrik untuk menentukan status alarm.
+
+Mencegah dan memecahkan masalah dengan alarm CloudWatch
+
+CloudWatch Logs menggunakan filter metrik untuk mengubah data log menjadi metrik yang dapat Anda buatkan grafik atau setelkan alarmnya. Lini waktu berikut ini menunjukkan urutan langkah yang harus diselesaikan ketika menyetel alarm. Ditunjukkan juga sebuah contoh menggunakan aplikasi direktori karyawan.
+
+1
+Mengatur filter metrik
+Untuk aplikasi direktori karyawan, anggaplah Anda mengatur filter metrik untuk kode respons kesalahan HTTP 500. 
+
+2
+Menentukan alarm
+Kemudian, Anda menentukan status alarm metrik mana yang harus diaktifkan berdasarkan ambang batas. Dengan contoh ini, status alarm dipicu jika respons kesalahan HTTP 500 bertahan dalam jangka waktu tertentu.
+
+3
+Menentukan tindakan
+Selanjutnya, Anda menentukan tindakan yang Anda inginkan saat alarm dipicu. Di sini, tindakan yang wajar adalah mengirimkan email atau peringatan teks kepada Anda agar Anda dapat memulai pemecahan masalah pada situs web. Harapannya adalah Anda dapat memperbaikinya sebelum masalah makin parah.
+
+
+
+Setelah alarm disetel, Anda tahu bahwa jika kesalahan tersebut kembali terjadi, Anda akan langsung menerima notifikasi.
+
+Anda dapat menyiapkan alarm berbeda karena alasan yang berbeda untuk membantu Anda mencegah atau memecahkan masalah operasional. Di skenario yang baru saja dijelaskan, alarm memicu notifikasi Amazon SNS yang dikirimkan ke seseorang yang memeriksa masalah secara manual. 
+
+Opsi lainnya adalah membuat alarm memicu tindakan yang memperbaiki masalah teknis secara otomatis. Misalnya, Anda dapat menyetel alarm untuk memicu instans EC2 agar mem-booting ulang atau menaikkan atau menurunkan skala layanan. Anda bahkan dapat mengatur agar alarm memicu notifikasi Amazon SNS yang memicu fungsi Lambda. Fungsi Lambda kemudian memanggil API AWS untuk mengelola sumber daya Anda dan memecahkan masalah operasional. Dengan menggunakan layanan AWS bersama-sama seperti ini, Anda dapat merespons event lebih cepat.
+
+3. Optimalisasi Solusi
+
+Rancang sistem Anda agar memiliki satu titik kesalahan tunggal dengan pemantauan otomatis, deteksi kegagalan, dan mekanisme failover.
+
+Untuk menonton video tentang optimalisasi solusi, pilih tombol putar.
+
+Play Video
+Ketersediaan
+
+Ketersediaan suatu sistem biasanya dinyatakan dalam bentuk persentase waktu aktif dalam satu tahun tertentu atau dalam bentuk jumlah sembilan. Di dalam tabel berikut ini terdapat daftar persentase ketersediaan berdasarkan waktu henti per tahun dan notasinya dalam sembilan. 
+
+Ketersediaan (%)
+
+Waktu henti (per tahun)
+
+90% (satu sembilan dari ketersediaan)
+
+36,53 hari
+
+99% (ketersediaan dua sembilan)
+
+3,65 hari
+
+99,9% (ketersediaan tiga sembilan)
+
+8,77 jam
+
+99,95% (ketersediaan tiga setengah sembilan)
+
+4,38 jam
+
+99,99% (ketersediaan empat sembilan)
+
+52,60 menit
+
+99.995% (four and a half nines of availability)
+
+26,30 menit
+
+99,999% (ketersediaan lima sembilan)
+
+5,26 menit
+
+Untuk meningkatkan ketersediaan, Anda membutuhkan redundansi. Umumnya, ini berarti lebih banyak infrastruktur—lebih banyak pusat data, lebih banyak server, lebih banyak basis data, dan lebih banyak replikasi data. Anda dapat membayangkan bahwa konsekuensi dari lebih banyak infrastruktur ini adalah biaya yang lebih tinggi. Pelanggan ingin agar aplikasi selalu tersedia, tetapi Anda perlu tahu kapan penambahan redundansi tidak menjadi opsi yang memungkinkan dari sudut pandang keuntungan.
+
+Mengapa harus meningkatkan ketersediaan aplikasi?
+
+Di aplikasi saat ini, satu instans EC2 meng-host aplikasi. Foto-foto disajikan dari Amazon S3, dan data yang terstuktur disimpan di Amazon DynamoDB. Instans EC2 tunggal tersebut merupakan satu titik kegagalan untuk aplikasi.
+
+Bahkan jika basis data dan Amazon S3 memiliki ketersediaan tinggi, pelanggan tidak memiliki cara untuk terhubung jika instans tunggal tersebut tidak tersedia. Salah satu cara untuk mengatasi masalah titik kegagalan tunggal ini adalah dengan menambahkan satu server lagi di Availability Zone kedua.
+
+Menambahkan Availability Zone kedua
+
+Lokasi fisik server adalah hal penting. Selain potensi masalah perangkat lunak pada sistem operasi (OS) atau tingkat aplikasi, Anda juga harus mempertimbangkan masalah perangkat keras. Masalah tersebut bisa jadi berada di server fisik, rak, pusat data, atau bahkan Availability Zone yang meng-host mesin virtual. Untuk memperbaiki masalah lokasi fisik, Anda dapat men-deploy instans EC2 kedua di Availability Zone kedua. Instans kedua ini juga dapat memecahkan masalah pada OS dan aplikasi.
+
+Diagram dua Availability Zone di Region yang sama. Masing-masing memiliki subnet publik dengan instans EC2 dan subnet privat.
+
+Namun, ketika terdapat lebih dari satu instans, muncullah tantangan-tantangan baru seperti berikut:
+
+•
+Proses replikasi – Tantangan pertama dengan beberapa instans EC2 adalah Anda perlu membuat proses untuk mereplikasi file konfigurasi, patch perangkat lunak, dan aplikasi di seluruh instans. Metode terbaik adalah dengan melakukan otomatisasi di mana pun yang memungkinkan.
+
+•
+Pengalihan pelanggan – Tantangan kedua adalah bagaimana memberi tahu klien—komputer yang mengirimkan permintaan ke server Anda—tentang server yang berbeda. Anda dapat menggunakan berbagai alat di sini. Yang paling umum adalah menggunakan Domain Name System (DNS) ketika klien menggunakan satu catatan yang menunjuk ke alamat IP dari semua server yang tersedia.
+Namun, metode ini tidak selalu digunakan karena propagasi — jangka waktu yang dibutuhkan agar perubahan DNS diperbarui di Internet.
+
+Pilihan lainnya adalah menggunakan penyeimbang beban, yang menangani pemeriksaan kondisi dan mendistribusikan beban di setiap server. Terletak di antara klien dan server, load balancer menghindari masalah waktu perambatan. Anda akan mempelajari selengkapnya tentang load balancer di bagian berikutnya.
+
+•
+Jenis ketersediaan tinggi – Tantangan terakhir yang harus diatasi ketika ada lebih dari satu server adalah jenis ketersediaan yang Anda perlukan: aktif-pasif atau aktif-aktif.
+
+Untuk mempelajari selengkapnya tentang jenis-jenis ketersediaan tinggi, perluas masing-masing dari dua kategori.
+
+
+Sistem aktif-pasif
+Dengan sistem aktif-pasif, hanya satu dari dua instans yang tersedia dalam satu waktu. Salah satu keuntungan metode ini adalah untuk aplikasi stateful (di mana data tentang sesi klien disimpan di server), tidak akan ada masalah apa pun. Alasannya adalah pelanggan selalu dikirimkan ke server di mana sesi mereka disimpan.
+
+
+Sistem aktif-aktif
+Kelemahan sistem aktif-pasif adalah skalabilitas. Di sinilah letak keunggulan sistem aktif-aktif. Karena kedua server tersedia, server kedua dapat mengambil beberapa beban untuk aplikasi, dan seluruh sistem dapat mengambil lebih banyak beban. Namun, jika aplikasi dalam keadaan stateful, akan ada masalah jika sesi pelanggan tidak tersedia di kedua server. Aplikasi stateless bekerja lebih baik untuk sistem aktif-aktif.
+
+4. Perutean Lalu Lintas dengan Elastic Load Balancing
+
+Layanan Elastic Load Balancing (ELB) dapat mendistribusikan lalu lintas aplikasi yang masuk ke seluruh instans EC2, kontainer, alamat IP, dan fungsi Lambda.
+
+Untuk menonton demonstrasi tentang ELB, pilih tombol putar.
+
+Play Video
+Load balancer
+
+Ikon ELB.
+
+Penyeimbangan beban (load balancing) ialah proses pendistribusian tugas di satu set sumber daya. Dalam kasus aplikasi Direktori Karyawan, sumber daya adalah instans EC2 yang meng-host aplikasi, dan tugasnya adalah permintaan yang dikirim. Anda dapat menggunakan load balancer untuk mendistribusikan permintaan di semua server yang meng-host aplikasi.
+
+Untuk melakukannya, load balancer perlu mengambil semua lalu lintas dan mengalihkannya ke server backend berdasarkan suatu algoritme. Algoritme yang paling populer adalah round robin, yang mengirimkan lalu lintas ke tiap server satu per satu.
+
+Permintaan umum untuk sebuah aplikasi dimulai dari browser klien. Permintaan dikirim ke load balancer. Kemudian, permintaan dikirim ke salah satu instans EC2 yang meng-host aplikasi. Lalu lintas yang kembali dikembalikan melalui load balancer dan kembali ke browser klien.
+Meskipun dimungkinkan untuk menginstal solusi load balancing perangkat lunak Anda sendiri pada instans EC2, AWS menyediakan layanan ELB untuk Anda.
+
+
+
+ELB berada langsung di jalur lalu lintas.
+
+Fitur ELB
+
+Layanan ELB memberikan keuntungan besar dibandingkan penggunaan solusi Anda sendiri untuk melakukan penyeimbangan beban. Terutama, Anda tidak perlu mengelola atau mengoperasikan ELB. ELB dapat mendistribusikan lalu lintas aplikasi masuk di instans EC2, kontainer, alamat IP, dan fungsi Lambda. Berikut ini adalah fitur-fitur utamanya yang lain:
+
+•
+Mode hibrid – Karena ELB dapat menyeimbangkan beban ke alamat IP, ia dapat bekerja dalam mode hibrid, yang berarti ia juga menyeimbangkan beban ke server on-premise.
+
+•
+Ketersediaan tinggi – ELB sangat tersedia. Satu-satunya opsi yang harus Anda pastikan adalah bahwa target load balancer di-deploy di beberapa Availability Zone.
+
+•
+Skalabilitas – Dalam hal skalabilitas, ELB secara otomatis diskalakan untuk memenuhi permintaan lalu lintas masuk. ELB menangani lalu lintas masuk dan mengirimkannya ke aplikasi backend Anda.
+
+Pemeriksaan kondisi
+
+Pemantauan merupakan bagian penting dari load balancer yang harus merutekan lalu lintas hanya ke instans EC2 yang sehat. Itulah alasan ELB mendukung dua jenis pemeriksaan kondisi seperti berikut:
+
+•
+Membangun koneksi ke instans EC2 backend menggunakan TCP dan menandai instans sebagai tersedia jika koneksi berhasil.
+
+•
+Membuat permintaan HTTP atau HTTPS ke halaman web yang Anda tentukan dan memvalidasi bahwa kode respons HTTP dikembalikan.
+
+Menyisihkan waktu untuk menentukan pemeriksaan kondisi yang tepat sangatlah penting. Hanya memverifikasi bahwa port aplikasi terbuka bukan berarti aplikasi bekerja. Ini juga tidak berarti bahwa melakukan panggilan ke beranda aplikasi adalah cara yang tepat.
+
+Misalnya, aplikasi Direktori Karyawan bergantung pada basis data dan Amazon S3. Pemeriksaan kondisi harus memvalidasi semua elemen. Salah satu cara untuk melakukannya adalah dengan membuat halaman web pemantauan, seperti /memantau. Halaman web ini akan membuat panggilan ke basis data untuk memastikan bahwa basis data dapat terhubung, mengambil data, dan membuat panggilan ke Amazon S3. Lalu, Anda mengarahkan pemeriksaan kondisi pada penyeimbang beban ke halaman /memantau.
+
+Gambar halaman web pemantauan dengan pemeriksaan kondisi pada load balancer yang diarahkan ke halaman “/monitor”.
+
+Setelah menentukan ketersediaan instans EC2 baru, load balancer mulai mengirim lalu lintas ke sana. Jika ELB menentukan bahwa sebuah instans EC2 tidak lagi bekerja, ia berhenti mengirim lalu lintas ke sana dan memberi tahu Amazon EC2 Auto Scaling. Amazon EC2 Auto Scaling bertanggung jawab untuk menghapus instans tersebut dari grup dan menggantinya dengan instans EC2 baru. Lalu lintas hanya dikirim ke instans baru jika lolos pemeriksaan kondisi.
+
+Jika Amazon EC2 Auto Scaling memiliki kebijakan penskalaan yang mengharuskan tindakan penurunan skala, Amazon EC2 Auto Scaling akan memberi tahu ELB bahwa instans EC2 akan dihentikan. ELB dapat mencegah Amazon EC2 Auto Scaling mengakhiri instans EC2 hingga semua koneksi ke instans tersebut berakhir. ELB juga mencegah koneksi baru apa pun. Fitur ini disebut pengurasan koneksi (connection draining). Kita akan mempelajari lebih lanjut tentang Amazon EC2 Auto Scaling pada materi berikutnya.
+
+Komponen ELB
+
+Layanan ELB terdiri dari tiga komponen utama: aturan, listener, dan grup target. 
+
+Untuk mempelajari selengkapnya, pilih masing-masing dari ketiga penanda bernomor. 
+
+Diagram komponen ELB yang menggambarkan sebuah aturan, sebuah listener, dua target,pemeriksaan kondisi, dan satu grup target.
+
+
+
+Tipe load balancer
+
+ELB mendukung tiga tipe load balancer: Application Load Balancer (ALB), Network Load Balancer (NLB), dan Gateway Load Balancer (GLB). 
+
+Untuk mempelajari lebih lanjut tentang tiap jenis load balancer, pilih tiap kartu flash berikut untuk membaliknya. 
+
+Front of card
+Penyeimbang Beban Aplikasi
+Klik untuk membalik
+Back of card
+Otorisasi pengguna
+Metrik kaya dan pencatatan log
+Pengalihan
+Respons tetap
+
+Klik untuk membalik
+Front of card
+Penyeimbang Beban Jaringan
+Klik untuk membalik
+Back of card
+Berbasis koneksi User Datagram Protocol (UDP) dan TCP
+Preservasi IP sumber
+Latensi rendah
+
+Klik untuk membalik
+Front of card
+Penyeimbang Beban Gateway
+Klik untuk membalik
+Back of card
+Pemeriksaan kondisi
+Endpoint Gateway Load Balancer
+Ketersediaan lebih tinggi untuk perangkat virtual pihak ketiga
+
+Klik untuk membalik
+Penyeimbang Beban Aplikasi
+
+Untuk aplikasi Direktori Karyawan kita, kita menggunakan Application Load Balancer. Application Load Balancer berfungsi pada Lapisan 7 dari model Open Systems Interconnection (OSI). Jenis ini ideal untuk menyeimbangkan beban lalu lintas HTTP dan HTTPS. Setelah menerima permintaan, load balancer mengevaluasi aturan listener dalam urutan prioritas untuk menentukan aturan yang harus diterapkan. Load balancer kemudian merutekan lalu lintas ke target berdasarkan isi permintaan.
+
+Untuk mempelajari lebih lanjut tentang beberapa fitur utama Application Load Balancer, perluas masing-masing dari keenam kategori berikut.
+
+
+Merutekan lalu lintas berdasarkan data permintaan
+Application Load Balancer mengambil keputusan perutean berdasarkan protokol HTTP dan HTTPS. Misalnya, ALB dapat menggunakan jalur URL (/upload) dan host, judul dan metode HTTP, atau alamat IP sumber klien. Hal ini mempermudah perutean yang terperinci ke grup target.
+
+
+Mengirimkan respons langsung ke klien.
+Application Load Balancer dapat membalas langsung ke klien dengan respons tetap, seperti halaman HTML kustom. Application Load Balancer juga dapat mengirimkan pengalihan ke klien. Kemampuan ini bermanfaat ketika Anda harus beralih ke situs web khusus atau mengalihkan permintaan dari HTTP ke HTTPS. Kemampuan ini menghilangkan tugas tersebut dari server backend Anda.
+
+
+Menggunakan offloading TLS
+Application Load Balancer memahami lalu lintas HTTPS. Untuk melewatkan lalu lintas HTTPS melalui Application Load Balancer, sertifikat SSL disediakan dengan salah satu dari beberapa cara berikut:
+
+
+
+Mengimpor sertifikat melalui layanan IAM atau ACM
+Membuat sertifikat secara gratis menggunakan ACM
+Hal ini memastikan bahwa lalu lintas antara klien dan Application Load Balancer dienkripsi.
+
+
+Mengautentikasi pengguna
+Application Load Balancer dapat mengautentikasi pengguna sebelum mereka dapat melewati load balancer. Application Load Balancer menggunakan protokol OpenID Connect (OIDC) dan terintegrasi dengan layanan AWS lain untuk mendukung protokol, seperti berikut:
+
+SAML
+Lightweight Directory Access Protocol (LDAP)
+Microsoft Active Directory
+Lainnya
+
+Mengamankan lalu lintas
+Untuk mencegah lalu lintas mencapai load balancer, Anda mengonfigurasi grup keamanan untuk menentukan rentang alamat IP yang didukung.
+
+
+Mendukung sticky session
+Jika permintaan harus dikirim ke server backend yang sama karena aplikasi bersifat stateful, gunakan fitur sticky session. Fitur ini menggunakan cookie HTTP untuk mengingat server mana yang akan menerima lalu lintas pada koneksi.
+
+Penyeimbang Beban Jaringan
+
+Network Load Balancer ideal untuk menyeimbangkan beban lalu lintas TCP dan UDP. Jenis ini berfungsi di Lapisan 4 model OSI, yang merutekan koneksi dari sebuah target di dalam grup target berdasarkan data protokol IP.
+
+Untuk mempelajari lebih lanjut tentang beberapa fitur utama Network Load Balancer, pilih tiap kartu flash berikut untuk membaliknya. 
+
+Sticky session
+Merutekan permintaan dari klien yang sama ke target yang sama.
+
+Latensi rendah
+Menawarkan latensi rendah untuk aplikasi yang sensitif terhadap latensi.
+
+Alamat IP sumber
+Mempertahankan alamat IP sumber sisi klien.
+
+Dukungan IP statis
+Secara otomatis memberikan alamat IP statis per Availability Zone (subnet).
+
+Dukungan alamat IP elastis
+Memungkinkan pengguna menetapkan alamat IP tetap kustom per Availability Zone (subnet).
+
+Failover DNS
+Menggunakan Amazon Route 53 untuk mengarahkan lalu lintas ke node load balancer di zona lain.
+
+Penyeimbang Beban Gateway
+
+Gateway Penyeimbang Beban membantu Anda men-deploy, menskalakan, dan mengelola peralatan pihak ketiga, seperti firewall, sistem deteksi dan pencegahan intrusi, dan sistem inspeksi paket mendalam. Jenis ini menyediakan gateway untuk mendistribusikan lalu lintas di beberapa alat virtual, sekaligus menaikkan atau menurunkan skalanya sesuai permintaan.
+
+Untuk mempelajari lebih lanjut tentang beberapa fitur utama Gateway Load Balancer, pilih tiap kartu flash berikut untuk membaliknya. 
+
+Ketersediaan tinggi
+Memastikan ketersediaan dan keandalan tinggi dengan merutekan lalu lintas melalui alat virtual yang sehat.
+
+Monitoring
+Dapat dipantau menggunakan metrik CloudWatch.
+
+Deployment yang lebih ramping
+Dapat men-deploy alat virtual baru dengan memilihnya di AWS Marketplace.
+
+Konektivitas privat
+Menghubungkan gateway internet, cloud privat virtual (VPC), dan sumber daya jaringan lainnya melalui jaringan privat.
+
+
+Memilih jenis ELB
+
+Anda dapat memilih di antara jenis layanan ELB dengan menentukan fitur mana yang diperlukan untuk aplikasi Anda. Tabel berikut ini menyajikan daftar fitur utama load balancer. Untuk melihat daftar lengkapnya, lihat “Fitur-fitur Elastic Load Balancing” di bagian Sumber Daya pada akhir mater ini. 
+
+Fitur
+
+ALB
+
+NLB
+
+GLB
+
+Jenis Penyeimbang Balance
+
+Lapisan 7
+
+Lapisan 4
+
+Gateway lapisan 3 dan load balancing lapisan 4
+
+Jenis Target
+
+IP, instans, Lambda
+
+IP, instans, ALB
+
+IP, instans
+
+Pendengar Protokol
+
+HTTP, HTTPS
+
+TCP, UDP, TLS
+
+IP
+
+Alamat IP Statis dan Alamat IP Elastis
+
+Ya
+
+Mempertahankan Alamat IP Sumber
+
+Ya
+
+Ya
+
+Ya
+
+Respon Tetap
+
+Ya
+
+Autentikasi Pengguna
+
+Ya
+
+5. Amazon EC2 Auto Scaling
+
+Amazon EC2 Auto Scaling membantu Anda mempertahankan ketersediaan aplikasi. Anda dapat menambahkan atau menghapus instans EC2 secara otomatis menggunakan kebijakan yang Anda tentukan.
+
+Untuk menonton demonstrasi tentang Amazon EC2 Auto Scaling, pilih tombol putar.
+
+Play Video
+Masalah kapasitas
+
+Anda dapat meningkatkan ketersediaan dan keterjangkauan dengan menambahkan satu server lagi. Namun, seluruh sistem bisa menjadi tidak tersedia lagi jika terdapat masalah kapasitas. Bagian ini membahas masalah beban untuk jenis sistem aktif-pasif dan aktif-aktif. Masalah-masalah ini ditangani melalui penskalaan. 
+
+Pilih tiap tab untuk mempelajari selengkapnya.
+
+Penskallan Vertikal
+Tingkatkan ukuran instans. Jika terlalu banyak permintaan dikirim ke satu sistem aktif-pasif tunggal, server aktif akan menjadi tidak tersedia dan, harapannya, melakukan failover ke server pasif. Namun, hal ini tidak menyelesaikan apa pun.
+
+Dengan sistem aktif-pasif, Anda memerlukan penskalaan vertikal. Ini artinya diperlukan peningkatan ukuran server. Dengan instans EC2, Anda memilih tipe instans yang lebih besar atau tipe instans yang berbeda. Ini hanya dapat dilakukan ketika instans dalam status dihentikan. Berikut adalah langkah-langkahnya dalam skenario ini:
+
+Hentikan instans pasif. Ini tidak memengaruhi aplikasi karena instans tersebut tidak menerima lalu lintas apa pun.
+
+Ubah ukuran atau jenis instans, lalu mulai lagi instans tersebut.
+
+Alihkan lalu lintas ke instans pasif dan menjadikannya aktif.
+
+Berhenti, ubah ukuran, dan mulai instans aktif sebelumnya karena kedua contoh harus cocok.
+
+Ketika jumlah permintaan berkurang, Anda harus melakukan operasi yang sama. Meskipun tidak banyak langkah yang termasuk, sebenarnya itu adalah pekerjaan manual yang banyak. Kelemahan lainnya adalah server hanya dapat menskalakan secara vertikal hingga batas tertentu. Ketika batas tersebut tercapai, satu-satunya pilihan adalah membuat sistem aktif-pasif lain dan membagi permintaan dan fungsi di antara semua sistem tersebut. Hal ini dapat memerlukan penulisan ulang aplikasi secara besar-besaran.
+
+Di sinilah sistem aktif-aktif dapat membantu. Ketika ada terlalu banyak permintaan, Anda dapat menskalakan sistem ini secara horizontal dengan menambahkan lebih banyak server.
+
+Penskalaan Horizontal
+Tambahkan instans tambahan. Seperti yang telah disebutkan, agar aplikasi bekerja dalam sistem aktif-aktif, sistem sudah dibuat sebagai stateless, yakni tidak menyimpan sesi klien apa pun pada server. Ini berarti untuk memiliki dua atau empat server tidak akan diperlukan perubahan aplikasi. Intinya adalah menciptakan lebih banyak instans ketika diperlukan dan mematikannya ketika lalu lintas menurun. Layanan Amazon EC2 Auto Scaling dapat menangani tugas tersebut dengan membuat dan menghapus instans EC2 secara otomatis berdasarkan metrik dari Amazon CloudWatch. Kita akan mempelajari selengkapnya tentang layanan ini dalam pelajaran ini.
+
+Anda dapat melihat bahwa ada banyak keuntungan menggunakan sistem aktif-aktif dibandingkan dengan sistem aktif-pasif. Memodifikasi aplikasi agar menjadi stateless memberi Anda skalabilitas.
+
+Penskalaan tradisional dibandingkan penskalaan otomatis
+
+Dengan pendekatan penskalaan tradisional, Anda membeli dan menyediakan server yang cukup untuk menangani puncak lalu lintas. Namun, konsekuensinya adalah pada malam hari, misalnya, Anda mungkin memiliki kapasitas yang lebih besar daripada lalu lintas, sehingga Anda membuang-buang uang. Mematikan server pada malam hari atau pada saat-saat di mana lalu lintas lebih rendah hanya akan menghemat biaya listrik.
+
+Ikon Amazon EC2 Auto Scaling.
+
+Cara kerja cloud berbeda dengan model bayar sesuai penggunaan. Anda harus mematikan layanan yang tidak terpakai, terutama instans EC2 yang Anda bayar sesuai permintaan. Anda dapat menambahkan dan menghapus server secara manual pada waktu yang diprediksi. Namun, dengan lonjakan lalu lintas yang tidak biasa, solusi ini berimbas pada terbuangnya sumber daya dengan penyediaan yang terlalu besar atau hilangnya pelanggan akibat penyediaan yang terlalu rendah.
+
+Yang dibutuhkan di sini adalah sebuah alat yang secara otomatis menambahkan dan menghapus instans EC2 berdasarkan syarat yang Anda tentukan. Seperti itulah persisnya cara kerja layanan Amazon EC2 Auto Scaling.
+
+Fitur Amazon EC2 Auto Scaling
+
+Layanan Amazon EC2 Auto Scaling menambahkan dan menghapus kapasitas untuk menjaga kinerja tetap stabil dan dapat diprediksi dengan biaya serendah mungkin. Dengan menyesuaikan kapasitas secara tepat ke apa yang digunakan oleh aplikasi Anda, Anda hanya membayar sesuai kebutuhan aplikasi Anda. Ini berarti Amazon EC2 Auto Scaling membantu menskalakan infrastruktur Anda dan memastikan ketersediaan yang tinggi.
+
+Untuk mempelajari lebih lanjut tentang fitur penskalaan otomatis, pilih tiap kartu flash berikut untuk membaliknya. 
+
+Front of card
+Penskalaan otomatis
+
+
+Klik untuk membalik
+Back of card
+Secara otomatis menyempitkan dan memperluas skala berdasarkan permintaan.
+
+
+Klik untuk membalik
+Front of card
+Penskalaan terjadwal
+
+
+Klik untuk membalik
+Back of card
+Menskalakan berdasarkan jadwal yang ditetapkan pengguna.
+
+
+Klik untuk membalik
+Front of card
+Manajemen armada
+
+
+Klik untuk membalik
+Back of card
+Secara otomatis mengganti instans EC2 yang tidak sehat
+
+
+Klik untuk membalik
+Front of card
+Penskalaan prediktif
+
+
+Klik untuk membalik
+Back of card
+Menggunakan machine learning (ML) untuk membantu menjadwalkan jumlah optimal instans EC2.
+
+
+Klik untuk membalik
+Front of card
+Opsi Pembelian
+
+
+Klik untuk membalik
+Back of card
+Mencakup beberapa model pembelian, tipe instans, dan Availability Zone.
+
+
+Klik untuk membalik
+Front of card
+Ketersediaan Amazon EC2
+
+
+Klik untuk membalik
+Back of card
+Dilengkapi dengan layanan Amazon EC2.
+
+
+Klik untuk membalik
+ELB dengan Amazon EC2 Auto Scaling
+
+Selain itu, layanan ELB terintegrasi secara mulus dengan Amazon EC2 Auto Scaling. Setelah instans EC2 baru ditambahkan ke atau dihapus dari grup EC2 Auto Scaling, ELB langsung menerima notifikasi. Namun, sebelum ELB dapat mengirim lalu lintas ke instans EC2 baru, ELB perlu memvalidasi bahwa aplikasi yang berjalan pada instans EC2 tersebut tersedia.
+
+Validasi ini dilakukan melalui fitur pemeriksaan kondisi ELB yang telah Anda pelajari di pelajaran sebelumnya. 
+
+Mengonfigurasi komponen Amazon EC2 Auto Scaling
+
+Terdapat tiga komponen utama Amazon EC2 Auto Scaling. Tiap komponen ini menangani satu pertanyaan utama seperti berikut:
+
+•
+Luncurkan templat atau konfigurasi: Sumber daya mana yang harus diskalakan secara otomatis?
+
+•
+Grup Amazon EC2 Auto Scaling: Di mana sumber daya harus di-deploy?
+
+•
+Kebijakan penskalaan: Kapan sumber daya harus ditambahkan atau dihapus?
+
+Konfigurasi dan templat peluncuran
+
+Beberapa parameter diperlukan untuk membuat instans EC2; ID Amazon Machine Image (AMI), tipe instans, grup keamanan, tambahan volume Amazon EBS, dan banyak lagi. Semua informasi ini juga diperlukan oleh Amazon EC2 Auto Scaling untuk membuat instans EC2 atas nama Anda ketika ada kebutuhan untuk menskalakan. Informasi ini disimpan dalam templat peluncuran.
+
+Anda dapat menggunakan templat peluncuran untuk meluncurkan instans EC2 secara manual atau untuk digunakan dengan Amazon EC2 Auto Scaling. Templat peluncuran juga mendukung versioning, yang dapat digunakan untuk menurunkan versi dengan cepat jika ada masalah atau kebutuhan untuk menentukan versi templat default. Dengan begitu, sambil mengiterasi versi baru, pengguna lain dapat terus meluncurkan instans EC2 menggunakan versi default sampai Anda membuat perubahan yang diperlukan.
+
+Contoh templat peluncuran dengan tiga versi. Selengkapnya lihat keterangan.
+
+Templat peluncuran menentukan informasi konfigurasi instans, seperti ID AMI, tipe instans, dan grup keamanan. Anda dapat memiliki beberapa versi templat peluncuran dengan subset parameter penuh.
+
+Anda dapat membuat templat peluncuran dengan salah satu dari tiga cara berikut:
+
+•
+Gunakan instans EC2 yang ada. Semua pengaturan sudah ditentukan.
+
+•
+Buat templat dari templat yang sudah ada atau versi templat peluncuran sebelumnya.
+
+•
+Buat templat dari nol. Parameter ini perlu ditentukan: ID AMI, tipe instans, pasangan kunci, grup keamanan, penyimpanan, dan tag sumber daya.
+
+Cara lain untuk menentukan Amazon EC2 Auto Scaling yang perlu diskalakan adalah dengan menggunakan konfigurasi peluncuran. Ini mirip dengan templat peluncuran, tetapi Anda tidak dapat menggunakan konfigurasi peluncuran yang dibuat sebelumnya sebagai templat. Anda tidak dapat membuat konfigurasi peluncuran dari instans Amazon EC2 yang ada. Untuk alasan ini dan untuk memastikan bahwa Anda mendapatkan fitur terbaru dari Amazon EC2, AWS merekomendasikan Anda menggunakan templat peluncuran, bukan konfigurasi peluncuran.
+
+Grup Amazon EC2 Auto Scaling
+
+Komponen berikutnya yang diperlukan oleh Amazon EC2 Auto Scaling adalah grup Amazon EC2 Auto Scaling. Grup Auto Scaling membantu Anda menentukan di mana Amazon EC2 Auto Scaling men-deploy sumber daya Anda. Ini adalah tempat di mana Anda menentukan Amazon Virtual Private Cloud (Amazon VPC) dan subnet tempat instans EC2 harus diluncurkan. Amazon EC2 Auto Scaling menangani pembuatan instans EC2 di seluruh subnet, jadi pilih setidaknya dua subnet yang berada di Availability Zone yang berbeda.
+
+Dengan grup Auto Scaling, Anda dapat menentukan jenis pembelian untuk instans EC2. Anda dapat menggunakan Instans Sesuai Permintaan atau Instans Spot. Anda juga dapat menggunakan kombinasi keduanya, sehingga Anda akan mendapatkan kelebihan Instans Spot dengan biaya administrasi yang minim.
+
+Untuk menentukan jumlah instans yang harus diluncurkan oleh Amazon EC2 Auto Scaling, Anda memiliki tiga pengaturan kapasitas yang harus dikonfigurasi untuk ukuran grup.
+
+Untuk mempelajari selengkapnya, pilih masing-masing dari ketiga penanda bernomor. 
+
+Diagram untuk grup Auto Scaling dengan kapasitas minimum, yang diinginkan, dan maksimum.
+
+
+
+Kebijakan penskalaan
+
+Secara default, grup Auto Scaling akan dipertahankan dengan kapasitas awal yang diinginkan. Meskipun memungkinkan untuk mengubah kapasitas yang diinginkan secara manual, Anda juga dapat menggunakan kebijakan penskalaan.
+
+Dalam pelajaran Monitoring, Anda mempelajari tentang metrik dan alarm CloudWatch. Anda menggunakan metrik untuk menyimpan informasi tentang atribut yang berbeda dari instans EC2 Anda, seperti persentase CPU. Anda menggunakan alarm untuk menentukan tindakan saat ambang batas tercapai. Metrik dan alarm adalah dua hal yang digunakan oleh kebijakan penskalaan untuk mengetahui kapan harus bertindak. Misalnya, Anda dapat mengatur alarm akan dimulai ketika pemanfaatan CPU melebihi 70 persen di seluruh armada instans EC2. Kemudian akan menginvokasi kebijakan penskalaan untuk menambahkan instans EC2.
+
+Tersedia tiga jenis kebijakan penskalaan: penskalaan sederhana, bertahap, dan pelacakan target Untuk mempelajari suatu kategori, pilih tab yang sesuai.
+
+Kebijakan Penskalaan Sederhana
+Dengan kebijakan penskalaan sederhana, Anda dapat melakukan persis seperti yang dijelaskan dalam modul ini. Anda menggunakan alarm CloudWatch dan menentukan apa yang harus dilakukan saat alarm dipicu. Tindakan bisa mencakup penambahan atau penghapusan instans EC2 atau menentukan jumlah instans sebagai kapasitas yang diinginkan. Anda dapat menentukan persentase grup alih-alih menggunakan sejumlah instans EC2, yang membuat grup bertambah atau berkurang lebih cepat.
+
+Setelah kebijakan penskalaan diterapkan, kebijakan tersebut memasuki periode pendinginan sebelum mengambil tindakan lain. Hal ini penting karena dibutuhkan waktu untuk memulai instans EC2, dan alarm CloudWatch mungkin masih dipicu saat instans EC2 dalam proses booting. Misalnya, Anda mungkin memutuskan untuk menambahkan instans EC2 jika penggunaan CPU di semua instans melebihi 65 persen. Anda tidak ingin menambahkan lebih banyak instans sampai instans EC2 yang baru tersebut menerima lalu lintas. Namun, bagaimana jika penggunaan CPU sekarang melebihi 85 persen di seluruh grup Auto Scaling?
+
+
+
+Menambahkan satu instans mungkin bukan langkah yang tepat. Sebagai gantinya, Anda mungkin ingin menambahkan langkah lain dalam kebijakan penskalaan Anda. Sayangnya, untuk urusan ini, kebijakan penskalaan sederhana tidak bisa membantu. Di sinilah keunggulan kebijakan penskalaan langkah. 
+
+Kebijakan Penskalaan Langkah
+Kebijakan penskalaan langkah merespons alarm tambahan meskipun aktivitas penskalaan atau penggantian pemeriksaan kondisi sedang berlangsung. Mirip dengan contoh sebelumnya, Anda mungkin memutuskan untuk menambahkan dua instans lagi saat penggunaan CPU mencapai 85 persen dan empat instans lagi saat mencapai 95 persen.
+
+Memutuskan kapan akan menambahkan dan menghapus instans berdasarkan alarm CloudWatch mungkin tampak seperti tugas yang sulit. Inilah alasan tersedianya jenis kebijakan penskalaan ketiga, pelacakan target.
+
+Kebijakan Penskalaan Pelacakan Target
+Jika aplikasi Anda menskalakan berdasarkan rata-rata pemanfaatan CPU, rata-rata pemanfaatan jaringan (masuk atau keluar), atau jumlah permintaan, maka ini adalah jenis kebijakan penskalaan yang ideal. Yang perlu Anda berikan hanyalah nilai target untuk dilacak, dan alarm CloudWatch yang diperlukan akan secara otomatis dibuat.

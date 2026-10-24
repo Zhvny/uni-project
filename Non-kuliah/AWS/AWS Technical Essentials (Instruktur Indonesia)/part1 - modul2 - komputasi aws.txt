@@ -1,0 +1,491 @@
+1. Komputasi sebagai sebuah Layanan
+
+Pada tingkat dasar, terdapat tiga opsi tipe komputasi – mesin virtual (VM), layanan kontainer, dan nirserver.
+
+Untuk menonton video tentang komputasi sebagai layanan, pilih tombol putar.
+
+
+Pause
+Remaining Time -3:32
+1x
+Playback Rate 1x
+
+Captions
+
+Picture-in-Picture
+
+Fullscreen
+
+Mute
+Server
+
+Elemen pertama yang Anda butuhkan untuk menjadi meng-host aplikasi adalah server. Server biasanya dapat menangani permintaan HTTP dan mengirimkan respons kepada klien dengan mengikuti model server klien. Meskipun komunikasi berbasis API apa pun juga termasuk ke dalam model ini. 
+
+
+
+Klien adalah orang atau komputer yang mengirimkan permintaan. Server yang menangani permintaan adalah komputer, atau sekumpulan komputer, yang terhubung ke internet yang menyajikan situs web ke pengguna internet. Server mendukung aplikasi Anda dengan menyediakan CPU, memori, dan kapasitas jaringan untuk memproses permintaan pengguna dan mengubahnya menjadi respons. Sebagai konteks, server HTTP umum mencakup berikut ini:
+
+Opsi Windows, seperti Layanan Informasi Internet (IIS)
+Opsi Linux, seperti Apache HTTP Server, Nginx, dan Apache Tomcat
+Untuk menjalankan server HTTP pada AWS, Anda harus menemukan layanan yang menyediakan daya komputasi di AWS Management Console. Anda dapat melihat daftar lengkap layanan komputasi AWS saat masuk ke konsol.
+
+Daftar layanan komputasi di AWS Management Console.
+Memilih opsi komputasi yang tepat
+
+Jika Anda bertanggung jawab menyiapkan server di AWS untuk menjalankan infrastruktur Anda, Anda memiliki banyak opsi komputasi. Pertama-tama, Anda perlu tahu layanan mana yang akan digunakan untuk tiap kasus penggunaan. Pada tingkat dasar, terdapat tiga opsi tipe komputasi – mesin virtual (VM), layanan kontainer, dan nirserver.
+
+
+Jika Anda memiliki pengetahuan infrastruktur sebelumnya, mesin virtual sering kali akan menjadi opsi komputasi paling mudah untuk dipahami. Alasannya adalah mesin virtual mengemulasi server fisik dan memungkinkan Anda, misalnya, untuk menginstal server HTTP untuk menjalankan aplikasi Anda. Untuk menjalankan mesin virtual, Anda menginstal hypervisor pada mesin host. Dalam bentuk paling sederhana, hypervisor adalah perangkat lunak atau firmware yang memungkinkan berbagi sumber daya perangkat keras fisik di satu atau beberapa mesin virtual. Hypervisor menyediakan sumber daya untuk membuat dan menjalankan VM Anda.
+
+Di AWS, Amazon Elastic Compute Cloud (Amazon EC2) adalah layanan web yang menyediakan kapasitas komputasi yang aman dan dapat diubah ukurannya di cloud. Anda dapat menyediakan server virtual yang disebut instans EC2. Di balik layar, AWS mengoperasikan dan mengelola mesin host dan lapisan hypervisor. AWS juga menginstal sistem operasi mesin virtual, yang disebut sistem operasi tamu.
+
+Di bawah permukaan, beberapa layanan komputasi AWS menggunakan Amazon Elastic Compute Cloud atau menggunakan konsep virtualisasi. Anda harus memahami layanan ini sebelum melanjutkan ke layanan kontainer dan komputasi nirserver.
+
+2. Memulai dengan Amazon EC2
+
+Saat merancang aplikasi apa pun untuk ketersediaan tinggi, pertimbangkan menggunakan dua instans EC2 di dua Availability Zone terpisah. 
+
+Untuk menonton demonstrasi tentang memulai Amazon EC2, pilih tombol putar.
+
+Play Video
+Play
+Remaining Time -6:33
+1x
+Playback Rate 1x
+
+Captions
+
+Picture-in-Picture
+
+Fullscreen
+
+Mute
+Amazon EC2
+
+Amazon EC2 adalah layanan web yang memberikan kapasitas komputasi yang aman dengan ukuran yang dapat diubah di cloud. Dengan layanan ini, Anda dapat menyediakan server virtual yang disebut instans EC2. 
+
+Ikon Amazon EC2.
+
+Amazon Elastic Compute Cloud (Amazon EC2)
+
+Dengan Amazon EC2, Anda dapat melakukan hal berikut:
+
+Menyediakan dan meluncurkan satu atau beberapa instans EC2 dalam hitungan menit.
+Menghentikan atau mematikan instans EC2 ketika Anda selesai menjalankan workload.
+Membayar per jam atau per detik untuk tiap jenis instans (minimal 60 detik).
+Anda dapat membuat dan mengelola instans EC2 melalui AWS Management Console, AWS CLI, AWS SDK, alat otomatisasi, dan layanan orkestrasi infrastruktur.
+
+Untuk membuat instans EC2, Anda harus menentukan hal-hal berikut:
+
+•
+Spesifikasi perangkat keras: CPU, memori, jaringan, dan penyimpanan
+
+•
+Konfigurasi logis: Lokasi jaringan, aturan firewall, autentikasi, dan sistem operasi pilihan Anda
+
+Amazon Machine Image
+
+Saat meluncurkan instans EC2, pengaturan pertama yang Anda konfigurasi adalah sistem operasi yang Anda inginkan dengan memilih Amazon Machine Image (AMI).
+
+Di dunia infrastruktur konvensional, penyiapan server terdiri dari menginstal sistem operasi dari disk, drive, atau wizard instalasi melalui jaringan. Di AWS Cloud, instalasi sistem operasi bukan tanggung jawab Anda. Sistem operasi tersebut sudah tertanam di dalam AMI yang Anda pilih.
+
+AMI mencakup sistem operasi, pemetaan penyimpanan, tipe arsitektur, izin peluncuran, dan aplikasi perangkat lunak tambahan apa pun yang diinstal sebelumnya.
+
+Hubungan antara instans AMI dan EC2
+
+Instans EC2 adalah perwujudan (atau versi) langsung dari apa yang ditetapkan di dalam AMI, seperti halnya kue yang merupakan perwujudan langsung dari resep kue. Jika Anda akrab dengan pengembangan perangkat lunak, Anda juga dapat melihat jenis hubungan ini antara kelas dan objek. Dalam hal ini, AMI adalah cara Anda memodelkan dan menetapkan instans Anda. Instans Elastic Compute Cloud adalah entitas yang berinteraksi dengan Anda, di mana Anda dapat menginstal server web Anda dan menyajikan konten Anda kepada pengguna.
+
+Ketika Anda meluncurkan instans baru, AWS mengalokasikan mesin virtual yang berjalan pada hypervisor. Kemudian, AMI yang Anda pilih disalin ke volume perangkat root, yang berisi image yang digunakan untuk mem-boot volume. Pada akhirnya, Anda mendapatkan server di mana Anda dapat tersambung dan menginstal paket dan perangkat lunak tambahan. Dalam contoh ini, Anda menginstal server web bersama dengan kode sumber yang dikonfigurasi dengan benar dari aplikasi direktori karyawan Anda.
+
+AMI yang dipilih saat meluncurkan instans EC2 disalin ke volume perangkat root.
+Salah satu keuntungan menggunakan AMI adalah AMI dapat digunakan kembali. Anda dapat memilih AMI berbasis Linux dan mengonfigurasi server HTTP, paket aplikasi, dan perangkat lunak tambahan yang Anda butuhkan untuk menjalankan aplikasi Anda. Jika Anda ingin membuat instans EC2 lain dengan konfigurasi yang sama, Anda dapat membuat dan mengonfigurasi instans EC2 baru agar sesuai dengan instans pertama. Atau, Anda dapat membuat AMI dari instans Anda yang sedang berjalan dan menggunakan AMI tersebut untuk memulai instans baru. Dengan begitu, instans baru Anda akan memiliki konfigurasi yang sama seperti instans Anda saat ini, karena konfigurasi yang ditetapkan di semua AMI sama.
+
+Anda dapat membuat sebuah AMI dari instans yang berjalan atau dihentikan dan menggunakannya untuk membuat instans lain.
+
+Menemukan AMI
+
+Ada beberapa cara untuk memilih AMI Untuk mempelajari selengkapnya, buka tiap lima kategori berikut.
+
+
+AMI Quick Start
+AMI Quick Start adalah AMI buatan AWS yang umum digunakan yang dapat Anda pilih untuk memulai dengan cepat. 
+
+
+AMI AWS Marketplace
+AMI AWS Marketplace menyediakan perangkat lunak komersial dan sumber terbuka dari vendor pihak ketiga.
+
+
+My AMI
+My AMI dibuat dari instans EC2 Anda.
+
+
+AMI komunitas
+AMI komunitas disediakan oleh komunitas pengguna AWS.
+
+
+Image kustom
+Bangun image kustom Anda sendiri dengan EC2 Image Builder.
+
+Setiap AMI di Konsol Manajemen AWS memiliki ID AMI, yang diawali dengan ami-, diikuti oleh angka dan huruf acak. ID ini berbeda-beda untuk tiap AWS Region.
+
+Halaman arahan untuk memilih AMI di AWS Management Console.
+
+AMI mencakup sistem operasi, pemetaan penyimpanan, tipe arsitektur, izin peluncuran, dan aplikasi perangkat lunak tambahan apa pun yang diinstal sebelumnya.
+
+Mengonfigurasi EC2
+
+Setelah Anda tahu cara memilih sistem operasi untuk instans EC2 Anda, Anda kini siap memilih konfigurasi lain untuk membuat instans EC2 Anda, seperti tipe instans, jaringan, dan penyimpanan.
+
+Untuk aplikasi seperti aplikasi direktori karyawan, Anda memerlukan instans dengan kapasitas yang cukup untuk memproses permintaan pelanggan. Ukuran instans Anda akan tergantung pada tuntutan aplikasi Anda dan ukuran yang diantisipasi dari basis pengguna Anda.
+
+Untuk memprakirakan kapasitas server untuk aplikasi on-premise diperlukan keputusan sulit yang melibatkan pengeluaran modal di muka dalam jumlah besar. Sebaliknya, perubahan pada alokasi layanan berbasis cloud Anda dapat dilakukan dengan panggilan API sederhana. Karena model bayar sesuai penggunaan AWS, Anda dapat mencocokkan kapasitas infrastruktur Anda dengan permintaan aplikasi Anda, bukan sebaliknya.
+
+Tipe instans Amazon EC2
+
+Instans EC2 adalah kombinasi dari prosesor virtual (vCPU), memori, jaringan, dan, dalam beberapa kasus, penyimpanan instans dan unit pengolahan grafis (GPU). Ketika Anda membuat instans EC2, Anda harus memilih berapa banyak yang Anda butuhkan dari masing-masing komponen ini.
+
+Saat mengonfigurasi instans EC2, pilih dari sekumpulan tipe instans yang menawarkan kombinasi sumber daya yang berbeda.
+
+AWS menawarkan berbagai instans yang berbeda berdasarkan performa. Beberapa instans memberikan kapasitas lebih dari yang lain. Untuk mendapatkan gambaran umum tentang detail kapasitas untuk instans tertentu, Anda harus melihat tipe instans tersebut. Tipe instans terdiri dari awalan yang mengidentifikasi tipe workload yang menjadi tujuan pengoptimalan instans, diikuti dengan ukuran. Misalnya, tipe instans c5n.xlarge dapat diuraikan seperti berikut:
+
+Posisi pertama – Posisi pertama, c, menunjukkan family instans. Ini menunjukkan bahwa instans tersebut termasuk ke dalam family yang dioptimalkan untuk komputasi.
+
+Posisi kedua – Posisi kedua, 5, menandakan generasi instans. Instans tersebut termasuk ke dalam instans generasi kelima.
+
+Huruf lain sebelum titik – Dalam hal ini, n menandakan atribut tambahan, seperti penyimpanan NVMe lokal.
+
+Setelah titik – Setelah titik, xlarge menandakan ukuran instans. Dalam contoh ini, ukurannya adalah xlarge atau ekstra besar.
+
+Tipe instans diberi nama berdasarkan family, generasi, kemampuan tambahan, dan ukurannya.
+
+Family instans
+
+Setiap family instans dioptimalkan agar sesuai dengan kasus penggunaan yang berbeda-beda. Tabel berikut menjelaskan family instans dan beberapa workload umum.
+
+Untuk mempelajari selengkapnya tentang family instans EC2, perluas kategori berikut.
+
+
+Family instans EC2
+**Catatan: Untuk pengguna dengan pembaca layar, gunakan mode tabel untuk membaca tabel.
+
+Family instans
+
+Deskripsi
+
+Kasus Penggunaan
+
+Tujuan umum
+
+Instans tujuan umum menyediakan keseimbangan sumber daya komputasi, memori, dan jaringan, dan dapat digunakan untuk berbagai beban kerja.
+
+Ideal untuk aplikasi yang menggunakan sumber daya ini dalam proporsi yang sama, seperti server web dan repositori kode
+
+Komputasi yang dioptimalkan
+
+Instans komputasi yang dioptimalkan ideal untuk aplikasi terikat komputasi yang diuntungkan oleh prosesor berkinerja tinggi.
+
+Sangat cocok untuk beban kerja pemrosesan batch, transcoding media, server web berkinerja tinggi, komputasi berkinerja tinggi (HPC), pemodelan ilmiah, server game khusus dan mesin server iklan, inferensi machine learning, dan aplikasi intensif komputasi lainnya.
+
+Memori yang dioptimalkan
+
+Instans memori yang dioptimalkan dirancang untuk memberikan kinerja cepat untuk beban kerja yang memproses set data besar dalam memori.
+
+Aplikasi yang membutuhkan banyak memori, seperti basis data berkinerja tinggi, cache dalam memori skala web terdistribusi, basis data dalam memori berukuran sedang, analitik data besar waktu nyata, dan aplikasi perusahaan lainnya
+
+Komputasi terakselerasi
+
+Instans komputasi terakselerasi menggunakan akselerator perangkat keras atau koprosesor untuk menjalankan fungsi seperti kalkulasi angka floating-point, pemrosesan grafik, atau pencocokan pola data secara lebih efisien daripada yang dimungkinkan dalam perangkat lunak yang berjalan pada CPU.
+
+Machine learning, HPC, dinamika fluida komputasional, keuangan komputasional, analisis seismik, pengenalan suara, kendaraan otonom, dan penemuan obat
+
+Penyimpanan yang dioptimalkan
+
+Instans penyimpanan yang dioptimalkan dirancang untuk beban kerja yang memerlukan akses baca dan tulis berurutan tinggi ke set data besar pada penyimpanan lokal. Mereka dioptimalkan untuk memberikan puluhan ribu operasi I/O acak latensi rendah per detik (IOPS) ke aplikasi yang mereplikasi datanya di berbagai instansi.
+
+Basis data NoSQL (Cassandra, MongoDB dan Redis), basis data dalam memori dalam memori, basis data transaksional skala besar, pergudangan data, Elasticsearch, dan analitik
+
+HPC dioptimalkan
+
+Instans komputasi kinerja tinggi (HPC) dibuat khusus untuk menawarkan kinerja harga terbaik untuk menjalankan beban kerja HPC dalam skala besar di AWS.
+
+Ideal untuk aplikasi yang memanfaatkan prosesor berkinerja tinggi, seperti simulasi besar dan kompleks serta beban kerja deep learning
+
+Lokasi instans EC2
+
+Kecuali ditentukan lain, saat Anda meluncurkan instans EC2, instans-instans tersebut ditempatkan di dalam cloud privat virtual (VPC). VPC default ideal untuk memulai dengan cepat dan meluncurkan instans EC2 publik tanpa harus membuat dan mengonfigurasi VPC Anda sendiri.
+
+Sumber daya apa pun yang Anda masukkan ke dalam VPC default akan bersifat publik dan dapat diakses oleh internet, sehingga Anda tidak boleh menempatkan data pelanggan atau informasi pribadi di dalamnya.
+
+Ketika Anda lebih nyaman dengan jaringan di AWS, Anda harus mengubah pengaturan default ini untuk memilih VPC kustom Anda sendiri dan membatasi akses dengan mekanisme perutean dan konektivitas tambahan.
+
+Merancang untuk ketersediaan tinggi
+
+Di dalam jaringan, instans Anda berada di Availability Zone pilihan Anda. Seperti yang Anda pelajari sebelumnya, layanan AWS yang dicakup pada tingkat Availability Zone harus dirancang dengan mempertimbangkan ketersediaan tinggi.
+
+Meskipun instans Elastic Compute Cloud biasanya dapat diandalkan, dua lebih baik daripada satu, dan tiga lebih baik daripada dua. Dengan menentukan ukuran instans, Anda diuntungkan ketika merancang arsitektur karena Anda dapat menggunakan lebih banyak instans yang lebih kecil daripada beberapa instans yang lebih besar.
+
+Jika frontend Anda hanya memiliki satu instans dan instans tersebut gagal, aplikasi Anda tidak akan berfungsi. Alternatifnya, jika beban kerjaAnda didistribusikan di 10 instans dan salah satunya gagal, Anda hanya kehilangan 10 persen dari armada Anda, dan ketersediaan aplikasi Anda hampir tidak terpengaruh.
+
+Saat merancang aplikasi apa pun untuk ketersediaan tinggi, pertimbangkan untuk menggunakan setidaknya dua instans Elastic Compute Cloud di dua Availability Zone terpisah.
+
+Merancang dengan mempertimbangkan ketersediaan tinggi. Pertimbangkan menggunakan minimal dua instans EC2 di Availability Zone yang terpisah.
+
+3. Layanan Kontainer
+
+Tidak ada layanan komputasi yang memenuhi segala kebutuhan, kecuali disesuaikan dengan kebutuhan Anda. Kuncinya adalah memahami penawaran tiap opsi.
+
+Untuk menonton video tentang layanan kontainer, pilih tombol putar.
+
+
+Pause
+Remaining Time -5:07
+1x
+Playback Rate 1x
+
+Captions
+
+Picture-in-Picture
+
+Fullscreen
+
+Mute
+AWS menawarkan berbagai macam penawaran komputasi yang memberi Anda fleksibilitas untuk memilih alat yang tepat untuk menyelesaikan pekerjaan. Seperti disebutkan sebelumnya, tiga kategori utama komputasi adalah mesin virtual (VM), kontainer, dan nirserver. Tidak ada layanan komputasi yang memenuhi segala kebutuhan kecuali disesuaikan dengan kebutuhan Anda.
+
+Kuncinya adalah memahami penawaran setiap opsi. Dengan begitu, Anda dapat membangun arsitektur cloud yang sesuai untuk kasus penggunaan Anda. Pada bagian ini, Anda akan belajar tentang kontainer dan cara menjalankannya.
+
+Kontainer dapat meng-host berbagai beban kerja, termasuk aplikasi web, migrasi angkat dan geser, aplikasi terdistribusi, dan merampingkan lingkungan pengembangan, pengujian, dan produksi.
+
+Kontainer
+
+Meskipun kontainer sering disebut teknologi baru, idenya dimulai pada tahun 1970-an dengan kernel (inti pusat sistem operasi) UNIX tertentu yang memiliki kemampuan untuk memisahkan proses-prosesnya melalui isolasi. Pada saat itu, hal ini dikonfigurasi secara manual, sehingga operasi menjadi kompleks.
+
+Dengan berkembangnya komunitas perangkat lunak sumber terbuka, kontainer juga turut berkembang. Saat ini, kontainer digunakan sebagai solusi untuk masalah komputasi tradisional, termasuk masalah mendapatkan perangkat lunak untuk berjalan dengan andal ketika bergerak dari satu lingkungan komputasi ke yang lain.
+
+
+
+Kontainer adalah unit terstandardisasi yang dapat mengemas kode Anda beserta dependensinya. Kemasan ini dirancang untuk berjalan dengan andal pada platform apa pun, karena kontainernya menciptakan lingkungan independennya sendiri. Dengan kontainer, workload dapat dibawa dari satu tempat ke tempat lain, seperti dari pengembangan ke produksi atau dari lingkungan on-premises ke cloud.
+
+Contoh platform kontainerisasi adalah Docker. Docker adalah runtime kontainer populer yang menyederhanakan pengelolaan seluruh tumpukan sistem operasi yang diperlukan untuk isolasi kontainer, termasuk jaringan dan penyimpanan. Docker membantu pelanggan membuat, mengemas, men-deploy, dan menjalankan kontainer.
+
+Perbedaan antara VM dan kontainer
+
+
+
+Dibandingkan mesin virtual (VM), kontainer memiliki sistem operasi dan kersel yang sama dengan host tempat deployment-nya.
+
+Kontainer memiliki sistem operasi dan kernel yang sama dengan host tempatnya berada. Sebaliknya, mesin virtual berisi sistem operasinya sendiri. Setiap mesin virtual harus mempertahankan salinan sistem operasi, yang menyebabkan terbuangnya sejumlah sumber daya secara percuma.
+
+Kontainer lebih ringan. Kontainer mulai berjalan dengan lebih cepat, hampir secara instan. Perbedaan dalam hal waktu mulai ini sangat penting saat merancang aplikasi yang harus melakukan penskalaan dengan cepat selama lonjakan I/O.
+
+Kontainer dapat menyediakan kecepatan, tetapi mesin virtual menawarkan kekuatan penuh sebuah sistem operasi dan sumber daya lain, seperti instalasi paket, kernel khusus, dan lain-lain.
+
+Mengorkestrasi kontainer
+
+Di AWS, kontainer dapat berjalan pada instans EC2. Misalnya, Anda mungkin memiliki instans besar dan menjalankan beberapa kontainer pada instans tersebut. Meskipun tidak sulit untuk dikelola, satu instans tidak memberikan ketersediaan dan skalabilitas yang tinggi. Kebanyakan perusahaan dan organisasi menjalankan banyak kontainer di banyak instans Elastic Compute Cloud di beberapa Availability Zone.
+
+Jika Anda mencoba mengelola komputasi Anda pada skala besar, Anda harus mempertimbangkan hal-hal berikut:
+
+•
+Cara menempatkan kontainer di instans Anda
+
+•
+Apa yang terjadi jika kontainer Anda gagal
+
+•
+Apa yang terjadi jika instans Anda gagal
+
+•
+Cara memantau deployment kontainer Anda
+
+Koordinasi ini ditangani oleh layanan orkestrasi kontainer. AWS menawarkan dua layanan orkestrasi kontainer: Amazon Elastic Container Service (Amazon ECS) dan Amazon Elastic Kubernetes Service (Amazon EKS)
+
+Mengelola kontainer dengan Amazon ECS
+
+Ikon Amazon ECS.
+Amazon Elastic Container Service (Amazon ECS)
+
+Amazon ECS adalah layanan orkestrasi kontainer menyeluruh yang membantu Anda mengaktifkan kontainer baru. Dengan Amazon ECS, kontainer Anda ditentukan dalam keterangan tugas yang Anda gunakan untuk menjalankan tugas secara individu atau tugas di dalam sebuah layanan. Anda memiliki opsi untuk menjalankan tugas dan layanan di infrastruktur nirserver yang dikelola oleh layanan AWS lain yang disebut AWS Fargate. Alternatifnya, untuk mendapatkan lebih banyak kontrol atas infrastruktur Anda, Anda dapat menjalankan tugas dan layanan Anda pada klaster instans EC2 yang Anda kelola.
+
+Kontainer Anda ditentukan dalam keterangan tugas yang Anda gunakan untuk menjalankan tugas secara individu atau tugas di dalam sebuah layanan.
+
+Jika Anda memilih untuk memiliki lebih banyak kontrol dengan menjalankan dan mengelola kontainer Anda di sebuah klaster instans Amazon EC2, Anda juga akan perlu menginstal agen kontainer Amazon ECS di instans EC2 Anda. Ingat bahwa sebuah instans Elastic Compute Cloud dengan agen kontainer terinstal sering disebut instans kontainer. Agen kontainer ini adalah sumber terbuka dan bertanggung jawab untuk berkomunikasi dengan layanan Amazon ECS tentang detail manajemen klaster. Anda dapat menjalankan agen pada AMI Linux dan Windows. 
+
+Instans EC2 dengan agen kontainer terinstal sering disebut instans kontainer.
+
+Saat instans kontainer Amazon ECS aktif dan berjalan, Anda dapat melakukan tindakan yang mencakup, tetapi tidak terbatas pada, hal-hal berikut:
+
+Meluncurkan dan menghentikan kontainer
+Mendapatkan status klaster
+Mengurangi dan menambah skala
+Menjadwalkan penempatan kontainer di klaster Anda
+Menetapkan izin
+Memenuhi persyaratan ketersediaan
+Untuk mempersiapkan aplikasi Anda untuk berjalan di Amazon ECS, Anda membuat definisi tugas. Definisi tugas adalah file teks, dalam format JSON, yang menggambarkan satu atau beberapa kontainer. Definisi tugas mirip dengan cetak biru yang menggambarkan sumber daya yang Anda butuhkan untuk menjalankan kontainer, seperti CPU, memori, port, image, penyimpanan, dan informasi jaringan.
+
+Berikut adalah definisi tugas sederhana yang dapat Anda gunakan untuk aplikasi direktori perusahaan Anda. Dalam contoh ini, tugas ini berjalan pada server web Nginx.
+
+{
+"family": "webserver",
+"containerDefinitions": [ {
+"name": "web",
+"image": "nginx",
+"memory": "100",
+"cpu": "99"
+} ],
+"requiresCompatibilities": [ "FARGATE" ],
+"networkMode": "awsvpc",
+"memory": "512",
+"cpu": "256"
+}
+Menggunakan Kubernetes dengan Amazon EKS
+
+Ikon Amazon EKS.
+Amazon Elastic Kubernetes Service (Amazon EKS)
+
+Kubernetes adalah platform sumber terbuka yang portabel dan dapat diperluas untuk mengelola workload dan layanan dalam kontainer. Dengan menyatukan pengembangan dan operasi perangkat lunak dengan sengaja, Kubernetes menciptakan ekosistem yang berkembang pesat yang sangat populer dan mapan di pasar.
+
+Jika Anda sudah menggunakan Kubernetes, Anda dapat menggunakan Amazon EKS untuk mengatur workload di AWS Cloud. Amazon EKS adalah layanan terkelola yang dapat Anda gunakan untuk menjalankan Kubernetes pada AWS tanpa perlu menginstal, mengoperasikan, dan memelihara node atau bidang kontrol Kubernetes Anda sendiri. Amazon EKS secara konsep mirip dengan Amazon ECS, tetapi dengan beberapa perbedaan berikut:
+
+•
+Di Amazon ECS, mesin yang menjalankan kontainer adalah instans EC2 yang memiliki agen ECS terinstal dan dikonfigurasi untuk menjalankan dan mengelola kontainer Anda. Instans ini disebut instans kontainer. Di Amazon EKS, mesin yang menjalankan kontainer disebut node pekerja, atau, node Kubernetes. 
+
+•
+Kontainer ECS disebut tugas. Kontainer EKS disebut pod.
+
+•
+Amazon ECS berjalan di teknologi asli AWS. Amazon EKS berjalan di Kubernetes. 
+
+Jika Anda memiliki kontainer yang berjalan di Kubernetes dan menginginkan solusi orkestrasi canggih yang dapat memberikan kesederhanaan, ketersediaan tinggi, dan kontrol mendetail terhadap infrastruktur Anda, Amazon EKS mungkin adalah alat yang tepat untuk Anda.
+
+
+4. Pengantar Nirserver
+
+Luangkan waktu pada hal-hal yang memberikan diferensiasi pada aplikasi Anda, bukan menghabiskan waktu untuk memastikan ketersediaan, penskalaan, dan pengelolaan server.
+
+Untuk menonton video tentang nirserver, pilih tombol putar.
+
+Play Video
+Menghilangkan beban berat tanpa diferensiasi
+
+Jika Anda menjalankan kode Anda di Amazon EC2, AWS bertanggung jawab atas perangkat keras fisik. Anda tetap bertanggung jawab atas kontrol logis, seperti sistem operasi tamu, keamanan dan patch, jaringan, keamanan, dan penskalaan.
+
+Seperti yang telah dibahas di materi Layanan Kontainer sebelumnya, Anda memilih untuk memiliki lebih banyak kontrol dengan menjalankan dan mengelola kontainer Anda di Amazon ECS dan Amazon EKS. Dengan melakukannya, AWS tetap bertanggung jawab atas lebih banyak pengelolaan kontainer, seperti deployment kontainer di instans-instans EC2 dan pengelolaan klaster kontainer. Namun, saat menjalankan Amazon ECS dan Amazon EKS di Amazon Elastic Compute Cloud, Anda tetap bertanggung jawab memelihara instans Elastic Compute Cloud yang mendasari.
+
+Apakah ada cara untuk menyingkirkan beberapa tugas berat tanpa diferensiasi ini? Ada! Jika Anda ingin men-deploy workload dan aplikasi Anda tanpa harus mengelola instans EC2 apa pun, Anda dapat melakukannya di AWS dengan komputasi nirserver.
+
+Memulai nirserver
+
+
+
+Dengan komputasi nirserver, Anda dapat meluangkan waktu pada hal-hal yang memberikan diferensiasi pada aplikasi Anda, bukan menghabiskan waktu untuk memastikan ketersediaan, penskalaan, dan pengelolaan server. Setiap definisi nirserver menyebutkan empat aspek berikut ini:
+
+Tidak ada server yang perlu disediakan atau dikelola.
+Komputasi nirserver diskalakan berdasarkan penggunaan.
+Anda tidak pernah membayar untuk sumber daya yang tidak digunakan.
+Ketersediaan dan toleransi kesalahan tersedia secara bawaan.
+AWS telah mengembangkan layanan nirserver untuk ketiga lapisan tumpukan aplikasi Anda. Kita akan membahas dua layanan, AWS Fargate dan AWS Lambda, pada materi berikutnya. 
+
+
+5. Nirserver dengan AWS Fargate
+
+AWS Fargate menskalakan dan mengelola infrastruktur, sehingga developer dapat menjalankan keahlian mereka, yakni mengembangkan aplikasi.
+
+Untuk menonton video tentang AWS Fargate, pilih tombol putar.
+
+Play Video
+Menjelajahi kontainer nirserver dengan AWS Fargate
+
+Fargate mengabstraksi instans EC2 sehingga Anda tidak harus mengelola infrastruktur komputasi yang mendasari. Namun, dengan Fargate, Anda dapat menggunakan konsep Amazon ECS, API, dan integrasi AWS yang sepenuhnya sama. Fargate terintegrasi secara asli dengan IAM dan Amazon Virtual Private Cloud (Amazon VPC). Dengan integrasi asli dengan Amazon VPC, Anda dapat meluncurkan kontainer Fargate di dalam jaringan Anda dan mengontrol konektivitas ke aplikasi Anda.
+
+Ikon AWS Fargate.
+
+AWS Fargate
+
+AWS Fargate adalah mesin komputasi nirserver yang dibuat dengan tujuan khusus untuk kontainer. AWS Fargate menskalakan dan mengelola infrastruktur, sehingga developer dapat menjalankan keahlian mereka, yakni mengembangkan aplikasi. Hal ini dicapai dengan pengalokasian komputasi dalam jumlah yang tepat. Hal ini menghilangkan kebutuhan untuk memilih dan mengelola instans EC2, kapasitas klaster, dan penskalaan. Fargate mendukung arsitektur Amazon ECS dan Amazon EKS, dan menyediakan isolasi workload dan peningkatan keamanan dengan sengaja.
+
+6. Nirserver dengan AWS Lambda
+
+Dengan AWS Lambda, tidak ada server yang perlu dikelola. Anda mendapatkan penskalaan berkelanjutan dengan penghitungan subdetik dan performa yang konsisten.
+
+Untuk menonton video tentang AWS Lambda, pilih tombol putar.
+
+Play Video
+Menjalankan kode pada AWS Lambda
+
+Jika Anda ingin men-deploy workload dan aplikasi Anda tanpa harus mengelola instans EC2 atau kontainer, Anda dapat menggunakan Lambda.
+
+Ikon AWS Lambda.
+
+AWS Lambda
+
+Dengan Lambda, Anda dapat menjalankan kode tanpa menyediakan atau mengelola server. Anda dapat menjalankan kode secara virtual untuk hampir semua tipe aplikasi atau layanan backend. Termasuk di dalamnya adalah pemrosesan data, pemrosesan stream waktu nyata, machine learning, WebSockets, backend IoT, backend seluler, dan aplikasi web seperti aplikasi direktori karyawan Anda!
+
+Lambda menjalankan kode Anda pada infrastruktur komputasi dengan ketersediaan tinggi dan tanpa memerlukan administrasi dari penggunanya. Anda mengunggah kode sumber Anda dalam salah satu bahasa yang didukung oleh Lambda, dan Lambda mengurus segala sesuatu yang diperlukan untuk menjalankan dan menskalakan kode Anda dengan ketersediaan tinggi. Tidak ada server yang perlu dikelola. Anda mendapatkan penskalaan berkelanjutan dengan penghitungan subdetik dan performa yang konsisten.
+
+Cara kerja Lambda
+
+Fungsi Lambda adalah prinsip dasar AWS Lambda. Anda memiliki opsi untuk mengonfigurasi fungsi Lambda Anda menggunakan konsol Lambda, API Lambda, AWS CloudFormation, atau AWS Serverless Application Model (AWS SAM). Anda dapat memanggil fungsi Anda langsung dengan menggunakan API Lambda, atau Anda bisa mengonfigurasi layanan atau sumber daya AWS untuk memanggil fungsi Anda ketika merespons suatu event.
+
+Untuk mempelajari selengkapnya tentang konsep-konsep Lambda, perluas masing-masing dari tujuh kategori berikut.
+
+
+Fungsi
+Fungsi adalah sumber daya yang dapat Anda panggil untuk menjalankan kode di Lambda. Lambda menjalankan instans fungsi Anda untuk memproses event. Anda bisa membuat fungsi Lambda dengan beberapa cara:
+
+Anda bisa membuat fungsi dari nol.
+Anda bisa menggunakan cetak biru yang disediakan oleh AWS.
+Anda bisa memilih image kontainer untuk men-deploy fungsi Anda.
+Anda bisa menelusuri AWS Serverless Application Repository. 
+Anda bisa membuat fungsi Lambda dari nol, menggunakan cetak biru, atau memilih image kontainer.
+
+
+Pemicu
+Pemicu menjelaskan kapan sebuah fungsi Lambda harus berjalan. Pemicu mengintegrasikan fungsi Lambda Anda dengan layanan AWS lain dan pemetaan sumber event. Jadi, Anda bisa menjalankan fungsi Lambda Anda untuk merespons panggilan API tertentu atau dengan membaca item dari suatu stream atau antrean. Hal ini meningkatkan kemampuan Anda untuk menanggapi event di konsol Anda tanpa harus melakukan tindakan manual. 
+
+
+Peristiwa
+Peristiwa adalah dokumen berformat JSON yang berisi data untuk diproses oleh fungsi Lambda. Runtime mengonversi event menjadi objek dan meneruskannya ke kode fungsi Anda. Ketika Anda menjalankan fungsi, Anda menentukan struktur dan isi dari events.
+
+
+Lingkungan Aplikasi
+Lingkungan aplikasi menyediakan lingkungan runtime yang aman dan terisolasi untuk fungsi Lambda Anda. Lingkungan aplikasi mengelola proses dan sumber daya yang diperlukan untuk menjalankan fungsi. 
+
+
+Paket deployment
+Anda men-deploy kode fungsi Lambda Anda menggunakan paket deployment. Lambda mendukung dua tipe paket deployment:
+
+Arsip file .zip – Tipe ini menyertakan kode fungsi Anda serta dependensinya. Lambda menyediakan sistem operasi dan runtime untuk fungsi Anda.
+
+Image kontainer – Tipe ini kompatibel dengan spesifikasi Open Container Initiative (OCI). Anda menambahkan kode fungsi dan dependensi Anda ke image. Anda juga harus menyertakan sistem operasi dan runtime Lambda.
+
+
+Runtime
+Runtime menyediakan lingkungan bahasa khusus yang berjalan di lingkungan aplikasi. Saat Anda membuat fungsi Lambda, Anda menentukan runtime yang ingin Anda gunakan untuk menjalankan kode Anda. Anda bisa menggunakan runtime bawaan, seperti Python, Node.js, Ruby, Go, Java, atau .NET Core. Anda juga bisa mengimplementasikan fungsi Lambda Anda agar berjalan di runtime kustom.
+
+
+Handler fungsi Lambda
+Handler fungsi AWS Lambda adalah metode dalam kode fungsi Anda yang memroses peristiwa. Ketika fungsi Anda dipanggil, Lambda menjalankan metode handler. Ketika keluar atau mengembalikan respons, handler menjadi tersedia untuk menangani peristiwa lain. 
+
+
+
+Anda dapat menggunakan sintaks umum berikut saat membuat fungsi handler di Python.
+
+
+
+def handler_name (event, context):
+
+...
+
+return some_value
+
+
+
+Perincian penagihan
+
+Dengan Lambda, Anda dapat menjalankan kode tanpa menyediakan atau mengelola server, dan Anda hanya membayar sesuai yang Anda gunakan. Anda dikenakan biaya sesuai berapa kali kode Anda diinvokasi (permintaan) dan saat kode Anda berjalan, dibulatkan ke 1 milidetik terdekat durasi terdekat.
+
+AWS membulatkan durasi ke milidetik terdekat tanpa waktu berjalan minimum. Dengan harga ini, biayanya efektif untuk menjalankan fungsi yang waktu eksekusinya sangat rendah, seperti fungsi dengan durasi di bawah 100 md atau API latensi rendah.
+
+"Tidak ada server yang lebih mudah dikelola daripada nirserver." – Werner Vogels, CTO Amazon
+
+Kutipan ini merangkum kenyamanan yang dapat Anda miliki saat menjalankan solusi nirserver, seperti AWS Fargate dan AWS Lambda. Kemudian, Anda akan menerapkan semua informasi yang telah Anda peroleh tentang Amazon EC2, Amazon ECS, Amazon EKS, dan AWS Fargate untuk beberapa kasus penggunaan untuk setiap layanan.
