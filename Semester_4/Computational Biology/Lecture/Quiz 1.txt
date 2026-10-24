@@ -1,0 +1,142 @@
+Quiz 1
+Section A - Genomics & Central Dogma
+Diberikan DNA berikut:
+5’ - ATG TTT CGA GGA TAA - 3’
+3’ - TAC AAA GCT CCT ATT - 5’
+a. Tentukan coding strand dan template strand
+b. Tuliskan mRNA hasil transkripsi
+c. Tentukan urutan asam amino hasil translasi
+d. Jelaskan bagaimana kesalahan pembacaan satu basa saat translasi dapat mempengaruhi protein
+Jawab
+a. coding	5’ - ATG TTT CGA GGA TAA - 3’
+template	3’ - TAC AAA GCT CCT ATT - 5’
+b. mRNA	5’ - AUG UUU CGA GGA UAA - 3’
+c. Asam amino       Met   Phe   Arg   Gly   Stop
+d. 
+Silent Mutation : terjadi ketika kesalahan pembacaan tidak mengefek / merubah amino acidnya
+Missense mutation : when errornya menyebabkan asam amino berubah menjadi asam amino lain
+Nonsense mutation : Errornya membuat stop codon yang terlalu awal (proteinnya pendek/ terpotong)
+
+Normal	5’ - ATG GAA TTT CCG TGA - 3’
+Mutasi		5’ - ATG GAG TTT CCG TGA - 3’
+a. Identifikasi jenis mutasi
+b. Analisa pengaruh mutasi terhadap struktur dan fungsi protein
+c. Bandingkan dengan kasus jika mutasi terjadi pada kodon STOP
+Jawab
+a. Jenis mutasi: Substitution dimana pada basa nitrogen ke 6 yang seharusnya A disubstitusi/digantikan dengan G
+b. Normal 
+coding	 	5’ - ATG GAA TTT CCG TGA - 3’ 
+template	3’ - TAC CTT AAA GGC ACT - 5’ 
+mRNA		5’ - AUG GAA UUU CCG UGA - 3’
+Asam Amino           Met   Glu  Phe  Pro   Stop
+
+Mutasi 
+coding		5’ - ATG GAG TTT CCG TGA - 3’ 
+template	3’ - TAC CTC AAA GGC ACT - 5’ 
+mRNA		5’ - AUG GAG UUU CCG UGA - 3’ 
+Asam Amino        Met   Glu   Phe  Pro  Stop
+
+Kesimpulan: terjadi mutasi substitusi pada DNA strand yang menyebabkan terjadinya silent mutation (tidak mengubah protein)
+c. Jika mutasi terjadi pada stop kodon, maka sinyal penghentian translasi tidak akan dikenali oleh ribosom. Akibatnya ribosom akan menerjemahkan mRNA hingga menemukan kodon stop dan menyebabkan protein menjadi lebih panjang karena urutan asam amino yang terus ditambahkan.
+
+
+Diberikan urutan: ATG AAA CCC GGG TGA
+Terjadi delesi satu basa pada posisi ke-4
+a. Tentukan urutan DNA baru
+b. Tentukan perubahan pada protein
+c. Jelaskan mengapa frameshift mutation lebih berbahaya dibandingkan missense mutation
+Jawab
+a.Normal	: ATG AAA CCC GGG TGA
+Mutasi		: ATG AAC CCG GGT GA	 (urutan DNA baru)
+b. Normal: 	5’ - ATG AAA CCC GGG TGA - 3’ [coding]
+		5’ - AUG AAA CCC GGG UGA - 3’ [mRNA]
+		       Met   Lys   Pro    Gly   Stop
+Mutasi:	5’ - ATG AAC CCG GGT GA - 3’ [coding]
+		5’ - AUG AAC CCG GGU GA - 3’ [mRNA]
+		        Met  Asn  Pro    Gly   -
+(disini terjadi frameshift mutation dimana protein menjadi pendek atau bentuknya salah)
+c. Frameshift mutation lebih berbahaya dari pada misense karena frameshift mutation dapat menyebabkan gangguan seluruh struktur protein dan juga menyebabkan penyakit genetik yang lebih berbahaya. Pada kasus delesi contoh penyakit genetiknya adalah sindrom cri du cat.
+
+
+Jelaskan keterkaitan DNA mutation, RNA Processing, protein misfolding dan penyakit.
+Jawab
+- Ketika terjadi mutasi pada DNA (substitusi, delesi, atau adisi), maka DNA akan rusak dan menyebabkan mutasi (silent mutation,missense, atau nonsense mutation). DNA merupakan template untuk membentuk RNA, jadi kalau DNA rusak, maka RNA juga akan rusak.
+- Pada RNA Processing, proses splicing akan terjadi dan karena DNA sebelumnya sudah mengalami kerusakan, maka akan berdampak pada RNA yang menjadi tidak stabil atau tidak bisa diterjemahkan.
+- Protein misfolding adalah dampak dari mutasi DNA dan kesalahan pada RNA Processing. Protein misfolding bisa menyebabkan protein tidak berfungsi dan merusak sel
+- Karena protein tidak berfungsi dan sel rusak, maka akan menyebabkan penyakit pada makhluk hidup
+
+
+Struktur gen: Exon1 - Exon2 - Exon3 - Exon4
+Isoform A: Exon1 - Exon2 - Exon4
+Isoform B: Exon1 - Exon3 - Exon4
+a. Jelaskan bagaimana satu gen dapat menghasilkan dua protein berbeda
+b. Analisis dampak biologis dari alternative splicing
+c. Berikan contoh kondisi biologis di mana alternative splicing penting
+Jawab
+a. satu gen bisa menghasilkan dua protein berbeda karena proses alternative splicing, dimana satu gen bisa memproduksi banyak urutan mRNA dengan include atau exclude salah satu exon.
+Contoh pada Isoform A, Exon 3 diexclude.
+	pada isoform B, Exon 2 diexclude
+b. Alternative splicing bisa meningkatkan keragaman protein dan memastikan bahwa sel bisa beradaptasi terhadap berbagai lingkungan. 
+c. Alternative splicing berperan penting dalam pembentukan antibodi/imun sehingga makhluk hidup bisa beradaptasi terhadap perubahan lingkungan
+Gen berekspresi tinggi hanya pada kondisi stress oksidatif
+a. Jelaskan mekanisme regulasi gen
+b. Peran Promoter, enhancer, dan transcription factor
+c. Pendekatan bioinformatics untuk identifikasi gen
+Jawab
+- 
+
+
+Kesalahan splicing menyebabkan intron tidak terhapus.
+a. Dampak terhadap mRNA
+b. Dampak terhadap protein
+c. Kaitkan dengan penyakit genetik
+Jawab
+a.  Dampak kesalahan splicing terhadap mRNA
+- mRNA akan lebih panjang (karena masih terdapat intron)
+- Urutan kodon berubah (karena intron tidak dirancang untuk translasi)
+- Bisa muncul kodon STOP prematur (karena intron banyak mengandung kodon STOP)
+b. Dampak terhadap Protein
+- Protein akan terpotong (karena kodon STOP muncul lebih awal)
+- Protein misfolding
+- Struktur Protein berubah (karena intron ikut diterjemahkan)
+c. Kaitan dengan penyakit genetik
+- Beta Thalassemia, terjadi kegagalan splicing yang menyebabkan mutasi pada gen globin dimana intron masih tertahan sehingga menyebabkan anemia.
+Jelaskan hubungan DNA -> RNA -> Protein -> Sel -> Organisme dengan contoh penyakit
+Jawab
+- DNA menyimpan informasi genetik, jika terjadi mutasi maka informasi berubah
+- RNA membawa kode untuk disintesis dan jika DNA terjadi mutasi maka bisa terjadi kesalahan
+- Protein merupakan produk akhir gen yang akan menentukan fungsi biologis, jika salah urutan maka akan terjadi gangguan pada fungsi biologis
+- Protein menjalankan fungsi sel, jika protein rusak maka sel tidak akan bekerja normal
+- Organisme merupakan kumpulan sel yang membentuk jaringan dan organ, jika terdapat banyak sel yang bekerja tidak normal maka akan menimbulkan penyakit
+
+Contoh penyakit:
+Anemia, Alzheimer, hemophilia
+
+
+Analisis gen penyakit metabolik:
+a. Langkah pencarian database
+b. Data yang dikumpulkan
+c. Validasi data
+Jawab
+a. langkah pencarian database
+- Buka NCBI
+- Pilih database Gene
+- Ketik “Metabolic Disease” untuk mencari gen penyakit metabolik
+- Pilih penyakit metabolik yang ingin dianalisa
+b. Data yang dikumpulkan
+- informasi mengenai gene (nama, organisme)
+- Sequence DNA, mRNA, dan Protein
+- Struktur Gene (jumlah intron, exon, dan hasil alternative splicing)
+- Mutasi dan lokasinya
+- kaitannya dengan penyakit
+c. Validasi data
+- membandingkan data dari berbagai macam bioinformatics database
+- melakukan BLAST untuk membandingkan sequence
+- membaca literature ilmiah
+Kasus:
+gen bermutasi
+RNA tidak berubah
+protein berubah
+Jelaskan Fenomena
+Mekanisme
+Pendekatan computational

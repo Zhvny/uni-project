@@ -1,0 +1,251 @@
+LOCUS       NM_001097               1430 bp    mRNA    linear   PRI 28-APR-2025
+DEFINITION  Homo sapiens acrosin (ACR), mRNA.
+ACCESSION   NM_001097 XM_003403747
+VERSION     NM_001097.3
+KEYWORDS    RefSeq; MANE Select.
+SOURCE      Homo sapiens (human)
+  ORGANISM  Homo sapiens
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+            Catarrhini; Hominidae; Homo.
+REFERENCE   1  (bases 1 to 1430)
+  AUTHORS   Lin,M., Ling,P., He,Q., Chen,D., Zheng,L., Tang,L. and Jiang,S.W.
+  TITLE     Low acrosin activity is associated with decreased Spam1/acrosin
+            expression and GSH deficiency-caused premature acrosome release of
+            human sperm cells
+  JOURNAL   Cell Tissue Res 394 (3), 529-545 (2023)
+   PUBMED   37833433
+  REMARK    GeneRIF: Low acrosin activity is associated with decreased
+            Spam1/acrosin expression and GSH deficiency-caused premature
+            acrosome release of human sperm cells.
+REFERENCE   2  (bases 1 to 1430)
+  AUTHORS   Hua,R., Xue,R., Liu,Y., Li,Y., Sha,X., Li,K., Gao,Y., Shen,Q.,
+            Lv,M., Xu,Y., Zhang,Z., He,X., Cao,Y. and Wu,H.
+  TITLE     ACROSIN deficiency causes total fertilization failure in humans by
+            preventing the sperm from penetrating the zona pellucida
+  JOURNAL   Hum Reprod 38 (6), 1213-1223 (2023)
+   PUBMED   37004249
+REFERENCE   3  (bases 1 to 1430)
+  AUTHORS   Zhang,G., Yang,W., Zou,P., Jiang,F., Zeng,Y., Chen,Q., Sun,L.,
+            Yang,H., Zhou,N., Wang,X., Liu,J., Cao,J., Zhou,Z. and Ao,L.
+  TITLE     Mitochondrial functionality modifies human sperm acrosin activity,
+            acrosome reaction capability and chromatin integrity
+  JOURNAL   Hum Reprod 34 (1), 3-11 (2019)
+   PUBMED   30428044
+  REMARK    GeneRIF: Study revealed significantly higher acrosin activity and a
+            lower DNA fragmentation index in subjects with moderate or high
+            mitochondrial membrane potential (MMP) compared to those with low
+            MMP.
+REFERENCE   4  (bases 1 to 1430)
+  AUTHORS   Dorosh,A., Tepla,O., Zatecka,E., Ded,L., Koci,K. and Peknicova,J.
+  TITLE     Expression analysis of MND1/GAJ, SPATA22, GAPDHS and ACR genes in
+            testicular biopsies from non-obstructive azoospermia (NOA) patients
+  JOURNAL   Reprod Biol Endocrinol 11, 42 (2013)
+   PUBMED   23675907
+  REMARK    GeneRIF: Data indicate that the positive expression of studied
+            genes fertilization rate for GAPDHS positive subset was 66%, ACR -
+            71%, SPATA22 - 68%, MND1 - 70%, pregnancy rates were 8%, 6%, 18%
+            and 36% respectively.
+            Publication Status: Online-Only
+REFERENCE   5  (bases 1 to 1430)
+  AUTHORS   Zheng,J.J., Yang,X., Zhang,L.Y., Fei,Q.J., Pan,C.S., Ni,W.H.,
+            Jin,J.Y. and Huang,X.F.
+  TITLE     [Sperm DNA damage and sperm-nucleoprotein transition correlate to
+            acrosin activity and seminal parameters]
+  JOURNAL   Zhonghua Nan Ke Xue 18 (10), 925-929 (2012)
+   PUBMED   23297503
+  REMARK    GeneRIF: Sperm DNA damage is closely related with
+            sperm-nucleoprotein transition, acrosin activity and seminal
+            parameters.
+REFERENCE   6  (bases 1 to 1430)
+  AUTHORS   Vazquez-Levin,M.H., Reventos,J. and Gordon,J.W.
+  TITLE     Molecular cloning, sequencing and restriction mapping of the
+            genomic sequence encoding human proacrosin
+  JOURNAL   Eur J Biochem 207 (1), 23-6 (1992)
+   PUBMED   1628652
+REFERENCE   7  (bases 1 to 1430)
+  AUTHORS   Kremling,H., Keime,S., Wilhelm,K., Adham,I.M., Hameister,H. and
+            Engel,W.
+  TITLE     Mouse proacrosin gene: nucleotide sequence, diploid expression, and
+            chromosomal localization
+  JOURNAL   Genomics 11 (4), 828-834 (1991)
+   PUBMED   1783391
+REFERENCE   8  (bases 1 to 1430)
+  AUTHORS   Klemm,U., Muller-Esterl,W. and Engel,W.
+  TITLE     Acrosin, the peculiar sperm-specific serine protease
+  JOURNAL   Hum Genet 87 (6), 635-641 (1991)
+   PUBMED   1937464
+  REMARK    Review article
+REFERENCE   9  (bases 1 to 1430)
+  AUTHORS   Slomski,R., Schloesser,M., Chlebowska,H., Reiss,J. and Engel,W.
+  TITLE     Detection of human spermatid-specific transcripts in peripheral
+            blood lymphocytes of males and females
+  JOURNAL   Hum Genet 87 (3), 307-310 (1991)
+   PUBMED   1907596
+REFERENCE   10 (bases 1 to 1430)
+  AUTHORS   Keime,S., Adham,I.M. and Engel,W.
+  TITLE     Nucleotide sequence and exon-intron organization of the human
+            proacrosin gene
+  JOURNAL   Eur J Biochem 190 (1), 195-200 (1990)
+   PUBMED   2114285
+COMMENT     REVIEWED REFSEQ: This record has been curated by NCBI staff. The
+            reference sequence was derived from AC000036.5, DB054152.1,
+            CR456366.1, Y00970.1 and AC002056.1.
+            
+            On May 17, 2019 this sequence version replaced NM_001097.2.
+            
+            Summary: Acrosin is the major proteinase present in the acrosome of
+            mature spermatozoa. It is a typical serine proteinase with
+            trypsin-like specificity. It is stored in the acrosome in its
+            precursor form, proacrosin. The active enzyme functions in the
+            lysis of the zona pellucida, thus facilitating penetration of the
+            sperm through the innermost glycoprotein layers of the ovum. The
+            mRNA for proacrosin is synthesized only in the postmeiotic stages
+            of spermatogenesis. In humans proacrosin first appears in the
+            haploid spermatids. [provided by RefSeq, Jul 2008].
+            
+            Publication Note:  This RefSeq record includes a subset of the
+            publications that are available for this gene. Please see the Gene
+            record to access additional publications.
+            
+            ##Evidence-Data-START##
+            Transcript exon combination :: Y00970.1, CR456366.1 [ECO:0000332]
+            RNAseq introns              :: single sample supports all introns
+                                           SAMEA1968968, SAMEA2148093
+                                           [ECO:0000348]
+            ##Evidence-Data-END##
+            
+            ##RefSeq-Attributes-START##
+            MANE Ensembl match     :: ENST00000216139.10/ ENSP00000216139.5
+            RefSeq Select criteria :: based on single protein-coding transcript
+            ##RefSeq-Attributes-END##
+            COMPLETENESS: complete on the 3' end.
+PRIMARY     REFSEQ_SPAN         PRIMARY_IDENTIFIER PRIMARY_SPAN        COMP
+            1-20                AC000036.5         40454-40473
+            21-25               DB054152.1         1-5
+            26-917              CR456366.1         1-892
+            918-943             Y00970.1           902-927
+            944-1303            CR456366.1         919-1278
+            1304-1390           Y00970.1           1288-1374
+            1391-1430           AC002056.1         22120-22159
+FEATURES             Location/Qualifiers
+     source          1..1430
+                     /organism="Homo sapiens"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:9606"
+                     /chromosome="22"
+                     /map="22q13.33"
+     gene            1..1430
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /note="acrosin"
+                     /db_xref="GeneID:49"
+                     /db_xref="HGNC:HGNC:126"
+                     /db_xref="MIM:102480"
+     exon            1..109
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /inference="alignment:Splign:2.1.0"
+     misc_feature    3..5
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /note="upstream in-frame stop codon"
+     CDS             33..1298
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /EC_number="3.4.21.10"
+                     /note="preproacrosin; proacrosin; acrosin light and heavy
+                     chain prepropeptide"
+                     /codon_start=1
+                     /product="acrosin precursor"
+                     /protein_id="NP_001088.2"
+                     /db_xref="CCDS:CCDS14101.1"
+                     /db_xref="GeneID:49"
+                     /db_xref="HGNC:HGNC:126"
+                     /db_xref="MIM:102480"
+                     /translation="MVEMLPTAILLVLAVSVVAKDNATCDGPCGLRFRQNPQGGVRIV
+                     GGKAAQHGAWPWMVSLQIFTYNSHRYHTCGGSLLNSRWVLTAAHCFVGKNNVHDWRLV
+                     FGAKEITYGNNKPVKAPLQERYVEKIIIHEKYNSATEGNDIALVEITPPISCGRFIGP
+                     GCLPHFKAGLPRGSQSCWVAGWGYIEEKAPRPSSILMEARVDLIDLDLCNSTQWYNGR
+                     VQPTNVCAGYPVGKIDTCQGDSGGPLMCKDSKESAYVVVGITSWGVGCARAKRPGIYT
+                     ATWPYLNWIASKIGSNALRMIQSATPPPPTTRPPPIRPPFSHPISAHLPWYFQPPPRP
+                     LPPRPPAAQPRPPPSPPPPPPPPASPLPPPPPPPPPTPSSTTKLPQGLSFAKRLQQLI
+                     EVLKGKTYSDGKNHYDMETTELPELTSTS"
+     sig_peptide     33..89
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /inference="COORDINATES: ab initio prediction:SignalP:6.0"
+     mat_peptide     90..1295
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /product="acrosin"
+     misc_feature    96..98
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /note="N-linked (GlcNAc...) asparagine.
+                     /evidence=ECO:0000250; propagated from
+                     UniProtKB/Swiss-Prot (P10323.4); glycosylation site"
+     misc_feature    660..662
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /note="N-linked (GlcNAc...) asparagine.
+                     /evidence=ECO:0000250; propagated from
+                     UniProtKB/Swiss-Prot (P10323.4); glycosylation site"
+     misc_feature    921..980
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /note="propagated from UniProtKB/Swiss-Prot (P10323.4);
+                     Region: Disordered. /evidence=ECO:0000256|SAM:MobiDB-lite"
+     misc_feature    1011..1181
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /note="propagated from UniProtKB/Swiss-Prot (P10323.4);
+                     Region: Disordered. /evidence=ECO:0000256|SAM:MobiDB-lite"
+     misc_feature    1221..1295
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /note="propagated from UniProtKB/Swiss-Prot (P10323.4);
+                     Region: Disordered. /evidence=ECO:0000256|SAM:MobiDB-lite"
+     exon            110..313
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /inference="alignment:Splign:2.1.0"
+     exon            314..597
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /inference="alignment:Splign:2.1.0"
+     exon            598..743
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /inference="alignment:Splign:2.1.0"
+     exon            744..1430
+                     /gene="ACR"
+                     /gene_synonym="SPGF87"
+                     /inference="alignment:Splign:2.1.0"
+ORIGIN      
+        1 actaggcttg caggccaggc agtgccagga gtatggttga gatgctacca actgccattc
+       61 tgctggtctt ggcagtgtcc gtggttgcta aagataacgc cacgtgtgat ggcccctgtg
+      121 ggttacggtt caggcaaaac ccacagggtg gtgtccgcat cgtcggcggg aaggctgcac
+      181 agcatggggc ctggccctgg atggtcagcc tccagatctt cacgtacaac agccacaggt
+      241 accacacatg tggaggcagc ttgctgaatt cacgatgggt gctcactgct gctcactgct
+      301 tcgtcggcaa aaataatgtg catgactgga gactggtttt cggagcaaag gaaattacat
+      361 atgggaacaa taaaccagta aaggcgcctc tgcaagagag atatgtggag aaaatcatca
+      421 ttcatgaaaa atacaactct gcgacagagg gaaatgacat tgccctcgtg gagatcaccc
+      481 ctcccatttc gtgtgggcgc ttcattgggc cgggctgcct gccccacttt aaggcaggcc
+      541 tccccagagg ctcccagagc tgctgggtgg ccggctgggg atatatagaa gagaaagccc
+      601 ccaggccatc atctatactg atggaggcac gtgtggatct catcgacctg gacttgtgta
+      661 actcgaccca gtggtacaat gggcgcgttc agccaaccaa tgtgtgcgcg gggtatcctg
+      721 taggcaagat cgacacctgc cagggagaca gcggcgggcc tctcatgtgc aaagacagca
+      781 aggaaagcgc ctatgtggtc gtgggaatca caagctgggg ggtaggctgt gcccgtgcca
+      841 agcgccccgg aatctacacg gccacctggc cctatctgaa ctggatcgcc tccaagattg
+      901 gttctaacgc tttgcgtatg attcaatcgg ccacccctcc acctcccacc actcgaccgc
+      961 ccccgattcg accccccttc tcccacccta tctctgctca ccttccttgg tatttccaac
+     1021 cgccccctcg accacttcca ccccgaccac cggcagccca gccccgaccc ccaccttcac
+     1081 ccccgccccc acccccacct ccagcctcac ctttaccccc acccccaccc ccacccccac
+     1141 ctacaccctc atctaccaca aaacttcccc aaggactttc ttttgccaag cgcctacagc
+     1201 agctcataga ggtcttgaag gggaagacct attccgacgg aaagaaccat tatgacatgg
+     1261 agaccacaga gctcccagaa ctgacctcga cctcctgatc tgacctggtt ctcaacagac
+     1321 ccagtgagcc cttcactcct gagaaaaagg aaagatgaaa taaataaata aacatatata
+     1381 tatagatata cacacacaca tatctgtatg tatacatgca tatacatcaa
+//
+
