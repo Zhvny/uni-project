@@ -1,0 +1,26 @@
+Kisi Kisi Ujian
+Dear Teman teman, Saya sudah mendapatkan kisi kisi ujian berikut detail nya:
+
+Bandwith, Latency dan Network Topology
+Bandwith membahas mengenai maksimum transfer data, disini harap kalian mengerti perbedaan dari satuan file speed example:
+GB & Gb itu tidak sama,  B besar melambangkan Byte sedangkan b kecil melambangkan bit, kalau seandai nya ada file 1,2 GB berarti 1,2 Giga Byte dan misal ada koneksi memiliki bandwith 100 Mbps, berarti butuh berapa lama waktu nya?
+Apa itu Latency? bagaimana konsep ping itu berkerja? sebenar nya kalau kita ping itu ada tulisan misal nya 18ms itu apa yang terjadi? dari mana 18ms itu didapatkan?
+Network Tologi kasus"
+
+Address resolution, Traffic routing dan Routing protocol
+Bagaimana ARP itu terjadi ? (Ini berhubungan dengan OSI layer yang kita pelajari di layer 3 dan layer 2)
+Apa yang terjadi pada routing? dan apa saja routing protocol kelebihan dan kekurangan (Static routing vs Dynamic Routing) di rekomendasi pelajari algoritma seperti OSPF,EIGRP dan BGP
+
+
+TCP Session, Tx & Rx data with Go
+Bagaimana TCP Session itu terjadi (Three way handsake pelajari ya)
+Disini ternyata ada miss guys tetap ingin menggunakan golang sebagai example codding just incase jika memang soal pakai codding golang untuk socket bisa di check disini (https://medium.com/@viktordev/socket-programming-in-go-write-a-simple-tcp-client-server-c9609edf3671) Syntax lebih mudah kok selalu inget konsep codding socket yang ada server dan client yang mana yang listen dan yang mana yang send serta requirement attribute untuk socket itu sendiri
+
+Fragmentation,  Ensuring UDP reliability
+Cara UDP ter connect session nya berbeda dari TCP, bagaimana caranya?
+ada istilah MTU (Maximum Transmission Unit) Boleh di check saya pernah mention tapi istilah nya maksimal size dari packet coba di check berapa maksimal nya pada UDP dan apa yang terjadi jika packet melebihi maksimum tersebut
+UDP meskipun rentan bersifat tidak terkirim semua packet ada konsep Ensuring UDP Reliability Konsep untuk membuat UDP tidak mudah corrupt (cari case dan pelajari how to buat UDP untuk tidak mudah corrupt / data packet ada yang hilang)
+
+UDS best practice
+Ini basically itu socket biasa guys, ini cuman ngasih tau best practice penggunaan socket ex: seperti yang ku bilang sebelumnya setiap buka socket jangan lupa di close atau mungkin validasi null lain nya
+kalau bingung UDS itu apa intinya adalah Unix Domain Socket (buat yang bingung unix basically itu os tapi bisa di miripin sama linux meskipun beda, ini sejaarah nya https://www.codepolitan.com/blog/linux-vs-unix-apa-perbedaannya-5b044cba00f5c/)
