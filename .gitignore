@@ -6,3 +6,13 @@ Non-kuliah/assets/hljs/
 # File kerja lokal: berisi token aktif / state mesin — jangan commit
 import_to_notion.py
 **/.import_history.json
+
+# Android build artifacts & local configurations
+**/build/
+**/.gradle/
+**/local.properties
+**/.idea/
+*.apk
+*.ap_
+*.aab
+
