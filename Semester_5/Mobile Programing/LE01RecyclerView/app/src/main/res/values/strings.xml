@@ -1,0 +1,5 @@
+<resources>
+    <string name="appName">LE01RecyclerView</string>
+    <string name="btnPrevious">Previous</string>
+    <string name="btnNext">Next</string>
+</resources>

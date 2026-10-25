@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imageData"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama : "
+        android:id="@+id/textNamaData"
+        android:layout_toRightOf="@+id/imageData"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="5dp"
+        android:textSize="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price : "
+        android:id="@+id/textPriceData"
+        android:layout_toRightOf="@+id/imageData"
+        android:layout_below="@+id/textNamaData"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Keterangan : Disini ada keterangan."
+        android:id="@+id/textDescriptionData"
+        android:layout_toRightOf="@+id/imageData"
+        android:layout_below="@+id/textPriceData"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"/>
+</RelativeLayout>
