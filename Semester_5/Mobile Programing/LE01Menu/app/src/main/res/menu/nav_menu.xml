@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menuProfile"
+        android:title="Profile" />
+    <item android:id="@+id/menuSepatu"
+        android:title="Sepatu"/>
+    <item android:id="@+id/menuPakaian"
+        android:title="Pakaian">
+        <menu>
+            <item android:id="@+id/menuKemeja"
+                android:title="Kemeja" />
+            <item android:id="@+id/menuBawahan"
+                android:title="Celana atau Rok" />
+        </menu>
+    </item>
+</menu>
