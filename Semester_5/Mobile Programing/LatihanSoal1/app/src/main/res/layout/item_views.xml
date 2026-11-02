@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_centerHorizontal="true">
+
+<!--        TODO: CREATE IMAGE 100dp x 100dp-->
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/itemImage" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/itemImage">
+
+            <TextView
+                android:id="@+id/itemCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#XXXX" />
+
+<!--            TODO: CREATE TEXTVIEW with id: "itemName"-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemName"
+                android:layout_below="@+id/itemCode"
+                android:text="Name: "/>
+
+<!--            TODO: FIX POSITION OF itemDesc -->
+            <TextView
+                android:id="@+id/itemDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item description here"
+                android:layout_below="@+id/itemName" />
+
+            <TextView
+                android:id="@+id/itemAvailability"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/itemDesc"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="2dp"
+                android:textStyle="bold"
+                android:background="@color/green"
+                android:text="Available" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

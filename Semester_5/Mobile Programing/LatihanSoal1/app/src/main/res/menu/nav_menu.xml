@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Rent">
+        <menu>
+            <item android:title="Rent Tools"
+                android:id="@+id/menuRentTools"/>
+            <item android:title="Rent Workers"
+                android:id="@+id/menuRentWorkers"/>
+        </menu>
+    </item>
+    <item android:title="Upload"
+        android:id="@+id/menuUpload" />
+
+
+</menu>
